@@ -7,15 +7,18 @@
     "frontend",
     "backend",
     "shared-prisma"
-  ],
-  "scripts": {
+  ],  "scripts": {
     "install:all": "npm install && npm run install:workspaces",
     "install:workspaces": "cd frontend && npm install && cd ../backend && npm install && cd ../shared-prisma && npm install && cd ..",
     "dev": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"blue,green\" \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
     "build": "cd shared-prisma && npm run build && cd .. && concurrently \"cd frontend && npm run build\" \"cd backend && npm run build\"",
     "start": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"blue,green\" \"cd frontend && npm run start\" \"cd backend && npm run start\"",
     "lint": "concurrently \"cd frontend && npm run lint\" \"cd backend && npm run lint\"",
-    "clean": "rimraf */node_modules */dist */.next"
+    "clean": "rimraf */node_modules */dist */.next",
+    "db:migrate": "cd shared-prisma && npx prisma migrate dev",
+    "db:generate": "cd shared-prisma && npx prisma generate",
+    "db:seed": "cd shared-prisma && npx prisma db seed",
+    "db:setup": "npm run db:migrate && npm run db:generate && npm run db:seed"
   },
   "repository": {
     "type": "git",

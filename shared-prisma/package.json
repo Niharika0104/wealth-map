@@ -7,9 +7,18 @@
     "prettier": "^3.5.3",
     "prettier-plugin-prisma": "^5.0.0",
     "prisma": "^6.7.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "@prisma/client": "^6.7.0"
+  },  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "dev": "tsc --watch"
   }
 }

@@ -16,10 +16,7 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "shared-prisma": ["../shared-prisma/src"],
-      "shared-prisma/*": ["../shared-prisma/src/*"]
-    }
-  }
+    "noFallthroughCasesInSwitch": false
+  },
+  "include": ["src/**/*"]
 }

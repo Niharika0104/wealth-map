@@ -1,12 +1,8 @@
-// This is your Prisma schema file,
+// This is your Prisma schema file
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,56 +10,134 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User Model: Represents an employee in the system
-model Users {
-  user_id       String     @id @default(uuid())
-  name          String
-  phone_number  String?
-  region        String
-  role          String
-  email         String     @unique
-  password      String
-  mfa_enabled   Boolean
-  created_by    String?
-  created_date  DateTime   @default(now())
-  modified_by   String?
-  modified_date DateTime?  @updatedAt
-  last_login    DateTime?
-  employee      Employees? @relation("EmployeeUser")
-  userlogs      Logging[]
-  roles         Constants  @relation(fields: [role], references: [const_id])
+// User Model: Represents a user in the system with enhanced authentication support
+model User {
+  id                  String          @id @default(cuid())
+  name                String
+  email               String          @unique
+  email_verified      DateTime?
+  password            String
+  image               String?
+  phone_number        String?
+  region              String
+  role                String
+  mfa_enabled         Boolean         @default(false)
+  mfa_method          String?
+  mfa_secret          String?
+  last_login          DateTime?
+  created_by          String?
+  created_date        DateTime        @default(now())
+  modified_by         String?
+  modified_date       DateTime?       @updatedAt
+
+  accounts            Account[]
+  sessions            Session[]
+  web_authn_devices   WebAuthnDevice[]
+  employee            Employee?
+  userlogs            Logging[]
+  role_definition     Constants       @relation(fields: [role], references: [const_id])
 }
 
-// ...existing code...
+model Account {
+  id                  String    @id @default(cuid()) 
+  user_id             String
+  type                String
+  provider            String
+  provider_account_id String
+  refresh_token       String?   @db.Text
+  access_token        String?   @db.Text
+  expires_at          Int?
+  token_type          String?
+  scope               String?
+  id_token            String?   @db.Text
+  session_state       String?
 
-model Employees {
-  user_id    String @unique
-  company_id String
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
 
-  user    Users     @relation("EmployeeUser", fields: [user_id], references: [user_id])
-  company Companies @relation(fields: [company_id], references: [company_id])
+  user                User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([provider, provider_account_id])
 }
 
-// Companies Model: Represents a company the user belongs to
-model Companies {
-  company_id    String   @id @default(uuid())
-  company_name  String
-  region        String
-  created_by    String?
-  created_date  DateTime @default(now())
-  modified_by   String?
-  modified_date DateTime @updatedAt
-
-  admins Employees[]
+model Session {
+  id                  String    @id @default(cuid())
+  session_token       String    @unique
+  user_id             String
+  expires             DateTime
+  
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
+  
+  user                User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
-// Assets Model: Represents an asset owned by one or more candidates
-model Assets {
-  asset_id            String                    @id @default(uuid())
+model VerificationToken {
+  identifier          String
+  token               String
+  expires             DateTime
+
+  @@id([identifier, token])
+}
+
+// MFA WebAuthn Device support
+model WebAuthnDevice {
+  credential_id       String    @id @db.Text
+  user_id             String
+  public_key          String    @db.Text
+  counter             Int
+  device_type         String
+  backed_up           Boolean
+  transports          String?
+  friendly_name       String?
+  last_used           DateTime?
+  
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
+  
+  user                User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model OneTimeCode {
+  id                  String    @id @default(cuid())
+  user_id             String
+  code                String
+  type                String
+  used                Boolean   @default(false)
+  expires             DateTime
+  
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
+  
+  @@index([user_id, type])
+}
+
+model Employee {
+  user_id             String    @unique
+  company_id          String
+
+  user                User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  company             Company   @relation(fields: [company_id], references: [id])
+}
+
+model Company {
+  id                  String     @id @default(cuid())
+  name                String
+  region              String
+  created_by          String?
+  created_date        DateTime   @default(now())
+  modified_by         String?
+  modified_date       DateTime   @updatedAt
+
+  employees           Employee[]
+}
+
+model Asset {
+  id                  String                @id @default(cuid())
   asset_type_id       String
   description         String?
   region              String?
-  isProperty          Boolean
+  is_property         Boolean
   quantity            Float?
   unit_of_measurement String?
   unit_value          Float?
@@ -73,86 +147,86 @@ model Assets {
   valuation_date      DateTime
   source_platform     String?
   created_by          String?
-  created_date        DateTime                  @default(now())
+  created_date        DateTime              @default(now())
   modified_by         String?
-  modified_date       DateTime                  @updatedAt
-  assetType           Constants                 @relation(fields: [asset_type_id], references: [const_id])
-  owners              CandidateAssetOwnership[]
-  Views               Views[]
-  Bookmarks           Bookmarks[]
+  modified_date       DateTime              @updatedAt
+
+  asset_type          Constants             @relation(fields: [asset_type_id], references: [const_id])
+  ownerships          CandidateAssetOwnership[]
+  views               View[]
+  bookmarks           Bookmark[]
 }
 
-// CandidateAssetOwnership Model: Maps assets to multiple candidates (many-to-many)
 model CandidateAssetOwnership {
-  id                   String @id @default(uuid())
-  asset_id             String
-  candidate_id         String
-  ownership_percentage Float
+  id                    String    @id @default(cuid())
+  asset_id              String
+  candidate_id          String
+  ownership_percentage  Float
 
-  asset     Assets     @relation(fields: [asset_id], references: [asset_id])
-  candidate Candidates @relation(fields: [candidate_id], references: [candidate_id])
+  asset                 Asset     @relation(fields: [asset_id], references: [id])
+  candidate             Candidate @relation(fields: [candidate_id], references: [id])
 }
 
-// Candidates Model: Represents an individual who owns assets
-model Candidates {
-  candidate_id  String   @id @default(uuid())
-  name          String
-  region        String
-  phone_number  String
-  email         String
-  address       String
-  dob           DateTime
-  country_name  String
-  created_by    String?
-  created_date  DateTime @default(now())
-  modified_by   String?
-  modified_date DateTime @updatedAt
+model Candidate {
+  id                  String    @id @default(cuid())
+  name                String
+  region              String
+  phone_number        String
+  email               String
+  address             String
+  dob                 DateTime
+  country_name        String
+  created_by          String?
+  created_date        DateTime  @default(now())
+  modified_by         String?
+  modified_date       DateTime  @updatedAt
 
-  assets CandidateAssetOwnership[]
+  asset_ownerships    CandidateAssetOwnership[]
 }
 
-// Logging Model: Stores activity logs
 model Logging {
-  user_activity_id String    @id @default(uuid())
-  user_id          String
-  action_type      String
-  action_name      Constants @relation(fields: [action_type], references: [const_id])
+  id                  String    @id @default(cuid())
+  user_id             String
+  action_type         String
+  activity_time       DateTime  @default(now())
+  details             String?   @db.Text
+  ip_address          String?
+  user_agent          String?
+  created_by          String?
+  created_date        DateTime  @default(now())
+  modified_by         String?
+  modified_date       DateTime  @updatedAt
 
-  activity_time DateTime @default(now())
-  created_by    String?
-  created_date  DateTime @default(now())
-  modified_by   String?
-  modified_date DateTime @updatedAt
-  user          Users    @relation(fields: [user_id], references: [user_id])
+  user                User      @relation(fields: [user_id], references: [id])
+  action_definition   Constants @relation(fields: [action_type], references: [const_id])
 }
 
-// Views Model: Stores information about property views
-model Views {
-  view_id        String   @id @default(uuid())
-  property_id    String
-  viewed_by_whom String
-  viewed_at      DateTime @default(now())
+model View {
+  id                  String    @id @default(cuid())
+  asset_id            String
+  viewed_by           String
+  viewed_at           DateTime  @default(now())
 
-  property Assets @relation(fields: [property_id], references: [asset_id])
+  asset               Asset     @relation(fields: [asset_id], references: [id])
 }
 
-// Bookmarks Model: Stores information about bookmarked properties
-model Bookmarks {
-  bookmark_id        String   @id @default(uuid())
-  property_id        String
-  bookmarked_by_whom String
-  bookmarked_at      DateTime @default(now())
+model Bookmark {
+  id                  String    @id @default(cuid())
+  asset_id            String
+  bookmarked_by       String
+  bookmarked_at       DateTime  @default(now())
 
-  Properties Assets @relation(fields: [property_id], references: [asset_id])
+  asset               Asset     @relation(fields: [asset_id], references: [id])
 }
 
-// Constants Model: Stores constant values for various actions
 model Constants {
-  const_id    String    @id @default(uuid())
-  const_name  String    @unique
-  code        String
-  description String?
-  assets      Assets[]
-  Users       Users[]
-  Logging     Logging[]
+  const_id            String    @id @default(cuid())
+  const_name          String    @unique
+  code                String
+  category            String
+  description         String?
+
+  assets              Asset[]
+  users               User[]
+  logs                Logging[]
 }
