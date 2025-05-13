@@ -1,4 +1,15 @@
 {
+  "scripts": {
+    "seed": "ts-node /src/seed.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "db:seed": "prisma db seed",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
   "devDependencies": {
     "@types/node": "^22.15.17",
     "eslint": "^9.26.0",
@@ -12,13 +23,5 @@
   },
   "dependencies": {
     "@prisma/client": "^6.7.0"
-  },  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
-  "scripts": {
-    "clean": "rimraf dist",
-    "prebuild": "npm run clean",
-    "build": "tsc",
-    "dev": "tsc --watch"
   }
 }

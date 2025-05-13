@@ -1,187 +1,88 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
-
+import { constants } from 'buffer';
+import {PrismaClient} from '../prisma/generated/prisma' ;
+  console.log('Seeding  jjkh constants...');
+export const prisma = new PrismaClient();
+  console.log('Seeding constants...');
 async function main() {
-  // ─── Constants: Roles ───────────────────────────────
-  const roleCategory = await prisma.constants.create({
-    data: {
-      const_name: 'Roles',
-      code: 'ROLES',
-      description: 'Roles available in the system',
-    },
-  });
+  // 1. Constants
 
-  const roles = ['SuperAdmin', 'Admin', 'Employee'];
-  for (const role of roles) {
-    await prisma.constants.create({
-      data: {
-        const_name: role,
-        code: 'ROLES',
-        description: `Role: ${role}`,
-      },
-    });
-  }
+  // const constants = await prisma.$transaction([
+  //   prisma.constants.create({ data: { code: 'ROLE_SUPERADMIN' } }),
+  //   prisma.constants.create({ data: { code: 'ROLE_ADMIN' } }),
+  //   prisma.constants.create({ data: { code: 'ROLE_EMPLOYEE' } }),
+  //   prisma.constants.create({ data: { code: 'REAL_ESTATE' } }),
+  //   prisma.constants.create({ data: { code: 'EQUITY_OWNERSHIP' } }),
+  //   prisma.constants.create({ data: { code: 'ROYALTIES_OR_IP' } }),
+  //   prisma.constants.create({ data: { code: 'BUSINESS_OWNERSHIP' } }),
+  //   prisma.constants.create({ data: { code: 'GOLD' } }),
+  //   prisma.constants.create({ data: { code: 'SILVER' } }),
+  // ]);
+const constants = await prisma.constants.findMany();
+  const constantsMap = Object.fromEntries(constants.map(c => [c.code, c.const_id]));
 
-  // ─── Constants: User Actions ─────────────────────────
-  const userActions = ['user_login', 'user_logout', 'report_generate', 'file_export'];
-  for (const action of userActions) {
-    await prisma.constants.create({
-      data: {
-        const_name: action,
-        code: 'USER_ACTION',
-        description: `User action: ${action}`,
-      },
-    });
-  }
+  // // 2. Companies
+  // const companies = await prisma.$transaction([
+  //   prisma.companies.create({ data: { company_name: 'Company 1', region: 'Dallas' } }),
+  //   prisma.companies.create({ data: { company_name: 'Company 2', region: 'Texas' } }),
+  //   prisma.companies.create({ data: { company_name: 'Company 3', region: 'Virginia' } }),
+  // ]);
+const companies = await prisma.companies.findMany();
+  // 3. Users and Employees
+  const users = await Promise.all(
+    Array.from({ length: 5 }, async (_, i) => {
+      const user = await prisma.users.create({
+        data: {
+          name: `Employee ${i + 1}`,
+          email: `employee${i + 1}@company.com`,
+          password: 'securepassword',
+          phone_number: `12345678${i}`,
+          region: ['Texas', 'Dallas', 'Virginia'][i % 3],
+          role: 'b9f67327-6490-47ec-b4da-3365d97438e1',
+          mfa_enabled: false,
+        },
+      });
 
-  // ─── Constants: Asset Types ──────────────────────────
-  const assetTypes = [
-    { name: 'Real Estate', code: 'ASSET_TYPE' },
-    { name: 'Equity Ownership', code: 'ASSET_TYPE' },
-    { name: 'Royalties / IP', code: 'ASSET_TYPE' },
-    { name: 'Business Ownership', code: 'ASSET_TYPE' },
-    { name: 'Gold', code: 'COMMODITY' },
-    { name: 'Silver', code: 'COMMODITY' },
-  ];
+      await prisma.employees.create({
+        data: {
+          user_id: user.user_id,
+          company_id: companies[i % 3].company_id,
+        },
+      });
 
-  for (const asset of assetTypes) {
-    await prisma.constants.create({
-      data: {
-        const_name: asset.name,
-        code: asset.code,
-        description: `Asset type: ${asset.name}`,
-      },
-    });
-  }
+      return user;
+    })
+  );
 
-  // ─── Companies ───────────────────────────────────────
-  const company1 = await prisma.companies.create({
-    data: {
-      company_id: 'company-1',
-      company_name: 'TechCorp Inc.',
-      region: 'North America',
-    },
-  });
+  // 4. Properties
+  const regions = ['Texas', 'Dallas', 'Virginia'];
+  const unitTypes = ['yards'];
 
-  const company2 = await prisma.companies.create({
-    data: {
-      company_id: 'company-2',
-      company_name: 'FinSolve Ltd.',
-      region: 'Europe',
-    },
-  });
+  await Promise.all(
+    Array.from({ length: 5 }, (_, i) => {
+      return prisma.assets.create({
+        data: {
+          asset_type_id: constantsMap['REAL_ESTATE'],
+          description: `Property ${i + 1} in ${regions[i % regions.length]}`,
+          region: regions[i % regions.length],
+          quantity: parseFloat((Math.random() * 10000 + 1).toFixed(2)),
+          unit_of_measurement: unitTypes[i % unitTypes.length],
+          unit_value: parseFloat((Math.random() * 100000 + 10000).toFixed(2)),
+          total_value: parseFloat((Math.random() * 200000 + 50000).toFixed(2)),
+          valuation_method: 'Market',
+          valuation_date: new Date(),
+        },
+      });
+    })
+  );
 
-  // ─── Users ───────────────────────────────────────────
-  const users = await Promise.all([
-    prisma.users.create({
-      data: {
-        user_id: 'user-1',
-        name: 'Alice Johnson',
-        phone_number: '1234567890',
-        region: 'North America',
-        role: 'SuperAdmin',
-        email: 'alice@techcorp.com',
-        password: 'hashed_pass_1',
-        mfa_enabled: true,
-      },
-    }),
-    prisma.users.create({
-      data: {
-        user_id: 'user-2',
-        name: 'Bob Smith',
-        phone_number: '9876543210',
-        region: 'North America',
-        role: 'Admin',
-        email: 'bob@techcorp.com',
-        password: 'hashed_pass_2',
-        mfa_enabled: false,
-      },
-    }),
-    prisma.users.create({
-      data: {
-        user_id: 'user-3',
-        name: 'Charlie Lee',
-        phone_number: '5551234567',
-        region: 'North America',
-        role: 'Employee',
-        email: 'charlie@techcorp.com',
-        password: 'hashed_pass_3',
-        mfa_enabled: true,
-      },
-    }),
-    prisma.users.create({
-      data: {
-        user_id: 'user-4',
-        name: 'Diana Prince',
-        phone_number: '4445556666',
-        region: 'Europe',
-        role: 'Admin',
-        email: 'diana@finsolve.com',
-        password: 'hashed_pass_4',
-        mfa_enabled: true,
-      },
-    }),
-    prisma.users.create({
-      data: {
-        user_id: 'user-5',
-        name: 'Ethan Hunt',
-        phone_number: '3332221111',
-        region: 'Europe',
-        role: 'Employee',
-        email: 'ethan@finsolve.com',
-        password: 'hashed_pass_5',
-        mfa_enabled: false,
-      },
-    }),
-  ]);
-
-  // ─── Employees ───────────────────────────────────────
-  await prisma.employees.createMany({
-    data: [
-      { user_id: 'user-1', company_id: 'company-1' },
-      { user_id: 'user-2', company_id: 'company-1' },
-      { user_id: 'user-3', company_id: 'company-1' },
-      { user_id: 'user-4', company_id: 'company-2' },
-      { user_id: 'user-5', company_id: 'company-2' },
-    ],
-  });
-    // ─── Assets lands ──────────────────────────────────────────
-    const assetSeeds = [
-  { name: 'Sunnyvale Plot', type: 'Real Estate', isProperty: true,   quantity: 2.5,unit_of_measurement: 'acres', region: 'Texas' },
-  { name: 'Green Acres', type: 'Real Estate', isProperty: true,   quantity: 2.5, unit_of_measurement: 'acres',region: 'Texas' },
-  { name: 'Skyrise Tower', type: 'Real Estate', isProperty: true,unit_of_measurement: 'acres',quantity: 10,region: 'Texas' },
-  { name: 'Beachfront Land', type: 'Real Estate', isProperty: true, unit_of_measurement: 'acres',quantity: 10,region: 'Texas' },
-  { name: 'Farmhouse Estate', type: 'Real Estate', isProperty: true, region: 'Texas' },
-
-  { name: 'Golden Shares', type: 'Equity Ownership', isProperty: false, unit_of_measurement: 'acres',region: 'Dallas' },
-  { name: 'Tech IP Rights', type: 'Royalties / IP', isProperty: false,unit_of_measurement: 'acres', region: 'Dallas' },
-  { name: 'Startup Equity', type: 'Equity Ownership', isProperty: false, region: 'Dallas' },
-  { name: 'Retail Franchise', type: 'Business Ownership', isProperty: false, region: 'Dallas' },
-  { name: 'Innovation Hub', type: 'Real Estate', isProperty: true, region: 'Dallas' },
-
-  { name: 'Industrial Land', type: 'Real Estate', isProperty: true, region: 'Virginia' },
-  { name: 'Vineyard Property', type: 'Real Estate', isProperty: true, region: 'Virginia' },
-
-  { name: 'Gold Bullion', type: 'Gold', isProperty: false, region: 'California' },
-  { name: 'Silver Vault', type: 'Silver', isProperty: false, region: 'Florida' },
-  { name: 'Mining Field', type: 'Real Estate', isProperty: true, region: 'Nevada' },
-  { name: 'Fashion License', type: 'Royalties / IP', isProperty: false, region: 'New York' },
-  { name: 'AI Equity Holding', type: 'Equity Ownership', isProperty: false, region: 'Washington' },
-  { name: 'Content IP', type: 'Royalties / IP', isProperty: false, region: 'Colorado' },
-  { name: 'Jewelry Stock', type: 'Gold', isProperty: false, region: 'Oregon' },
-  { name: 'Luxury Silverware', type: 'Silver', isProperty: false, region: 'Illinois' },
-];
-
-
+  console.log('Seeding completed ✅');
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-    console.log('🌱 Seed data inserted successfully');
+  .catch(e => {
+    console.error(e);
+   
   })
-  .catch(async (e) => {
-    console.error('❌ Error inserting seed data:', e);
+  .finally(async () => {
     await prisma.$disconnect();
-    process.exit(1);
   });

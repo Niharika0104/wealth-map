@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   =  "generated/prisma"
 }
 
 datasource db {
@@ -137,7 +138,6 @@ model Asset {
   asset_type_id       String
   description         String?
   region              String?
-  is_property         Boolean
   quantity            Float?
   unit_of_measurement String?
   unit_value          Float?
@@ -220,13 +220,10 @@ model Bookmark {
 }
 
 model Constants {
-  const_id            String    @id @default(cuid())
-  const_name          String    @unique
-  code                String
-  category            String
-  description         String?
-
-  assets              Asset[]
-  users               User[]
-  logs                Logging[]
+  const_id    String    @id @default(uuid()) 
+  code        String   @unique
+  description String?
+  assets      Assets[]
+  Users       Users[]
+  Logging     Logging[]
 }
