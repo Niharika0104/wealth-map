@@ -1,6 +1,13 @@
 {
   "devDependencies": {
-    "prisma": "^6.7.0"
+    "@types/node": "^22.15.17",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-prisma": "^5.0.0",
+    "prisma": "^6.7.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@prisma/client": "^6.7.0"

@@ -15,9 +15,6 @@
     "build": "cd shared-prisma && npm run build && cd .. && concurrently \"cd frontend && npm run build\" \"cd backend && npm run build\"",
     "start": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"blue,green\" \"cd frontend && npm run start\" \"cd backend && npm run start\"",
     "lint": "concurrently \"cd frontend && npm run lint\" \"cd backend && npm run lint\"",
-    "prisma:generate": "cd shared-prisma && npm run generate",
-    "prisma:migrate": "cd shared-prisma && npm run migrate:dev",
-    "prisma:studio": "cd shared-prisma && npm run studio",
     "clean": "rimraf */node_modules */dist */.next"
   },
   "repository": {
