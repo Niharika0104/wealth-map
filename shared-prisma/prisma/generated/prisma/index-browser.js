@@ -120,30 +120,91 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UsersScalarFieldEnum = {
-  user_id: 'user_id',
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
   name: 'name',
+  email: 'email',
+  email_verified: 'email_verified',
+  password: 'password',
+  image: 'image',
   phone_number: 'phone_number',
   region: 'region',
   role: 'role',
-  email: 'email',
-  password: 'password',
   mfa_enabled: 'mfa_enabled',
+  mfa_method: 'mfa_method',
+  mfa_secret: 'mfa_secret',
+  last_login: 'last_login',
   created_by: 'created_by',
   created_date: 'created_date',
   modified_by: 'modified_by',
-  modified_date: 'modified_date',
-  last_login: 'last_login'
+  modified_date: 'modified_date'
 };
 
-exports.Prisma.EmployeesScalarFieldEnum = {
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  type: 'type',
+  provider: 'provider',
+  provider_account_id: 'provider_account_id',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  session_token: 'session_token',
+  user_id: 'user_id',
+  expires: 'expires',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+};
+
+exports.Prisma.WebAuthnDeviceScalarFieldEnum = {
+  credential_id: 'credential_id',
+  user_id: 'user_id',
+  public_key: 'public_key',
+  counter: 'counter',
+  device_type: 'device_type',
+  backed_up: 'backed_up',
+  transports: 'transports',
+  friendly_name: 'friendly_name',
+  last_used: 'last_used',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.OneTimeCodeScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  code: 'code',
+  type: 'type',
+  used: 'used',
+  expires: 'expires',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.EmployeeScalarFieldEnum = {
   user_id: 'user_id',
   company_id: 'company_id'
 };
 
-exports.Prisma.CompaniesScalarFieldEnum = {
-  company_id: 'company_id',
-  company_name: 'company_name',
+exports.Prisma.CompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
   region: 'region',
   created_by: 'created_by',
   created_date: 'created_date',
@@ -151,8 +212,8 @@ exports.Prisma.CompaniesScalarFieldEnum = {
   modified_date: 'modified_date'
 };
 
-exports.Prisma.AssetsScalarFieldEnum = {
-  asset_id: 'asset_id',
+exports.Prisma.AssetScalarFieldEnum = {
+  id: 'id',
   asset_type_id: 'asset_type_id',
   description: 'description',
   region: 'region',
@@ -177,8 +238,8 @@ exports.Prisma.CandidateAssetOwnershipScalarFieldEnum = {
   ownership_percentage: 'ownership_percentage'
 };
 
-exports.Prisma.CandidatesScalarFieldEnum = {
-  candidate_id: 'candidate_id',
+exports.Prisma.CandidateScalarFieldEnum = {
+  id: 'id',
   name: 'name',
   region: 'region',
   phone_number: 'phone_number',
@@ -193,27 +254,30 @@ exports.Prisma.CandidatesScalarFieldEnum = {
 };
 
 exports.Prisma.LoggingScalarFieldEnum = {
-  user_activity_id: 'user_activity_id',
+  id: 'id',
   user_id: 'user_id',
   action_type: 'action_type',
   activity_time: 'activity_time',
+  details: 'details',
+  ip_address: 'ip_address',
+  user_agent: 'user_agent',
   created_by: 'created_by',
   created_date: 'created_date',
   modified_by: 'modified_by',
   modified_date: 'modified_date'
 };
 
-exports.Prisma.ViewsScalarFieldEnum = {
-  view_id: 'view_id',
-  property_id: 'property_id',
-  viewed_by_whom: 'viewed_by_whom',
+exports.Prisma.ViewScalarFieldEnum = {
+  id: 'id',
+  asset_id: 'asset_id',
+  viewed_by: 'viewed_by',
   viewed_at: 'viewed_at'
 };
 
-exports.Prisma.BookmarksScalarFieldEnum = {
-  bookmark_id: 'bookmark_id',
-  property_id: 'property_id',
-  bookmarked_by_whom: 'bookmarked_by_whom',
+exports.Prisma.BookmarkScalarFieldEnum = {
+  id: 'id',
+  asset_id: 'asset_id',
+  bookmarked_by: 'bookmarked_by',
   bookmarked_at: 'bookmarked_at'
 };
 
@@ -240,15 +304,20 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Users: 'Users',
-  Employees: 'Employees',
-  Companies: 'Companies',
-  Assets: 'Assets',
+  User: 'User',
+  Account: 'Account',
+  Session: 'Session',
+  VerificationToken: 'VerificationToken',
+  WebAuthnDevice: 'WebAuthnDevice',
+  OneTimeCode: 'OneTimeCode',
+  Employee: 'Employee',
+  Company: 'Company',
+  Asset: 'Asset',
   CandidateAssetOwnership: 'CandidateAssetOwnership',
-  Candidates: 'Candidates',
+  Candidate: 'Candidate',
   Logging: 'Logging',
-  Views: 'Views',
-  Bookmarks: 'Bookmarks',
+  View: 'View',
+  Bookmark: 'Bookmark',
   Constants: 'Constants'
 };
 

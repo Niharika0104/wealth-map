@@ -223,7 +223,7 @@ model Constants {
   const_id    String    @id @default(uuid()) 
   code        String   @unique
   description String?
-  assets      Assets[]
-  Users       Users[]
+  assets      Asset[]
+  Users       User[]
   Logging     Logging[]
 }
