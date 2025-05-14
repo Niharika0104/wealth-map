@@ -1,39 +1,24 @@
 {
   "name": "wealth",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend",
-    "shared-prisma"
-  ],  "scripts": {
-    "install:all": "npm install && npm run install:workspaces",
-    "install:workspaces": "cd frontend && npm install && cd ../backend && npm install && cd ../shared-prisma && npm install && cd ..",
-    "dev": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"blue,green\" \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
-    "build": "cd shared-prisma && npm run build && cd .. && concurrently \"cd frontend && npm run build\" \"cd backend && npm run build\"",
-    "start": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"blue,green\" \"cd frontend && npm run start\" \"cd backend && npm run start\"",
-    "lint": "concurrently \"cd frontend && npm run lint\" \"cd backend && npm run lint\"",
-    "clean": "rimraf */node_modules */dist */.next",
-    "db:migrate": "cd shared-prisma && npx prisma migrate dev",
-    "db:generate": "cd shared-prisma && npx prisma generate",
-    "db:seed": "cd shared-prisma && npx prisma db seed",
-    "db:setup": "npm run db:migrate && npm run db:generate && npm run db:seed"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Niharika0104/wealth-map.git"
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "15.3.2"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Niharika0104/wealth-map/issues"
-  },
-  "homepage": "https://github.com/Niharika0104/wealth-map#readme",
-  "description": "Wealth management monorepo",
   "devDependencies": {
-    "concurrently": "^9.1.2",
-    "rimraf": "^5.0.5"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4"
   }
 }
