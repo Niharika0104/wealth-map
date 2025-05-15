@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/custom-components/app-sidebar";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,15 +23,35 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      <head>
+        <script src="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.umd.min.js"></script>
+  <link href="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.css" rel="stylesheet" />
+  <script src="https://cdn.maptiler.com/maptiler-geocoding-control/v2.1.4/maptilersdk.umd.js"></script>
+  <link href="https://cdn.maptiler.com/maptiler-geocoding-control/v2.1.4/style.css" rel="stylesheet"></link>
+        </head>      
+        <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white-50`}
       >
-        {children}
+        <SidebarProvider>
+        
+           
+              <AppSidebar />
+           
+
+            {/* Right column: main content */}
+            <main className="flex gap-2  w-full p-4  ">
+              <div className="">
+               <SidebarTrigger /></div>
+               <div className=" w-15/15">
+              {children}</div>
+            </main>
+         
+        </SidebarProvider>
       </body>
     </html>
   );

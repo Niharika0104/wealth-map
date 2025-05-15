@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "generated/prisma"
 }
 
 datasource db {
@@ -20,8 +19,8 @@ model User {
   phone_number  String?
   region        String
   email         String     @unique
-  created_date  DateTime   @default(now())
-  modified_date DateTime?  @updatedAt
+  createdAt  DateTime   @default(now())
+  modifiedAt DateTime?  @updatedAt
   last_login    DateTime?
   emailVerified Boolean
   employee      Employees? @relation("EmployeeUser")
@@ -117,19 +116,18 @@ model Assets {
   asset_type_id       String
   description         String?
   region              String?
-  isProperty          Boolean
   quantity            Float?
   unit_of_measurement String?
   unit_value          Float?
   total_value         Float?
   income_generated    Float?
-  valuation_method    String
-  valuation_date      DateTime
+  valuation_method    String?
+  valuation_date      DateTime?
   source_platform     String?
   created_by          String?
-  created_date        DateTime                  @default(now())
+  created_date        DateTime?                  @default(now())
   modified_by         String?
-  modified_date       DateTime                  @updatedAt
+  modified_date       DateTime?                  @updatedAt
   assetType           Constants                 @relation(fields: [asset_type_id], references: [const_id])
   owners              CandidateAssetOwnership[]
   Views               Views[]
@@ -202,9 +200,8 @@ model Bookmarks {
 
 // Constants Model: Stores constant values for various actions
 model Constants {
-  const_id    String    @id @default(uuid())
-  const_name  String    @unique
-  code        String
+  const_id    String    @id @default(uuid())    
+  code        String @unique
   description String?
   assets      Assets[]
   Users       User[]
