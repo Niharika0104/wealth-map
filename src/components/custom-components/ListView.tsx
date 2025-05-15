@@ -1,13 +1,9 @@
 import React from 'react'
 import ImageCarousel from './ImageCarousal';
 import { LandPlot,MapPin } from 'lucide-react';
-interface ListViewProps {
-  Region: string;  // Changed String to string for TypeScript
-  Name: string;
-  Owners: string[];
-  size: string;
-  Images:String[]
-}
+import {  User,ListViewProps} from "@/Models/models";
+import AvatarGroup from '@/components/custom-components/Avatargroup';
+
 
 interface ListViewComponentProps {
   items: ListViewProps[];  // Array of ListViewProps
@@ -36,12 +32,8 @@ function ListView({ items }: ListViewComponentProps) {
          
           
           <div>
-            <p>Owners:</p>
-            <ul className="list-disc pl-5">
-              {item.Owners.map((owner, ownerIndex) => (
-                <li key={ownerIndex}>{owner}</li>
-              ))}
-            </ul>
+            <p className='font-semibold text-lg'>Owners:</p>
+         <AvatarGroup users={item.Owners}/>
           </div>
         </div>
        
