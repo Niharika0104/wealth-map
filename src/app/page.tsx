@@ -4,6 +4,7 @@ import Searchbar from "@/components/custom-components/searchbar";
 import Map from "@/components/custom-components/Map";
 import ListView from "@/components/custom-components/ListView";
 import { Property ,ListViewProps} from '@/Models/models';
+import { Filter } from "lucide-react";
 const dummyProperties:ListViewProps[] = [
   {
     Region: "North America",
@@ -116,14 +117,7 @@ const dummyProperties:ListViewProps[] = [
 export default function Home() {
    const [search, setSearch] = useState("");
   return (
-    <div >
-<Searchbar
-  value={search}
-  onChange={setSearch}
-  onSearch={(val) => {
-    
-  }}
-/>
+   
 <div className="flex flex-row gap-2 mt-3">
   <div className="w-1/2">
     <ListView items={dummyProperties}/>
@@ -132,6 +126,6 @@ export default function Home() {
   <Map/>
   </div>
 </div>
-    </div>
+   
   );
 }

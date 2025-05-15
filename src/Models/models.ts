@@ -23,7 +23,7 @@ interface ListViewProps {
   Name: string;
   Owners: User[];
   size: string;
-  Images:String[]
+  Images:string[]
 }
 
 
