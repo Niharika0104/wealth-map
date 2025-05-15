@@ -3,6 +3,8 @@ import ImageCarousel from './ImageCarousal';
 import { LandPlot,MapPin } from 'lucide-react';
 import {  User,ListViewProps} from "@/Models/models";
 import AvatarGroup from '@/components/custom-components/Avatargroup';
+import { useState } from 'react';
+import Pagination from './Pagination';
 
 
 interface ListViewComponentProps {
@@ -10,9 +12,25 @@ interface ListViewComponentProps {
 }
 
 function ListView({ items }: ListViewComponentProps) {
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  // Calculate total pages
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  
+  // Get current items for the page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
+    <div>
      <div className="grid grid-cols-2 gap-4">
-      {items.map((item, index) => (
+      {currentItems.map((item, index) => (
         <div key={index} className="p-4 border rounded-lg shadow">
           <div className='flex flex-col gap-2'>
             <ImageCarousel images={item.Images} />
@@ -34,6 +52,12 @@ function ListView({ items }: ListViewComponentProps) {
           </div>
         </div>
       ))}
+    </div>
+     <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }
