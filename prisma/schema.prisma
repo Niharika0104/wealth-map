@@ -15,20 +15,26 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id       String     @id @default(uuid())
   name          String
-  email         String
+  phone_number  String?
+  region        String
+  email         String     @unique
+  created_date  DateTime   @default(now())
+  modified_date DateTime?  @updatedAt
+  last_login    DateTime?
   emailVerified Boolean
+  employee      Employees? @relation("EmployeeUser")
+  userlogs      Logging[]
   image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
+  role_id String
+  roles         Constants  @relation(fields: [role_id], references: [const_id])
   sessions      Session[]
   accounts      Account[]
 
   twoFactorEnabled Boolean?
   twofactors       TwoFactor[]
 
-  @@unique([email])
   @@map("user")
 }
 
@@ -85,4 +91,122 @@ model TwoFactor {
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("twoFactor")
+}
+model Employees {
+  user_id    String @unique
+  company_id String
+
+  user    User     @relation("EmployeeUser", fields: [user_id], references: [id])
+  company Companies @relation(fields: [company_id], references: [company_id])
+}
+model Companies {
+  company_id    String   @id @default(uuid())
+  company_name  String
+  region        String
+  created_by    String?
+  created_date  DateTime @default(now())
+  modified_by   String?
+  modified_date DateTime @updatedAt
+
+  admins Employees[]
+}
+
+// Assets Model: Represents an asset owned by one or more candidates
+model Assets {
+  asset_id            String                    @id @default(uuid())
+  asset_type_id       String
+  description         String?
+  region              String?
+  isProperty          Boolean
+  quantity            Float?
+  unit_of_measurement String?
+  unit_value          Float?
+  total_value         Float?
+  income_generated    Float?
+  valuation_method    String
+  valuation_date      DateTime
+  source_platform     String?
+  created_by          String?
+  created_date        DateTime                  @default(now())
+  modified_by         String?
+  modified_date       DateTime                  @updatedAt
+  assetType           Constants                 @relation(fields: [asset_type_id], references: [const_id])
+  owners              CandidateAssetOwnership[]
+  Views               Views[]
+  Bookmarks           Bookmarks[]
+}
+
+// CandidateAssetOwnership Model: Maps assets to multiple candidates (many-to-many)
+model CandidateAssetOwnership {
+  id                   String @id @default(uuid())
+  asset_id             String
+  candidate_id         String
+  ownership_percentage Float
+
+  asset     Assets     @relation(fields: [asset_id], references: [asset_id])
+  candidate Candidates @relation(fields: [candidate_id], references: [candidate_id])
+}
+
+// Candidates Model: Represents an individual who owns assets
+model Candidates {
+  candidate_id  String   @id @default(uuid())
+  name          String
+  region        String
+  phone_number  String
+  email         String
+  address       String
+  dob           DateTime
+  country_name  String
+  created_by    String?
+  created_date  DateTime @default(now())
+  modified_by   String?
+  modified_date DateTime @updatedAt
+
+  assets CandidateAssetOwnership[]
+}
+
+// Logging Model: Stores activity logs
+model Logging {
+  user_activity_id String    @id @default(uuid())
+  user_id          String
+  action_type      String
+  action_name      Constants @relation(fields: [action_type], references: [const_id])
+
+  activity_time DateTime @default(now())
+  created_by    String?
+  created_date  DateTime @default(now())
+  modified_by   String?
+  modified_date DateTime @updatedAt
+  user          User    @relation(fields: [user_id], references: [id])
+}
+
+// Views Model: Stores information about property views
+model Views {
+  view_id        String   @id @default(uuid())
+  property_id    String
+  viewed_by_whom String
+  viewed_at      DateTime @default(now())
+
+  property Assets @relation(fields: [property_id], references: [asset_id])
+}
+
+// Bookmarks Model: Stores information about bookmarked properties
+model Bookmarks {
+  bookmark_id        String   @id @default(uuid())
+  property_id        String
+  bookmarked_by_whom String
+  bookmarked_at      DateTime @default(now())
+
+  Properties Assets @relation(fields: [property_id], references: [asset_id])
+}
+
+// Constants Model: Stores constant values for various actions
+model Constants {
+  const_id    String    @id @default(uuid())
+  const_name  String    @unique
+  code        String
+  description String?
+  assets      Assets[]
+  Users       User[]
+  Logging     Logging[]
 }
