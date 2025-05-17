@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -14,26 +15,26 @@ datasource db {
 }
 
 model User {
-  id       String     @id @default(uuid())
+  id            String    @id
   name          String
-  phone_number  String?
-  region        String
-  email         String     @unique
-  createdAt  DateTime   @default(now())
-  modifiedAt DateTime?  @updatedAt
-  last_login    DateTime?
+  email         String
   emailVerified Boolean
-  employee      Employees? @relation("EmployeeUser")
-  userlogs      Logging[]
   image         String?
-  role_id String
-  roles         Constants  @relation(fields: [role_id], references: [const_id])
+  createdAt     DateTime
+  updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
 
   twoFactorEnabled Boolean?
+  role             String?
+  banned           Boolean?
+  banReason        String?
+  banExpires       DateTime?
   twofactors       TwoFactor[]
+  members          Member[]
+  invitations      Invitation[]
 
+  @@unique([email])
   @@map("user")
 }
 
@@ -47,6 +48,9 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy       String?
+  activeOrganizationId String?
 
   @@unique([token])
   @@map("session")
@@ -91,119 +95,43 @@ model TwoFactor {
 
   @@map("twoFactor")
 }
-model Employees {
-  user_id    String @unique
-  company_id String
 
-  user    User     @relation("EmployeeUser", fields: [user_id], references: [id])
-  company Companies @relation(fields: [company_id], references: [company_id])
-}
-model Companies {
-  company_id    String   @id @default(uuid())
-  company_name  String
-  region        String
-  created_by    String?
-  created_date  DateTime @default(now())
-  modified_by   String?
-  modified_date DateTime @updatedAt
+model Organization {
+  id          String       @id
+  name        String
+  slug        String?
+  logo        String?
+  createdAt   DateTime
+  metadata    String?
+  members     Member[]
+  invitations Invitation[]
 
-  admins Employees[]
+  @@unique([slug])
+  @@map("organization")
 }
 
-// Assets Model: Represents an asset owned by one or more candidates
-model Assets {
-  asset_id            String                    @id @default(uuid())
-  asset_type_id       String
-  description         String?
-  region              String?
-  quantity            Float?
-  unit_of_measurement String?
-  unit_value          Float?
-  total_value         Float?
-  income_generated    Float?
-  valuation_method    String?
-  valuation_date      DateTime?
-  source_platform     String?
-  created_by          String?
-  created_date        DateTime?                  @default(now())
-  modified_by         String?
-  modified_date       DateTime?                  @updatedAt
-  assetType           Constants                 @relation(fields: [asset_type_id], references: [const_id])
-  owners              CandidateAssetOwnership[]
-  Views               Views[]
-  Bookmarks           Bookmarks[]
+model Member {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String
+  createdAt      DateTime
+
+  @@map("member")
 }
 
-// CandidateAssetOwnership Model: Maps assets to multiple candidates (many-to-many)
-model CandidateAssetOwnership {
-  id                   String @id @default(uuid())
-  asset_id             String
-  candidate_id         String
-  ownership_percentage Float
+model Invitation {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String
+  role           String?
+  status         String
+  expiresAt      DateTime
+  inviterId      String
+  user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
 
-  asset     Assets     @relation(fields: [asset_id], references: [asset_id])
-  candidate Candidates @relation(fields: [candidate_id], references: [candidate_id])
-}
-
-// Candidates Model: Represents an individual who owns assets
-model Candidates {
-  candidate_id  String   @id @default(uuid())
-  name          String
-  region        String
-  phone_number  String
-  email         String
-  address       String
-  dob           DateTime
-  country_name  String
-  created_by    String?
-  created_date  DateTime @default(now())
-  modified_by   String?
-  modified_date DateTime @updatedAt
-
-  assets CandidateAssetOwnership[]
-}
-
-// Logging Model: Stores activity logs
-model Logging {
-  user_activity_id String    @id @default(uuid())
-  user_id          String
-  action_type      String
-  action_name      Constants @relation(fields: [action_type], references: [const_id])
-
-  activity_time DateTime @default(now())
-  created_by    String?
-  created_date  DateTime @default(now())
-  modified_by   String?
-  modified_date DateTime @updatedAt
-  user          User    @relation(fields: [user_id], references: [id])
-}
-
-// Views Model: Stores information about property views
-model Views {
-  view_id        String   @id @default(uuid())
-  property_id    String
-  viewed_by_whom String
-  viewed_at      DateTime @default(now())
-
-  property Assets @relation(fields: [property_id], references: [asset_id])
-}
-
-// Bookmarks Model: Stores information about bookmarked properties
-model Bookmarks {
-  bookmark_id        String   @id @default(uuid())
-  property_id        String
-  bookmarked_by_whom String
-  bookmarked_at      DateTime @default(now())
-
-  Properties Assets @relation(fields: [property_id], references: [asset_id])
-}
-
-// Constants Model: Stores constant values for various actions
-model Constants {
-  const_id    String    @id @default(uuid())    
-  code        String @unique
-  description String?
-  assets      Assets[]
-  Users       User[]
-  Logging     Logging[]
+  @@map("invitation")
 }

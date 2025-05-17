@@ -30,27 +30,15 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <script src="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.umd.min.js"></script>
-  <link href="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.css" rel="stylesheet" />
-  <script src="https://cdn.maptiler.com/maptiler-geocoding-control/v2.1.4/maptilersdk.umd.js"></script>
-  <link href="https://cdn.maptiler.com/maptiler-geocoding-control/v2.1.4/style.css" rel="stylesheet"></link>
-        </head>      
-        <body
+        <link href="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.css" rel="stylesheet" />
+        <script src="https://cdn.maptiler.com/maptiler-geocoding-control/v2.1.4/maptilersdk.umd.js"></script>
+        <link href="https://cdn.maptiler.com/maptiler-geocoding-control/v2.1.4/style.css" rel="stylesheet"></link>
+      </head>
+      <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white-50`}
       >
         <SidebarProvider>
-        
-           
-              <AppSidebar />
-           
-
-            {/* Right column: main content */}
-            <main className="flex gap-2  w-full p-4  ">
-              <div className="">
-               <SidebarTrigger /></div>
-               <div className=" w-15/15">
-              {children}</div>
-            </main>
-         
+          {children}
         </SidebarProvider>
       </body>
     </html>
