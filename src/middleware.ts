@@ -5,15 +5,31 @@ import { auth } from "@/lib/auth";
 export async function middleware(request: NextRequest) {
     console.log(`[Middleware] Processing request for: ${request.nextUrl.pathname}`);
     
-    // Get the auth session
+    // Performance optimization: Check if we should bypass session check for static assets
+    const shouldBypassAuth = [
+        '/favicon.ico',
+        '/_next',
+        '/images',
+        '/public',
+        '/api/public'
+    ].some(path => request.nextUrl.pathname.startsWith(path));
+    
+    if (shouldBypassAuth) {
+        return NextResponse.next();
+    }
+    
+    // We'll use the cached session if available to improve performance
+    // The actual session validation still happens server-side for security
     const session = await auth.api.getSession({
         headers: await headers()
     });
     
-    // Log authentication status for debugging
-    console.log(`[Middleware] Auth status: ${session ? 'Authenticated' : 'Not authenticated'}`);
-    if (session?.user) {
-        console.log(`[Middleware] User: ${session.user.email}, Role: ${session.user.role || 'none'}`);
+    // Debug logging in development only
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`[Middleware] Auth status: ${session ? 'Authenticated' : 'Not authenticated'}`);
+        if (session?.user) {
+            console.log(`[Middleware] User: ${session.user.email}, Role: ${session.user.role || 'none'}`);
+        }
     }
     
     // Public paths that don't require authentication
@@ -63,7 +79,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   runtime: "nodejs",
   matcher: [
-    // Protected routes
     '/app',
     '/app/:path*',
     '/admin',

@@ -9,7 +9,7 @@ export default function Home() {
   const { isAuthenticated, isLoading, user } = useAuth();
   
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6">
+    <div className="flex min-h-screen flex-col items-center justify-center p-6 w-full bg-gray-50">
       <div className="w-full max-w-2xl space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold">Welcome to Wealth Map</h1>

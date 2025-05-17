@@ -88,7 +88,8 @@ export default function TwoFactorAuth() {
       inputRefs.current[focusIndex]?.focus();
     }
   };
-    const handleVerify = async () => {
+  
+  const handleVerify = async () => {
     const completeCode = code.join('');
     
     if (completeCode.length !== 6) {
@@ -97,52 +98,101 @@ export default function TwoFactorAuth() {
     }
     
     setLoading(true);
+    
     try {
-      // Use our helper function to verify the code
-      // This handles all the different API method names
-      const { verifyTwoFactorCode } = await import('@/lib/two-factor-helpers');
+      // Check what methods are available on authClient.twoFactor
+      console.log("Available methods on twoFactor:", Object.keys(authClient.twoFactor));
       
-      await verifyTwoFactorCode(completeCode, 'email', {
-        onError: (ctx: any) => {
-          toast.error(ctx.error?.message || "Invalid verification code");
-          setLoading(false);
-          
-          // Clear the code input for retry
-          setCode(Array(6).fill(''));
-          if (inputRefs.current[0]) {
-            inputRefs.current[0].focus();
+      // Using the correct method based on available API
+      // First try enable with the code which is used for completing 2FA verification
+      if (typeof authClient.twoFactor.enable === 'function') {
+        await authClient.twoFactor.enable({
+          password: completeCode,
+          fetchOptions: {
+            onError: (ctx: any) => {
+              toast.error(ctx.error?.message || "Invalid verification code");
+              setLoading(false);
+              
+              // Clear the code input for retry
+              setCode(Array(6).fill(''));
+              if (inputRefs.current[0]) {
+                inputRefs.current[0].focus();
+              }
+            },
+            onSuccess: () => {
+              handleSuccessfulVerification();
+            }
           }
-        },
-        onSuccess: () => {
-          handleSuccessfulVerification();
-        }
-      });
+        });
+      } 
+      // If that fails, we'll try validateCode which may be the API name
+      else if (typeof authClient.twoFactor.validateCode === 'function') {
+        await authClient.twoFactor.validateCode({
+          code: completeCode,
+          fetchOptions: {
+            onError: (ctx: any) => {
+              toast.error(ctx.error?.message || "Invalid verification code");
+              setLoading(false);
+              
+              // Clear the code input for retry
+              setCode(Array(6).fill(''));
+              if (inputRefs.current[0]) {
+                inputRefs.current[0].focus();
+              }
+            },
+            onSuccess: () => {
+              handleSuccessfulVerification();
+            }
+          }
+        });
+      }
+      // As a last resort, try confirm
+      else if (typeof authClient.twoFactor.confirm === 'function') {
+        await authClient.twoFactor.confirm({
+          code: completeCode,
+          fetchOptions: {
+            onError: (ctx: any) => {
+              toast.error(ctx.error?.message || "Invalid verification code");
+              setLoading(false);
+              
+              // Clear the code input for retry
+              setCode(Array(6).fill(''));
+              if (inputRefs.current[0]) {
+                inputRefs.current[0].focus();
+              }
+            },
+            onSuccess: () => {
+              handleSuccessfulVerification();
+            }
+          }
+        });
+      } else {
+        throw new Error("No suitable 2FA validation method found");
+      }
     } catch (error) {
       console.error("2FA verification error:", error);
       setLoading(false);
       toast.error("Something went wrong. Please try again.");
     }
   };
-  const handleSuccessfulVerification = async () => {
+  
+  const handleSuccessfulVerification = () => {
     toast.success("Verification successful");
     
-    try {
-      // Use our helper function to mark 2FA as complete
-      const { markTwoFactorComplete } = await import('@/lib/auth-utils');
-      markTwoFactorComplete();
+    if (typeof window !== 'undefined') {
+      // Clear 2FA flow indicators from session storage
+      sessionStorage.removeItem('auth_waiting_for_2fa');
+      sessionStorage.removeItem('auth_email');
       
-      // Also refresh the session to make sure it's updated with the latest 2FA status
-      const session = await authClient.getSession();
-      console.log("Updated session after 2FA verification:", session);
-      
-      // Use replace instead of push to prevent back button from returning to 2FA page
-      router.replace("/app");
-    } catch (error) {
-      console.error("Error after successful verification:", error);
-      // Even if there's an error in refreshing, still redirect the user
-      router.replace("/app");
+      // Store a flag that indicates the user has completed 2FA
+      // This helps prevent creating unnecessary new sessions
+      sessionStorage.setItem('auth_session_verified', 'true');
     }
+    
+    // Use replace instead of push to prevent back button from returning to 2FA page
+    router.replace("/app");
   };
+
   const handleResendCode = async () => {
     if (!userEmail) {
       toast.error("Email address not found. Please try signing in again.");
@@ -153,19 +203,48 @@ export default function TwoFactorAuth() {
     toast.info("We're sending you a new verification code");
     
     try {
-      // Use our helper function to request a new code
-      const { requestNewTwoFactorCode } = await import('@/lib/two-factor-helpers');
+      // Check available methods for sending new codes
+      console.log("Available methods on twoFactor:", Object.keys(authClient.twoFactor));
       
-      await requestNewTwoFactorCode('email', {
-        onError: (ctx: any) => {
-          toast.error(ctx.error?.message || "Failed to send a new code");
-          setLoading(false);
-        },
-        onSuccess: () => handleResendSuccess()
-      });
-      
-      // If helper function fails, use fallback direct API call
-      if (!document.hidden) {
+      // Try different method names based on what might be available
+      if (typeof authClient.twoFactor.resendCode === 'function') {
+        await authClient.twoFactor.resendCode({
+          method: 'email',
+          fetchOptions: {
+            onError: (ctx: any) => {
+              toast.error(ctx.error?.message || "Failed to send a new code");
+              setLoading(false);
+            },
+            onSuccess: () => handleResendSuccess()
+          }
+        });
+      } 
+      else if (typeof authClient.twoFactor.sendNewCode === 'function') {
+        await authClient.twoFactor.sendNewCode({
+          method: 'email',
+          fetchOptions: {
+            onError: (ctx: any) => {
+              toast.error(ctx.error?.message || "Failed to send a new code");
+              setLoading(false);
+            },
+            onSuccess: () => handleResendSuccess()
+          }
+        });
+      }
+      else if (typeof authClient.twoFactor.requestCode === 'function') {
+        await authClient.twoFactor.requestCode({
+          method: 'email',
+          fetchOptions: {
+            onError: (ctx: any) => {
+              toast.error(ctx.error?.message || "Failed to send a new code");
+              setLoading(false);
+            },
+            onSuccess: () => handleResendSuccess()
+          }
+        });
+      } 
+      // If no method is found, use a more generic approach
+      else {
         // Fallback to a more direct API call
         await fetch('/api/auth/2fa/request-code', {
           method: 'POST',

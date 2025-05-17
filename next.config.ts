@@ -2,6 +2,23 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  env: {
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+  },
+  webpack: (config, { isServer, dev }) => {
+    // This prevents importing Prisma Client in middleware/client components
+    // by creating empty modules for edge runtime
+    if (!isServer) {
+      // Don't bundle prisma for client-side
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        "@prisma/client": false,
+        ".prisma/client": false,
+      };
+    }
+    
+    return config;
+  },
 };
 
 export default nextConfig;
