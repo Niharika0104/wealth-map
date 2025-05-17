@@ -1,54 +1,63 @@
 import React from 'react'
 import ImageCarousel from './ImageCarousal';
 import { LandPlot,MapPin } from 'lucide-react';
-interface ListViewProps {
-  Region: string;  // Changed String to string for TypeScript
-  Name: string;
-  Owners: string[];
-  size: string;
-  Images:String[]
-}
+import {  User,ListViewProps} from "@/Models/models";
+import AvatarGroup from '@/components/custom-components/Avatargroup';
+import { useState } from 'react';
+import Pagination from './Pagination';
+
 
 interface ListViewComponentProps {
   items: ListViewProps[];  // Array of ListViewProps
 }
 
 function ListView({ items }: ListViewComponentProps) {
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  // Calculate total pages
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  
+  // Get current items for the page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
-    <div className="space-y-4">
-      {items.map((item, index) => (
+    <div>
+     <div className="grid grid-cols-2 gap-3">
+      {currentItems.map((item, index) => (
         <div key={index} className="p-4 border rounded-lg shadow">
-       <div className='flex flex-col gap-2'>
- <ImageCarousel images={item.Images} />
-        <div>
-          <h3 className="font-bold">{item.Name}</h3>
-          <div className='flex gap-3'>
-           <MapPin className='text-red-400' />
-            <span>{item.Region}</span>
-
+          <div className='flex flex-col gap-2'>
+            <ImageCarousel images={item.Images} />
+            <div>
+              <h3 className="font-bold text-xl">{item.Name}</h3>
+              <div className='flex gap-3 items-center mt-1'>
+                <MapPin className='text-red-400 h-5 w-5' />
+                <span className="text-base">{item.Region}</span>
+              </div>
+              <div className='flex gap-3 items-center mt-1'>
+                <LandPlot className='text-gray-400 h-5 w-5' />
+                <span className="text-base">{item.size}</span>
+              </div>
+              <div className="mt-2">
+                <p className='font-semibold text-lg mb-1'>Owners:</p>
+                <AvatarGroup users={item.Owners}/>
+              </div>
+            </div>
           </div>
-            <div className='flex gap-3'>
-           <LandPlot className='text-gray-400' />
-            <span>{item.size}</span>
-
-          </div>
-
-         
-          
-          <div>
-            <p>Owners:</p>
-            <ul className="list-disc pl-5">
-              {item.Owners.map((owner, ownerIndex) => (
-                <li key={ownerIndex}>{owner}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-       
-          
-        </div>
         </div>
       ))}
+    </div>
+     <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }

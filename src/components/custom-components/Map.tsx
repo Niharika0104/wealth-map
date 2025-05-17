@@ -21,8 +21,8 @@ export default function MapComponent() {
       if (!mapContainer.current || mapInstance.current) return;
 
       try {
-        const apikey:string=process.env.NEXT_PUBLIC_MAPTILER_API_KEY as string;
-        maptilersdk.config.apiKey =apikey;
+        const apikey: string = process.env.NEXT_PUBLIC_MAPTILER_API_KEY as string;
+        maptilersdk.config.apiKey = apikey;
 
         mapInstance.current = new maptilersdk.Map({
           container: mapContainer.current,
@@ -32,26 +32,38 @@ export default function MapComponent() {
         }) as MapRef;
 
         const addresses = ['Hyderabad, India', 'New York, USA'];
-
+        
         for (const address of addresses) {
           try {
             const result = await maptilersdk.geocoding.forward(address);
             if (result.features.length > 0) {
-              const [lon, lat] = result.features[0].geometry.coordinates;
+              // Type guard to check if the geometry is a type that has coordinates
+              const geometry = result.features[0].geometry;
+              
+              if ('coordinates' in geometry) {
+                const [lon, lat] = geometry.coordinates as [number, number];
+                
+                const marker = new maptilersdk.Marker({ color: 'red' })
+                  .setLngLat([lon, lat])
+                  .addTo(mapInstance.current);
+                
+                const markerElement = marker.getElement();
+                markerElement.style.cursor = 'pointer';
 
-              new maptilersdk.Marker({ color: 'red' })
-                .setLngLat([lon, lat])
-                .addTo(mapInstance.current);
-
-              // Optional: center the map to the first result
-              mapInstance.current.setCenter([lon, lat]);
-              mapInstance.current.setZoom(10);
+                markerElement.onclick = () => {
+                  window.location.href = `https://www.google.com/`
+                };
+                
+                // Optional: center the map to the first result
+                mapInstance.current.setCenter([lon, lat]);
+                mapInstance.current.setZoom(10);
+              }
             }
           } catch (error) {
             console.error(`Failed to geocode address "${address}":`, error);
           }
         }
-        
+
         console.log('Map initialized successfully');
       } catch (error) {
         console.error('Error initializing map:', error);
@@ -70,8 +82,8 @@ export default function MapComponent() {
   }, []);
 
   return (
-    <div className="w-full h-screen relative">
-      <div ref={mapContainer} className="h-full" />
+    <div className="w-full h-full relative">
+      <div ref={mapContainer} className='h-full' />
     </div>
   );
 }

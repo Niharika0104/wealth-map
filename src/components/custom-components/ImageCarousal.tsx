@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 interface ImageCarouselProps {
-  images: String[];
+  images: string[];
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
@@ -24,7 +24,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   return (
     <div className="relative w-full">
       {/* Carousel wrapper */}
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-56">
+      <div className="relative h-56 overflow-hidden rounded-lg md:h-36">
         {images.map((src, index) => (
           <div
             key={index}
@@ -32,7 +32,8 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
               current === index ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <img
+            <img 
+              
               src={src}
               alt={`Slide ${index}`}
               className="block w-full h-full object-cover"
