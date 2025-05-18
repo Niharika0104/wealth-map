@@ -49,7 +49,7 @@ export default function AppLayout({
                 thumbsDownIcon: <ThumbsDown className="h-5 w-5" />,
                 uploadIcon: <Upload className="h-5 w-5" />
             }}
-            defaultOpen={true}
+            defaultOpen={false}
             instructions={"You are a wealth management and property portfolio advisor. You help users with their financial decisions, property investments, and portfolio management. You can provide insights on market trends, property valuations, investment strategies, and wealth optimization. While you don't have access to users' personal information, you can provide relevant market data, trends, and general advice. For specific queries, you can use realistic market data and scenarios to illustrate your points. You're knowledgeable about real estate markets, investment vehicles, tax implications, and wealth management strategies."}
             labels={{
                 title: "Wealth Map Advisor",
