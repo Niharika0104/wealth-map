@@ -1,9 +1,9 @@
 // app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/custom-components/app-sidebar";
 import "./globals.css";
 import MainLayoutShell from "@/components/custom-components/main-layout";
+import { CopilotKit } from "@copilotkit/react-core"; 
+import "@/lib/styles/styles.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white-50`}
       >
-        <SidebarProvider>
-          {children}
-        </SidebarProvider>
+          <CopilotKit publicApiKey={process.env.NEXT_PUBLIC_COPILOT_CLOUD_PUBLIC_API_KEY}> 
+            {children}
+          </CopilotKit>
       </body>
     </html>
   );
