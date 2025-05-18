@@ -56,10 +56,7 @@ export default function AppLayout({
                 initial: "How can I help you with your wealth and property portfolio today?",
             }}
         >
-            <SidebarProvider>
-                <AppSidebar />
-                <MainLayoutShell>{children}</MainLayoutShell>
-            </SidebarProvider>
+            <MainLayoutShell>{children}</MainLayoutShell>
         </CopilotSidebar>
     );
 }

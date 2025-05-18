@@ -1,90 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react';
 import ImageCarousel from './ImageCarousal';
-import { LandPlot,MapPin,Bookmark,EyeIcon } from 'lucide-react';
-import {  User,ListViewProps} from "@/Models/models";
+import { LandPlot, MapPin, Bookmark, EyeIcon } from 'lucide-react';
+import { User, ListViewProps } from "@/Models/models";
 import AvatarGroup from '@/components/custom-components/Avatargroup';
-import { useState } from 'react';
 import Pagination from './Pagination';
-
-import { cn } from '@/lib/utils'; // if you already have it
-
+import { cn } from '@/lib/utils';
 
 interface ListViewComponentProps {
-  items: ListViewProps[]; 
-  columns?:number // Array of ListViewProps
+  items: ListViewProps[];
+  columns?: number;
 }
 
-function ListView({ items , columns = 2 }: ListViewComponentProps) {
+function ListView({ items, columns = 2 }: ListViewComponentProps) {
   const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
-  
-  // Calculate total pages
+
   const totalPages = Math.ceil(items.length / itemsPerPage);
-  
-  // Get current items for the page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
-   const columnClassMap: { [key: number]: string } = {
+
+  const columnClassMap: { [key: number]: string } = {
     1: 'grid-cols-1',
     2: 'grid-cols-2',
     3: 'grid-cols-3',
     4: 'grid-cols-4',
   };
+
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
- const gridColumnClass = columnClassMap[columns] || 'grid-cols-2'; 
+
+  const gridColumnClass = columnClassMap[columns] || 'grid-cols-2';
+
   return (
     <div>
-     <div className={cn("grid gap-3", gridColumnClass)}>
-      {currentItems.map((item, index) => (
-        <div key={index} className="p-4 border rounded-lg shadow">
-          <div className='flex flex-col gap-2'>
+      <div className={cn("grid gap-6", gridColumnClass)}>
+        {currentItems.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-xl border border-gray-200 shadow-sm"
+          >
             <ImageCarousel images={item.Images} />
-            <div>
-              <h3 className="font-bold text-xl">{item.Name}</h3>
-             {/* Location + Bookmark */}
-<div className='flex gap-3 items-center mt-1'>
-  <MapPin className='text-red-400 h-5 w-5' />
-  <span className="text-base">{item.Region}</span>
-  <div className="flex items-center gap-1 ml-auto">
-    <Bookmark className='text-blue-800 h-4 w-4' />
-    <span className='text-sm text-gray-600'>100K</span>
-  </div>
-</div>
 
-{/* Size + Views */}
-<div className='flex gap-3 items-center mt-1'>
-  <LandPlot className='text-gray-400 h-5 w-5 ' />
-  <span className="text-base">{item.size}</span>
-  <div className="flex items-center gap-1 ml-auto">
-    <EyeIcon className='text-blue-800 h-4 w-4' />
-    <span className='text-sm text-gray-600'>810K</span>
-  </div>
-</div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">{item.Name}</h3>
 
-<div className="mt-3 flex items-center justify-between gap-6">
-  <div className="flex flex-col items-center">
-    <p className="font-semibold text-sm mb-1">Owners:</p>
-    <AvatarGroup users={item.Owners} />
-  </div>
-</div>
+              {/* Location + Bookmark */}
+              <div className="flex items-center justify-between text-sm text-muted-foreground mb-1">
+                <div className="flex items-center">
+                  <MapPin className="h-4 w-4 text-red-500 mr-1" />
+                  <span>{item.Region}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Bookmark className="h-4 w-4 text-blue-600" />
+                  <span className="text-gray-800 font-medium">{item.BookmarkCount || '100K'}</span>
+                </div>
+              </div>
 
+              {/* Size + Views */}
+              <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
+                <div className="flex items-center">
+                  <LandPlot className="h-4 w-4 text-gray-500 mr-1" />
+                  <span>{item.size}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <EyeIcon className="h-4 w-4 text-blue-600" />
+                  <span className="text-gray-800 font-medium">{item.ViewCount || '810K'}</span>
+                </div>
+              </div>
 
-
+              {/* Owners */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground font-medium">Owned By</span>
+                <AvatarGroup users={item.Owners} />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
-     <Pagination 
+        ))}
+      </div>
+
+      <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
+     
       />
     </div>
-  )
+  );
 }
 
-export default ListView
+export default ListView;
