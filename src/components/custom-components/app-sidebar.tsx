@@ -66,9 +66,15 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent >
         <SidebarGroup>
-          <SidebarGroupLabel><img src="https://mdb43gc8n0.ufs.sh/f/m6WitHx8Oy6bknDQjybQqPvSr9wEOR5WAN7dcYG2tHfylU4I"  className="pt-5 pb-5 h-36 "/></SidebarGroupLabel>
+      <SidebarGroupLabel className=" w-36 h-18">
+  <img
+    src="https://mdb43gc8n0.ufs.sh/f/m6WitHx8Oy6bknDQjybQqPvSr9wEOR5WAN7dcYG2tHfylU4I"
+    className="mx-auto my-6 h-15 max-h-24 w-auto"
+  />
+</SidebarGroupLabel>
+
           <SidebarGroupContent >
-            <SidebarMenu className="mt-4">
+            <SidebarMenu >
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
