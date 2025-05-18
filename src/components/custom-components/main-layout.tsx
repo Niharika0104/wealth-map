@@ -1,14 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Searchbar from "@/components/custom-components/searchbar";
 import UserDropdown from "@/components/custom-components/UserProfile";
 import { Bell, Filter } from "lucide-react";
+import { useUIStore } from "@/stores/UIStore";
+import FilterPopup from "./FilterPopUp";
+
 
 export default function MainLayoutShell({ children }: { children: React.ReactNode }) {
   const [search, setSearch] = useState("");
+  const pathname = usePathname();
 
+  const isRootPath = pathname === "/app";
+const { openFilterDialog } = useUIStore();
   return (
     <main className="flex w-full p-4 gap-4">
       {/* Sidebar Trigger */}
@@ -20,22 +27,27 @@ export default function MainLayoutShell({ children }: { children: React.ReactNod
       <div className="flex-1">
         {/* Top Bar */}
         <div className="flex justify-between items-center mb-6">
-          <div className="w-full flex justify-end gap-2 items-center">
-            <Searchbar
-              value={search}
-              onChange={setSearch}
-              onSearch={(val) => {
-                // handle search
-              }}
-            />
+          <div className="w-full flex justify-end gap-4 items-center">
+            {isRootPath && (
+              <>
+                <Searchbar
+                  value={search}
+                  onChange={setSearch}
+                  onSearch={(val) => {
+                    // handle search
+                  }}
+                />
 
-            <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded flex items-center gap-1">
-              <Filter className="h-4 w-4" />
-              <span>Filter</span>
-            </button>
+                <button className="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-3 rounded-md flex items-center gap-1"  onClick={openFilterDialog}>
+                  <Filter className="h-4 w-4" />
+                  <span className="text-md">Filter</span>
+                </button>
+              </>
+            )}
 
             <Bell className="cursor-pointer text-gray-600 hover:text-black" />
             <UserDropdown />
+             <FilterPopup />
           </div>
         </div>
 

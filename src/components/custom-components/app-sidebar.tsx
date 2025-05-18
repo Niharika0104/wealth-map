@@ -15,7 +15,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/app",
     icon: Home,
   },
   {
@@ -34,6 +34,16 @@ const items = [
     icon: Proportions,
   },
   {
+    title: "AI Assistant",
+    url: "#",
+    icon: BotMessageSquare,
+  },
+  {
+    title: "Trending Listings",
+    url: "#",
+    icon: TrendingUp,
+  },
+  {
     title: "Account Information",
     url: "#",
     icon: User,
@@ -48,32 +58,23 @@ const items = [
     url: "#",
     icon: LogOut,
   },
-  {
-    title: "AI Assistant",
-    url: "#",
-    icon: BotMessageSquare,
-  },
-  {
-    title: "Trending Listings",
-    url: "#",
-    icon: TrendingUp,
-  },
+  
 ]
 
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent >
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+          <SidebarGroupLabel><img src="https://mdb43gc8n0.ufs.sh/f/m6WitHx8Oy6bknDQjybQqPvSr9wEOR5WAN7dcYG2tHfylU4I"  className="pt-5 pb-5 h-36 "/></SidebarGroupLabel>
+          <SidebarGroupContent >
+            <SidebarMenu className="mt-4">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className="text-md">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -10,15 +10,17 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import MultiSelectDropdown from "@/components/ui/MultiSelectdropdown";
 import MinMaxInput from "@/components/ui/MinMaxInput";
+import { useUIStore } from "@/stores/UIStore"; // ✅ Import Zustand store
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+
+// ✅ Import Zustand UI store
 
 const propertyTypes = [
   "Apartment", "House", "Villa", "Plot/Land", "Studio", "Farmhouse",
@@ -34,38 +36,42 @@ const owners = [
 ];
 
 const constructionTypes = ["New Construction", "Resale", "Under Construction"];
-
 const locations = [
   "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
   "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose",
   "Austin", "Jacksonville"
 ];
-
 const areaUnits = [
   "Square Feet", "Square Yards", "Square Meters",
   "Acres", "Hectares", "Cents", "Bigha", "Guntha", "Marla"
 ];
+const furnishingTypes = ["Fully Furnished", "Semi Furnished", "Unfurnished"];
+const bedroomCounts = ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"];
 
-export default function FilterPopup({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
+export default function FilterPopup() {
+  console.log("FilterPopup rendered"); // Debugging line
+  const {
+    isFilterDialogOpen,
+    setFilterDialogOpen,
+    closeFilterDialog,
+  } = useUIStore(); // ✅ Use Zustand store
+
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([]);
   const [selectedOwners, setSelectedOwners] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedConstructionTypes, setSelectedConstructionTypes] = useState<string[]>([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  
   const [minArea, setMinArea] = useState("");
   const [maxArea, setMaxArea] = useState("");
   const [selectedAreaUnit, setSelectedAreaUnit] = useState(areaUnits[0]);
-    const [selectedFurnishingTypes, setSelectedFurnishingTypes] = useState<string[]>([]);
+  const [selectedFurnishingTypes, setSelectedFurnishingTypes] = useState<string[]>([]);
   const [selectedBedroomCounts, setSelectedBedroomCounts] = useState<string[]>([]);
 
+  const showExtraFiltersFor = ["Apartment", "Villa", "Studio", "Penthouse"];
+  const shouldShowExtraFilters = selectedPropertyTypes.some(type =>
+    showExtraFiltersFor.includes(type)
+  );
 
   const resetFilters = () => {
     setSelectedPropertyTypes([]);
@@ -77,23 +83,17 @@ export default function FilterPopup({
     setMinArea("");
     setMaxArea("");
     setSelectedAreaUnit(areaUnits[0]);
-     setSelectedFurnishingTypes([]);
+    setSelectedFurnishingTypes([]);
     setSelectedBedroomCounts([]);
   };
-  const showExtraFiltersFor = ["Apartment", "Villa", "Studio", "Penthouse"];
-const furnishingTypes = ["Fully Furnished", "Semi Furnished", "Unfurnished"];
-const bedroomCounts = ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"];
- const shouldShowExtraFilters = selectedPropertyTypes.some(type =>
-    showExtraFiltersFor.includes(type)
-  );
 
   const handleApply = () => {
-    // trigger search logic here if needed
-    onOpenChange(false);
+    // Trigger search logic if needed
+    closeFilterDialog(); // ✅ Use Zustand method to close dialog
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={isFilterDialogOpen} onOpenChange={setFilterDialogOpen}>
       <DialogContent className="min-w-[45%] max-h-[70vh] overflow-y-auto rounded-xl p-6">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
@@ -149,72 +149,66 @@ const bedroomCounts = ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"];
             </div>
           </div>
 
-          {/* Third row: Price Range */}
-{/* Price Range */}
-<div className="flex gap-2 items-center">
-  <MinMaxInput
-    label1="Min Price"
-    label2="Max Price"
-    min={minPrice}
-    max={maxPrice}
-    onChangeMin={(e) => setMinPrice(e.target.value)}
-    onChangeMax={(e) => setMaxPrice(e.target.value)}
-  />
-  <MinMaxInput
-    label1="Min Area"
-    label2="Max Area"
-    min={minArea}
-    max={maxArea}
-    onChangeMin={(e) => setMinArea(e.target.value)}
-    onChangeMax={(e) => setMaxArea(e.target.value)}
-  />
-<div>
-  <label className="font-medium">Area Unit</label>
-  <Select
-    value={selectedAreaUnit}
-    onValueChange={setSelectedAreaUnit}
-  >
-    <SelectTrigger className="w-36 ">
-      <SelectValue placeholder="Area Unit" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        {areaUnits.map((unit) => (
-          <SelectItem key={unit} value={unit}>
-            {unit}
-          </SelectItem>
-        ))}
-      </SelectGroup>
-    </SelectContent>
-  </Select>
-</div>
-</div>
+          {/* Price & Area Range */}
+          <div className="flex gap-2 items-center">
+            <MinMaxInput
+              label1="Min Price"
+              label2="Max Price"
+              min={minPrice}
+              max={maxPrice}
+              onChangeMin={(e) => setMinPrice(e.target.value)}
+              onChangeMax={(e) => setMaxPrice(e.target.value)}
+            />
+            <MinMaxInput
+              label1="Min Area"
+              label2="Max Area"
+              min={minArea}
+              max={maxArea}
+              onChangeMin={(e) => setMinArea(e.target.value)}
+              onChangeMax={(e) => setMaxArea(e.target.value)}
+            />
+            <div>
+              <label className="font-medium">Area Unit</label>
+              <Select value={selectedAreaUnit} onValueChange={setSelectedAreaUnit}>
+                <SelectTrigger className="w-36">
+                  <SelectValue placeholder="Area Unit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {areaUnits.map((unit) => (
+                      <SelectItem key={unit} value={unit}>
+                        {unit}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
+          {/* Optional: Extra filters for some property types */}
           {shouldShowExtraFilters && (
             <div className="flex gap-6">
-          <div className="flex-1 flex flex-col gap-1">
-              <label className="font-medium">Furnishing Type(s)</label>
+              <div className="flex-1 flex flex-col gap-1">
+                <label className="font-medium">Furnishing Type(s)</label>
                 <MultiSelectDropdown
                   options={furnishingTypes}
                   selected={selectedFurnishingTypes}
-                  label="select Furnishing Type"
-                  
+                  label="Select Furnishing Type"
                   onChange={setSelectedFurnishingTypes}
                 />
               </div>
-           <div className="flex-1 flex flex-col gap-1">
-              <label className="font-medium">Bedroom Count(s)</label>
+              <div className="flex-1 flex flex-col gap-1">
+                <label className="font-medium">Bedroom Count(s)</label>
                 <MultiSelectDropdown
                   options={bedroomCounts}
                   selected={selectedBedroomCounts}
-                  label="select BHK Count"
-                 
+                  label="Select BHK Count"
                   onChange={setSelectedBedroomCounts}
                 />
               </div>
             </div>
           )}
-         
         </div>
 
         <div className="flex justify-between items-center pt-6 border-t mt-6">

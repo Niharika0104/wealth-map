@@ -117,7 +117,7 @@ export default function MapComponent() {
 
   return (
     <div className="w-full h-full relative">
-      <div ref={mapContainer} className='h-full' />
+      <div ref={mapContainer} className='h-full rounded-lg ' />
     </div>
   );
 }
