@@ -32,9 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white-50`}
       >
-        <SidebarProvider>
+       
           {children}
-        </SidebarProvider>
+       
       </body>
     </html>
   );

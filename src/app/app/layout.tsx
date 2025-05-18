@@ -7,6 +7,7 @@ import AuthGuard from "@/components/custom-components/auth-guard";
 import { UserProfileMenu } from "@/components/custom-components/user-profile-menu";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainLayoutShell from "@/components/custom-components/main-layout";
+import { HorizontalNav } from "@/components/custom-components/HorizontalNavbar";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -31,10 +32,15 @@ export default function AppLayout({
     // The AuthGuard component will handle authentication and redirects
     // If the user isn't authenticated, it will show a loading state and redirect to /auth
     return (
-       <SidebarProvider>
-               <AppSidebar />
-               <MainLayoutShell>{children}</MainLayoutShell>
-             </SidebarProvider>
-        
+    //    <SidebarProvider>
+    //            <AppSidebar />
+    //            <MainLayoutShell>{children}</MainLayoutShell>
+    //          </SidebarProvider>
+    <div>
+    
+      <MainLayoutShell>
+       
+        {children}</MainLayoutShell>
+        </div>
     );
 }
