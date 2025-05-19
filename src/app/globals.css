@@ -75,6 +75,8 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.723 0.219 149.579);
+  --font-sans: var(--font-geist-sans), "DM Sans", sans-serif;
+  --font-mono: var(--font-geist-mono);
 }
 
 .dark {
@@ -117,5 +119,15 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
