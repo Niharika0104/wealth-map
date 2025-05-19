@@ -23,7 +23,7 @@ const owners = [
   // Add more owner data...
 ];
 
-const OwnerCard = ({ owner }) => (
+const OwnerCard = ({ owner  }) => (
   <div className="bg-white shadow rounded-lg p-5 w-full sm:w-80">
     <div className="flex items-center space-x-4">
       <img
@@ -63,17 +63,9 @@ const OwnersList = () => {
     <div className="pb-6">
       <h1 className="text-4xl font-bold mb-4">Owners</h1>
 
-      {/* Search Bar */}
-      <input
-        type="text"
-        placeholder="Search owners..."
-        className="mb-6 p-3 border border-gray-300 rounded-md w-full max-w-md focus:outline-none focus:ring-0"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
+ 
       {/* Cards Grid */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-row gap-4">
         {filteredOwners.map((owner) => (
           <OwnerCard key={owner.id} owner={owner} />
         ))}

@@ -1,7 +1,7 @@
 'use client';
-import ImageCarousel from '@/components/custom-components/ImageCarousal';
-import ListView from '@/components/custom-components/ListView';
-import OwnerList from '@/components/custom-components/OwnerDetails';
+import ImageCarousel from '@/components/custom-components/GalleryCarousel';
+import ListView from '@/components/custom-components/PropertyCard';
+import OwnerList from '@/components/custom-components/OwnerDetailsCard';
 import { ListViewProps } from '@/Models/models';
 import { LandPlot, MapPin, Bookmark, View, DollarSign, Crop, EyeIcon } from 'lucide-react';
 import React from 'react'
@@ -151,7 +151,7 @@ function page() {
     <div>
       <div className='grid grid-cols-2 gap-10'>
         {/* LEFT COLUMN */}
-        <div className='flex flex-col gap-4'>
+       
           <ImageCarousel images={images} />
 
           <div className='flex flex-col gap-3'> {/* Reduced gap between title & content */}
@@ -223,15 +223,16 @@ function page() {
               </div>
             </div>
           </div>
-        </div>
+       
 
-        {/* RIGHT COLUMN */}
-        <div className='flex justify-center'>
-          <OwnerList />
-        </div>
+     
       </div>
 
       <div className="w-[90%] border-b border-gray-300 mx-auto p-2" />
+         {/* RIGHT COLUMN */}
+        <div className='flex flex-row justify-start'>
+          <OwnerList />
+        </div>
       <div className='font-semibold text-2xl'>Similar Properties</div>
  <ListView items={dummyProperties} columns={4}/>
     </div>
