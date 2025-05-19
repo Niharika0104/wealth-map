@@ -7,8 +7,9 @@ import UserDropdown from "@/components/custom-components/UserProfile";
 import { Bell, Filter } from "lucide-react";
 import { useUIStore } from "@/stores/UIStore";
 import FilterPopup from "./FilterPopUp";
-import HorizontalNavbar from "./HorizontalNavbar";
+import {AppSidebar} from "./app-sidebar";
 import React from "react";
+import App from "next/app";
 
 export default function MainLayoutShell({ children }: { children: React.ReactNode }) {
   const [search, setSearch] = useState("");
@@ -46,7 +47,7 @@ export default function MainLayoutShell({ children }: { children: React.ReactNod
       <div className="max-w-[1600px] mx-auto flex flex-col gap-6">
         {/* Top Navbar */}
         <div className="flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-3">
-          <HorizontalNavbar/>
+          <AppSidebar  />
 
           <div className="flex items-center gap-5" style={{ minHeight: `${controlHeight}px` }}>
             {isRootPath && (
@@ -74,19 +75,7 @@ export default function MainLayoutShell({ children }: { children: React.ReactNod
               </>
             )}
 
-            <div
-              ref={bellRef}
-              className="p-2 cursor-pointer text-gray-600 hover:text-gray-900 transition-colors duration-300 rounded-full hover:bg-gray-100"
-              aria-label="Notifications"
-              role="button"
-              tabIndex={0}
-            >
-              <Bell className="h-7 w-7" />
-            </div>
-
-            <div ref={userRef}>
-              <UserDropdown />
-            </div>
+         
 
             <FilterPopup />
           </div>

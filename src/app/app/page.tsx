@@ -117,8 +117,25 @@ const dummyProperties:ListViewProps[] = [
 export default function Home() {
    const [search, setSearch] = useState("");
   return (
+   <div>
+    <div className="flex flex-row gap-2 mt-3 pr-4 w-[40%] float-end mb-5">
    
-<div className="flex flex-row gap-2 mt-3 pr-4">
+        <Searchbar
+          placeholder="Search for properties"
+     
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+  
+    
+        <button className="bg-green-500 text-white px-4 py-2 rounded flex items-center">
+          <Filter className="mr-2" />
+          Filter
+        </button>
+    </div>
+  
+<div className="flex flex-row gap-2 mt-3 pr-4 w-full">
+    
   <div className="w-1/2" >
     <ListView items={dummyProperties}/>
     </div>
@@ -126,6 +143,6 @@ export default function Home() {
   <Map/>
   </div>
 </div>
-   
+   </div>
   );
 }
