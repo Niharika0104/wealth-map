@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Searchbar from "@/components/custom-components/searchbar";
 import Map from "@/components/custom-components/Map";
-import ListView from "@/components/custom-components/ListView";
+import ListView from "@/components/custom-components/PropertyCard";
 import { Property ,ListViewProps} from '@/Models/models';
 import { Filter } from "lucide-react";
 const dummyProperties:ListViewProps[] = [

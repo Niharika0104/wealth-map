@@ -7,7 +7,7 @@ import UserDropdown from "@/components/custom-components/UserProfile";
 import { Bell, Filter } from "lucide-react";
 import { useUIStore } from "@/stores/UIStore";
 import FilterPopup from "./FilterPopUp";
-import { HorizontalNav } from "./HorizontalNavbar";
+import HorizontalNavbar from "./HorizontalNavbar";
 import React from "react";
 
 export default function MainLayoutShell({ children }: { children: React.ReactNode }) {
@@ -46,7 +46,7 @@ export default function MainLayoutShell({ children }: { children: React.ReactNod
       <div className="max-w-[1600px] mx-auto flex flex-col gap-6">
         {/* Top Navbar */}
         <div className="flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-3">
-          <HorizontalNav navItems={navitem} />
+          <HorizontalNavbar/>
 
           <div className="flex items-center gap-5" style={{ minHeight: `${controlHeight}px` }}>
             {isRootPath && (

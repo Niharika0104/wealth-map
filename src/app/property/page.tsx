@@ -1,7 +1,7 @@
 'use client';
 import ImageCarousel from '@/components/custom-components/ImageCarousal';
-import ListView from '@/components/custom-components/ListView';
-import OwnerList from '@/components/custom-components/OwnerDetails';
+import ListView from '@/components/custom-components/PropertyCard';
+import OwnerList from '@/components/custom-components/OwnerDetailsCard';
 import { ListViewProps } from '@/Models/models';
 import { LandPlot, MapPin, Bookmark, View, DollarSign, Crop, EyeIcon } from 'lucide-react';
 import React from 'react'
