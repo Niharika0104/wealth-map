@@ -1,11 +1,13 @@
 import React, { useState, FormEvent } from "react";
 import { MapPin, Search } from "lucide-react";
-
+  import { cn } from "@/lib/utils";
 interface SearchbarProps {
   value: string;
   onChange: (value: string) => void;
   onSearch: (value: string) => void;
   placeholder?: string;
+ className?: string;
+
 }
 
 const Searchbar: React.FC<SearchbarProps> = ({
@@ -13,6 +15,7 @@ const Searchbar: React.FC<SearchbarProps> = ({
   onChange,
   onSearch,
   placeholder = "Search...",
+   className,
 }) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -20,7 +23,7 @@ const Searchbar: React.FC<SearchbarProps> = ({
   };
 
   return (
-   <div className="relative">
+   <div className={cn("relative w-full", className)}>
   {/* Left icon */}
   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
     <MapPin className="text-primary" />
