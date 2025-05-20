@@ -57,11 +57,10 @@ function TabsContent({
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("flex-1 outline-none w-full overflow-x-hidden", className)}
+      className={cn("flex-1 outline-none", className)}
       {...props}
     />
   )
 }
-
 
 export { Tabs, TabsList, TabsTrigger, TabsContent }
