@@ -260,12 +260,12 @@ export function AppSidebar() {
           ) : (
             <div className="flex items-center gap-3 mb-4">
               <Avatar className="h-9 w-9">
-                <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage src="/broken" alt="User" />
+                <AvatarFallback>RS</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium">John Doe</p>
-                <p className="text-xs text-muted-foreground truncate">john.doe@example.com</p>
+                <p className="text-sm font-medium">Radhika Sharma</p>
+                <p className="text-xs text-muted-foreground truncate">radhikarohan@forever.com</p>
               </div>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Bell className="h-4 w-4" />

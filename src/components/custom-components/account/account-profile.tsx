@@ -9,13 +9,13 @@ import { Badge } from "@/components/ui/badge"
 export function AccountProfile() {
   // Mock user data
   const userData = {
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    company: "Wealth Compass",
-    location: "New York, NY",
+    firstName: "Radhika",
+    lastName: "Sharma",
+    email: "radhikarohan@forever.com",
+    company: "Serenity",
+    location: "kanpur, UP",
     phone: "+1 (555) 123-4567",
-    title: "Investment Advisor",
+    title: "Rohan's Fav",
     memberSince: "January 15, 2023",
     totalReports: 47,
     lastLogin: "May 20, 2025 at 10:23 AM",
@@ -45,9 +45,15 @@ export function AccountProfile() {
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6">
           <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
             <div className="flex-shrink-0">
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-white border-4 border-white shadow-sm flex items-center justify-center text-2xl font-semibold text-gray-700">
-                {userData.firstName.charAt(0)}
-                {userData.lastName.charAt(0)}
+              {/* <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-white border-4 border-white shadow-sm flex items-center justify-center text-2xl font-semibold text-gray-700"> */}
+                {/* {userData.firstName.charAt(0)} */}
+                {/* {userData.lastName.charAt(0)} */}
+              {/* </div> */}
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-sm">
+                <img
+                  src="/radhika.jpg"
+                  alt="Radhika Sharma"
+                />
               </div>
             </div>
 
