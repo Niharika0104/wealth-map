@@ -5,6 +5,19 @@ import Map from "@/components/custom-components/Map";
 import ListView from "@/components/custom-components/PropertyCard";
 import { Property ,ListViewProps} from '@/Models/models';
 import { Filter } from "lucide-react";
+import InteractiveMap from "@/components/custom-components/HomePage/InteractiveMap";
+const addresses = [
+  "1600 Amphitheatre Parkway, Mountain View, CA",
+  "1 Apple Park Way, Cupertino, CA",
+  "350 Fifth Avenue, New York, NY 10118",
+  "4059 Mt Lee Dr, Hollywood, CA 90068",
+  "1600 Pennsylvania Avenue NW, Washington, DC 20500",
+  "500 S Buena Vista St, Burbank, CA 91521",
+  "1111 S Figueroa St, Los Angeles, CA 90015",
+  "233 S Wacker Dr, Chicago, IL 60606",
+  "700 Exposition Park Dr, Los Angeles, CA 90037",
+  "1201 S Figueroa St, Los Angeles, CA 90015"
+]
 const dummyProperties:ListViewProps[] = [
   {
     Region: "North America",
@@ -140,7 +153,15 @@ export default function Home() {
     <ListView items={dummyProperties}/>
     </div>
     <div className="w-1/2 ">
-  <Map/>
+ <InteractiveMap
+  properties={addresses}
+  className="w-full h-full"
+  mapType="streets"
+  onViewChange={(center, zoom) => {
+   
+  }}
+/>
+
   </div>
 </div>
    </div>

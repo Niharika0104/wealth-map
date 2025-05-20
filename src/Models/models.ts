@@ -11,13 +11,7 @@ interface Owner {
   image: string;
 }
 
-interface Property {
-  Region: string;
-  Name: string;
-  Owners: Owner[];
-  size: string;
-  Images: string[];
-}
+
 interface ListViewProps {
   Region: string;  // Changed String to string for TypeScript
   Name: string;
@@ -25,7 +19,32 @@ interface ListViewProps {
   size: string;
   Images:string[]
 }
+export type ConfidenceLevel = "High" | "Medium" | "Low"
+export type Property = {
+  id: string
+  address: string
+  coordinates: number[]
+  value: string
+  region: string
+  sqft: number
+  views: number
+  confidenceLevel: ConfidenceLevel
+  lastUpdated: string
+  ownerId: string
+  ownerName: string
+  ownerType: string
+  type: string
+  trendingScore: number
+}
+interface InteractiveMapProps {
+  properties: Property[]
+  mapType: "streets" | "satellite"
+  initialCente?: [number, number]
+  initialZoom?: number
+  onViewChange: (center: [number, number], zoom: number) => void
+}
+interface InteractiveMapProps
 
 
-export type { Owner, Property ,ListViewProps};
+export type { Owner ,ListViewProps,InteractiveMapProps};
 export type { User, AvatarGroupProps };

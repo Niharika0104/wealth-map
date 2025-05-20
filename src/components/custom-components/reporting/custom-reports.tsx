@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getProperties } from "../property-store"
+import { getProperties } from "../trending/property-store"
 import { BarChart, PieChart, LineChart, Save, Share, Download, Plus, Trash2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import {
