@@ -196,7 +196,7 @@ export default function HomePage() {
   return (
     <div className="relative h-screen w-full overflow-hidden">
       {/* View Toggle */}
-      <div className="absolute top-4 left-4 z-10">
+      <div className="absolute top-4 left-4 z-20">
         <div className="bg-white rounded-md shadow-md p-1 flex">
           <Button
             variant={viewMode === "map" ? "default" : "ghost"}
@@ -219,6 +219,36 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Map Controls - Desktop (Left Side) */}
+      {isDesktop && viewMode === "map" && (
+        <div className="absolute top-18 left-4 z-10 flex flex-col gap-2">
+          <Button variant="secondary" size="sm" onClick={toggleMapType} className="w-36 justify-start">
+            <Layers className="h-4 w-4 mr-2" />
+            {mapType === "streets" ? "Satellite" : "Streets"}
+          </Button>
+
+          <Button
+            variant={isFilterOpen ? "default" : "secondary"}
+            size="sm"
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className="w-36 justify-start"
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            Filters
+          </Button>
+
+          <Button
+            variant={isSavedViewsOpen ? "default" : "secondary"}
+            size="sm"
+            onClick={() => setIsSavedViewsOpen(!isSavedViewsOpen)}
+            className="w-36 justify-start"
+          >
+            <Bookmark className="h-4 w-4 mr-2" />
+            Saved Views
+          </Button>
+        </div>
+      )}
+
       {/* Map View */}
       {viewMode === "map" && (
         <InteractiveMap
@@ -232,36 +262,6 @@ export default function HomePage() {
 
       {/* Grid View */}
       {viewMode === "grid" && <PropertyGrid properties={filteredProperties} />}
-
-      {/* Map Controls - Desktop */}
-      {isDesktop && (
-        <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-          {viewMode === "map" && (
-            <Button variant="secondary" size="sm" onClick={toggleMapType}>
-              <Layers className="h-4 w-4 mr-2" />
-              {mapType === "streets" ? "Satellite" : "Streets"}
-            </Button>
-          )}
-
-          <Button
-            variant={isFilterOpen ? "default" : "secondary"}
-            size="sm"
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-          >
-            <Filter className="h-4 w-4 mr-2" />
-            Filters
-          </Button>
-
-          <Button
-            variant={isSavedViewsOpen ? "default" : "secondary"}
-            size="sm"
-            onClick={() => setIsSavedViewsOpen(!isSavedViewsOpen)}
-          >
-            <Bookmark className="h-4 w-4 mr-2" />
-            Saved Views
-          </Button>
-        </div>
-      )}
 
       {/* Map Controls - Mobile */}
       {!isDesktop && (
@@ -320,7 +320,7 @@ export default function HomePage() {
 
       {/* Filters Panel - Desktop */}
       {isDesktop && isFilterOpen && (
-        <div className="absolute top-4 left-4 z-10 w-80 bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-32px)] overflow-y-auto mt-14">
+        <div className="absolute top-16 left-44 z-10 w-80 bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-80px)] overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Filters</h2>
             <Button variant="ghost" size="sm" onClick={() => setIsFilterOpen(false)}>
@@ -343,7 +343,7 @@ export default function HomePage() {
 
       {/* Saved Views Panel - Desktop */}
       {isDesktop && isSavedViewsOpen && (
-        <div className="absolute top-4 left-4 z-10 w-80 bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-32px)] overflow-y-auto mt-14">
+        <div className="absolute top-16 left-44 z-10 w-80 bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-80px)] overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Saved Views</h2>
             <Button variant="ghost" size="sm" onClick={() => setIsSavedViewsOpen(false)}>
@@ -361,7 +361,7 @@ export default function HomePage() {
       )}
 
       {/* Property Count Indicator */}
-      <div className="absolute bottom-4 left-4 z-10 bg-white bg-opacity-90 rounded-md px-3 py-1 text-sm">
+      <div className="absolute bottom-4 left-4 z-10 bg-white bg-opacity-90 rounded-md px-3 py-1 text-sm shadow-md">
         Showing {filteredProperties.length} of {trendingProperties.length} properties
       </div>
     </div>
