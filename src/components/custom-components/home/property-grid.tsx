@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MapPin, Eye, Calendar, Shield, Grid3X3, List } from "lucide-react"
 import Link from "next/link"
-import type { Property } from "../property-generator"
+import type { Property } from "../trending/property-generator"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import {
@@ -112,8 +112,8 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
   }
 
   return (
-    <div className="container mx-auto p-6 h-screen overflow-y-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+    <div className="container mx-auto p-6 pt-16 h-screen overflow-y-auto">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 mt-4">
         <div className="relative w-full md:w-auto flex-1 max-w-md">
           <Input
             placeholder="Search properties..."
@@ -199,14 +199,14 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                       />
                     </div>
                     <CardContent className="p-4">
-                      <h3 className="font-bold text-lg mb-1">
+                      <h3 className="font-bold text-lg mb-1 line-clamp-1">
                         {property.type} {property.region}
                       </h3>
                       <div className="flex items-center text-gray-600 mb-2">
-                        <MapPin className="h-4 w-4 mr-1" />
+                        <MapPin className="h-4 w-4 min-w-4 mr-1" />
                         <span className="text-sm truncate">{property.address}</span>
                       </div>
-                      <div className="flex justify-between mb-3">
+                      <div className="flex flex-wrap gap-2 mb-3">
                         <Badge variant="outline" className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />
                           {property.views}
@@ -305,7 +305,7 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-8">
+            <div className="mt-8 mb-8">
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>

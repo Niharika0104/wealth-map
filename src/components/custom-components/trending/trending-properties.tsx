@@ -6,7 +6,21 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { MapPin, Eye, Calendar, Shield, TrendingUp, ArrowRight, MapIcon } from "lucide-react"
+import {
+  MapPin,
+  Eye,
+  Calendar,
+  Shield,
+  TrendingUp,
+  ArrowRight,
+  MapIcon,
+  Flame,
+  Clock,
+  BarChart3,
+  ArrowUpRight,
+  Users,
+  Activity,
+} from "lucide-react"
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getProperties, type Property } from "./property-store"
@@ -24,7 +38,7 @@ export default function TrendingProperties() {
   const [confidenceFilter, setConfidenceFilter] = useState<ConfidenceFilter>("all")
   const [viewsFilter, setViewsFilter] = useState<ViewsFilter>("all")
   const [currentPage, setCurrentPage] = useState(1)
-  const [activeTab, setActiveTab] = useState("all")
+  const [activeTab, setActiveTab] = useState("hot")
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
   const itemsPerPage = 8
 
@@ -83,58 +97,180 @@ export default function TrendingProperties() {
     }
   }
 
+  // Get trending score color and icon
+  const getTrendingIndicator = (score: number) => {
+    if (score > 100) {
+      return {
+        color: "text-red-600",
+        bgColor: "bg-red-50",
+        icon: <Flame className="h-3 w-3 mr-1" />,
+        label: "Hot",
+      }
+    } else if (score > 50) {
+      return {
+        color: "text-orange-600",
+        bgColor: "bg-orange-50",
+        icon: <TrendingUp className="h-3 w-3 mr-1" />,
+        label: "Rising",
+      }
+    } else {
+      return {
+        color: "text-blue-600",
+        bgColor: "bg-blue-50",
+        icon: <Activity className="h-3 w-3 mr-1" />,
+        label: "Active",
+      }
+    }
+  }
+
   // Property card component to avoid duplication
-  const PropertyCard = ({ property }: { property: Property }) => (
-    <Link href={`/app/property/${property.id}`} key={property.id}>
-      <Card className="h-full hover:shadow-lg transition-shadow duration-200">
-        <div className="relative h-48 w-full">
-          <div
-            className="absolute inset-0 rounded-t-lg bg-gradient-to-r from-blue-100 to-indigo-100"
-            style={{
-              backgroundImage: `url('/placeholder-r0y0s.png')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
+  const PropertyCard = ({ property, rank }: { property: Property; rank?: number }) => {
+    const trendingIndicator = getTrendingIndicator(property.trendingScore)
+
+    return (
+      <Link href={`/app/property/${property.id}`} key={property.id}>
+        <Card className="h-full hover:shadow-lg transition-shadow duration-200 relative overflow-hidden">
+          {rank && (
+            <div className="absolute top-0 left-0 w-10 h-10 bg-gray-800 flex items-center justify-center text-white font-bold text-lg z-10 rounded-tl-lg rounded-br-lg">
+              {rank}
+            </div>
+          )}
+          <div className="relative h-48 w-full">
+            <div
+              className="absolute inset-0 rounded-t-lg bg-gray-100"
+              style={{
+                backgroundImage: `url('/placeholder-r0y0s.png')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+              <h3 className="font-bold text-lg text-white">
+                {property.type} {property.region}
+              </h3>
+              <div className="flex items-center text-white/90 mb-1">
+                <MapPin className="h-3 w-3 mr-1" />
+                <span className="text-sm truncate">{property.address}</span>
+              </div>
+            </div>
+            <div
+              className={`absolute top-0 right-0 ${trendingIndicator.bgColor} ${trendingIndicator.color} px-2 py-1 rounded-bl-lg flex items-center text-xs font-medium`}
+            >
+              {trendingIndicator.icon}
+              {trendingIndicator.label}
+            </div>
+          </div>
+          <CardContent className="p-4">
+            <div className="flex justify-between mb-3">
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Eye className="h-3 w-3" />
+                {property.views}
+              </Badge>
+              <Badge variant="outline" className="flex items-center gap-1">
+                {property.sqft} sqft
+              </Badge>
+              <Badge className={`${getConfidenceColor(property.confidenceLevel)} flex items-center gap-1`}>
+                <Shield className="h-3 w-3" />
+                {property.confidenceLevel}
+              </Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="text-sm text-gray-600 flex items-center">
+                <Calendar className="h-3 w-3 mr-1" />
+                {property.lastUpdated}
+              </div>
+              <div className="flex items-center">
+                <span className="font-bold text-green-600 mr-2">{property.value}</span>
+                <Avatar className="h-6 w-6">
+                  <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
+                  <AvatarFallback>{property.ownerName.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+    )
+  }
+
+  // Featured property card for the top trending property
+  const FeaturedPropertyCard = ({ property }: { property: Property }) => {
+    const trendingIndicator = getTrendingIndicator(property.trendingScore)
+
+    return (
+      <Card className="overflow-hidden border shadow-md">
+        <div className="md:flex">
+          <div className="relative md:w-2/5 h-64 md:h-auto">
+            <div
+              className="absolute inset-0 bg-gray-200"
+              style={{
+                backgroundImage: `url('/placeholder-r0y0s.png')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute top-4 left-4 bg-white/90 rounded-full px-3 py-1 flex items-center">
+              <Flame className="h-4 w-4 text-red-600 mr-1" />
+              <span className="font-bold text-sm">Top Trending</span>
+            </div>
+          </div>
+          <div className="p-6 md:w-3/5">
+            <div className="flex items-center mb-2">
+              <Badge className={`${trendingIndicator.bgColor} ${trendingIndicator.color} mr-2`}>
+                {trendingIndicator.icon}
+                Trending Score: {Math.round(property.trendingScore)}
+              </Badge>
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Eye className="h-3 w-3" />
+                {property.views} views
+              </Badge>
+            </div>
+
+            <h2 className="text-2xl font-bold mb-2">
+              {property.type} in {property.region}
+            </h2>
+
+            <div className="flex items-center text-gray-600 mb-4">
+              <MapPin className="h-4 w-4 mr-1" />
+              <span className="text-sm">{property.address}</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="flex items-center">
+                <Badge className={`${getConfidenceColor(property.confidenceLevel)} mr-2`}>
+                  <Shield className="h-3 w-3 mr-1" />
+                  {property.confidenceLevel}
+                </Badge>
+              </div>
+              <div className="flex items-center">
+                <Clock className="h-4 w-4 text-gray-500 mr-1" />
+                <span className="text-sm text-gray-600">{property.lastUpdated}</span>
+              </div>
+              <div className="flex items-center">
+                <BarChart3 className="h-4 w-4 text-gray-500 mr-1" />
+                <span className="text-sm text-gray-600">{property.sqft} sqft</span>
+              </div>
+              <div className="flex items-center">
+                <Users className="h-4 w-4 text-gray-500 mr-1" />
+                <span className="text-sm text-gray-600">{property.ownerType}</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <span className="font-bold text-2xl text-green-600 mr-2">{property.value}</span>
+                <ArrowUpRight className="h-5 w-5 text-green-500" />
+              </div>
+              <Link href={`/app/property/${property.id}`}>
+                <Button>View Details</Button>
+              </Link>
+            </div>
+          </div>
         </div>
-        <CardContent className="p-4">
-          <h3 className="font-bold text-lg mb-1">
-            {property.type} {property.region}
-          </h3>
-          <div className="flex items-center text-gray-600 mb-2">
-            <MapPin className="h-4 w-4 mr-1" />
-            <span className="text-sm truncate">{property.address}</span>
-          </div>
-          <div className="flex justify-between mb-3">
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Eye className="h-3 w-3" />
-              {property.views}
-            </Badge>
-            <Badge variant="outline" className="flex items-center gap-1">
-              {property.sqft} sqft
-            </Badge>
-            <Badge className={`${getConfidenceColor(property.confidenceLevel)} flex items-center gap-1`}>
-              <Shield className="h-3 w-3" />
-              {property.confidenceLevel}
-            </Badge>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="text-sm text-gray-600 flex items-center">
-              <Calendar className="h-3 w-3 mr-1" />
-              {property.lastUpdated}
-            </div>
-            <div className="flex items-center">
-              <span className="font-bold text-green-600 mr-2">{property.value}</span>
-              <Avatar className="h-6 w-6">
-                <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                <AvatarFallback>{property.ownerName.charAt(0)}</AvatarFallback>
-              </Avatar>
-            </div>
-          </div>
-        </CardContent>
       </Card>
-    </Link>
-  )
+    )
+  }
 
   // Handle tab change
   const handleTabChange = (value: string) => {
@@ -147,18 +283,123 @@ export default function TrendingProperties() {
     setActiveTab("all")
   }
 
+  // Get top trending property
+  const topTrendingProperty = hotProperties[0]
+
+  // Get trending categories
+  const trendingCategories = [
+    { name: "Luxury", icon: <Flame className="h-5 w-5 text-gray-700" /> },
+    { name: "Beachfront", icon: <Flame className="h-5 w-5 text-gray-700" /> },
+    { name: "Urban", icon: <Flame className="h-5 w-5 text-gray-700" /> },
+    { name: "Mountain", icon: <Flame className="h-5 w-5 text-gray-700" /> },
+  ]
+
   return (
     <div>
+      {/* Trending Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <Card>
+          <CardContent className="p-4 flex items-center">
+            <div className="bg-gray-100 p-3 rounded-full mr-3">
+              <Flame className="h-6 w-6 text-red-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Hot Properties</p>
+              <p className="text-2xl font-bold">{hotProperties.length}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 flex items-center">
+            <div className="bg-gray-100 p-3 rounded-full mr-3">
+              <Eye className="h-6 w-6 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Total Views</p>
+              <p className="text-2xl font-bold">
+                {trendingProperties.reduce((sum, p) => sum + p.views, 0).toLocaleString()}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 flex items-center">
+            <div className="bg-gray-100 p-3 rounded-full mr-3">
+              <Activity className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">New This Week</p>
+              <p className="text-2xl font-bold">
+                {
+                  trendingProperties.filter((p) => {
+                    const updatedDate = new Date(p.lastUpdated)
+                    const now = new Date()
+                    const diffTime = Math.abs(now.getTime() - updatedDate.getTime())
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+                    return diffDays <= 7
+                  }).length
+                }
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 flex items-center">
+            <div className="bg-gray-100 p-3 rounded-full mr-3">
+              <BarChart3 className="h-6 w-6 text-gray-700" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Avg. Confidence</p>
+              <p className="text-2xl font-bold">
+                {trendingProperties.filter((p) => p.confidenceLevel === "High").length > trendingProperties.length / 2
+                  ? "High"
+                  : "Medium"}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Featured Property */}
+      <div className="mb-8">
+        <h2 className="text-xl font-bold mb-4 flex items-center">
+          <Flame className="mr-2 h-5 w-5 text-red-600" />
+          Featured Trending Property
+        </h2>
+        <FeaturedPropertyCard property={topTrendingProperty} />
+      </div>
+
+      {/* Trending Categories */}
+      <div className="mb-8">
+        <h2 className="text-xl font-bold mb-4">Trending Categories</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {trendingCategories.map((category, index) => (
+            <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
+              <div className="h-16 bg-gray-100 flex items-center justify-center">{category.icon}</div>
+              <CardContent className="p-3 text-center">
+                <h3 className="font-bold">{category.name}</h3>
+                <p className="text-sm text-gray-600">
+                  {trendingProperties.filter((p) => p.type.includes(category.name)).length} properties
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
       <Tabs value={activeTab} onValueChange={handleTabChange} className="mb-6">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="all">All Properties</TabsTrigger>
           <TabsTrigger value="hot">Hot Properties</TabsTrigger>
+          <TabsTrigger value="all">All Properties</TabsTrigger>
         </TabsList>
 
         <TabsContent value="hot" className="mt-6">
           <div className="mb-4">
             <h2 className="text-xl font-bold flex items-center">
-              <TrendingUp className="mr-2 h-5 w-5 text-red-500" />
+              <TrendingUp className="mr-2 h-5 w-5 text-red-600" />
               Hot Properties
               <span className="text-sm font-normal ml-2 text-gray-500">
                 (Highest trending score based on views and recency)
@@ -167,8 +408,8 @@ export default function TrendingProperties() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {hotProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+            {hotProperties.slice(1).map((property, index) => (
+              <PropertyCard key={property.id} property={property} rank={index + 2} />
             ))}
           </div>
 
