@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { getProperties } from "../trending/property-store"
-import { Download, FileText, Table } from "lucide-react"
+import { Download, FileText, Table, Search } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
+import { Input } from "@/components/ui/input"
 
 const { trendingProperties } = getProperties()
 
@@ -36,6 +37,7 @@ export default function PropertyExport() {
   ])
   const [isExporting, setIsExporting] = useState(false)
   const [propertyFilter, setPropertyFilter] = useState("all")
+  const [propertySearchTerm, setPropertySearchTerm] = useState("")
 
   // Available export formats
   const exportFormats = [
@@ -59,13 +61,23 @@ export default function PropertyExport() {
     { id: "ownerType", label: "Owner Type" },
   ]
 
-  // Filter properties based on selection
+  // Filter properties based on selection and search
   const filteredProperties = trendingProperties.filter((property) => {
-    if (propertyFilter === "all") return true
-    if (propertyFilter === "high") return property.confidenceLevel === "High"
-    if (propertyFilter === "medium") return property.confidenceLevel === "Medium"
-    if (propertyFilter === "low") return property.confidenceLevel === "Low"
-    return true
+    // First apply the confidence filter
+    let passesConfidenceFilter = true
+    if (propertyFilter === "high") passesConfidenceFilter = property.confidenceLevel === "High"
+    else if (propertyFilter === "medium") passesConfidenceFilter = property.confidenceLevel === "Medium"
+    else if (propertyFilter === "low") passesConfidenceFilter = property.confidenceLevel === "Low"
+
+    // Then apply the search filter if there's a search term
+    const passesSearchFilter =
+      propertySearchTerm === "" ||
+      property.address.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.region.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.value.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.type.toLowerCase().includes(propertySearchTerm.toLowerCase())
+
+    return passesConfidenceFilter && passesSearchFilter
   })
 
   // Toggle property selection
@@ -158,6 +170,20 @@ export default function PropertyExport() {
             <CardDescription>Choose the properties you want to export</CardDescription>
           </CardHeader>
           <CardContent>
+            {/* Search Bar - Added before the filter options */}
+            <div className="mb-4">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search properties by name, location, or value..."
+                  className="pl-9 w-full"
+                  value={propertySearchTerm}
+                  onChange={(e) => setPropertySearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -182,24 +208,30 @@ export default function PropertyExport() {
             </div>
 
             <div className="border rounded-md">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-4 max-h-[400px] overflow-y-auto">
-                {filteredProperties.map((property) => (
-                  <div key={property.id} className="flex items-start space-x-2">
-                    <Checkbox
-                      id={property.id}
-                      checked={selectedProperties.includes(property.id)}
-                      onCheckedChange={() => toggleProperty(property.id)}
-                    />
-                    <div>
-                      <Label htmlFor={property.id} className="font-medium">
-                        {property.type} {property.region}
-                      </Label>
-                      <p className="text-sm text-gray-500">{property.address}</p>
-                      <p className="text-sm text-gray-500">Value: {property.value}</p>
+              {filteredProperties.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-4 max-h-[400px] overflow-y-auto">
+                  {filteredProperties.map((property) => (
+                    <div key={property.id} className="flex items-start space-x-2">
+                      <Checkbox
+                        id={property.id}
+                        checked={selectedProperties.includes(property.id)}
+                        onCheckedChange={() => toggleProperty(property.id)}
+                      />
+                      <div>
+                        <Label htmlFor={property.id} className="font-medium">
+                          {property.type} {property.region}
+                        </Label>
+                        <p className="text-sm text-gray-500">{property.address}</p>
+                        <p className="text-sm text-gray-500">Value: {property.value}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center">
+                  <p className="text-muted-foreground">No properties found matching your search criteria.</p>
+                </div>
+              )}
             </div>
 
             <div className="mt-4 text-sm text-gray-500">
