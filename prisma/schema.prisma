@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -35,6 +34,8 @@ model User {
   invitations      Invitation[]
 
   passkeys Passkey[]
+
+  roles Role[] @relation("UserRoles")
 
   @@unique([email])
   @@map("user")
@@ -167,4 +168,21 @@ model Passkey {
   createdAt    DateTime?
 
   @@map("passkey")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String
+  description String?
+  roles       Role[]   @relation("RolePermissions")
+}
+
+model Role {
+  id          String        @id @default(cuid())
+  name        String        @unique
+  description String?
+  isSystem    Boolean       @default(false)
+  permissions Permission[]  @relation("RolePermissions")
+  users       User[]        @relation("UserRoles")
 }
