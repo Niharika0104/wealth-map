@@ -2,12 +2,12 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import Resend from "next-auth/providers/resend"
-import { prisma } from "./prisma"
+import { PrismaClient } from "@/generated/prisma"
 import Credentials from "next-auth/providers/credentials"
  
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(PrismaClient),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
     Resend({
-        from: "no-reply@peisma.com",
+        from: "no-reply@prisma.com",
         apiKey: process.env.RESEND_API_KEY,
     }),
   ],
