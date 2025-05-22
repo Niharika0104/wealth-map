@@ -1,9 +1,6 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/custom-components/app-sidebar";
-import AuthGuard from "@/components/custom-components/auth-guard";
-import { UserProfileMenu } from "@/components/custom-components/user-profile-menu";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainLayoutShell from "@/components/custom-components/main-layout";
 import { CopilotSidebar } from "@copilotkit/react-ui";
