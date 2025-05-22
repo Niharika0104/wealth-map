@@ -34,6 +34,8 @@ model User {
   members          Member[]
   invitations      Invitation[]
 
+  passkeys Passkey[]
+
   @@unique([email])
   @@map("user")
 }
@@ -105,6 +107,7 @@ model Organization {
   metadata    String?
   members     Member[]
   invitations Invitation[]
+  customRoles CustomRole[]
 
   @@unique([slug])
   @@map("organization")
@@ -134,4 +137,34 @@ model Invitation {
   user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
 
   @@map("invitation")
+}
+
+model CustomRole {
+  id             String       @id @default(cuid())
+  name           String
+  description    String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  baseRole       String // Reference to a system role like 'analyst', 'viewer'
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, name])
+  @@map("custom_role")
+}
+
+model Passkey {
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+
+  @@map("passkey")
 }
