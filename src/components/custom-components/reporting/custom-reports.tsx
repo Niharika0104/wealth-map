@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getProperties } from "../property-store"
-import { BarChart, PieChart, LineChart, Save, Share, Download, Plus, Trash2 } from "lucide-react"
+import { getProperties } from "../trending/property-store"
+import { BarChart, PieChart, LineChart, Save, Share, Download, Plus, Trash2, Search } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import {
   Dialog,
@@ -84,14 +84,24 @@ export default function CustomReports() {
     { id: "views", label: "View Count" },
     { id: "ownerType", label: "Owner Type" },
   ]
-
-  // Filter properties based on selection
+  const [propertySearchTerm, setPropertySearchTerm] = useState("")
+  // Filter properties based on selection and search
   const filteredProperties = trendingProperties.filter((property) => {
-    if (propertyFilter === "all") return true
-    if (propertyFilter === "high") return property.confidenceLevel === "High"
-    if (propertyFilter === "medium") return property.confidenceLevel === "Medium"
-    if (propertyFilter === "low") return property.confidenceLevel === "Low"
-    return true
+    // First apply the confidence filter
+    let passesConfidenceFilter = true
+    if (propertyFilter === "high") passesConfidenceFilter = property.confidenceLevel === "High"
+    else if (propertyFilter === "medium") passesConfidenceFilter = property.confidenceLevel === "Medium"
+    else if (propertyFilter === "low") passesConfidenceFilter = property.confidenceLevel === "Low"
+
+    // Then apply the search filter if there's a search term
+    const passesSearchFilter =
+      propertySearchTerm === "" ||
+      property.address.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.region.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.value.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.type.toLowerCase().includes(propertySearchTerm.toLowerCase())
+
+    return passesConfidenceFilter && passesSearchFilter
   })
 
   // Toggle property selection
@@ -303,6 +313,19 @@ export default function CustomReports() {
                 <CardTitle>Select Properties</CardTitle>
                 <CardDescription>Choose the properties to include in your report</CardDescription>
               </CardHeader>
+              {/* Search Bar - Added before the filter options */}
+              <div className="relative mx-4 mb-2">
+                <div className="relative">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search properties by name, location, or value..."
+                    className="pl-9 w-full"
+                    value={propertySearchTerm}
+                    onChange={(e) => setPropertySearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
               <CardContent>
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center space-x-2">

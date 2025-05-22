@@ -48,12 +48,12 @@ export function ProfileSettings() {
               <Label htmlFor="firstName">First Name</Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input id="firstName" placeholder="John" defaultValue="John" className="pl-10" />
+                <Input id="firstName" placeholder="Radhika" className="pl-10" />
               </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="lastName">Last Name</Label>
-              <Input id="lastName" placeholder="Doe" defaultValue="Doe" />
+              <Input id="lastName" placeholder="Sharma" />
             </div>
           </div>
 
@@ -64,8 +64,7 @@ export function ProfileSettings() {
               <Input
                 id="email"
                 type="email"
-                placeholder="john.doe@example.com"
-                defaultValue="john.doe@example.com"
+                placeholder="radhikarohan@forever.com"
                 className="pl-10"
               />
             </div>
@@ -75,7 +74,7 @@ export function ProfileSettings() {
             <Label htmlFor="company">Company</Label>
             <div className="relative">
               <Building className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input id="company" placeholder="Acme Inc." defaultValue="Wealth Compass" className="pl-10" />
+              <Input id="company" placeholder="Serenity" className="pl-10" />
             </div>
           </div>
 
@@ -83,7 +82,7 @@ export function ProfileSettings() {
             <Label htmlFor="location">Location</Label>
             <div className="relative">
               <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input id="location" placeholder="New York, NY" defaultValue="San Francisco, CA" className="pl-10" />
+              <Input id="location" placeholder="Kanpur, UP" className="pl-10" />
             </div>
           </div>
 
@@ -91,8 +90,7 @@ export function ProfileSettings() {
             <Label htmlFor="bio">Bio</Label>
             <Textarea
               id="bio"
-              placeholder="Tell us about yourself"
-              defaultValue="Wealth analysis specialist with 5+ years of experience in property valuation and financial assessment."
+              placeholder="I, Radhika means the whole world to Rohan. One day I will meet him and start a new company built with pure love and love. 🫀"
               className="min-h-[100px]"
             />
             <p className="text-sm text-muted-foreground">Brief description for your profile. URLs are hyperlinked.</p>
