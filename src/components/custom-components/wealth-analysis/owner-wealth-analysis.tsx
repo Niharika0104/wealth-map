@@ -66,20 +66,15 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
       }
       setIsMounted(true);
     };
-    const getOwner=async ()=>{
-    try {
-        const res = await axios.post('/api/owner/get',{ownerId});
-        setSelectedOwner(res.data);
-      } catch (error) {
-        setOwners([]);
-      }
-      setIsMounted(true);
+
+    if(ownerId){
+     
+      handleOwnerSelect(ownerId)
     }
-    if(!ownerId)
-    fetchOwners();
-  else getOwner()
+   
+   fetchOwners();
     return () => setIsMounted(false);
-  }, []);
+  }, [ownerId]);
 
   const toggleSection = (ownerId: string) => {
     setExpandedSections((prev) => ({
