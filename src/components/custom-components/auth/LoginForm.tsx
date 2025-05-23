@@ -16,8 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const loginFormSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -28,6 +31,10 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState("");
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
@@ -36,6 +43,33 @@ export function LoginForm() {
       password: "",
     },
   });
+
+  const handleTwoFactorSubmit = async () => {
+    if (!twoFactorCode) {
+      toast.error("Please enter the 2FA code");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        email: form.getValues("email"),
+        password: form.getValues("password"),
+        twoFactorCode,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      router.push("/app");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Invalid 2FA code");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   async function onSubmit(data: LoginFormValues) {
     setIsLoading(true);
@@ -47,10 +81,14 @@ export function LoginForm() {
       });
 
       if (result?.error) {
+        if (result.error.includes("2FA")) {
+          setShowTwoFactor(true);
+          return;
+        }
         throw new Error(result.error);
       }
 
-      window.location.href = "/app";
+      router.push("/app");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
@@ -65,6 +103,49 @@ export function LoginForm() {
       toast.error("Failed to sign in with Google");
     }
   };
+
+  if (showTwoFactor) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Two-Factor Authentication</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <Alert>
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Please enter the 2FA code from your authenticator app
+              </AlertDescription>
+            </Alert>
+            <Input
+              type="text"
+              placeholder="Enter 2FA code"
+              value={twoFactorCode}
+              onChange={(e) => setTwoFactorCode(e.target.value)}
+              disabled={isLoading}
+            />
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setShowTwoFactor(false)}
+                disabled={isLoading}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={handleTwoFactorSubmit}
+                disabled={isLoading}
+                className="flex-1"
+              >
+                {isLoading ? "Verifying..." : "Verify"}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>

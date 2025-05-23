@@ -46,64 +46,64 @@ const isPublicApiRoute = (path: string, method: string) => {
 };
 
 export async function middleware(request: NextRequest) {
-  const session = await auth();
-  console.log('Middleware - Session:', JSON.stringify(session, null, 2)); // Debug log
+  // const session = await auth();
+  // console.log('Middleware - Session:', JSON.stringify(session, null, 2)); // Debug log
 
-  const isAuth = !!session?.user;
-  const isAuthPage = request.nextUrl.pathname.startsWith(ROUTES.AUTH);
-  const isApiRoute = request.nextUrl.pathname.startsWith(ROUTES.API);
-  const isRegisterPage = request.nextUrl.pathname.startsWith(ROUTES.REGISTER);
-  const isAppRoute = request.nextUrl.pathname.startsWith(ROUTES.APP_ROOT);
-  const isAppRoot = request.nextUrl.pathname === ROUTES.APP_ROOT;
+  // const isAuth = !!session?.user;
+  // const isAuthPage = request.nextUrl.pathname.startsWith(ROUTES.AUTH);
+  // const isApiRoute = request.nextUrl.pathname.startsWith(ROUTES.API);
+  // const isRegisterPage = request.nextUrl.pathname.startsWith(ROUTES.REGISTER);
+  // const isAppRoute = request.nextUrl.pathname.startsWith(ROUTES.APP_ROOT);
+  // const isAppRoot = request.nextUrl.pathname === ROUTES.APP_ROOT;
 
-  console.log('Middleware - Path:', request.nextUrl.pathname); // Debug log
-  console.log('Middleware - Is Auth:', isAuth); // Debug log
-  console.log('Middleware - User ID:', session?.user?.id); // Debug log
+  // console.log('Middleware - Path:', request.nextUrl.pathname); // Debug log
+  // console.log('Middleware - Is Auth:', isAuth); // Debug log
+  // console.log('Middleware - User ID:', session?.user?.id); // Debug log
 
-  // Handle API routes first
-  if (isApiRoute) {
-    // Allow access to public API routes with specific methods
-    if (isPublicApiRoute(request.nextUrl.pathname, request.method)) {
-      return NextResponse.next();
-    }
+  // // Handle API routes first
+  // if (isApiRoute) {
+  //   // Allow access to public API routes with specific methods
+  //   if (isPublicApiRoute(request.nextUrl.pathname, request.method)) {
+  //     return NextResponse.next();
+  //   }
 
-    // Require authentication for other API routes
-    if (!isAuth || !session.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    return NextResponse.next();
-  }
+  //   // Require authentication for other API routes
+  //   if (!isAuth || !session.user?.id) {
+  //     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  //   }
+  //   return NextResponse.next();
+  // }
 
-  // Handle auth and register pages
-  if (isAuthPage || isRegisterPage) {
-    // If user is already authenticated, redirect to employee dashboard
-    if (isAuth && session.user?.id) {
-      return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
-    }
-    // Allow access to auth and register pages for unauthenticated users
-    return NextResponse.next();
-  }
+  // // Handle auth and register pages
+  // if (isAuthPage || isRegisterPage) {
+  //   // If user is already authenticated, redirect to employee dashboard
+  //   if (isAuth && session.user?.id) {
+  //     return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+  //   }
+  //   // Allow access to auth and register pages for unauthenticated users
+  //   return NextResponse.next();
+  // }
 
-  // Require authentication for all other routes
-  if (!isAuth || !session.user?.id) {
-    console.log('Middleware - Redirecting to login - Missing auth or user ID'); // Debug log
-    return NextResponse.redirect(new URL('/auth/login', request.url));
-  }
+  // // Require authentication for all other routes
+  // if (!isAuth || !session.user?.id) {
+  //   console.log('Middleware - Redirecting to login - Missing auth or user ID'); // Debug log
+  //   return NextResponse.redirect(new URL('/auth/login', request.url));
+  // }
 
-  // Handle app routes
-  if (isAppRoute) {
-    // Redirect /app to /app/employee
-    if (isAppRoot) {
-      return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
-    }
+  // // Handle app routes
+  // if (isAppRoute) {
+  //   // Redirect /app to /app/employee
+  //   if (isAppRoot) {
+  //     return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+  //   }
 
-    // Check if the user is trying to access a protected route
-    const path = request.nextUrl.pathname;
-    if (path.startsWith(ROUTES.SUPER_ADMIN) || path.startsWith(ROUTES.COMPANY_ADMIN)) {
-      // Let the page components handle the role-based access control
-      return NextResponse.next();
-    }
-  }
+  //   // Check if the user is trying to access a protected route
+  //   const path = request.nextUrl.pathname;
+  //   if (path.startsWith(ROUTES.SUPER_ADMIN) || path.startsWith(ROUTES.COMPANY_ADMIN)) {
+  //     // Let the page components handle the role-based access control
+  //     return NextResponse.next();
+  //   }
+  // }
 
   return NextResponse.next();
 }
@@ -111,7 +111,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Match all paths except:
-    // - API routes (handled separately in middleware)
     // - Static files (_next/static, _next/image)
     // - Favicon
     // - Public files (public directory)
