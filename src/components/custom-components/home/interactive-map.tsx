@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import * as maptilersdk from "@maptiler/sdk"
 import "@maptiler/sdk/dist/maptiler-sdk.css"
-import type { Property } from "../trending/property-generator"
+import type { Property } from "../../../Models/models"
 import { Skeleton } from "@/components/ui/skeleton"
 
 // Proper interface for the Map instance
@@ -19,6 +19,43 @@ interface InteractiveMapProps {
   onViewChange: (center: [number, number], zoom: number) => void
 }
 
+const geocodeCache = new Map<string, [number, number]>()
+
+async function geocodeAddress(address: string): Promise<[number, number] | null> {
+  if (geocodeCache.has(address)) return geocodeCache.get(address)!
+  try {
+    const apikey: string = process.env.NEXT_PUBLIC_MAPTILER_API_KEY as string
+    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(address)}.json?key=${apikey}`
+    const res = await fetch(url)
+    if (!res.ok) return null
+    const data = await res.json()
+    if (data && data.features && data.features.length > 0) {
+      const [lng, lat] = data.features[0].geometry.coordinates
+      const coords: [number, number] = [lng, lat]
+      geocodeCache.set(address, coords)
+      return coords
+    }
+    return null
+  } catch (error) {
+    console.error(`Geocoding error for address "${address}":`, error)
+    return null
+  }
+}
+
+  // Helper to get coordinates from property (if present)
+  const getCoordinates = async (property: Property): Promise<[number, number] | null> => {
+    if ((property as any).coordinates && Array.isArray((property as any).coordinates) && (property as any).coordinates.length === 2) {
+      return (property as any).coordinates as [number, number]
+    }
+    if ((property as any).lng !== undefined && (property as any).lat !== undefined) {
+      return [(property as any).lng, (property as any).lat]
+    }
+    if (property.address) {
+      return await geocodeAddress(property.address)
+    }
+    return null
+  }
+
 export default function InteractiveMap({
   properties,
   mapType,
@@ -32,6 +69,9 @@ export default function InteractiveMap({
   const markersLayerRef = useRef<any>(null)
   const clustersLayerRef = useRef<any>(null)
 
+  // Keep a stable reference for the moveend handler
+  const handleMoveEndRef = useRef<(() => void) | null>(null)
+
   // Track mounted state to prevent memory leaks
   const isMounted = useRef(false)
   // Use state to ensure client-side rendering only
@@ -39,12 +79,33 @@ export default function InteractiveMap({
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  // Fetch properties from API if not provided
+  const [apiProperties, setApiProperties] = useState<Property[] | null>(null)
+  useEffect(() => {
+    if (!properties || properties.length === 0) {
+      fetch("/api/property/all")
+        .then((res) => res.json())
+        .then((data) => setApiProperties(data))
+        .catch(() => setApiProperties([]))
+    }
+  }, [properties])
+  const displayProperties = properties && properties.length > 0 ? properties : apiProperties || []
+
   // Clean up function to remove markers
   const clearMarkers = () => {
     if (markersRef.current.length > 0) {
       markersRef.current.forEach((marker) => marker.remove())
       markersRef.current = []
     }
+  }
+
+  // Helper to get region from address
+  const getRegion = (property: Property) => {
+    if (property.address && property.address.includes(",")) {
+      const parts = property.address.split(",")
+      return parts[parts.length - 1].trim()
+    }
+    return property.state || ""
   }
 
   // Update map style when mapType changes
@@ -65,6 +126,9 @@ export default function InteractiveMap({
     return () => {
       isMounted.current = false
       clearMarkers()
+      if (mapInstance.current && handleMoveEndRef.current) {
+        mapInstance.current.off("moveend", handleMoveEndRef.current)
+      }
       if (mapInstance.current) {
         mapInstance.current.remove()
       }
@@ -93,7 +157,7 @@ export default function InteractiveMap({
         await new Promise((resolve) => setTimeout(resolve, 100))
 
         // Check again if component is still mounted
-        if (!isMounted.current) return
+        if (!isMounted.current || mapInstance.current) return // prevent double init
 
         const style = mapType === "streets" ? maptilersdk.MapStyle.STREETS : maptilersdk.MapStyle.SATELLITE
 
@@ -104,19 +168,31 @@ export default function InteractiveMap({
           zoom: initialZoom,
         }) as MapRef
 
-        // Wait for the map to load before adding markers
+        // Define the moveend handler and store in ref
+        const handleMoveEnd = () => {
+          if (
+            !isMounted.current ||
+            !mapInstance.current ||
+            typeof mapInstance.current?.getCenter !== "function" ||
+            typeof mapInstance.current?.getZoom !== "function"
+          ) {
+            return
+          }
+          const center = mapInstance.current?.getCenter()?.toArray?.() as [number, number] | undefined
+          const zoom = mapInstance.current.getZoom?.()
+          if (center && typeof zoom === "number") {
+            onViewChange(center, zoom)
+          }
+        }
+        handleMoveEndRef.current = handleMoveEnd
+
         mapInstance.current.on("load", () => {
-          if (!isMounted.current) return
+          if (!isMounted.current || !mapInstance.current) return
           setIsLoading(false)
           console.log("Map initialized successfully")
-
-          // Add event listener for map movement
-          mapInstance.current!.on("moveend", () => {
-            if (mapInstance.current) {
-              const center = mapInstance.current.getCenter().toArray() as [number, number]
-              const zoom = mapInstance.current.getZoom()
-              onViewChange(center, zoom)
-            }
+          mapInstance.current?.on("moveend", handleMoveEnd)
+          mapInstance.current?.on("remove", () => {
+            mapInstance.current?.off("moveend", handleMoveEnd)
           })
         })
       } catch (error) {
@@ -139,14 +215,12 @@ export default function InteractiveMap({
 
     // Add new markers for each property
     const addMarkers = async () => {
-      // If we have coordinates, use them directly
-      for (const property of properties) {
+      for (const property of displayProperties) {
         try {
           if (!isMounted.current || !mapInstance.current) break
-
-          // Check if we have coordinates
-          if (property.coordinates && property.coordinates.length === 2) {
-            const [lng, lat] = property.coordinates
+          const coords = await getCoordinates(property)
+          if (coords && mapInstance.current) {
+            const [lng, lat] = coords
 
             // Create marker element
             const el = document.createElement("div")
@@ -154,7 +228,7 @@ export default function InteractiveMap({
             el.style.width = "20px"
             el.style.height = "20px"
             el.style.borderRadius = "50%"
-            el.style.backgroundColor = getMarkerColor(property.confidenceLevel)
+            el.style.backgroundColor = getMarkerColor(property.confidence ?? "")
             el.style.border = "2px solid white"
             el.style.boxShadow = "0 2px 4px rgba(0,0,0,0.3)"
 
@@ -163,9 +237,9 @@ export default function InteractiveMap({
             // Add popup with property info
             const popup = new maptilersdk.Popup({ offset: 25 }).setHTML(`
                 <div style="max-width: 200px;">
-                  <h3 style="font-weight: bold; margin-bottom: 5px;">${property.type} ${property.region}</h3>
+                  <h3 style="font-weight: bold; margin-bottom: 5px;">${property.type} ${getRegion(property)}</h3>
                   <p style="margin-bottom: 5px;">${property.address}</p>
-                  <p style="font-weight: bold; color: #10b981;">${property.value}</p>
+                  <p style="font-weight: bold; color: #10b981;">${property.price ? property.price.toLocaleString() : ""}</p>
                   <a href="/app/property/${property.id}" style="color: #3b82f6; text-decoration: underline;">View details</a>
                 </div>
               `)
@@ -183,7 +257,13 @@ export default function InteractiveMap({
       }
 
       // If we have markers and the map is at the default zoom level, fit the map to show all markers
-      if (markersRef.current.length > 0 && mapInstance.current && mapInstance.current.getZoom() === initialZoom) {
+      if (
+        markersRef.current.length > 0 &&
+        mapInstance.current &&
+        typeof mapInstance.current.getZoom === "function" &&
+        typeof mapInstance.current?.getCenter === "function" &&
+        mapInstance.current.getZoom() === initialZoom
+      ) {
         // Create a bounds object
         const bounds = new maptilersdk.LngLatBounds()
 
@@ -193,7 +273,7 @@ export default function InteractiveMap({
         })
 
         // Fit the map to the bounds
-        mapInstance.current.fitBounds(bounds, {
+        mapInstance.current?.fitBounds(bounds, {
           padding: 50, // Add some padding around the bounds
           maxZoom: 15, // Don't zoom in too far
         })
@@ -201,7 +281,7 @@ export default function InteractiveMap({
     }
 
     addMarkers()
-  }, [properties, isLoading, initialZoom])
+  }, [displayProperties, isLoading, initialZoom])
 
   // Helper function to get marker color based on confidence level
   const getMarkerColor = (confidenceLevel: string): string => {
@@ -242,3 +322,4 @@ export default function InteractiveMap({
     </div>
   )
 }
+export{getCoordinates}

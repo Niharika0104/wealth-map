@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+import { faker } from "@faker-js/faker";
 
 async function main() {
   // Create permissions
@@ -122,7 +123,83 @@ async function main() {
   }
 }
 
-main()
+
+
+
+
+
+async function generateOwners() {
+  const corporateSuffixes = ["LLC", "Ltd.", "Inc.", "Corporation", "Holdings"];
+
+  const ownersData = Array.from({ length: 50 }, () => {
+    const isCorporate = Math.random() < 0.4;
+
+    const name = isCorporate
+      ? `${faker.company.name()} ${faker.helpers.arrayElement(corporateSuffixes)}`
+      : `${faker.person.firstName()} ${faker.person.lastName()}`;
+
+    const owner = {
+     
+      name,
+      email: isCorporate ? null : faker.internet.email(),
+      phoneNumber: isCorporate ? null : faker.phone.number({ style: "international" }),
+      stocksSecurities: Math.random() < 0.7 ? faker.number.float({ min: 10000, max: 500000 }) : 0,
+      businessInterests: Math.random() < 0.7 ? faker.number.float({ min: 10000, max: 500000 }) : 0,
+      cashSavings: Math.random() < 0.7 ? faker.number.float({ min: 10000, max: 500000 }) : 0,
+      otherAssets: Math.random() < 0.7 ? faker.number.float({ min: 10000, max: 500000 }) : 0,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    return owner;
+  });
+
+  await prisma.owner.createMany({ data: ownersData });
+  console.log("✅ 50 owners inserted.");
+}
+async function mapOwnersToProperties() {
+  const owners = await prisma.owner.findMany();
+  const properties = await prisma.property.findMany();
+
+  const propertyOwners: {
+   
+    propertyId: string;
+    ownerId: string;
+    ownerType: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }[] = [];
+
+  properties.forEach((property, index) => {
+    // 20% of properties have no owner
+    if (Math.random() < 0.2) return;
+
+    // Pick 1 random owner
+    const owner = faker.helpers.arrayElement(owners);
+
+    const isCorporate = owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.");
+
+    propertyOwners.push({
+    
+      propertyId: property.id,
+      ownerId: owner.id,
+      ownerType: isCorporate ? "corporate" : "individual",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+  });
+
+  await prisma.propertyOwner.createMany({ data: propertyOwners });
+  console.log(`✅ Linked ${propertyOwners.length} properties with owners.`);
+}
+
+async function seedOwnersAndLinkToProperties() {
+  await generateOwners();               // Step 1: Create Owners
+  await mapOwnersToProperties();        // Step 2: Link Owners to Properties
+}
+
+// main()
+seedOwnersAndLinkToProperties()
   .catch((e) => {
     console.error(e);
     process.exit(1);

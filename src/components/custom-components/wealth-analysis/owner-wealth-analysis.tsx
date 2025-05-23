@@ -38,8 +38,14 @@ import { ConfidenceIndicator } from "./confidence-indicator"
 import { PropertyMap } from "./property-map"
 import { TitleUpdater } from "./title-updater"
 import { mockOwners } from "./mock-data"
+import { Owner,formatKMB } from "@/Models/models"
+import axios from "axios"
+import { dataSources, Wealthownershipfields } from "@/Models/models"
+import type { ConfidenceLevel } from "@/Models/models"
 
-export default function OwnerWealthAnalysis() {
+// Accept a single optional prop: { ownerId?: string }
+export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
+  
   const [selectedOwner, setSelectedOwner] = useState<string | null>(null)
   const [comparisonOwner, setComparisonOwner] = useState<string | null>(null)
   const [showOnlyHighConfidence, setShowOnlyHighConfidence] = useState(false)
@@ -48,12 +54,32 @@ export default function OwnerWealthAnalysis() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("details")
   const [isMounted, setIsMounted] = useState(false)
+  const [owners, setOwners] = useState<Owner[] | null>([])
 
-  // Set isMounted to true when component mounts
   useEffect(() => {
-    setIsMounted(true)
-    return () => setIsMounted(false)
-  }, [])
+    const fetchOwners = async () => {
+      try {
+        const res = await axios.get('/api/owner/all');
+        setOwners(res.data);
+      } catch (error) {
+        setOwners([]);
+      }
+      setIsMounted(true);
+    };
+    const getOwner=async ()=>{
+    try {
+        const res = await axios.post('/api/owner/get',{ownerId});
+        setSelectedOwner(res.data);
+      } catch (error) {
+        setOwners([]);
+      }
+      setIsMounted(true);
+    }
+    if(!ownerId)
+    fetchOwners();
+  else getOwner()
+    return () => setIsMounted(false);
+  }, []);
 
   const toggleSection = (ownerId: string) => {
     setExpandedSections((prev) => ({
@@ -62,14 +88,14 @@ export default function OwnerWealthAnalysis() {
     }))
   }
 
-  const filteredOwners = mockOwners.filter((owner) => {
+  const filteredOwners = owners?.filter((owner) => {
     const matchesSearch = owner.name.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesConfidence = showOnlyHighConfidence ? owner.confidenceLevel === "High" : true
     return matchesSearch && matchesConfidence
   })
 
-  const selectedOwnerData = selectedOwner ? mockOwners.find((owner) => owner.id === selectedOwner) : null
-  const comparisonOwnerData = comparisonOwner ? mockOwners.find((owner) => owner.id === comparisonOwner) : null
+  const selectedOwnerData = selectedOwner ? owners?.find((owner) => owner.id === selectedOwner) : null
+  const comparisonOwnerData = comparisonOwner ? owners?.find((owner) => owner.id === comparisonOwner) : null
 
   const handleOwnerSelect = (ownerId: string) => {
     setSelectedOwner(ownerId)
@@ -96,6 +122,39 @@ export default function OwnerWealthAnalysis() {
       }))
     }
   }, [selectedOwner])
+
+  // Helper: Calculate total net worth for an owner
+  function getOwnerNetWorth(owner: any): number {
+    if (!owner) return 0;
+    return (
+      (owner.stocksSecurities || 0) +
+      (owner.businessInterests || 0) +
+      (owner.cashSavings || 0) +
+      (owner.otherAssets || 0) +
+      (owner.totalRealEstateWealth || 0)
+    );
+  }
+
+  // Helper: Generate wealth composition array for chart
+  function getWealthComposition(owner: any) {
+    if (!owner) return [];
+    return Wealthownershipfields.map((item) => ({
+      name: item.name,
+      value: String(
+        item.key === "realEstate"
+          ? owner.totalRealEstateWealth || 0
+          : owner[item.key] || 0
+      ),
+      color: item.color,
+      confidence: owner.confidenceLevel ?? "Low",
+    }));
+  }
+
+  // Helper: Get asset value by name from wealth composition
+  function getAssetValue(owner: any, assetName: string): string {
+    const composition = getWealthComposition(owner);
+    return composition.find((item: any) => item.name === assetName)?.value || "0";
+  }
 
   return (
     <div className="space-y-8">
@@ -172,8 +231,8 @@ export default function OwnerWealthAnalysis() {
             {isMounted && isDropdownOpen && (
               <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg">
                 <ScrollArea className="h-72">
-                  {filteredOwners.length > 0 ? (
-                    filteredOwners.map((owner) => (
+                  {(filteredOwners?.length ?? 0) > 0 ? (
+                    (filteredOwners ?? []).map((owner) => (
                       <div
                         key={owner.id}
                         className={`p-3 hover:bg-gray-50 cursor-pointer flex items-center justify-between ${
@@ -183,11 +242,11 @@ export default function OwnerWealthAnalysis() {
                       >
                         <div className="flex items-center gap-2">
                           <Avatar className="h-8 w-8 bg-primary-100">
-                            <span className="text-sm font-medium text-primary-700">{owner.name.charAt(0)}</span>
+                            <span className="text-sm font-medium text-primary-700">{owner?.name.charAt(0)}</span>
                           </Avatar>
                           <div>
-                            <div className="font-medium">{owner.name}</div>
-                            <div className="text-xs text-muted-foreground">{owner.type}</div>
+                            <div className="font-medium">{owner?.name}</div>
+                            <div className="text-xs text-muted-foreground">{owner?.ownerType}</div>
                           </div>
                         </div>
                         {selectedOwner === owner.id && <span className="text-primary">✓</span>}
@@ -242,7 +301,7 @@ export default function OwnerWealthAnalysis() {
                       </DialogDescription>
                     </DialogHeader>
                     <ScrollArea className="h-72 mt-4">
-                      {filteredOwners
+                      {(filteredOwners ?? [])
                         .filter((owner) => owner.id !== selectedOwner)
                         .map((owner) => (
                           <div
@@ -256,7 +315,7 @@ export default function OwnerWealthAnalysis() {
                               </Avatar>
                               <div>
                                 <div className="font-medium">{owner.name}</div>
-                                <div className="text-sm text-muted-foreground">{owner.type}</div>
+                                <div className="text-sm text-muted-foreground">{owner.ownerType}</div>
                               </div>
                             </div>
                           </div>
@@ -283,28 +342,30 @@ export default function OwnerWealthAnalysis() {
                         <div className="flex items-center gap-2">
                           <CardTitle className="text-xl">{selectedOwnerData.name}</CardTitle>
                           <Badge variant="outline" className="ml-2">
-                            {selectedOwnerData.type === "Entity" ? (
+                            {selectedOwnerData.ownerType === "corporate" ? (
                               <Building className="h-3 w-3 mr-1" />
                             ) : (
                               <User className="h-3 w-3 mr-1" />
                             )}
-                            {selectedOwnerData.type}
+                            {selectedOwnerData.ownerType}
                           </Badge>
                         </div>
                         <CardDescription className="flex items-center gap-2 mt-1">
                           <Calendar className="h-3 w-3" />
-                          Last Updated: {selectedOwnerData.lastUpdated}
+                          Last Updated: {new Date(selectedOwnerData.updatedAt).toLocaleDateString()}
                         </CardDescription>
                       </div>
                     </div>
                     <div className="flex flex-col items-end">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-sm text-muted-foreground">Confidence:</span>
-                        <ConfidenceIndicator level={selectedOwnerData.confidenceLevel} />
+                        <ConfidenceIndicator level={selectedOwnerData.confidenceLevel ?? "Low"} />
                       </div>
                       <div className="flex items-center">
                         <DollarSign className="h-5 w-5 text-green-600" />
-                        <span className="font-bold text-2xl">{selectedOwnerData.netWorth}</span>
+                        <span className="font-bold text-2xl">
+                          {formatKMB(getOwnerNetWorth(selectedOwnerData))}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -329,7 +390,7 @@ export default function OwnerWealthAnalysis() {
                       {expandedSections[selectedOwnerData.id] && (
                         <div className="space-y-4">
                           <div className="h-[300px]">
-                            <WealthCompositionChart data={selectedOwnerData.wealthComposition} />
+                            <WealthCompositionChart data={getWealthComposition(selectedOwnerData)} />
                           </div>
 
                           <div className="mt-4">
@@ -353,7 +414,7 @@ export default function OwnerWealthAnalysis() {
                                     </DialogDescription>
                                   </DialogHeader>
                                   <div className="space-y-4 mt-4">
-                                    {selectedOwnerData.dataSources.map((source, index) => (
+                                    {dataSources.map((source, index) => (
                                       <div key={index} className="space-y-2">
                                         <div className="flex justify-between">
                                           <span className="font-medium">{source.name}</span>
@@ -408,20 +469,20 @@ export default function OwnerWealthAnalysis() {
                             </Avatar>
                             <div>
                               <CardTitle className="text-lg">{selectedOwnerData.name}</CardTitle>
-                              <CardDescription>{selectedOwnerData.type}</CardDescription>
+                              <CardDescription>{selectedOwnerData.ownerType}</CardDescription>
                             </div>
                           </div>
-                          <ConfidenceIndicator level={selectedOwnerData.confidenceLevel} small />
+                          <ConfidenceIndicator level={selectedOwnerData.confidenceLevel??"Low"} small />
                         </div>
                       </CardHeader>
                       <CardContent className="p-4">
                         <div className="space-y-4">
                           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                             <span className="text-muted-foreground">Net Worth</span>
-                            <span className="font-bold text-xl">${selectedOwnerData.netWorth}</span>
+                            <span className="font-bold text-xl">${formatKMB(getOwnerNetWorth(selectedOwnerData))}</span>
                           </div>
                           <div className="h-48">
-                            <WealthCompositionChart data={selectedOwnerData.wealthComposition} compact />
+                            <WealthCompositionChart data={getWealthComposition(selectedOwnerData)} compact />
                           </div>
                         </div>
                       </CardContent>
@@ -436,20 +497,20 @@ export default function OwnerWealthAnalysis() {
                             </Avatar>
                             <div>
                               <CardTitle className="text-lg">{comparisonOwnerData.name}</CardTitle>
-                              <CardDescription>{comparisonOwnerData.type}</CardDescription>
+                              <CardDescription>{comparisonOwnerData.ownerType}</CardDescription>
                             </div>
                           </div>
-                          <ConfidenceIndicator level={comparisonOwnerData.confidenceLevel} small />
+                          <ConfidenceIndicator level={comparisonOwnerData.confidenceLevel??"Low"} small />
                         </div>
                       </CardHeader>
                       <CardContent className="p-4">
                         <div className="space-y-4">
                           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                             <span className="text-muted-foreground">Net Worth</span>
-                            <span className="font-bold text-xl">${comparisonOwnerData.netWorth}</span>
+                            <span className="font-bold text-xl">${formatKMB(getOwnerNetWorth(comparisonOwnerData))}</span>
                           </div>
                           <div className="h-48">
-                            <WealthCompositionChart data={comparisonOwnerData.wealthComposition} compact />
+                            <WealthCompositionChart data={getWealthComposition(comparisonOwnerData)} compact />
                           </div>
                         </div>
                       </CardContent>
@@ -502,21 +563,21 @@ export default function OwnerWealthAnalysis() {
                           <tbody>
                             <tr className="hover:bg-gray-50">
                               <td className="p-4 border-b font-medium">Net Worth</td>
-                              <td className="p-4 border-b text-right">${selectedOwnerData.netWorth}</td>
-                              <td className="p-4 border-b text-right">${comparisonOwnerData.netWorth}</td>
+                              <td className="p-4 border-b text-right">${formatKMB(getOwnerNetWorth(selectedOwnerData))}</td>
+                              <td className="p-4 border-b text-right">${formatKMB(getOwnerNetWorth(comparisonOwnerData))}</td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
-                                  value={calculateDifference(selectedOwnerData.netWorth, comparisonOwnerData.netWorth)}
+                                  value={calculateDifference(getOwnerNetWorth(selectedOwnerData).toString(), getOwnerNetWorth(comparisonOwnerData).toString())}
                                 />
                               </td>
                             </tr>
                             <tr className="hover:bg-gray-50">
                               <td className="p-4 border-b font-medium">Real Estate</td>
                               <td className="p-4 border-b text-right">
-                                ${getAssetValue(selectedOwnerData, "Real Estate")}
+                                ${formatKMB(Number(getAssetValue(selectedOwnerData, "Real Estate")))}
                               </td>
                               <td className="p-4 border-b text-right">
-                                ${getAssetValue(comparisonOwnerData, "Real Estate")}
+                              ${formatKMB(Number(getAssetValue(comparisonOwnerData, "Real Estate")))}
                               </td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
@@ -530,10 +591,11 @@ export default function OwnerWealthAnalysis() {
                             <tr className="hover:bg-gray-50">
                               <td className="p-4 border-b font-medium">Stocks & Securities</td>
                               <td className="p-4 border-b text-right">
-                                ${getAssetValue(selectedOwnerData, "Stocks & Securities")}
+                               
+                               ${formatKMB(Number(getAssetValue(selectedOwnerData,  "Stocks & Securities")))}
                               </td>
                               <td className="p-4 border-b text-right">
-                                ${getAssetValue(comparisonOwnerData, "Stocks & Securities")}
+                               ${formatKMB(Number(getAssetValue(comparisonOwnerData,  "Stocks & Securities")))}
                               </td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
@@ -547,10 +609,10 @@ export default function OwnerWealthAnalysis() {
                             <tr className="hover:bg-gray-50">
                               <td className="p-4 border-b font-medium">Business Interests</td>
                               <td className="p-4 border-b text-right">
-                                ${getAssetValue(selectedOwnerData, "Business Interests")}
+                                ${formatKMB(Number(getAssetValue(selectedOwnerData,  "Business Interests")))}
                               </td>
                               <td className="p-4 border-b text-right">
-                                ${getAssetValue(comparisonOwnerData, "Business Interests")}
+                               ${formatKMB(Number(getAssetValue(comparisonOwnerData,  "Business Interests")))}
                               </td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
@@ -595,22 +657,19 @@ function DifferenceValue({ value }: { value: string }) {
   const isNegative = value.startsWith("-")
 
   return (
-    <span className={`font-medium ${isPositive ? "text-green-600" : isNegative ? "text-red-600" : ""}`}>{value}</span>
+    <span className={`font-medium ${isPositive ? "text-green-600" : isNegative ? "text-red-600" : ""}`}>{
+     formatKMB(Number.parseFloat(value))}</span>
   )
 }
 
 // Helper functions
-function getAssetValue(owner: any, assetName: string): string {
-  return owner.wealthComposition.find((item: any) => item.name === assetName)?.value || "0"
-}
-
 function calculateDifference(value1: string, value2: string): string {
   const num1 = Number.parseFloat(value1.replace(/[^0-9.]/g, ""))
   const num2 = Number.parseFloat(value2.replace(/[^0-9.]/g, ""))
   const diff = num1 - num2
 
   const formattedDiff = Math.abs(diff).toFixed(1) + "M"
-  return diff > 0 ? `+$${formattedDiff}` : `-$${formattedDiff}`
+  return formattedDiff;
 }
 
 // Mock property data

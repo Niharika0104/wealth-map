@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MapPin, Eye, Calendar, Shield, Grid3X3, List } from "lucide-react"
 import Link from "next/link"
-import type { Property } from "../trending/property-generator"
+import type {Property} from "@/Models/models"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import {
@@ -30,13 +30,22 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 12
 
+  // Helper to get region from address (fallback to state if not present)
+  const getRegion = (property: Property) => {
+    if (property.address && property.address.includes(",")) {
+      const parts = property.address.split(",")
+      return parts[parts.length - 1].trim()
+    }
+    return property.state || ""
+  }
+
   // Filter properties by search query
   const filteredProperties = properties.filter(
     (property) =>
       property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      property.region.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      property.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      property.ownerName.toLowerCase().includes(searchQuery.toLowerCase()),
+      (property.name && property.name.toLowerCase().includes(searchQuery.toLowerCase()))
   )
 
   // Sort properties
@@ -48,23 +57,26 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
 
     switch (sortBy) {
       case "value-desc":
-        return getNumericValue(b.value) - getNumericValue(a.value)
+        return getNumericValue(b.price.toString()) - getNumericValue(a.price.toString())
       case "value-asc":
-        return getNumericValue(a.value) - getNumericValue(b.value)
+        return getNumericValue(a.price.toString()) - getNumericValue(b.price.toString())
       case "sqft-desc":
-        return b.sqft - a.sqft
+        return (Number(b.area) || 0) - (Number(a.area) || 0)
       case "sqft-asc":
-        return a.sqft - b.sqft
+        return (Number(a.area) || 0) - (Number(b.area) || 0)
       case "views-desc":
-        return b.views - a.views
+        // If views is an array, use its length; if it's a number, use it directly; fallback to 0
+        return (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0)
+          - (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0)
       case "views-asc":
-        return a.views - b.views
+        return (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0)
+          - (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0)
       case "date-desc":
-        return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       case "date-asc":
-        return new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime()
+        return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
       default:
-        return getNumericValue(b.value) - getNumericValue(a.value)
+        return getNumericValue(b.price.toString()) - getNumericValue(a.price.toString())
     }
   })
 
@@ -200,7 +212,8 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                     </div>
                     <CardContent className="p-4">
                       <h3 className="font-bold text-lg mb-1 line-clamp-1">
-                        {property.type} {property.region}
+                        {property.name} 
+                        
                       </h3>
                       <div className="flex items-center text-gray-600 mb-2">
                         <MapPin className="h-4 w-4 min-w-4 mr-1" />
@@ -212,23 +225,37 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                           {property.views}
                         </Badge>
                         <Badge variant="outline" className="flex items-center gap-1">
-                          {property.sqft} sqft
+                         {property?.area != null && !isNaN(Number(property.area))
+                      ? Number(property.area) >= 1_000_000
+                        ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
+                        : Number(property.area) >= 1_000
+                          ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
+                          : `${Math.floor(Number(property.area))} sqft`
+                      : "N/A sqft"}
                         </Badge>
-                        <Badge className={`${getConfidenceColor(property.confidenceLevel)} flex items-center gap-1`}>
+                        <Badge className={`${getConfidenceColor(property.confidence ?? "")} flex items-center gap-1`}>
                           <Shield className="h-3 w-3" />
-                          {property.confidenceLevel}
+                          {property.confidence}
                         </Badge>
                       </div>
                       <div className="flex justify-between items-center">
                         <div className="text-sm text-gray-600 flex items-center">
                           <Calendar className="h-3 w-3 mr-1" />
-                          {property.lastUpdated}
+                          {new Date(property.updatedAt).toLocaleDateString()}
                         </div>
                         <div className="flex items-center">
-                          <span className="font-bold text-green-600 mr-2">{property.value}</span>
+                          <span className="font-bold text-green-600 mr-2">
+                            {property?.price != null && !isNaN(Number(property.price))
+                      ? Number(property.price) >= 1_000_000
+                        ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
+                        : Number(property.price) >= 1_000
+                          ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
+                          : `$${Number(property.price)}`
+                      : 'N/A'}
+                          </span>
                           <Avatar className="h-6 w-6">
                             <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                            <AvatarFallback>{property.ownerName.charAt(0)}</AvatarFallback>
+                            <AvatarFallback>{(property.owners?.[0]?.name?.charAt(0) ?? "?")}</AvatarFallback>
                           </Avatar>
                         </div>
                       </div>
@@ -259,7 +286,7 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                           <div className="flex flex-col md:flex-row md:justify-between md:items-start">
                             <div>
                               <h3 className="font-bold text-lg">
-                                {property.type} {property.region}
+                                {property.name}
                               </h3>
                               <div className="flex items-center text-gray-600 mb-2">
                                 <MapPin className="h-4 w-4 mr-1" />
@@ -267,10 +294,18 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                               </div>
                             </div>
                             <div className="mt-2 md:mt-0 md:ml-4 flex items-center">
-                              <span className="font-bold text-green-600 text-lg">{property.value}</span>
+                              <span className="font-bold text-green-600 text-lg">
+                                {property?.price != null && !isNaN(Number(property.price))
+                      ? Number(property.price) >= 1_000_000
+                        ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
+                        : Number(property.price) >= 1_000
+                          ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
+                          : `$${Number(property.price)}`
+                      : 'N/A'}
+                              </span>
                               <Avatar className="h-6 w-6 ml-2">
                                 <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                                <AvatarFallback>{property.ownerName.charAt(0)}</AvatarFallback>
+                                <AvatarFallback>{(property.owners?.[0]?.name?.charAt(0) ?? "?")}</AvatarFallback>
                               </Avatar>
                             </div>
                           </div>
@@ -281,17 +316,25 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                               {property.views} views
                             </Badge>
                             <Badge variant="outline" className="flex items-center gap-1">
-                              {property.sqft} sqft
+                            
+                                  {property?.area != null && !isNaN(Number(property.area))
+                      ? Number(property.area) >= 1_000_000
+                        ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
+                        : Number(property.area) >= 1_000
+                          ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
+                          : `${Math.floor(Number(property.area))} sqft`
+                      : "N/A sqft"}
+                               
                             </Badge>
                             <Badge
-                              className={`${getConfidenceColor(property.confidenceLevel)} flex items-center gap-1`}
+                              className={`${getConfidenceColor(property.confidence ?? "")} flex items-center gap-1`}
                             >
                               <Shield className="h-3 w-3" />
-                              {property.confidenceLevel} confidence
+                              {property.confidence} confidence
                             </Badge>
                             <div className="text-sm text-gray-600 flex items-center ml-auto">
                               <Calendar className="h-3 w-3 mr-1" />
-                              {property.lastUpdated}
+                              {new Date(property.updatedAt).toLocaleDateString()}
                             </div>
                           </div>
                         </div>

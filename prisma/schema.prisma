@@ -23,7 +23,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
-
+Bookmark        Bookmark[]
   twoFactorEnabled Boolean?
   role             String?
   banned           Boolean?
@@ -32,8 +32,11 @@ model User {
   twofactors       TwoFactor[]
   members          Member[]
   invitations      Invitation[]
-
+Reports         Report[]
+  SharedProperty   SharedProperty[]
+  views           View[]
   passkeys Passkey[]
+  savedSearches SavedSearch[]
 
   roles Role[] @relation("UserRoles")
 
@@ -187,4 +190,119 @@ model Role {
   isSystem    Boolean       @default(false)
   permissions Permission[]  @relation("RolePermissions")
   users       User[]        @relation("UserRoles")
+}
+
+model Property{
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  address     String @unique
+  city        String
+  state       String
+  country     String
+  zipCode     String
+  price       Float
+  images      String[]
+  area       Float
+  bed             Int?             // only for houses
+  bath            Int? 
+  type        String
+  confidenceScore Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  owners      PropertyOwner[]
+  Bookmarks  Bookmark[]
+  views       View[]
+  @@map("property")
+}
+
+model Owner{
+  id          String   @id @default(uuid())
+  name        String
+  email       String?
+  phoneNumber String?
+  stocksSecurities  Float            @default(0.0)
+  businessInterests Float            @default(0.0)
+  cashSavings       Float            @default(0.0)
+  otherAssets       Float            @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  properties  PropertyOwner[]
+  @@map("owners")
+}
+
+model PropertyOwner{
+  id          String   @id @default(uuid())
+  propertyId  String
+  ownerId     String
+  ownerType  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  owner       Owner    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+ createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([propertyId, ownerId])
+  @@map("property_owners")
+}
+
+model Report {
+  id            String    @id @default(uuid())
+  title         String    @unique
+  description   String?
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+     
+  notes         String?          
+  reportType    String?
+  sharedWith    SharedProperty[] 
+  exported      Boolean?         @default(false)
+  exportUrl     String?         
+
+  @@map("reports")
+}
+
+
+model SharedProperty{
+  id String @id @default(uuid())
+  userId String
+  reportId String 
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("shared_property")
+  @@unique([userId, reportId])
+}
+
+model View{
+  id String @id @default(uuid())
+  userId String
+  propertyId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("views")
+}
+model Bookmark{
+  id String @id @default(uuid())
+  userId String
+  propertyId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, propertyId])
+  @@map("bookmarks")
+}
+model SavedSearch{
+  id String @id @default(uuid())
+  userId String
+  name String
+  filters Json 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("saved_searches")
 }

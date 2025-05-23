@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import axios from 'axios'
 import { getProperties } from "../trending/property-store"
 import InteractiveMap from "./interactive-map"
 import MapFilters from "./map-filters"
@@ -9,10 +10,10 @@ import { Button } from "@/components/ui/button"
 import { Layers, Filter, Bookmark, X, Grid, Map } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import type { Property } from "../trending/property-generator"
+
 import { toast } from "@/components/ui/use-toast"
 import PropertyGrid from "./property-grid"
-
+import type {Property} from "@/Models/models"
 export type MapView = {
   id: string
   name: string
@@ -31,76 +32,87 @@ export type FilterState = {
 }
 
 export default function HomePage() {
-  const { trendingProperties } = getProperties()
-  const [filteredProperties, setFilteredProperties] = useState<Property[]>(trendingProperties)
-  const [mapType, setMapType] = useState<"streets" | "satellite">("streets")
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
+  const [mapType, setMapType] = useState<"streets" | "satellite">("streets");
   const [currentView, setCurrentView] = useState<{ center: [number, number]; zoom: number }>({
-    center: [-95.7129, 37.0902], // Center of US
+    center: [-95.7129, 37.0902],
     zoom: 4,
-  })
-  const [savedViews, setSavedViews] = useState<MapView[]>([])
+  });
+  const [savedViews, setSavedViews] = useState<MapView[]>([]);
   const [filterState, setFilterState] = useState<FilterState>({
     value: [0, 15],
-    sqft: [0, 10000],
+    sqft: [0, 999000],
     confidence: ["High", "Medium", "Low"],
     propertyType: [],
     ownerType: [],
-  })
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [isSavedViewsOpen, setIsSavedViewsOpen] = useState(false)
-  const isDesktop = useMediaQuery("(min-width: 768px)")
-  const [viewMode, setViewMode] = useState<"map" | "grid">("map")
+  });
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isSavedViewsOpen, setIsSavedViewsOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [viewMode, setViewMode] = useState<"map" | "grid">("map");
+  const [valueRange, setValueRange] = useState<[number, number]>([0, 15]);
+  const [sqftRange, setSqftRange] = useState<[number, number]>([0, 10000]);
 
-  // Initialize min/max values for sliders
-  const [valueRange, setValueRange] = useState<[number, number]>([0, 15])
-  const [sqftRange, setSqftRange] = useState<[number, number]>([0, 10000])
+  // Fetch properties and assign random confidence
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await axios.get('/api/property/all');
+        const data = res.data;
+        // Assign random confidence to each property
+        const confidenceLevels = ["High", "Medium", "Low"];
+        const withConfidence = data.map((p: Property) => ({
+          ...p,
+          confidence: confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)]
+        }));
+        setProperties(withConfidence);
+        setFilteredProperties(withConfidence);
+      } catch (err) {
+        console.error('Failed to fetch properties:', err);
+      }
+    };
+    fetchProperties();
+  }, []);
 
   // Get unique property types and owner types
-  const propertyTypes = Array.from(new Set(trendingProperties.map((p) => p.type)))
-  const ownerTypes = Array.from(new Set(trendingProperties.map((p) => p.ownerType)))
+  const propertyTypes = Array.from(new Set(properties.map((p) => p.type)));
+  const ownerTypes = Array.from(
+    new Set(
+      properties
+        .map((p) => (p.ownerType == null ? "" : String(p.ownerType)))
+        .filter((v) => v !== "")
+    )
+  );
 
   // Apply filters to properties
   useEffect(() => {
-    const filtered = trendingProperties.filter((property) => {
-      // Convert property value from string to number (e.g., "$1.2M" to 1.2)
-      const numericValue = Number.parseFloat(property.value.replace(/[^0-9.]/g, ""))
-      const valueInMillions = property.value.includes("M") ? numericValue : numericValue / 1000000
-
-      // Check if property passes all filters
-      const passesValue = valueInMillions >= filterState.value[0] && valueInMillions <= filterState.value[1]
-      const passesSqft = property.sqft >= filterState.sqft[0] && property.sqft <= filterState.sqft[1]
-      const passesConfidence = filterState.confidence.includes(property.confidenceLevel)
-      const passesPropertyType =
-        filterState.propertyType.length === 0 || filterState.propertyType.includes(property.type)
-      const passesOwnerType = filterState.ownerType.length === 0 || filterState.ownerType.includes(property.ownerType)
-
-      return passesValue && passesSqft && passesConfidence && passesPropertyType && passesOwnerType
-    })
-
-    setFilteredProperties(filtered)
-  }, [filterState, trendingProperties])
+    const filtered = properties.filter((property) => {
+      const passesValue = property.price >= filterState.value[0] && property.price <= filterState.value[1];
+      const passesSqft = property.area >= filterState.sqft[0] && property.area <= filterState.sqft[1];
+      const passesConfidence = filterState.confidence.length === 0 || filterState.confidence.includes(property.confidence ?? "");
+      const passesPropertyType = filterState.propertyType.length === 0 || filterState.propertyType.includes(property.type);
+      const passesOwnerType = filterState.ownerType.length === 0 || filterState.ownerType.includes(property.ownerType ?? "");
+      return passesValue && passesSqft && passesConfidence && passesPropertyType && passesOwnerType;
+    });
+    setFilteredProperties(filtered);
+  }, [filterState, properties]);
 
   // Calculate ranges for sliders on initial load
   useEffect(() => {
-    if (trendingProperties.length > 0) {
-      // Calculate value range
-      const values = trendingProperties.map((p) => {
-        const numericValue = Number.parseFloat(p.value.replace(/[^0-9.]/g, ""))
-        return p.value.includes("M") ? numericValue : numericValue / 1000000
-      })
-      const minValue = Math.floor(Math.min(...values))
-      const maxValue = Math.ceil(Math.max(...values))
-      setValueRange([minValue, maxValue])
-      setFilterState((prev) => ({ ...prev, value: [minValue, maxValue] }))
-
-      // Calculate sqft range
-      const sqfts = trendingProperties.map((p) => p.sqft)
-      const minSqft = Math.floor(Math.min(...sqfts) / 100) * 100
-      const maxSqft = Math.ceil(Math.max(...sqfts) / 100) * 100
-      setSqftRange([minSqft, maxSqft])
-      setFilterState((prev) => ({ ...prev, sqft: [minSqft, maxSqft] }))
+    if (properties.length > 0) {
+      const values = properties.map((p) => p.price);
+      const minValue = Math.floor(Math.min(...values));
+      const maxValue = Math.ceil(Math.max(...values));
+      setValueRange([minValue, maxValue]);
+      setFilterState((prev) => ({ ...prev, value: [minValue, maxValue] }));
+      const sqfts = properties.map((p) => p.area);
+      const minSqft = Math.floor(Math.min(...sqfts) / 100) * 100;
+      const maxSqft = Math.ceil(Math.max(...sqfts) / 100) * 100;
+      setSqftRange([minSqft, maxSqft]);
+      setFilterState((prev) => ({ ...prev, sqft: [minSqft, maxSqft] }));
     }
-  }, [trendingProperties])
+  }, [properties]);
 
   // Load saved views from localStorage
   useEffect(() => {
@@ -131,7 +143,7 @@ export default function HomePage() {
 
     toast({
       title: "View saved",
-      description: `"${name}" has been saved to your views.`,
+      children: `"${name}" has been saved to your views.`,
     })
   }
 
@@ -146,7 +158,7 @@ export default function HomePage() {
 
     toast({
       title: "View loaded",
-      description: `"${view.name}" has been loaded.`,
+      children: `"${view.name}" has been loaded.`,
     })
   }
 
@@ -158,7 +170,7 @@ export default function HomePage() {
 
     toast({
       title: "View deleted",
-      description: "The saved view has been deleted.",
+      children: "The saved view has been deleted.",
     })
   }
 
@@ -184,7 +196,7 @@ export default function HomePage() {
 
     toast({
       title: "Filters reset",
-      description: "All filters have been reset to default values.",
+      children: "All filters have been reset to default values.",
     })
   }
 
@@ -284,7 +296,7 @@ export default function HomePage() {
                   ownerTypes={ownerTypes}
                   resetFilters={resetFilters}
                   filteredCount={filteredProperties.length}
-                  totalCount={trendingProperties.length}
+                  totalCount={properties.length}
                 />
               </div>
             </SheetContent>
@@ -336,7 +348,7 @@ export default function HomePage() {
             ownerTypes={ownerTypes}
             resetFilters={resetFilters}
             filteredCount={filteredProperties.length}
-            totalCount={trendingProperties.length}
+            totalCount={properties.length}
           />
         </div>
       )}
@@ -362,7 +374,7 @@ export default function HomePage() {
 
       {/* Property Count Indicator */}
       <div className="absolute bottom-4 left-4 z-10 bg-white bg-opacity-90 rounded-md px-3 py-1 text-sm shadow-md">
-        Showing {filteredProperties.length} of {trendingProperties.length} properties
+        Showing {filteredProperties.length} of {properties.length} properties
       </div>
     </div>
   )

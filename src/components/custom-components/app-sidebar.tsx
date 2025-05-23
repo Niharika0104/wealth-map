@@ -30,7 +30,7 @@ const navigationItems = [
     title: "Main",
     items: [
       {
-        title: "Dashboard",
+        title: "Home",
         url: "/app",
         icon: Home,
         badge: null,

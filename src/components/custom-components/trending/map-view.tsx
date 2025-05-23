@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import * as maptilersdk from "@maptiler/sdk"
 import "@maptiler/sdk/dist/maptiler-sdk.css"
-import type { Property } from "./property-generator"
+import { Property } from "@/Models/models"
 import { Skeleton } from "@/components/ui/skeleton"
 
 // Proper interface for the Map instance
@@ -15,12 +15,14 @@ interface MapViewProps {
   properties: Property[]
   initialCenter?: [number, number]
   initialZoom?: number
+  coordinates?: [number, number]
 }
 
 export default function MapView({
   properties,
   initialCenter = [-95.7129, 37.0902], // Center of US as default
   initialZoom = 3,
+  coordinates
 }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const mapInstance = useRef<MapRef | null>(null)
@@ -120,17 +122,17 @@ export default function MapView({
           if (!isMounted.current || !mapInstance.current) break
 
           // Check if we have coordinates
-          if (property.coordinates && property.coordinates.length === 2) {
-            const [lng, lat] = property.coordinates
+          if (coordinates && coordinates.length === 2) {
+            const [lng, lat] = coordinates
 
             const marker = new maptilersdk.Marker({ color: "red" }).setLngLat([lng, lat]).addTo(mapInstance.current)
 
             // Add popup with property info
             const popup = new maptilersdk.Popup({ offset: 25 }).setHTML(`
                 <div style="max-width: 200px;">
-                  <h3 style="font-weight: bold; margin-bottom: 5px;">${property.type} ${property.region}</h3>
+                  <h3 style="font-weight: bold; margin-bottom: 5px;">${property.type} ${property.city}</h3>
                   <p style="margin-bottom: 5px;">${property.address}</p>
-                  <p style="font-weight: bold; color: #10b981;">${property.value}</p>
+                  <p style="font-weight: bold; color: #10b981;">${property.price}</p>
                   <a href="/app/property/${property.id}" style="color: #3b82f6; text-decoration: underline;">View details</a>
                 </div>
               `)
