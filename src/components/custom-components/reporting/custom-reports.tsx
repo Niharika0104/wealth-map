@@ -136,7 +136,7 @@ export default function CustomReports() {
     if (!reportName) {
       toast({
         title: "Report name required",
-        description: "Please enter a name for your report.",
+        children: "Please enter a name for your report.",
         variant: "destructive",
       })
       return
@@ -145,7 +145,7 @@ export default function CustomReports() {
     if (selectedProperties.length === 0) {
       toast({
         title: "No properties selected",
-        description: "Please select at least one property for your report.",
+        children: "Please select at least one property for your report.",
         variant: "destructive",
       })
       return
@@ -154,7 +154,7 @@ export default function CustomReports() {
     if (selectedFields.length === 0) {
       toast({
         title: "No fields selected",
-        description: "Please select at least one field for your report.",
+        children: "Please select at least one field for your report.",
         variant: "destructive",
       })
       return
@@ -175,7 +175,7 @@ export default function CustomReports() {
 
     toast({
       title: "Report saved",
-      description: "Your custom report has been saved successfully.",
+      children: "Your custom report has been saved successfully.",
       variant: "default",
     })
 
@@ -196,7 +196,7 @@ export default function CustomReports() {
 
     toast({
       title: "Report deleted",
-      description: "The report has been deleted successfully.",
+      children: "The report has been deleted successfully.",
       variant: "default",
     })
   }
@@ -212,7 +212,7 @@ export default function CustomReports() {
     if (!shareEmail) {
       toast({
         title: "Email required",
-        description: "Please enter an email address to share with.",
+        children: "Please enter an email address to share with.",
         variant: "destructive",
       })
       return
@@ -228,7 +228,7 @@ export default function CustomReports() {
 
     toast({
       title: "Report shared",
-      description: `The report has been shared with ${shareEmail}.`,
+      children: `The report has been shared with ${shareEmail}.`,
       variant: "default",
     })
 

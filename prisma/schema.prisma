@@ -100,11 +100,13 @@ model TwoFactor {
 }
 
 model Organization {
-  id          String       @id
+  id          String       @id @default(uuid())
   name        String
   slug        String?
   logo        String?
-  createdAt   DateTime
+  createdAt   DateTime     @default(now())
+  status      String       @default("active")
+  isSuperAdmin Boolean     @default(false)
   metadata    String?
   members     Member[]
   invitations Invitation[]
