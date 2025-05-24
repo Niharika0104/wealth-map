@@ -33,6 +33,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import Link from "next/link"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 // Navigation items grouped by role
 const navigationItems = {
@@ -100,12 +108,6 @@ const navigationItems = {
           title: "Employees",
           url: "/app/company-admin/employees",
           icon: Users,
-          badge: null,
-        },
-        {
-          title: "Properties",
-          url: "/app/company-admin/properties",
-          icon: Building,
           badge: null,
         },
       ],
@@ -205,7 +207,17 @@ export function AppSidebar() {
 
   useEffect(() => {
     if (session?.user?.role) {
-      setCurrentRole(session.user.role)
+      // Get the stored role from localStorage or use the session role
+      const storedRole = localStorage.getItem('selectedRole')
+      const allowedRoles = availableRoles[session.user.role as keyof typeof availableRoles] || []
+      
+      // Only set the stored role if it's allowed for the current user
+      if (storedRole && allowedRoles.includes(storedRole)) {
+        setCurrentRole(storedRole)
+      } else {
+        setCurrentRole(session.user.role)
+        localStorage.setItem('selectedRole', session.user.role)
+      }
     }
   }, [session])
 
@@ -233,6 +245,8 @@ export function AppSidebar() {
       if (!response.ok) throw new Error("Failed to switch role")
 
       setCurrentRole(newRole)
+      // Store the selected role in localStorage
+      localStorage.setItem('selectedRole', newRole)
       // Redirect to the home page of the new role using hyphens
       const rolePath = newRole.toLowerCase().replace('_', '-')
       router.push(`/app/${rolePath}/home`)
@@ -267,19 +281,25 @@ export function AppSidebar() {
     >
       {/* Logo */}
       <div
-        className={cn("flex items-center p-4 border-b border-border", collapsed ? "justify-center" : "justify-between")}
+        className={cn(
+          "flex items-center p-4 border-b border-border",
+          collapsed ? "justify-center" : "justify-between"
+        )}
       >
         {!collapsed && (
-          <img
-            src="/globe.svg"
-            className="h-8 w-auto"
-            alt="Logo"
-          />
+          <Link href="/app" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img
+              src="/globe.svg"
+              className="h-8 w-auto"
+              alt="Logo"
+            />
+            <span className="text-lg font-semibold">Wealth Map</span>
+          </Link>
         )}
         {collapsed && (
-          <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+          <Link href="/app" className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors">
             <span className="text-primary font-bold text-lg">W</span>
-          </div>
+          </Link>
         )}
       </div>
 
@@ -405,15 +425,36 @@ export function AppSidebar() {
               <p className="text-xs text-muted-foreground truncate">{session?.user?.email}</p>
             </div>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-4 w-4" />
-            <span className="sr-only">Logout</span>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+              >
+                <Settings className="h-4 w-4" />
+                <span className="sr-only">Open user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/app/account" className="flex items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile & Settings</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-red-600 focus:text-red-600"
+                onClick={handleLogout}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </aside>

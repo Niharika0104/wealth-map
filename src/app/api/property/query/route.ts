@@ -1,30 +1,62 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { propertyAgent } from "@/lib/ai-agent/property-agent";
+import { PrismaClient } from "@/generated/prisma";
+
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
     const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!session?.user?.id) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { query } = await req.json();
-    if (!query) {
-      return NextResponse.json({ error: "Query is required" }, { status: 400 });
+    const body = await req.json();
+    const { query, chatId } = body;
+
+    if (!query || !chatId) {
+      return new NextResponse("Missing required fields", { status: 400 });
     }
 
-    const response = await propertyAgent.processQuery({
-      query,
-      userId: session.user.id,
+    // Save user message
+    await prisma.chatMessage.create({
+      data: {
+        chatId,
+        role: "user",
+        content: query,
+      },
     });
 
-    return NextResponse.json({ response });
+    // TODO: Implement actual AI response generation
+    const aiResponse = "This is a mock response. AI integration coming soon.";
+
+    // Save AI response
+    await prisma.chatMessage.create({
+      data: {
+        chatId,
+        role: "assistant",
+        content: aiResponse,
+      },
+    });
+
+    // Update chat title if it's the first message
+    const chat = await prisma.chat.findUnique({
+      where: { id: chatId },
+      include: { messages: true },
+    });
+
+    if (chat && chat.messages.length === 2) {
+      await prisma.chat.update({
+        where: { id: chatId },
+        data: {
+          title: query.slice(0, 30) + (query.length > 30 ? "..." : ""),
+        },
+      });
+    }
+
+    return NextResponse.json({ response: aiResponse });
   } catch (error) {
-    console.error("Error processing property query:", error);
-    return NextResponse.json(
-      { error: "Failed to process property query" },
-      { status: 500 }
-    );
+    console.error("[PROPERTY_QUERY]", error);
+    return new NextResponse("Internal Error", { status: 500 });
   }
 } 
