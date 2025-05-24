@@ -1,18 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { User, CreditCard, FileText, LifeBuoy, Download } from "lucide-react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { User, FileText, Download, Building, Users, Settings } from "lucide-react"
 import { AccountProfile } from "./account-profile"
-import { AccountBilling } from "./account-billing"
 import { AccountDocuments } from "./account-documents"
-import { AccountSupport } from "./account-support"
+import { AccountSettings } from "./account-settings"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useSession } from "next-auth/react"
 
 export function AccountDashboard() {
   const [activeTab, setActiveTab] = useState("profile")
+  const { data: session } = useSession()
 
   const handleDownloadProfile = () => {
     // In a real application, this would generate a PDF with profile info
@@ -21,19 +21,46 @@ export function AccountDashboard() {
     alert("Profile PDF download started")
   }
 
-  const tabs = [
-    { id: "profile", label: "Profile", icon: User },
-    { id: "billing", label: "Billing", icon: CreditCard },
-    { id: "documents", label: "Reports", icon: FileText },
-    { id: "support", label: "Support", icon: LifeBuoy },
-  ]
+  // Define tabs based on user role
+  const getTabs = () => {
+    const baseTabs = [
+      { id: "profile", label: "Profile", icon: User },
+      { id: "documents", label: "Reports", icon: FileText },
+    ]
+
+    if (session?.user?.role === "SUPER_ADMIN") {
+      return [
+        ...baseTabs,
+        { id: "companies", label: "Companies", icon: Building },
+        { id: "users", label: "Users", icon: Users },
+        { id: "settings", label: "Settings", icon: Settings },
+      ]
+    }
+
+    if (session?.user?.role === "COMPANY_ADMIN") {
+      return [
+        ...baseTabs,
+        { id: "settings", label: "Settings", icon: Settings },
+      ]
+    }
+
+    return baseTabs
+  }
+
+  const tabs = getTabs()
 
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-black">Account</h1>
-          <p className="text-muted-foreground mt-2">View and manage your account information</p>
+          <p className="text-muted-foreground mt-2">
+            {session?.user?.role === "SUPER_ADMIN" 
+              ? "Manage system-wide settings and user accounts"
+              : session?.user?.role === "COMPANY_ADMIN"
+              ? "Manage your company settings and preferences"
+              : "View and manage your account information"}
+          </p>
         </div>
         <Button
           onClick={handleDownloadProfile}
@@ -82,9 +109,9 @@ export function AccountDashboard() {
       {/* Tab Content */}
       <div className="p-6 border rounded-md">
         {activeTab === "profile" && <AccountProfile />}
-        {activeTab === "billing" && <AccountBilling />}
         {activeTab === "documents" && <AccountDocuments />}
-        {activeTab === "support" && <AccountSupport />}
+        {activeTab === "settings" && <AccountSettings />}
+        {/* Add other tab contents based on role */}
       </div>
     </div>
   )

@@ -343,6 +343,22 @@ exports.Prisma.SystemSettingsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ChatMessageScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -390,7 +406,9 @@ exports.Prisma.ModelName = {
   View: 'View',
   Bookmark: 'Bookmark',
   SavedSearch: 'SavedSearch',
-  SystemSettings: 'SystemSettings'
+  SystemSettings: 'SystemSettings',
+  Chat: 'Chat',
+  ChatMessage: 'ChatMessage'
 };
 
 /**
