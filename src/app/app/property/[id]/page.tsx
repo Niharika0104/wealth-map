@@ -1,7 +1,7 @@
 "use client"
 
 import { useParams,useRouter } from "next/navigation"
-import { dataSources ,Wealthownershipfields} from "@/Models/models"
+import { dataSources ,formatKMB,Wealthownershipfields} from "@/Models/models"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -294,9 +294,9 @@ useEffect(() => {
                       </div>
                       <div className="text-sm font-medium">
                         {index === 0
-                          ? realestateWealth.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+                          ? formatKMB(realestateWealth) 
                           : owner && item.key in owner && owner[item.key as keyof Owner] != null
-                            ? Number(owner[item.key as keyof Owner]).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+                            ? formatKMB( Number(owner[item.key as keyof Owner])) 
                             : ''}
                       </div>
                     </div>
