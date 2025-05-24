@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/generated/prisma";
 import { auth } from "@/lib/auth";
+import crypto from "crypto";
 
 const prisma = new PrismaClient();
 
@@ -47,10 +48,11 @@ export async function POST(
     // Create member record
     await prisma.member.create({
       data: {
+        id: crypto.randomUUID(),
         organizationId: invitation.organizationId,
         userId: session.user.id,
         role: invitation.role || "member",
-        status: "active",
+        createdAt: new Date(),
       },
     });
 

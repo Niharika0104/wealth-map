@@ -85,9 +85,10 @@ export function CompanyRegistrationForm() {
         body: JSON.stringify(data),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to register company");
+        throw new Error(result.message || "Failed to register company");
       }
 
       toast({
@@ -95,8 +96,8 @@ export function CompanyRegistrationForm() {
         children: "Your company has been registered successfully.",
       });
 
-      // Redirect to dashboard
-      window.location.href = "/app";
+      // Redirect to account setup page with organization ID
+      window.location.href = `/auth/setup?organizationId=${result.organizationId}`;
     } catch (error) {
       toast({
         title: "Error",

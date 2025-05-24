@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/generated/prisma';
 import { fileURLToPath } from 'url';
 import csvParser from 'csv-parser';
 import xlsx from 'xlsx';

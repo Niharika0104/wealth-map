@@ -63,6 +63,61 @@ export type CustomRole = $Result.DefaultSelection<Prisma.$CustomRolePayload>
  * 
  */
 export type Passkey = $Result.DefaultSelection<Prisma.$PasskeyPayload>
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = $Result.DefaultSelection<Prisma.$PermissionPayload>
+/**
+ * Model Role
+ * 
+ */
+export type Role = $Result.DefaultSelection<Prisma.$RolePayload>
+/**
+ * Model Property
+ * 
+ */
+export type Property = $Result.DefaultSelection<Prisma.$PropertyPayload>
+/**
+ * Model Owner
+ * 
+ */
+export type Owner = $Result.DefaultSelection<Prisma.$OwnerPayload>
+/**
+ * Model PropertyOwner
+ * 
+ */
+export type PropertyOwner = $Result.DefaultSelection<Prisma.$PropertyOwnerPayload>
+/**
+ * Model Report
+ * 
+ */
+export type Report = $Result.DefaultSelection<Prisma.$ReportPayload>
+/**
+ * Model SharedProperty
+ * 
+ */
+export type SharedProperty = $Result.DefaultSelection<Prisma.$SharedPropertyPayload>
+/**
+ * Model View
+ * 
+ */
+export type View = $Result.DefaultSelection<Prisma.$ViewPayload>
+/**
+ * Model Bookmark
+ * 
+ */
+export type Bookmark = $Result.DefaultSelection<Prisma.$BookmarkPayload>
+/**
+ * Model SavedSearch
+ * 
+ */
+export type SavedSearch = $Result.DefaultSelection<Prisma.$SavedSearchPayload>
+/**
+ * Model SystemSettings
+ * 
+ */
+export type SystemSettings = $Result.DefaultSelection<Prisma.$SystemSettingsPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -288,6 +343,116 @@ export class PrismaClient<
     * ```
     */
   get passkey(): Prisma.PasskeyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.permission`: Exposes CRUD operations for the **Permission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Permissions
+    * const permissions = await prisma.permission.findMany()
+    * ```
+    */
+  get permission(): Prisma.PermissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.role`: Exposes CRUD operations for the **Role** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Roles
+    * const roles = await prisma.role.findMany()
+    * ```
+    */
+  get role(): Prisma.RoleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.property`: Exposes CRUD operations for the **Property** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Properties
+    * const properties = await prisma.property.findMany()
+    * ```
+    */
+  get property(): Prisma.PropertyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.owner`: Exposes CRUD operations for the **Owner** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Owners
+    * const owners = await prisma.owner.findMany()
+    * ```
+    */
+  get owner(): Prisma.OwnerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.propertyOwner`: Exposes CRUD operations for the **PropertyOwner** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PropertyOwners
+    * const propertyOwners = await prisma.propertyOwner.findMany()
+    * ```
+    */
+  get propertyOwner(): Prisma.PropertyOwnerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.report`: Exposes CRUD operations for the **Report** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reports
+    * const reports = await prisma.report.findMany()
+    * ```
+    */
+  get report(): Prisma.ReportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sharedProperty`: Exposes CRUD operations for the **SharedProperty** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SharedProperties
+    * const sharedProperties = await prisma.sharedProperty.findMany()
+    * ```
+    */
+  get sharedProperty(): Prisma.SharedPropertyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.view`: Exposes CRUD operations for the **View** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Views
+    * const views = await prisma.view.findMany()
+    * ```
+    */
+  get view(): Prisma.ViewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.bookmark`: Exposes CRUD operations for the **Bookmark** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Bookmarks
+    * const bookmarks = await prisma.bookmark.findMany()
+    * ```
+    */
+  get bookmark(): Prisma.BookmarkDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.savedSearch`: Exposes CRUD operations for the **SavedSearch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SavedSearches
+    * const savedSearches = await prisma.savedSearch.findMany()
+    * ```
+    */
+  get savedSearch(): Prisma.SavedSearchDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.systemSettings`: Exposes CRUD operations for the **SystemSettings** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SystemSettings
+    * const systemSettings = await prisma.systemSettings.findMany()
+    * ```
+    */
+  get systemSettings(): Prisma.SystemSettingsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -737,7 +902,18 @@ export namespace Prisma {
     Member: 'Member',
     Invitation: 'Invitation',
     CustomRole: 'CustomRole',
-    Passkey: 'Passkey'
+    Passkey: 'Passkey',
+    Permission: 'Permission',
+    Role: 'Role',
+    Property: 'Property',
+    Owner: 'Owner',
+    PropertyOwner: 'PropertyOwner',
+    Report: 'Report',
+    SharedProperty: 'SharedProperty',
+    View: 'View',
+    Bookmark: 'Bookmark',
+    SavedSearch: 'SavedSearch',
+    SystemSettings: 'SystemSettings'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -756,7 +932,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "twoFactor" | "organization" | "member" | "invitation" | "customRole" | "passkey"
+      modelProps: "user" | "session" | "account" | "verification" | "twoFactor" | "organization" | "member" | "invitation" | "customRole" | "passkey" | "permission" | "role" | "property" | "owner" | "propertyOwner" | "report" | "sharedProperty" | "view" | "bookmark" | "savedSearch" | "systemSettings"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1500,6 +1676,820 @@ export namespace Prisma {
           }
         }
       }
+      Permission: {
+        payload: Prisma.$PermissionPayload<ExtArgs>
+        fields: Prisma.PermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.PermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          findMany: {
+            args: Prisma.PermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+          }
+          create: {
+            args: Prisma.PermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          createMany: {
+            args: Prisma.PermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PermissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+          }
+          delete: {
+            args: Prisma.PermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          update: {
+            args: Prisma.PermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.PermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PermissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.PermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.PermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePermission>
+          }
+          groupBy: {
+            args: Prisma.PermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<PermissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Role: {
+        payload: Prisma.$RolePayload<ExtArgs>
+        fields: Prisma.RoleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RoleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RoleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          findFirst: {
+            args: Prisma.RoleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RoleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          findMany: {
+            args: Prisma.RoleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>[]
+          }
+          create: {
+            args: Prisma.RoleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          createMany: {
+            args: Prisma.RoleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RoleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>[]
+          }
+          delete: {
+            args: Prisma.RoleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          update: {
+            args: Prisma.RoleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          deleteMany: {
+            args: Prisma.RoleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RoleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RoleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>[]
+          }
+          upsert: {
+            args: Prisma.RoleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RolePayload>
+          }
+          aggregate: {
+            args: Prisma.RoleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRole>
+          }
+          groupBy: {
+            args: Prisma.RoleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RoleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RoleCountArgs<ExtArgs>
+            result: $Utils.Optional<RoleCountAggregateOutputType> | number
+          }
+        }
+      }
+      Property: {
+        payload: Prisma.$PropertyPayload<ExtArgs>
+        fields: Prisma.PropertyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PropertyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PropertyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>
+          }
+          findFirst: {
+            args: Prisma.PropertyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PropertyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>
+          }
+          findMany: {
+            args: Prisma.PropertyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>[]
+          }
+          create: {
+            args: Prisma.PropertyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>
+          }
+          createMany: {
+            args: Prisma.PropertyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PropertyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>[]
+          }
+          delete: {
+            args: Prisma.PropertyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>
+          }
+          update: {
+            args: Prisma.PropertyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>
+          }
+          deleteMany: {
+            args: Prisma.PropertyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PropertyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PropertyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>[]
+          }
+          upsert: {
+            args: Prisma.PropertyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyPayload>
+          }
+          aggregate: {
+            args: Prisma.PropertyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProperty>
+          }
+          groupBy: {
+            args: Prisma.PropertyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PropertyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PropertyCountArgs<ExtArgs>
+            result: $Utils.Optional<PropertyCountAggregateOutputType> | number
+          }
+        }
+      }
+      Owner: {
+        payload: Prisma.$OwnerPayload<ExtArgs>
+        fields: Prisma.OwnerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OwnerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OwnerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          findFirst: {
+            args: Prisma.OwnerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OwnerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          findMany: {
+            args: Prisma.OwnerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          create: {
+            args: Prisma.OwnerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          createMany: {
+            args: Prisma.OwnerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OwnerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          delete: {
+            args: Prisma.OwnerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          update: {
+            args: Prisma.OwnerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          deleteMany: {
+            args: Prisma.OwnerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OwnerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OwnerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          upsert: {
+            args: Prisma.OwnerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          aggregate: {
+            args: Prisma.OwnerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOwner>
+          }
+          groupBy: {
+            args: Prisma.OwnerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OwnerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OwnerCountArgs<ExtArgs>
+            result: $Utils.Optional<OwnerCountAggregateOutputType> | number
+          }
+        }
+      }
+      PropertyOwner: {
+        payload: Prisma.$PropertyOwnerPayload<ExtArgs>
+        fields: Prisma.PropertyOwnerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PropertyOwnerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PropertyOwnerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>
+          }
+          findFirst: {
+            args: Prisma.PropertyOwnerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PropertyOwnerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>
+          }
+          findMany: {
+            args: Prisma.PropertyOwnerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>[]
+          }
+          create: {
+            args: Prisma.PropertyOwnerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>
+          }
+          createMany: {
+            args: Prisma.PropertyOwnerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PropertyOwnerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>[]
+          }
+          delete: {
+            args: Prisma.PropertyOwnerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>
+          }
+          update: {
+            args: Prisma.PropertyOwnerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>
+          }
+          deleteMany: {
+            args: Prisma.PropertyOwnerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PropertyOwnerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PropertyOwnerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>[]
+          }
+          upsert: {
+            args: Prisma.PropertyOwnerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PropertyOwnerPayload>
+          }
+          aggregate: {
+            args: Prisma.PropertyOwnerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePropertyOwner>
+          }
+          groupBy: {
+            args: Prisma.PropertyOwnerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PropertyOwnerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PropertyOwnerCountArgs<ExtArgs>
+            result: $Utils.Optional<PropertyOwnerCountAggregateOutputType> | number
+          }
+        }
+      }
+      Report: {
+        payload: Prisma.$ReportPayload<ExtArgs>
+        fields: Prisma.ReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          findFirst: {
+            args: Prisma.ReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          findMany: {
+            args: Prisma.ReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>[]
+          }
+          create: {
+            args: Prisma.ReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          createMany: {
+            args: Prisma.ReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>[]
+          }
+          delete: {
+            args: Prisma.ReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          update: {
+            args: Prisma.ReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.ReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          aggregate: {
+            args: Prisma.ReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReport>
+          }
+          groupBy: {
+            args: Prisma.ReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReportCountArgs<ExtArgs>
+            result: $Utils.Optional<ReportCountAggregateOutputType> | number
+          }
+        }
+      }
+      SharedProperty: {
+        payload: Prisma.$SharedPropertyPayload<ExtArgs>
+        fields: Prisma.SharedPropertyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SharedPropertyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SharedPropertyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>
+          }
+          findFirst: {
+            args: Prisma.SharedPropertyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SharedPropertyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>
+          }
+          findMany: {
+            args: Prisma.SharedPropertyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>[]
+          }
+          create: {
+            args: Prisma.SharedPropertyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>
+          }
+          createMany: {
+            args: Prisma.SharedPropertyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SharedPropertyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>[]
+          }
+          delete: {
+            args: Prisma.SharedPropertyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>
+          }
+          update: {
+            args: Prisma.SharedPropertyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>
+          }
+          deleteMany: {
+            args: Prisma.SharedPropertyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SharedPropertyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SharedPropertyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>[]
+          }
+          upsert: {
+            args: Prisma.SharedPropertyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharedPropertyPayload>
+          }
+          aggregate: {
+            args: Prisma.SharedPropertyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSharedProperty>
+          }
+          groupBy: {
+            args: Prisma.SharedPropertyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SharedPropertyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SharedPropertyCountArgs<ExtArgs>
+            result: $Utils.Optional<SharedPropertyCountAggregateOutputType> | number
+          }
+        }
+      }
+      View: {
+        payload: Prisma.$ViewPayload<ExtArgs>
+        fields: Prisma.ViewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ViewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ViewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          findFirst: {
+            args: Prisma.ViewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ViewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          findMany: {
+            args: Prisma.ViewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>[]
+          }
+          create: {
+            args: Prisma.ViewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          createMany: {
+            args: Prisma.ViewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ViewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>[]
+          }
+          delete: {
+            args: Prisma.ViewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          update: {
+            args: Prisma.ViewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          deleteMany: {
+            args: Prisma.ViewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ViewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ViewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>[]
+          }
+          upsert: {
+            args: Prisma.ViewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          aggregate: {
+            args: Prisma.ViewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateView>
+          }
+          groupBy: {
+            args: Prisma.ViewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ViewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ViewCountArgs<ExtArgs>
+            result: $Utils.Optional<ViewCountAggregateOutputType> | number
+          }
+        }
+      }
+      Bookmark: {
+        payload: Prisma.$BookmarkPayload<ExtArgs>
+        fields: Prisma.BookmarkFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BookmarkFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BookmarkFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>
+          }
+          findFirst: {
+            args: Prisma.BookmarkFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BookmarkFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>
+          }
+          findMany: {
+            args: Prisma.BookmarkFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+          }
+          create: {
+            args: Prisma.BookmarkCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>
+          }
+          createMany: {
+            args: Prisma.BookmarkCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BookmarkCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+          }
+          delete: {
+            args: Prisma.BookmarkDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>
+          }
+          update: {
+            args: Prisma.BookmarkUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>
+          }
+          deleteMany: {
+            args: Prisma.BookmarkDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BookmarkUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BookmarkUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+          }
+          upsert: {
+            args: Prisma.BookmarkUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookmarkPayload>
+          }
+          aggregate: {
+            args: Prisma.BookmarkAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBookmark>
+          }
+          groupBy: {
+            args: Prisma.BookmarkGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BookmarkGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BookmarkCountArgs<ExtArgs>
+            result: $Utils.Optional<BookmarkCountAggregateOutputType> | number
+          }
+        }
+      }
+      SavedSearch: {
+        payload: Prisma.$SavedSearchPayload<ExtArgs>
+        fields: Prisma.SavedSearchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SavedSearchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SavedSearchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+          }
+          findFirst: {
+            args: Prisma.SavedSearchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SavedSearchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+          }
+          findMany: {
+            args: Prisma.SavedSearchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>[]
+          }
+          create: {
+            args: Prisma.SavedSearchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+          }
+          createMany: {
+            args: Prisma.SavedSearchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SavedSearchCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>[]
+          }
+          delete: {
+            args: Prisma.SavedSearchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+          }
+          update: {
+            args: Prisma.SavedSearchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+          }
+          deleteMany: {
+            args: Prisma.SavedSearchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SavedSearchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SavedSearchUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>[]
+          }
+          upsert: {
+            args: Prisma.SavedSearchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+          }
+          aggregate: {
+            args: Prisma.SavedSearchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSavedSearch>
+          }
+          groupBy: {
+            args: Prisma.SavedSearchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SavedSearchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SavedSearchCountArgs<ExtArgs>
+            result: $Utils.Optional<SavedSearchCountAggregateOutputType> | number
+          }
+        }
+      }
+      SystemSettings: {
+        payload: Prisma.$SystemSettingsPayload<ExtArgs>
+        fields: Prisma.SystemSettingsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SystemSettingsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SystemSettingsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>
+          }
+          findFirst: {
+            args: Prisma.SystemSettingsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SystemSettingsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>
+          }
+          findMany: {
+            args: Prisma.SystemSettingsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>[]
+          }
+          create: {
+            args: Prisma.SystemSettingsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>
+          }
+          createMany: {
+            args: Prisma.SystemSettingsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SystemSettingsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>[]
+          }
+          delete: {
+            args: Prisma.SystemSettingsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>
+          }
+          update: {
+            args: Prisma.SystemSettingsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>
+          }
+          deleteMany: {
+            args: Prisma.SystemSettingsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SystemSettingsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SystemSettingsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>[]
+          }
+          upsert: {
+            args: Prisma.SystemSettingsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingsPayload>
+          }
+          aggregate: {
+            args: Prisma.SystemSettingsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSystemSettings>
+          }
+          groupBy: {
+            args: Prisma.SystemSettingsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SystemSettingsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SystemSettingsCountArgs<ExtArgs>
+            result: $Utils.Optional<SystemSettingsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1594,6 +2584,17 @@ export namespace Prisma {
     invitation?: InvitationOmit
     customRole?: CustomRoleOmit
     passkey?: PasskeyOmit
+    permission?: PermissionOmit
+    role?: RoleOmit
+    property?: PropertyOmit
+    owner?: OwnerOmit
+    propertyOwner?: PropertyOwnerOmit
+    report?: ReportOmit
+    sharedProperty?: SharedPropertyOmit
+    view?: ViewOmit
+    bookmark?: BookmarkOmit
+    savedSearch?: SavedSearchOmit
+    systemSettings?: SystemSettingsOmit
   }
 
   /* Types for Logging */
@@ -1688,20 +2689,32 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    roles: number
+    members: number
     sessions: number
     accounts: number
+    savedSearches: number
+    Bookmark: number
     twofactors: number
-    members: number
     invitations: number
+    Reports: number
+    SharedProperty: number
+    views: number
     passkeys: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | UserCountOutputTypeCountRolesArgs
+    members?: boolean | UserCountOutputTypeCountMembersArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+    savedSearches?: boolean | UserCountOutputTypeCountSavedSearchesArgs
+    Bookmark?: boolean | UserCountOutputTypeCountBookmarkArgs
     twofactors?: boolean | UserCountOutputTypeCountTwofactorsArgs
-    members?: boolean | UserCountOutputTypeCountMembersArgs
     invitations?: boolean | UserCountOutputTypeCountInvitationsArgs
+    Reports?: boolean | UserCountOutputTypeCountReportsArgs
+    SharedProperty?: boolean | UserCountOutputTypeCountSharedPropertyArgs
+    views?: boolean | UserCountOutputTypeCountViewsArgs
     passkeys?: boolean | UserCountOutputTypeCountPasskeysArgs
   }
 
@@ -1714,6 +2727,20 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoleWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MemberWhereInput
   }
 
   /**
@@ -1733,6 +2760,20 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountSavedSearchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SavedSearchWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBookmarkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookmarkWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountTwofactorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TwoFactorWhereInput
   }
@@ -1740,15 +2781,29 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MemberWhereInput
+  export type UserCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvitationWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: InvitationWhereInput
+  export type UserCountOutputTypeCountReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSharedPropertyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SharedPropertyWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ViewWhereInput
   }
 
   /**
@@ -1809,6 +2864,228 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CustomRoleCountOutputType
+   */
+
+  export type CustomRoleCountOutputType = {
+    permissions: number
+  }
+
+  export type CustomRoleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    permissions?: boolean | CustomRoleCountOutputTypeCountPermissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CustomRoleCountOutputType without action
+   */
+  export type CustomRoleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomRoleCountOutputType
+     */
+    select?: CustomRoleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CustomRoleCountOutputType without action
+   */
+  export type CustomRoleCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PermissionWhereInput
+  }
+
+
+  /**
+   * Count Type PermissionCountOutputType
+   */
+
+  export type PermissionCountOutputType = {
+    roles: number
+    customRoles: number
+  }
+
+  export type PermissionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | PermissionCountOutputTypeCountRolesArgs
+    customRoles?: boolean | PermissionCountOutputTypeCountCustomRolesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PermissionCountOutputType without action
+   */
+  export type PermissionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PermissionCountOutputType
+     */
+    select?: PermissionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PermissionCountOutputType without action
+   */
+  export type PermissionCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoleWhereInput
+  }
+
+  /**
+   * PermissionCountOutputType without action
+   */
+  export type PermissionCountOutputTypeCountCustomRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomRoleWhereInput
+  }
+
+
+  /**
+   * Count Type RoleCountOutputType
+   */
+
+  export type RoleCountOutputType = {
+    permissions: number
+    users: number
+  }
+
+  export type RoleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    permissions?: boolean | RoleCountOutputTypeCountPermissionsArgs
+    users?: boolean | RoleCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RoleCountOutputType
+     */
+    select?: RoleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PermissionWhereInput
+  }
+
+  /**
+   * RoleCountOutputType without action
+   */
+  export type RoleCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type PropertyCountOutputType
+   */
+
+  export type PropertyCountOutputType = {
+    owners: number
+    Bookmarks: number
+    views: number
+  }
+
+  export type PropertyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owners?: boolean | PropertyCountOutputTypeCountOwnersArgs
+    Bookmarks?: boolean | PropertyCountOutputTypeCountBookmarksArgs
+    views?: boolean | PropertyCountOutputTypeCountViewsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PropertyCountOutputType without action
+   */
+  export type PropertyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyCountOutputType
+     */
+    select?: PropertyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PropertyCountOutputType without action
+   */
+  export type PropertyCountOutputTypeCountOwnersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PropertyOwnerWhereInput
+  }
+
+  /**
+   * PropertyCountOutputType without action
+   */
+  export type PropertyCountOutputTypeCountBookmarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookmarkWhereInput
+  }
+
+  /**
+   * PropertyCountOutputType without action
+   */
+  export type PropertyCountOutputTypeCountViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ViewWhereInput
+  }
+
+
+  /**
+   * Count Type OwnerCountOutputType
+   */
+
+  export type OwnerCountOutputType = {
+    properties: number
+  }
+
+  export type OwnerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    properties?: boolean | OwnerCountOutputTypeCountPropertiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OwnerCountOutputType without action
+   */
+  export type OwnerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OwnerCountOutputType
+     */
+    select?: OwnerCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OwnerCountOutputType without action
+   */
+  export type OwnerCountOutputTypeCountPropertiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PropertyOwnerWhereInput
+  }
+
+
+  /**
+   * Count Type ReportCountOutputType
+   */
+
+  export type ReportCountOutputType = {
+    sharedWith: number
+  }
+
+  export type ReportCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sharedWith?: boolean | ReportCountOutputTypeCountSharedWithArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ReportCountOutputType without action
+   */
+  export type ReportCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportCountOutputType
+     */
+    select?: ReportCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ReportCountOutputType without action
+   */
+  export type ReportCountOutputTypeCountSharedWithArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SharedPropertyWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -1828,13 +3105,14 @@ export namespace Prisma {
     email: string | null
     emailVerified: boolean | null
     image: string | null
+    password: string | null
     createdAt: Date | null
     updatedAt: Date | null
     twoFactorEnabled: boolean | null
-    role: string | null
     banned: boolean | null
     banReason: string | null
     banExpires: Date | null
+    currentRole: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1843,13 +3121,14 @@ export namespace Prisma {
     email: string | null
     emailVerified: boolean | null
     image: string | null
+    password: string | null
     createdAt: Date | null
     updatedAt: Date | null
     twoFactorEnabled: boolean | null
-    role: string | null
     banned: boolean | null
     banReason: string | null
     banExpires: Date | null
+    currentRole: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1858,13 +3137,14 @@ export namespace Prisma {
     email: number
     emailVerified: number
     image: number
+    password: number
     createdAt: number
     updatedAt: number
     twoFactorEnabled: number
-    role: number
     banned: number
     banReason: number
     banExpires: number
+    currentRole: number
     _all: number
   }
 
@@ -1875,13 +3155,14 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    password?: true
     createdAt?: true
     updatedAt?: true
     twoFactorEnabled?: true
-    role?: true
     banned?: true
     banReason?: true
     banExpires?: true
+    currentRole?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1890,13 +3171,14 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    password?: true
     createdAt?: true
     updatedAt?: true
     twoFactorEnabled?: true
-    role?: true
     banned?: true
     banReason?: true
     banExpires?: true
+    currentRole?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1905,13 +3187,14 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    password?: true
     createdAt?: true
     updatedAt?: true
     twoFactorEnabled?: true
-    role?: true
     banned?: true
     banReason?: true
     banExpires?: true
+    currentRole?: true
     _all?: true
   }
 
@@ -1989,17 +3272,18 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    name: string
-    email: string
+    name: string | null
+    email: string | null
     emailVerified: boolean
     image: string | null
+    password: string | null
     createdAt: Date
     updatedAt: Date
     twoFactorEnabled: boolean | null
-    role: string | null
     banned: boolean | null
     banReason: string | null
     banExpires: Date | null
+    currentRole: string
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2025,18 +3309,25 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     twoFactorEnabled?: boolean
-    role?: boolean
     banned?: boolean
     banReason?: boolean
     banExpires?: boolean
+    currentRole?: boolean
+    roles?: boolean | User$rolesArgs<ExtArgs>
+    members?: boolean | User$membersArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    savedSearches?: boolean | User$savedSearchesArgs<ExtArgs>
+    Bookmark?: boolean | User$BookmarkArgs<ExtArgs>
     twofactors?: boolean | User$twofactorsArgs<ExtArgs>
-    members?: boolean | User$membersArgs<ExtArgs>
     invitations?: boolean | User$invitationsArgs<ExtArgs>
+    Reports?: boolean | User$ReportsArgs<ExtArgs>
+    SharedProperty?: boolean | User$SharedPropertyArgs<ExtArgs>
+    views?: boolean | User$viewsArgs<ExtArgs>
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -2047,13 +3338,14 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     twoFactorEnabled?: boolean
-    role?: boolean
     banned?: boolean
     banReason?: boolean
     banExpires?: boolean
+    currentRole?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2062,13 +3354,14 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     twoFactorEnabled?: boolean
-    role?: boolean
     banned?: boolean
     banReason?: boolean
     banExpires?: boolean
+    currentRole?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2077,22 +3370,29 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     twoFactorEnabled?: boolean
-    role?: boolean
     banned?: boolean
     banReason?: boolean
     banExpires?: boolean
+    currentRole?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "twoFactorEnabled" | "role" | "banned" | "banReason" | "banExpires", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "password" | "createdAt" | "updatedAt" | "twoFactorEnabled" | "banned" | "banReason" | "banExpires" | "currentRole", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | User$rolesArgs<ExtArgs>
+    members?: boolean | User$membersArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    savedSearches?: boolean | User$savedSearchesArgs<ExtArgs>
+    Bookmark?: boolean | User$BookmarkArgs<ExtArgs>
     twofactors?: boolean | User$twofactorsArgs<ExtArgs>
-    members?: boolean | User$membersArgs<ExtArgs>
     invitations?: boolean | User$invitationsArgs<ExtArgs>
+    Reports?: boolean | User$ReportsArgs<ExtArgs>
+    SharedProperty?: boolean | User$SharedPropertyArgs<ExtArgs>
+    views?: boolean | User$viewsArgs<ExtArgs>
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -2102,26 +3402,33 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      roles: Prisma.$RolePayload<ExtArgs>[]
+      members: Prisma.$MemberPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
+      savedSearches: Prisma.$SavedSearchPayload<ExtArgs>[]
+      Bookmark: Prisma.$BookmarkPayload<ExtArgs>[]
       twofactors: Prisma.$TwoFactorPayload<ExtArgs>[]
-      members: Prisma.$MemberPayload<ExtArgs>[]
       invitations: Prisma.$InvitationPayload<ExtArgs>[]
+      Reports: Prisma.$ReportPayload<ExtArgs>[]
+      SharedProperty: Prisma.$SharedPropertyPayload<ExtArgs>[]
+      views: Prisma.$ViewPayload<ExtArgs>[]
       passkeys: Prisma.$PasskeyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string
-      email: string
+      name: string | null
+      email: string | null
       emailVerified: boolean
       image: string | null
+      password: string | null
       createdAt: Date
       updatedAt: Date
       twoFactorEnabled: boolean | null
-      role: string | null
       banned: boolean | null
       banReason: string | null
       banExpires: Date | null
+      currentRole: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2516,11 +3823,17 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    roles<T extends User$rolesArgs<ExtArgs> = {}>(args?: Subset<T, User$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    members<T extends User$membersArgs<ExtArgs> = {}>(args?: Subset<T, User$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    savedSearches<T extends User$savedSearchesArgs<ExtArgs> = {}>(args?: Subset<T, User$savedSearchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Bookmark<T extends User$BookmarkArgs<ExtArgs> = {}>(args?: Subset<T, User$BookmarkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     twofactors<T extends User$twofactorsArgs<ExtArgs> = {}>(args?: Subset<T, User$twofactorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TwoFactorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    members<T extends User$membersArgs<ExtArgs> = {}>(args?: Subset<T, User$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     invitations<T extends User$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Reports<T extends User$ReportsArgs<ExtArgs> = {}>(args?: Subset<T, User$ReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SharedProperty<T extends User$SharedPropertyArgs<ExtArgs> = {}>(args?: Subset<T, User$SharedPropertyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    views<T extends User$viewsArgs<ExtArgs> = {}>(args?: Subset<T, User$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     passkeys<T extends User$passkeysArgs<ExtArgs> = {}>(args?: Subset<T, User$passkeysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasskeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2556,13 +3869,14 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly image: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly twoFactorEnabled: FieldRef<"User", 'Boolean'>
-    readonly role: FieldRef<"User", 'String'>
     readonly banned: FieldRef<"User", 'Boolean'>
     readonly banReason: FieldRef<"User", 'String'>
     readonly banExpires: FieldRef<"User", 'DateTime'>
+    readonly currentRole: FieldRef<"User", 'String'>
   }
     
 
@@ -2951,6 +4265,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.roles
+   */
+  export type User$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    where?: RoleWhereInput
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    cursor?: RoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * User.members
+   */
+  export type User$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Member
+     */
+    select?: MemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Member
+     */
+    omit?: MemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemberInclude<ExtArgs> | null
+    where?: MemberWhereInput
+    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
+    cursor?: MemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
+  }
+
+  /**
    * User.sessions
    */
   export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2999,6 +4361,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.savedSearches
+   */
+  export type User$savedSearchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    where?: SavedSearchWhereInput
+    orderBy?: SavedSearchOrderByWithRelationInput | SavedSearchOrderByWithRelationInput[]
+    cursor?: SavedSearchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SavedSearchScalarFieldEnum | SavedSearchScalarFieldEnum[]
+  }
+
+  /**
+   * User.Bookmark
+   */
+  export type User$BookmarkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    where?: BookmarkWhereInput
+    orderBy?: BookmarkOrderByWithRelationInput | BookmarkOrderByWithRelationInput[]
+    cursor?: BookmarkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookmarkScalarFieldEnum | BookmarkScalarFieldEnum[]
+  }
+
+  /**
    * User.twofactors
    */
   export type User$twofactorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3023,30 +4433,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.members
-   */
-  export type User$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    where?: MemberWhereInput
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    cursor?: MemberWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
-  }
-
-  /**
    * User.invitations
    */
   export type User$invitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3068,6 +4454,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
+  }
+
+  /**
+   * User.Reports
+   */
+  export type User$ReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    where?: ReportWhereInput
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    cursor?: ReportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * User.SharedProperty
+   */
+  export type User$SharedPropertyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    where?: SharedPropertyWhereInput
+    orderBy?: SharedPropertyOrderByWithRelationInput | SharedPropertyOrderByWithRelationInput[]
+    cursor?: SharedPropertyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SharedPropertyScalarFieldEnum | SharedPropertyScalarFieldEnum[]
+  }
+
+  /**
+   * User.views
+   */
+  export type User$viewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    where?: ViewWhereInput
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    cursor?: ViewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
   }
 
   /**
@@ -7467,6 +8925,8 @@ export namespace Prisma {
     slug: string | null
     logo: string | null
     createdAt: Date | null
+    status: string | null
+    isSuperAdmin: boolean | null
     metadata: string | null
   }
 
@@ -7476,6 +8936,8 @@ export namespace Prisma {
     slug: string | null
     logo: string | null
     createdAt: Date | null
+    status: string | null
+    isSuperAdmin: boolean | null
     metadata: string | null
   }
 
@@ -7485,6 +8947,8 @@ export namespace Prisma {
     slug: number
     logo: number
     createdAt: number
+    status: number
+    isSuperAdmin: number
     metadata: number
     _all: number
   }
@@ -7496,6 +8960,8 @@ export namespace Prisma {
     slug?: true
     logo?: true
     createdAt?: true
+    status?: true
+    isSuperAdmin?: true
     metadata?: true
   }
 
@@ -7505,6 +8971,8 @@ export namespace Prisma {
     slug?: true
     logo?: true
     createdAt?: true
+    status?: true
+    isSuperAdmin?: true
     metadata?: true
   }
 
@@ -7514,6 +8982,8 @@ export namespace Prisma {
     slug?: true
     logo?: true
     createdAt?: true
+    status?: true
+    isSuperAdmin?: true
     metadata?: true
     _all?: true
   }
@@ -7596,6 +9066,8 @@ export namespace Prisma {
     slug: string | null
     logo: string | null
     createdAt: Date
+    status: string
+    isSuperAdmin: boolean
     metadata: string | null
     _count: OrganizationCountAggregateOutputType | null
     _min: OrganizationMinAggregateOutputType | null
@@ -7622,6 +9094,8 @@ export namespace Prisma {
     slug?: boolean
     logo?: boolean
     createdAt?: boolean
+    status?: boolean
+    isSuperAdmin?: boolean
     metadata?: boolean
     members?: boolean | Organization$membersArgs<ExtArgs>
     invitations?: boolean | Organization$invitationsArgs<ExtArgs>
@@ -7635,6 +9109,8 @@ export namespace Prisma {
     slug?: boolean
     logo?: boolean
     createdAt?: boolean
+    status?: boolean
+    isSuperAdmin?: boolean
     metadata?: boolean
   }, ExtArgs["result"]["organization"]>
 
@@ -7644,6 +9120,8 @@ export namespace Prisma {
     slug?: boolean
     logo?: boolean
     createdAt?: boolean
+    status?: boolean
+    isSuperAdmin?: boolean
     metadata?: boolean
   }, ExtArgs["result"]["organization"]>
 
@@ -7653,10 +9131,12 @@ export namespace Prisma {
     slug?: boolean
     logo?: boolean
     createdAt?: boolean
+    status?: boolean
+    isSuperAdmin?: boolean
     metadata?: boolean
   }
 
-  export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "logo" | "createdAt" | "metadata", ExtArgs["result"]["organization"]>
+  export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "logo" | "createdAt" | "status" | "isSuperAdmin" | "metadata", ExtArgs["result"]["organization"]>
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | Organization$membersArgs<ExtArgs>
     invitations?: boolean | Organization$invitationsArgs<ExtArgs>
@@ -7679,6 +9159,8 @@ export namespace Prisma {
       slug: string | null
       logo: string | null
       createdAt: Date
+      status: string
+      isSuperAdmin: boolean
       metadata: string | null
     }, ExtArgs["result"]["organization"]>
     composites: {}
@@ -8111,6 +9593,8 @@ export namespace Prisma {
     readonly slug: FieldRef<"Organization", 'String'>
     readonly logo: FieldRef<"Organization", 'String'>
     readonly createdAt: FieldRef<"Organization", 'DateTime'>
+    readonly status: FieldRef<"Organization", 'String'>
+    readonly isSuperAdmin: FieldRef<"Organization", 'Boolean'>
     readonly metadata: FieldRef<"Organization", 'String'>
   }
     
@@ -10929,6 +12413,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    permissions?: boolean | CustomRole$permissionsArgs<ExtArgs>
+    _count?: boolean | CustomRoleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["customRole"]>
 
   export type CustomRoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10966,6 +12452,8 @@ export namespace Prisma {
   export type CustomRoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "organizationId" | "baseRole" | "createdAt" | "updatedAt", ExtArgs["result"]["customRole"]>
   export type CustomRoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    permissions?: boolean | CustomRole$permissionsArgs<ExtArgs>
+    _count?: boolean | CustomRoleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CustomRoleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
@@ -10978,6 +12466,7 @@ export namespace Prisma {
     name: "CustomRole"
     objects: {
       organization: Prisma.$OrganizationPayload<ExtArgs>
+      permissions: Prisma.$PermissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11382,6 +12871,7 @@ export namespace Prisma {
   export interface Prisma__CustomRoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    permissions<T extends CustomRole$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, CustomRole$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11811,6 +13301,30 @@ export namespace Prisma {
      * Limit how many CustomRoles to delete.
      */
     limit?: number
+  }
+
+  /**
+   * CustomRole.permissions
+   */
+  export type CustomRole$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    where?: PermissionWhereInput
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    cursor?: PermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
   }
 
   /**
@@ -12990,6 +14504,12177 @@ export namespace Prisma {
 
 
   /**
+   * Model Permission
+   */
+
+  export type AggregatePermission = {
+    _count: PermissionCountAggregateOutputType | null
+    _min: PermissionMinAggregateOutputType | null
+    _max: PermissionMaxAggregateOutputType | null
+  }
+
+  export type PermissionMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    description: string | null
+  }
+
+  export type PermissionMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    description: string | null
+  }
+
+  export type PermissionCountAggregateOutputType = {
+    id: number
+    name: number
+    category: number
+    description: number
+    _all: number
+  }
+
+
+  export type PermissionMinAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    description?: true
+  }
+
+  export type PermissionMaxAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    description?: true
+  }
+
+  export type PermissionCountAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    description?: true
+    _all?: true
+  }
+
+  export type PermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Permission to aggregate.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Permissions
+    **/
+    _count?: true | PermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PermissionMaxAggregateInputType
+  }
+
+  export type GetPermissionAggregateType<T extends PermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregatePermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePermission[P]>
+      : GetScalarType<T[P], AggregatePermission[P]>
+  }
+
+
+
+
+  export type PermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PermissionWhereInput
+    orderBy?: PermissionOrderByWithAggregationInput | PermissionOrderByWithAggregationInput[]
+    by: PermissionScalarFieldEnum[] | PermissionScalarFieldEnum
+    having?: PermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PermissionCountAggregateInputType | true
+    _min?: PermissionMinAggregateInputType
+    _max?: PermissionMaxAggregateInputType
+  }
+
+  export type PermissionGroupByOutputType = {
+    id: string
+    name: string
+    category: string
+    description: string | null
+    _count: PermissionCountAggregateOutputType | null
+    _min: PermissionMinAggregateOutputType | null
+    _max: PermissionMaxAggregateOutputType | null
+  }
+
+  type GetPermissionGroupByPayload<T extends PermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], PermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+    roles?: boolean | Permission$rolesArgs<ExtArgs>
+    customRoles?: boolean | Permission$customRolesArgs<ExtArgs>
+    _count?: boolean | PermissionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["permission"]>
+
+  export type PermissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["permission"]>
+
+  export type PermissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["permission"]>
+
+  export type PermissionSelectScalar = {
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+  }
+
+  export type PermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "description", ExtArgs["result"]["permission"]>
+  export type PermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | Permission$rolesArgs<ExtArgs>
+    customRoles?: boolean | Permission$customRolesArgs<ExtArgs>
+    _count?: boolean | PermissionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PermissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PermissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $PermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Permission"
+    objects: {
+      roles: Prisma.$RolePayload<ExtArgs>[]
+      customRoles: Prisma.$CustomRolePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      category: string
+      description: string | null
+    }, ExtArgs["result"]["permission"]>
+    composites: {}
+  }
+
+  type PermissionGetPayload<S extends boolean | null | undefined | PermissionDefaultArgs> = $Result.GetResult<Prisma.$PermissionPayload, S>
+
+  type PermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PermissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PermissionCountAggregateInputType | true
+    }
+
+  export interface PermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Permission'], meta: { name: 'Permission' } }
+    /**
+     * Find zero or one Permission that matches the filter.
+     * @param {PermissionFindUniqueArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PermissionFindUniqueArgs>(args: SelectSubset<T, PermissionFindUniqueArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Permission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PermissionFindUniqueOrThrowArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, PermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Permission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionFindFirstArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PermissionFindFirstArgs>(args?: SelectSubset<T, PermissionFindFirstArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Permission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionFindFirstOrThrowArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, PermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Permissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Permissions
+     * const permissions = await prisma.permission.findMany()
+     * 
+     * // Get first 10 Permissions
+     * const permissions = await prisma.permission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const permissionWithIdOnly = await prisma.permission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PermissionFindManyArgs>(args?: SelectSubset<T, PermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Permission.
+     * @param {PermissionCreateArgs} args - Arguments to create a Permission.
+     * @example
+     * // Create one Permission
+     * const Permission = await prisma.permission.create({
+     *   data: {
+     *     // ... data to create a Permission
+     *   }
+     * })
+     * 
+     */
+    create<T extends PermissionCreateArgs>(args: SelectSubset<T, PermissionCreateArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Permissions.
+     * @param {PermissionCreateManyArgs} args - Arguments to create many Permissions.
+     * @example
+     * // Create many Permissions
+     * const permission = await prisma.permission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PermissionCreateManyArgs>(args?: SelectSubset<T, PermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Permissions and returns the data saved in the database.
+     * @param {PermissionCreateManyAndReturnArgs} args - Arguments to create many Permissions.
+     * @example
+     * // Create many Permissions
+     * const permission = await prisma.permission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Permissions and only return the `id`
+     * const permissionWithIdOnly = await prisma.permission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PermissionCreateManyAndReturnArgs>(args?: SelectSubset<T, PermissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Permission.
+     * @param {PermissionDeleteArgs} args - Arguments to delete one Permission.
+     * @example
+     * // Delete one Permission
+     * const Permission = await prisma.permission.delete({
+     *   where: {
+     *     // ... filter to delete one Permission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PermissionDeleteArgs>(args: SelectSubset<T, PermissionDeleteArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Permission.
+     * @param {PermissionUpdateArgs} args - Arguments to update one Permission.
+     * @example
+     * // Update one Permission
+     * const permission = await prisma.permission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PermissionUpdateArgs>(args: SelectSubset<T, PermissionUpdateArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Permissions.
+     * @param {PermissionDeleteManyArgs} args - Arguments to filter Permissions to delete.
+     * @example
+     * // Delete a few Permissions
+     * const { count } = await prisma.permission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PermissionDeleteManyArgs>(args?: SelectSubset<T, PermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Permissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Permissions
+     * const permission = await prisma.permission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PermissionUpdateManyArgs>(args: SelectSubset<T, PermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Permissions and returns the data updated in the database.
+     * @param {PermissionUpdateManyAndReturnArgs} args - Arguments to update many Permissions.
+     * @example
+     * // Update many Permissions
+     * const permission = await prisma.permission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Permissions and only return the `id`
+     * const permissionWithIdOnly = await prisma.permission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PermissionUpdateManyAndReturnArgs>(args: SelectSubset<T, PermissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Permission.
+     * @param {PermissionUpsertArgs} args - Arguments to update or create a Permission.
+     * @example
+     * // Update or create a Permission
+     * const permission = await prisma.permission.upsert({
+     *   create: {
+     *     // ... data to create a Permission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Permission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PermissionUpsertArgs>(args: SelectSubset<T, PermissionUpsertArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Permissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionCountArgs} args - Arguments to filter Permissions to count.
+     * @example
+     * // Count the number of Permissions
+     * const count = await prisma.permission.count({
+     *   where: {
+     *     // ... the filter for the Permissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends PermissionCountArgs>(
+      args?: Subset<T, PermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Permission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PermissionAggregateArgs>(args: Subset<T, PermissionAggregateArgs>): Prisma.PrismaPromise<GetPermissionAggregateType<T>>
+
+    /**
+     * Group by Permission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PermissionGroupByArgs['orderBy'] }
+        : { orderBy?: PermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Permission model
+   */
+  readonly fields: PermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Permission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    roles<T extends Permission$rolesArgs<ExtArgs> = {}>(args?: Subset<T, Permission$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    customRoles<T extends Permission$customRolesArgs<ExtArgs> = {}>(args?: Subset<T, Permission$customRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Permission model
+   */
+  interface PermissionFieldRefs {
+    readonly id: FieldRef<"Permission", 'String'>
+    readonly name: FieldRef<"Permission", 'String'>
+    readonly category: FieldRef<"Permission", 'String'>
+    readonly description: FieldRef<"Permission", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Permission findUnique
+   */
+  export type PermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission findUniqueOrThrow
+   */
+  export type PermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission findFirst
+   */
+  export type PermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Permissions.
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Permissions.
+     */
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission findFirstOrThrow
+   */
+  export type PermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Permissions.
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Permissions.
+     */
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission findMany
+   */
+  export type PermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permissions to fetch.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Permissions.
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission create
+   */
+  export type PermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Permission.
+     */
+    data: XOR<PermissionCreateInput, PermissionUncheckedCreateInput>
+  }
+
+  /**
+   * Permission createMany
+   */
+  export type PermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Permissions.
+     */
+    data: PermissionCreateManyInput | PermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Permission createManyAndReturn
+   */
+  export type PermissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Permissions.
+     */
+    data: PermissionCreateManyInput | PermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Permission update
+   */
+  export type PermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Permission.
+     */
+    data: XOR<PermissionUpdateInput, PermissionUncheckedUpdateInput>
+    /**
+     * Choose, which Permission to update.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission updateMany
+   */
+  export type PermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Permissions.
+     */
+    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Permissions to update
+     */
+    where?: PermissionWhereInput
+    /**
+     * Limit how many Permissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Permission updateManyAndReturn
+   */
+  export type PermissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * The data used to update Permissions.
+     */
+    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Permissions to update
+     */
+    where?: PermissionWhereInput
+    /**
+     * Limit how many Permissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Permission upsert
+   */
+  export type PermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Permission to update in case it exists.
+     */
+    where: PermissionWhereUniqueInput
+    /**
+     * In case the Permission found by the `where` argument doesn't exist, create a new Permission with this data.
+     */
+    create: XOR<PermissionCreateInput, PermissionUncheckedCreateInput>
+    /**
+     * In case the Permission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PermissionUpdateInput, PermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * Permission delete
+   */
+  export type PermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter which Permission to delete.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission deleteMany
+   */
+  export type PermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Permissions to delete
+     */
+    where?: PermissionWhereInput
+    /**
+     * Limit how many Permissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Permission.roles
+   */
+  export type Permission$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    where?: RoleWhereInput
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    cursor?: RoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Permission.customRoles
+   */
+  export type Permission$customRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomRole
+     */
+    select?: CustomRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomRole
+     */
+    omit?: CustomRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomRoleInclude<ExtArgs> | null
+    where?: CustomRoleWhereInput
+    orderBy?: CustomRoleOrderByWithRelationInput | CustomRoleOrderByWithRelationInput[]
+    cursor?: CustomRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomRoleScalarFieldEnum | CustomRoleScalarFieldEnum[]
+  }
+
+  /**
+   * Permission without action
+   */
+  export type PermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Role
+   */
+
+  export type AggregateRole = {
+    _count: RoleCountAggregateOutputType | null
+    _min: RoleMinAggregateOutputType | null
+    _max: RoleMaxAggregateOutputType | null
+  }
+
+  export type RoleMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    isSystem: boolean | null
+  }
+
+  export type RoleMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    isSystem: boolean | null
+  }
+
+  export type RoleCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    isSystem: number
+    _all: number
+  }
+
+
+  export type RoleMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    isSystem?: true
+  }
+
+  export type RoleMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    isSystem?: true
+  }
+
+  export type RoleCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    isSystem?: true
+    _all?: true
+  }
+
+  export type RoleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Role to aggregate.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Roles
+    **/
+    _count?: true | RoleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoleMaxAggregateInputType
+  }
+
+  export type GetRoleAggregateType<T extends RoleAggregateArgs> = {
+        [P in keyof T & keyof AggregateRole]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRole[P]>
+      : GetScalarType<T[P], AggregateRole[P]>
+  }
+
+
+
+
+  export type RoleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RoleWhereInput
+    orderBy?: RoleOrderByWithAggregationInput | RoleOrderByWithAggregationInput[]
+    by: RoleScalarFieldEnum[] | RoleScalarFieldEnum
+    having?: RoleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoleCountAggregateInputType | true
+    _min?: RoleMinAggregateInputType
+    _max?: RoleMaxAggregateInputType
+  }
+
+  export type RoleGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    isSystem: boolean
+    _count: RoleCountAggregateOutputType | null
+    _min: RoleMinAggregateOutputType | null
+    _max: RoleMaxAggregateOutputType | null
+  }
+
+  type GetRoleGroupByPayload<T extends RoleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RoleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoleGroupByOutputType[P]>
+            : GetScalarType<T[P], RoleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+    permissions?: boolean | Role$permissionsArgs<ExtArgs>
+    users?: boolean | Role$usersArgs<ExtArgs>
+    _count?: boolean | RoleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["role"]>
+
+  export type RoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+  }, ExtArgs["result"]["role"]>
+
+  export type RoleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+  }, ExtArgs["result"]["role"]>
+
+  export type RoleSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+  }
+
+  export type RoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "isSystem", ExtArgs["result"]["role"]>
+  export type RoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    permissions?: boolean | Role$permissionsArgs<ExtArgs>
+    users?: boolean | Role$usersArgs<ExtArgs>
+    _count?: boolean | RoleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RoleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type RoleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RolePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Role"
+    objects: {
+      permissions: Prisma.$PermissionPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      isSystem: boolean
+    }, ExtArgs["result"]["role"]>
+    composites: {}
+  }
+
+  type RoleGetPayload<S extends boolean | null | undefined | RoleDefaultArgs> = $Result.GetResult<Prisma.$RolePayload, S>
+
+  type RoleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RoleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RoleCountAggregateInputType | true
+    }
+
+  export interface RoleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Role'], meta: { name: 'Role' } }
+    /**
+     * Find zero or one Role that matches the filter.
+     * @param {RoleFindUniqueArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RoleFindUniqueArgs>(args: SelectSubset<T, RoleFindUniqueArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Role that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RoleFindUniqueOrThrowArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RoleFindUniqueOrThrowArgs>(args: SelectSubset<T, RoleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Role that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleFindFirstArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RoleFindFirstArgs>(args?: SelectSubset<T, RoleFindFirstArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Role that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleFindFirstOrThrowArgs} args - Arguments to find a Role
+     * @example
+     * // Get one Role
+     * const role = await prisma.role.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RoleFindFirstOrThrowArgs>(args?: SelectSubset<T, RoleFindFirstOrThrowArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Roles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Roles
+     * const roles = await prisma.role.findMany()
+     * 
+     * // Get first 10 Roles
+     * const roles = await prisma.role.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roleWithIdOnly = await prisma.role.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RoleFindManyArgs>(args?: SelectSubset<T, RoleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Role.
+     * @param {RoleCreateArgs} args - Arguments to create a Role.
+     * @example
+     * // Create one Role
+     * const Role = await prisma.role.create({
+     *   data: {
+     *     // ... data to create a Role
+     *   }
+     * })
+     * 
+     */
+    create<T extends RoleCreateArgs>(args: SelectSubset<T, RoleCreateArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Roles.
+     * @param {RoleCreateManyArgs} args - Arguments to create many Roles.
+     * @example
+     * // Create many Roles
+     * const role = await prisma.role.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RoleCreateManyArgs>(args?: SelectSubset<T, RoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Roles and returns the data saved in the database.
+     * @param {RoleCreateManyAndReturnArgs} args - Arguments to create many Roles.
+     * @example
+     * // Create many Roles
+     * const role = await prisma.role.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Roles and only return the `id`
+     * const roleWithIdOnly = await prisma.role.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RoleCreateManyAndReturnArgs>(args?: SelectSubset<T, RoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Role.
+     * @param {RoleDeleteArgs} args - Arguments to delete one Role.
+     * @example
+     * // Delete one Role
+     * const Role = await prisma.role.delete({
+     *   where: {
+     *     // ... filter to delete one Role
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RoleDeleteArgs>(args: SelectSubset<T, RoleDeleteArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Role.
+     * @param {RoleUpdateArgs} args - Arguments to update one Role.
+     * @example
+     * // Update one Role
+     * const role = await prisma.role.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RoleUpdateArgs>(args: SelectSubset<T, RoleUpdateArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Roles.
+     * @param {RoleDeleteManyArgs} args - Arguments to filter Roles to delete.
+     * @example
+     * // Delete a few Roles
+     * const { count } = await prisma.role.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RoleDeleteManyArgs>(args?: SelectSubset<T, RoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Roles
+     * const role = await prisma.role.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RoleUpdateManyArgs>(args: SelectSubset<T, RoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Roles and returns the data updated in the database.
+     * @param {RoleUpdateManyAndReturnArgs} args - Arguments to update many Roles.
+     * @example
+     * // Update many Roles
+     * const role = await prisma.role.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Roles and only return the `id`
+     * const roleWithIdOnly = await prisma.role.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RoleUpdateManyAndReturnArgs>(args: SelectSubset<T, RoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Role.
+     * @param {RoleUpsertArgs} args - Arguments to update or create a Role.
+     * @example
+     * // Update or create a Role
+     * const role = await prisma.role.upsert({
+     *   create: {
+     *     // ... data to create a Role
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Role we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RoleUpsertArgs>(args: SelectSubset<T, RoleUpsertArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Roles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleCountArgs} args - Arguments to filter Roles to count.
+     * @example
+     * // Count the number of Roles
+     * const count = await prisma.role.count({
+     *   where: {
+     *     // ... the filter for the Roles we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoleCountArgs>(
+      args?: Subset<T, RoleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Role.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoleAggregateArgs>(args: Subset<T, RoleAggregateArgs>): Prisma.PrismaPromise<GetRoleAggregateType<T>>
+
+    /**
+     * Group by Role.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoleGroupByArgs['orderBy'] }
+        : { orderBy?: RoleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Role model
+   */
+  readonly fields: RoleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Role.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    permissions<T extends Role$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, Role$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    users<T extends Role$usersArgs<ExtArgs> = {}>(args?: Subset<T, Role$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Role model
+   */
+  interface RoleFieldRefs {
+    readonly id: FieldRef<"Role", 'String'>
+    readonly name: FieldRef<"Role", 'String'>
+    readonly description: FieldRef<"Role", 'String'>
+    readonly isSystem: FieldRef<"Role", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Role findUnique
+   */
+  export type RoleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role findUniqueOrThrow
+   */
+  export type RoleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role findFirst
+   */
+  export type RoleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Roles.
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Roles.
+     */
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Role findFirstOrThrow
+   */
+  export type RoleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Role to fetch.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Roles.
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Roles.
+     */
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Role findMany
+   */
+  export type RoleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter, which Roles to fetch.
+     */
+    where?: RoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Roles to fetch.
+     */
+    orderBy?: RoleOrderByWithRelationInput | RoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Roles.
+     */
+    cursor?: RoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Roles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Roles.
+     */
+    skip?: number
+    distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
+  }
+
+  /**
+   * Role create
+   */
+  export type RoleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Role.
+     */
+    data: XOR<RoleCreateInput, RoleUncheckedCreateInput>
+  }
+
+  /**
+   * Role createMany
+   */
+  export type RoleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Roles.
+     */
+    data: RoleCreateManyInput | RoleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Role createManyAndReturn
+   */
+  export type RoleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * The data used to create many Roles.
+     */
+    data: RoleCreateManyInput | RoleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Role update
+   */
+  export type RoleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Role.
+     */
+    data: XOR<RoleUpdateInput, RoleUncheckedUpdateInput>
+    /**
+     * Choose, which Role to update.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role updateMany
+   */
+  export type RoleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Roles.
+     */
+    data: XOR<RoleUpdateManyMutationInput, RoleUncheckedUpdateManyInput>
+    /**
+     * Filter which Roles to update
+     */
+    where?: RoleWhereInput
+    /**
+     * Limit how many Roles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Role updateManyAndReturn
+   */
+  export type RoleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * The data used to update Roles.
+     */
+    data: XOR<RoleUpdateManyMutationInput, RoleUncheckedUpdateManyInput>
+    /**
+     * Filter which Roles to update
+     */
+    where?: RoleWhereInput
+    /**
+     * Limit how many Roles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Role upsert
+   */
+  export type RoleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Role to update in case it exists.
+     */
+    where: RoleWhereUniqueInput
+    /**
+     * In case the Role found by the `where` argument doesn't exist, create a new Role with this data.
+     */
+    create: XOR<RoleCreateInput, RoleUncheckedCreateInput>
+    /**
+     * In case the Role was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoleUpdateInput, RoleUncheckedUpdateInput>
+  }
+
+  /**
+   * Role delete
+   */
+  export type RoleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+    /**
+     * Filter which Role to delete.
+     */
+    where: RoleWhereUniqueInput
+  }
+
+  /**
+   * Role deleteMany
+   */
+  export type RoleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Roles to delete
+     */
+    where?: RoleWhereInput
+    /**
+     * Limit how many Roles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Role.permissions
+   */
+  export type Role$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    where?: PermissionWhereInput
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    cursor?: PermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Role.users
+   */
+  export type Role$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Role without action
+   */
+  export type RoleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Role
+     */
+    select?: RoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Role
+     */
+    omit?: RoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RoleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Property
+   */
+
+  export type AggregateProperty = {
+    _count: PropertyCountAggregateOutputType | null
+    _avg: PropertyAvgAggregateOutputType | null
+    _sum: PropertySumAggregateOutputType | null
+    _min: PropertyMinAggregateOutputType | null
+    _max: PropertyMaxAggregateOutputType | null
+  }
+
+  export type PropertyAvgAggregateOutputType = {
+    price: number | null
+    area: number | null
+    bed: number | null
+    bath: number | null
+    confidenceScore: number | null
+  }
+
+  export type PropertySumAggregateOutputType = {
+    price: number | null
+    area: number | null
+    bed: number | null
+    bath: number | null
+    confidenceScore: number | null
+  }
+
+  export type PropertyMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    address: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    zipCode: string | null
+    price: number | null
+    area: number | null
+    bed: number | null
+    bath: number | null
+    type: string | null
+    confidenceScore: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PropertyMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    address: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    zipCode: string | null
+    price: number | null
+    area: number | null
+    bed: number | null
+    bath: number | null
+    type: string | null
+    confidenceScore: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PropertyCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    address: number
+    city: number
+    state: number
+    country: number
+    zipCode: number
+    price: number
+    images: number
+    area: number
+    bed: number
+    bath: number
+    type: number
+    confidenceScore: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PropertyAvgAggregateInputType = {
+    price?: true
+    area?: true
+    bed?: true
+    bath?: true
+    confidenceScore?: true
+  }
+
+  export type PropertySumAggregateInputType = {
+    price?: true
+    area?: true
+    bed?: true
+    bath?: true
+    confidenceScore?: true
+  }
+
+  export type PropertyMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    address?: true
+    city?: true
+    state?: true
+    country?: true
+    zipCode?: true
+    price?: true
+    area?: true
+    bed?: true
+    bath?: true
+    type?: true
+    confidenceScore?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PropertyMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    address?: true
+    city?: true
+    state?: true
+    country?: true
+    zipCode?: true
+    price?: true
+    area?: true
+    bed?: true
+    bath?: true
+    type?: true
+    confidenceScore?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PropertyCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    address?: true
+    city?: true
+    state?: true
+    country?: true
+    zipCode?: true
+    price?: true
+    images?: true
+    area?: true
+    bed?: true
+    bath?: true
+    type?: true
+    confidenceScore?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PropertyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Property to aggregate.
+     */
+    where?: PropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Properties to fetch.
+     */
+    orderBy?: PropertyOrderByWithRelationInput | PropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Properties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Properties.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Properties
+    **/
+    _count?: true | PropertyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PropertyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PropertySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PropertyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PropertyMaxAggregateInputType
+  }
+
+  export type GetPropertyAggregateType<T extends PropertyAggregateArgs> = {
+        [P in keyof T & keyof AggregateProperty]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProperty[P]>
+      : GetScalarType<T[P], AggregateProperty[P]>
+  }
+
+
+
+
+  export type PropertyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PropertyWhereInput
+    orderBy?: PropertyOrderByWithAggregationInput | PropertyOrderByWithAggregationInput[]
+    by: PropertyScalarFieldEnum[] | PropertyScalarFieldEnum
+    having?: PropertyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PropertyCountAggregateInputType | true
+    _avg?: PropertyAvgAggregateInputType
+    _sum?: PropertySumAggregateInputType
+    _min?: PropertyMinAggregateInputType
+    _max?: PropertyMaxAggregateInputType
+  }
+
+  export type PropertyGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images: string[]
+    area: number
+    bed: number | null
+    bath: number | null
+    type: string
+    confidenceScore: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PropertyCountAggregateOutputType | null
+    _avg: PropertyAvgAggregateOutputType | null
+    _sum: PropertySumAggregateOutputType | null
+    _min: PropertyMinAggregateOutputType | null
+    _max: PropertyMaxAggregateOutputType | null
+  }
+
+  type GetPropertyGroupByPayload<T extends PropertyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PropertyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PropertyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PropertyGroupByOutputType[P]>
+            : GetScalarType<T[P], PropertyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PropertySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    zipCode?: boolean
+    price?: boolean
+    images?: boolean
+    area?: boolean
+    bed?: boolean
+    bath?: boolean
+    type?: boolean
+    confidenceScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    owners?: boolean | Property$ownersArgs<ExtArgs>
+    Bookmarks?: boolean | Property$BookmarksArgs<ExtArgs>
+    views?: boolean | Property$viewsArgs<ExtArgs>
+    _count?: boolean | PropertyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["property"]>
+
+  export type PropertySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    zipCode?: boolean
+    price?: boolean
+    images?: boolean
+    area?: boolean
+    bed?: boolean
+    bath?: boolean
+    type?: boolean
+    confidenceScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["property"]>
+
+  export type PropertySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    zipCode?: boolean
+    price?: boolean
+    images?: boolean
+    area?: boolean
+    bed?: boolean
+    bath?: boolean
+    type?: boolean
+    confidenceScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["property"]>
+
+  export type PropertySelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    zipCode?: boolean
+    price?: boolean
+    images?: boolean
+    area?: boolean
+    bed?: boolean
+    bath?: boolean
+    type?: boolean
+    confidenceScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "address" | "city" | "state" | "country" | "zipCode" | "price" | "images" | "area" | "bed" | "bath" | "type" | "confidenceScore" | "createdAt" | "updatedAt", ExtArgs["result"]["property"]>
+  export type PropertyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owners?: boolean | Property$ownersArgs<ExtArgs>
+    Bookmarks?: boolean | Property$BookmarksArgs<ExtArgs>
+    views?: boolean | Property$viewsArgs<ExtArgs>
+    _count?: boolean | PropertyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PropertyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PropertyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $PropertyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Property"
+    objects: {
+      owners: Prisma.$PropertyOwnerPayload<ExtArgs>[]
+      Bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
+      views: Prisma.$ViewPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      address: string
+      city: string
+      state: string
+      country: string
+      zipCode: string
+      price: number
+      images: string[]
+      area: number
+      bed: number | null
+      bath: number | null
+      type: string
+      confidenceScore: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["property"]>
+    composites: {}
+  }
+
+  type PropertyGetPayload<S extends boolean | null | undefined | PropertyDefaultArgs> = $Result.GetResult<Prisma.$PropertyPayload, S>
+
+  type PropertyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PropertyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PropertyCountAggregateInputType | true
+    }
+
+  export interface PropertyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Property'], meta: { name: 'Property' } }
+    /**
+     * Find zero or one Property that matches the filter.
+     * @param {PropertyFindUniqueArgs} args - Arguments to find a Property
+     * @example
+     * // Get one Property
+     * const property = await prisma.property.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PropertyFindUniqueArgs>(args: SelectSubset<T, PropertyFindUniqueArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Property that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PropertyFindUniqueOrThrowArgs} args - Arguments to find a Property
+     * @example
+     * // Get one Property
+     * const property = await prisma.property.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PropertyFindUniqueOrThrowArgs>(args: SelectSubset<T, PropertyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Property that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyFindFirstArgs} args - Arguments to find a Property
+     * @example
+     * // Get one Property
+     * const property = await prisma.property.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PropertyFindFirstArgs>(args?: SelectSubset<T, PropertyFindFirstArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Property that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyFindFirstOrThrowArgs} args - Arguments to find a Property
+     * @example
+     * // Get one Property
+     * const property = await prisma.property.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PropertyFindFirstOrThrowArgs>(args?: SelectSubset<T, PropertyFindFirstOrThrowArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Properties that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Properties
+     * const properties = await prisma.property.findMany()
+     * 
+     * // Get first 10 Properties
+     * const properties = await prisma.property.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const propertyWithIdOnly = await prisma.property.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PropertyFindManyArgs>(args?: SelectSubset<T, PropertyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Property.
+     * @param {PropertyCreateArgs} args - Arguments to create a Property.
+     * @example
+     * // Create one Property
+     * const Property = await prisma.property.create({
+     *   data: {
+     *     // ... data to create a Property
+     *   }
+     * })
+     * 
+     */
+    create<T extends PropertyCreateArgs>(args: SelectSubset<T, PropertyCreateArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Properties.
+     * @param {PropertyCreateManyArgs} args - Arguments to create many Properties.
+     * @example
+     * // Create many Properties
+     * const property = await prisma.property.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PropertyCreateManyArgs>(args?: SelectSubset<T, PropertyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Properties and returns the data saved in the database.
+     * @param {PropertyCreateManyAndReturnArgs} args - Arguments to create many Properties.
+     * @example
+     * // Create many Properties
+     * const property = await prisma.property.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Properties and only return the `id`
+     * const propertyWithIdOnly = await prisma.property.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PropertyCreateManyAndReturnArgs>(args?: SelectSubset<T, PropertyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Property.
+     * @param {PropertyDeleteArgs} args - Arguments to delete one Property.
+     * @example
+     * // Delete one Property
+     * const Property = await prisma.property.delete({
+     *   where: {
+     *     // ... filter to delete one Property
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PropertyDeleteArgs>(args: SelectSubset<T, PropertyDeleteArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Property.
+     * @param {PropertyUpdateArgs} args - Arguments to update one Property.
+     * @example
+     * // Update one Property
+     * const property = await prisma.property.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PropertyUpdateArgs>(args: SelectSubset<T, PropertyUpdateArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Properties.
+     * @param {PropertyDeleteManyArgs} args - Arguments to filter Properties to delete.
+     * @example
+     * // Delete a few Properties
+     * const { count } = await prisma.property.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PropertyDeleteManyArgs>(args?: SelectSubset<T, PropertyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Properties.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Properties
+     * const property = await prisma.property.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PropertyUpdateManyArgs>(args: SelectSubset<T, PropertyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Properties and returns the data updated in the database.
+     * @param {PropertyUpdateManyAndReturnArgs} args - Arguments to update many Properties.
+     * @example
+     * // Update many Properties
+     * const property = await prisma.property.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Properties and only return the `id`
+     * const propertyWithIdOnly = await prisma.property.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PropertyUpdateManyAndReturnArgs>(args: SelectSubset<T, PropertyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Property.
+     * @param {PropertyUpsertArgs} args - Arguments to update or create a Property.
+     * @example
+     * // Update or create a Property
+     * const property = await prisma.property.upsert({
+     *   create: {
+     *     // ... data to create a Property
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Property we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PropertyUpsertArgs>(args: SelectSubset<T, PropertyUpsertArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Properties.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyCountArgs} args - Arguments to filter Properties to count.
+     * @example
+     * // Count the number of Properties
+     * const count = await prisma.property.count({
+     *   where: {
+     *     // ... the filter for the Properties we want to count
+     *   }
+     * })
+    **/
+    count<T extends PropertyCountArgs>(
+      args?: Subset<T, PropertyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PropertyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Property.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PropertyAggregateArgs>(args: Subset<T, PropertyAggregateArgs>): Prisma.PrismaPromise<GetPropertyAggregateType<T>>
+
+    /**
+     * Group by Property.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PropertyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PropertyGroupByArgs['orderBy'] }
+        : { orderBy?: PropertyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PropertyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPropertyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Property model
+   */
+  readonly fields: PropertyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Property.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    owners<T extends Property$ownersArgs<ExtArgs> = {}>(args?: Subset<T, Property$ownersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Bookmarks<T extends Property$BookmarksArgs<ExtArgs> = {}>(args?: Subset<T, Property$BookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    views<T extends Property$viewsArgs<ExtArgs> = {}>(args?: Subset<T, Property$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Property model
+   */
+  interface PropertyFieldRefs {
+    readonly id: FieldRef<"Property", 'String'>
+    readonly name: FieldRef<"Property", 'String'>
+    readonly description: FieldRef<"Property", 'String'>
+    readonly address: FieldRef<"Property", 'String'>
+    readonly city: FieldRef<"Property", 'String'>
+    readonly state: FieldRef<"Property", 'String'>
+    readonly country: FieldRef<"Property", 'String'>
+    readonly zipCode: FieldRef<"Property", 'String'>
+    readonly price: FieldRef<"Property", 'Float'>
+    readonly images: FieldRef<"Property", 'String[]'>
+    readonly area: FieldRef<"Property", 'Float'>
+    readonly bed: FieldRef<"Property", 'Int'>
+    readonly bath: FieldRef<"Property", 'Int'>
+    readonly type: FieldRef<"Property", 'String'>
+    readonly confidenceScore: FieldRef<"Property", 'Float'>
+    readonly createdAt: FieldRef<"Property", 'DateTime'>
+    readonly updatedAt: FieldRef<"Property", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Property findUnique
+   */
+  export type PropertyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which Property to fetch.
+     */
+    where: PropertyWhereUniqueInput
+  }
+
+  /**
+   * Property findUniqueOrThrow
+   */
+  export type PropertyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which Property to fetch.
+     */
+    where: PropertyWhereUniqueInput
+  }
+
+  /**
+   * Property findFirst
+   */
+  export type PropertyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which Property to fetch.
+     */
+    where?: PropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Properties to fetch.
+     */
+    orderBy?: PropertyOrderByWithRelationInput | PropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Properties.
+     */
+    cursor?: PropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Properties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Properties.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Properties.
+     */
+    distinct?: PropertyScalarFieldEnum | PropertyScalarFieldEnum[]
+  }
+
+  /**
+   * Property findFirstOrThrow
+   */
+  export type PropertyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which Property to fetch.
+     */
+    where?: PropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Properties to fetch.
+     */
+    orderBy?: PropertyOrderByWithRelationInput | PropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Properties.
+     */
+    cursor?: PropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Properties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Properties.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Properties.
+     */
+    distinct?: PropertyScalarFieldEnum | PropertyScalarFieldEnum[]
+  }
+
+  /**
+   * Property findMany
+   */
+  export type PropertyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which Properties to fetch.
+     */
+    where?: PropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Properties to fetch.
+     */
+    orderBy?: PropertyOrderByWithRelationInput | PropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Properties.
+     */
+    cursor?: PropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Properties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Properties.
+     */
+    skip?: number
+    distinct?: PropertyScalarFieldEnum | PropertyScalarFieldEnum[]
+  }
+
+  /**
+   * Property create
+   */
+  export type PropertyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Property.
+     */
+    data: XOR<PropertyCreateInput, PropertyUncheckedCreateInput>
+  }
+
+  /**
+   * Property createMany
+   */
+  export type PropertyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Properties.
+     */
+    data: PropertyCreateManyInput | PropertyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Property createManyAndReturn
+   */
+  export type PropertyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * The data used to create many Properties.
+     */
+    data: PropertyCreateManyInput | PropertyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Property update
+   */
+  export type PropertyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Property.
+     */
+    data: XOR<PropertyUpdateInput, PropertyUncheckedUpdateInput>
+    /**
+     * Choose, which Property to update.
+     */
+    where: PropertyWhereUniqueInput
+  }
+
+  /**
+   * Property updateMany
+   */
+  export type PropertyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Properties.
+     */
+    data: XOR<PropertyUpdateManyMutationInput, PropertyUncheckedUpdateManyInput>
+    /**
+     * Filter which Properties to update
+     */
+    where?: PropertyWhereInput
+    /**
+     * Limit how many Properties to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Property updateManyAndReturn
+   */
+  export type PropertyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * The data used to update Properties.
+     */
+    data: XOR<PropertyUpdateManyMutationInput, PropertyUncheckedUpdateManyInput>
+    /**
+     * Filter which Properties to update
+     */
+    where?: PropertyWhereInput
+    /**
+     * Limit how many Properties to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Property upsert
+   */
+  export type PropertyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Property to update in case it exists.
+     */
+    where: PropertyWhereUniqueInput
+    /**
+     * In case the Property found by the `where` argument doesn't exist, create a new Property with this data.
+     */
+    create: XOR<PropertyCreateInput, PropertyUncheckedCreateInput>
+    /**
+     * In case the Property was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PropertyUpdateInput, PropertyUncheckedUpdateInput>
+  }
+
+  /**
+   * Property delete
+   */
+  export type PropertyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+    /**
+     * Filter which Property to delete.
+     */
+    where: PropertyWhereUniqueInput
+  }
+
+  /**
+   * Property deleteMany
+   */
+  export type PropertyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Properties to delete
+     */
+    where?: PropertyWhereInput
+    /**
+     * Limit how many Properties to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Property.owners
+   */
+  export type Property$ownersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    where?: PropertyOwnerWhereInput
+    orderBy?: PropertyOwnerOrderByWithRelationInput | PropertyOwnerOrderByWithRelationInput[]
+    cursor?: PropertyOwnerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PropertyOwnerScalarFieldEnum | PropertyOwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Property.Bookmarks
+   */
+  export type Property$BookmarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    where?: BookmarkWhereInput
+    orderBy?: BookmarkOrderByWithRelationInput | BookmarkOrderByWithRelationInput[]
+    cursor?: BookmarkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookmarkScalarFieldEnum | BookmarkScalarFieldEnum[]
+  }
+
+  /**
+   * Property.views
+   */
+  export type Property$viewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    where?: ViewWhereInput
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    cursor?: ViewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * Property without action
+   */
+  export type PropertyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Property
+     */
+    select?: PropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Property
+     */
+    omit?: PropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Owner
+   */
+
+  export type AggregateOwner = {
+    _count: OwnerCountAggregateOutputType | null
+    _avg: OwnerAvgAggregateOutputType | null
+    _sum: OwnerSumAggregateOutputType | null
+    _min: OwnerMinAggregateOutputType | null
+    _max: OwnerMaxAggregateOutputType | null
+  }
+
+  export type OwnerAvgAggregateOutputType = {
+    stocksSecurities: number | null
+    businessInterests: number | null
+    cashSavings: number | null
+    otherAssets: number | null
+  }
+
+  export type OwnerSumAggregateOutputType = {
+    stocksSecurities: number | null
+    businessInterests: number | null
+    cashSavings: number | null
+    otherAssets: number | null
+  }
+
+  export type OwnerMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    phoneNumber: string | null
+    stocksSecurities: number | null
+    businessInterests: number | null
+    cashSavings: number | null
+    otherAssets: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OwnerMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    phoneNumber: string | null
+    stocksSecurities: number | null
+    businessInterests: number | null
+    cashSavings: number | null
+    otherAssets: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OwnerCountAggregateOutputType = {
+    id: number
+    name: number
+    email: number
+    phoneNumber: number
+    stocksSecurities: number
+    businessInterests: number
+    cashSavings: number
+    otherAssets: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OwnerAvgAggregateInputType = {
+    stocksSecurities?: true
+    businessInterests?: true
+    cashSavings?: true
+    otherAssets?: true
+  }
+
+  export type OwnerSumAggregateInputType = {
+    stocksSecurities?: true
+    businessInterests?: true
+    cashSavings?: true
+    otherAssets?: true
+  }
+
+  export type OwnerMinAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
+    stocksSecurities?: true
+    businessInterests?: true
+    cashSavings?: true
+    otherAssets?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OwnerMaxAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
+    stocksSecurities?: true
+    businessInterests?: true
+    cashSavings?: true
+    otherAssets?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OwnerCountAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
+    stocksSecurities?: true
+    businessInterests?: true
+    cashSavings?: true
+    otherAssets?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OwnerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Owner to aggregate.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Owners
+    **/
+    _count?: true | OwnerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OwnerAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OwnerSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OwnerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OwnerMaxAggregateInputType
+  }
+
+  export type GetOwnerAggregateType<T extends OwnerAggregateArgs> = {
+        [P in keyof T & keyof AggregateOwner]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOwner[P]>
+      : GetScalarType<T[P], AggregateOwner[P]>
+  }
+
+
+
+
+  export type OwnerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OwnerWhereInput
+    orderBy?: OwnerOrderByWithAggregationInput | OwnerOrderByWithAggregationInput[]
+    by: OwnerScalarFieldEnum[] | OwnerScalarFieldEnum
+    having?: OwnerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OwnerCountAggregateInputType | true
+    _avg?: OwnerAvgAggregateInputType
+    _sum?: OwnerSumAggregateInputType
+    _min?: OwnerMinAggregateInputType
+    _max?: OwnerMaxAggregateInputType
+  }
+
+  export type OwnerGroupByOutputType = {
+    id: string
+    name: string
+    email: string | null
+    phoneNumber: string | null
+    stocksSecurities: number
+    businessInterests: number
+    cashSavings: number
+    otherAssets: number
+    createdAt: Date
+    updatedAt: Date
+    _count: OwnerCountAggregateOutputType | null
+    _avg: OwnerAvgAggregateOutputType | null
+    _sum: OwnerSumAggregateOutputType | null
+    _min: OwnerMinAggregateOutputType | null
+    _max: OwnerMaxAggregateOutputType | null
+  }
+
+  type GetOwnerGroupByPayload<T extends OwnerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OwnerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OwnerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OwnerGroupByOutputType[P]>
+            : GetScalarType<T[P], OwnerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OwnerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+    stocksSecurities?: boolean
+    businessInterests?: boolean
+    cashSavings?: boolean
+    otherAssets?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    properties?: boolean | Owner$propertiesArgs<ExtArgs>
+    _count?: boolean | OwnerCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+    stocksSecurities?: boolean
+    businessInterests?: boolean
+    cashSavings?: boolean
+    otherAssets?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+    stocksSecurities?: boolean
+    businessInterests?: boolean
+    cashSavings?: boolean
+    otherAssets?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectScalar = {
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+    stocksSecurities?: boolean
+    businessInterests?: boolean
+    cashSavings?: boolean
+    otherAssets?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phoneNumber" | "stocksSecurities" | "businessInterests" | "cashSavings" | "otherAssets" | "createdAt" | "updatedAt", ExtArgs["result"]["owner"]>
+  export type OwnerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    properties?: boolean | Owner$propertiesArgs<ExtArgs>
+    _count?: boolean | OwnerCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type OwnerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type OwnerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $OwnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Owner"
+    objects: {
+      properties: Prisma.$PropertyOwnerPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      email: string | null
+      phoneNumber: string | null
+      stocksSecurities: number
+      businessInterests: number
+      cashSavings: number
+      otherAssets: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["owner"]>
+    composites: {}
+  }
+
+  type OwnerGetPayload<S extends boolean | null | undefined | OwnerDefaultArgs> = $Result.GetResult<Prisma.$OwnerPayload, S>
+
+  type OwnerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OwnerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OwnerCountAggregateInputType | true
+    }
+
+  export interface OwnerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Owner'], meta: { name: 'Owner' } }
+    /**
+     * Find zero or one Owner that matches the filter.
+     * @param {OwnerFindUniqueArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OwnerFindUniqueArgs>(args: SelectSubset<T, OwnerFindUniqueArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Owner that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OwnerFindUniqueOrThrowArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OwnerFindUniqueOrThrowArgs>(args: SelectSubset<T, OwnerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Owner that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindFirstArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OwnerFindFirstArgs>(args?: SelectSubset<T, OwnerFindFirstArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Owner that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindFirstOrThrowArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OwnerFindFirstOrThrowArgs>(args?: SelectSubset<T, OwnerFindFirstOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Owners that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Owners
+     * const owners = await prisma.owner.findMany()
+     * 
+     * // Get first 10 Owners
+     * const owners = await prisma.owner.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ownerWithIdOnly = await prisma.owner.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OwnerFindManyArgs>(args?: SelectSubset<T, OwnerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Owner.
+     * @param {OwnerCreateArgs} args - Arguments to create a Owner.
+     * @example
+     * // Create one Owner
+     * const Owner = await prisma.owner.create({
+     *   data: {
+     *     // ... data to create a Owner
+     *   }
+     * })
+     * 
+     */
+    create<T extends OwnerCreateArgs>(args: SelectSubset<T, OwnerCreateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Owners.
+     * @param {OwnerCreateManyArgs} args - Arguments to create many Owners.
+     * @example
+     * // Create many Owners
+     * const owner = await prisma.owner.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OwnerCreateManyArgs>(args?: SelectSubset<T, OwnerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Owners and returns the data saved in the database.
+     * @param {OwnerCreateManyAndReturnArgs} args - Arguments to create many Owners.
+     * @example
+     * // Create many Owners
+     * const owner = await prisma.owner.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Owners and only return the `id`
+     * const ownerWithIdOnly = await prisma.owner.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OwnerCreateManyAndReturnArgs>(args?: SelectSubset<T, OwnerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Owner.
+     * @param {OwnerDeleteArgs} args - Arguments to delete one Owner.
+     * @example
+     * // Delete one Owner
+     * const Owner = await prisma.owner.delete({
+     *   where: {
+     *     // ... filter to delete one Owner
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OwnerDeleteArgs>(args: SelectSubset<T, OwnerDeleteArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Owner.
+     * @param {OwnerUpdateArgs} args - Arguments to update one Owner.
+     * @example
+     * // Update one Owner
+     * const owner = await prisma.owner.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OwnerUpdateArgs>(args: SelectSubset<T, OwnerUpdateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Owners.
+     * @param {OwnerDeleteManyArgs} args - Arguments to filter Owners to delete.
+     * @example
+     * // Delete a few Owners
+     * const { count } = await prisma.owner.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OwnerDeleteManyArgs>(args?: SelectSubset<T, OwnerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Owners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Owners
+     * const owner = await prisma.owner.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OwnerUpdateManyArgs>(args: SelectSubset<T, OwnerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Owners and returns the data updated in the database.
+     * @param {OwnerUpdateManyAndReturnArgs} args - Arguments to update many Owners.
+     * @example
+     * // Update many Owners
+     * const owner = await prisma.owner.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Owners and only return the `id`
+     * const ownerWithIdOnly = await prisma.owner.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OwnerUpdateManyAndReturnArgs>(args: SelectSubset<T, OwnerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Owner.
+     * @param {OwnerUpsertArgs} args - Arguments to update or create a Owner.
+     * @example
+     * // Update or create a Owner
+     * const owner = await prisma.owner.upsert({
+     *   create: {
+     *     // ... data to create a Owner
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Owner we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OwnerUpsertArgs>(args: SelectSubset<T, OwnerUpsertArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Owners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerCountArgs} args - Arguments to filter Owners to count.
+     * @example
+     * // Count the number of Owners
+     * const count = await prisma.owner.count({
+     *   where: {
+     *     // ... the filter for the Owners we want to count
+     *   }
+     * })
+    **/
+    count<T extends OwnerCountArgs>(
+      args?: Subset<T, OwnerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OwnerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Owner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OwnerAggregateArgs>(args: Subset<T, OwnerAggregateArgs>): Prisma.PrismaPromise<GetOwnerAggregateType<T>>
+
+    /**
+     * Group by Owner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OwnerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OwnerGroupByArgs['orderBy'] }
+        : { orderBy?: OwnerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OwnerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOwnerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Owner model
+   */
+  readonly fields: OwnerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Owner.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OwnerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    properties<T extends Owner$propertiesArgs<ExtArgs> = {}>(args?: Subset<T, Owner$propertiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Owner model
+   */
+  interface OwnerFieldRefs {
+    readonly id: FieldRef<"Owner", 'String'>
+    readonly name: FieldRef<"Owner", 'String'>
+    readonly email: FieldRef<"Owner", 'String'>
+    readonly phoneNumber: FieldRef<"Owner", 'String'>
+    readonly stocksSecurities: FieldRef<"Owner", 'Float'>
+    readonly businessInterests: FieldRef<"Owner", 'Float'>
+    readonly cashSavings: FieldRef<"Owner", 'Float'>
+    readonly otherAssets: FieldRef<"Owner", 'Float'>
+    readonly createdAt: FieldRef<"Owner", 'DateTime'>
+    readonly updatedAt: FieldRef<"Owner", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Owner findUnique
+   */
+  export type OwnerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner findUniqueOrThrow
+   */
+  export type OwnerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner findFirst
+   */
+  export type OwnerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Owners.
+     */
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner findFirstOrThrow
+   */
+  export type OwnerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Owners.
+     */
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner findMany
+   */
+  export type OwnerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owners to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner create
+   */
+  export type OwnerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Owner.
+     */
+    data: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
+  }
+
+  /**
+   * Owner createMany
+   */
+  export type OwnerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Owners.
+     */
+    data: OwnerCreateManyInput | OwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Owner createManyAndReturn
+   */
+  export type OwnerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data used to create many Owners.
+     */
+    data: OwnerCreateManyInput | OwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Owner update
+   */
+  export type OwnerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Owner.
+     */
+    data: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
+    /**
+     * Choose, which Owner to update.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner updateMany
+   */
+  export type OwnerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Owners.
+     */
+    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which Owners to update
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner updateManyAndReturn
+   */
+  export type OwnerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data used to update Owners.
+     */
+    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which Owners to update
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner upsert
+   */
+  export type OwnerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Owner to update in case it exists.
+     */
+    where: OwnerWhereUniqueInput
+    /**
+     * In case the Owner found by the `where` argument doesn't exist, create a new Owner with this data.
+     */
+    create: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
+    /**
+     * In case the Owner was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
+  }
+
+  /**
+   * Owner delete
+   */
+  export type OwnerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter which Owner to delete.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner deleteMany
+   */
+  export type OwnerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Owners to delete
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner.properties
+   */
+  export type Owner$propertiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    where?: PropertyOwnerWhereInput
+    orderBy?: PropertyOwnerOrderByWithRelationInput | PropertyOwnerOrderByWithRelationInput[]
+    cursor?: PropertyOwnerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PropertyOwnerScalarFieldEnum | PropertyOwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner without action
+   */
+  export type OwnerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PropertyOwner
+   */
+
+  export type AggregatePropertyOwner = {
+    _count: PropertyOwnerCountAggregateOutputType | null
+    _min: PropertyOwnerMinAggregateOutputType | null
+    _max: PropertyOwnerMaxAggregateOutputType | null
+  }
+
+  export type PropertyOwnerMinAggregateOutputType = {
+    id: string | null
+    propertyId: string | null
+    ownerId: string | null
+    ownerType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PropertyOwnerMaxAggregateOutputType = {
+    id: string | null
+    propertyId: string | null
+    ownerId: string | null
+    ownerType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PropertyOwnerCountAggregateOutputType = {
+    id: number
+    propertyId: number
+    ownerId: number
+    ownerType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PropertyOwnerMinAggregateInputType = {
+    id?: true
+    propertyId?: true
+    ownerId?: true
+    ownerType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PropertyOwnerMaxAggregateInputType = {
+    id?: true
+    propertyId?: true
+    ownerId?: true
+    ownerType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PropertyOwnerCountAggregateInputType = {
+    id?: true
+    propertyId?: true
+    ownerId?: true
+    ownerType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PropertyOwnerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PropertyOwner to aggregate.
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PropertyOwners to fetch.
+     */
+    orderBy?: PropertyOwnerOrderByWithRelationInput | PropertyOwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PropertyOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PropertyOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PropertyOwners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PropertyOwners
+    **/
+    _count?: true | PropertyOwnerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PropertyOwnerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PropertyOwnerMaxAggregateInputType
+  }
+
+  export type GetPropertyOwnerAggregateType<T extends PropertyOwnerAggregateArgs> = {
+        [P in keyof T & keyof AggregatePropertyOwner]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePropertyOwner[P]>
+      : GetScalarType<T[P], AggregatePropertyOwner[P]>
+  }
+
+
+
+
+  export type PropertyOwnerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PropertyOwnerWhereInput
+    orderBy?: PropertyOwnerOrderByWithAggregationInput | PropertyOwnerOrderByWithAggregationInput[]
+    by: PropertyOwnerScalarFieldEnum[] | PropertyOwnerScalarFieldEnum
+    having?: PropertyOwnerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PropertyOwnerCountAggregateInputType | true
+    _min?: PropertyOwnerMinAggregateInputType
+    _max?: PropertyOwnerMaxAggregateInputType
+  }
+
+  export type PropertyOwnerGroupByOutputType = {
+    id: string
+    propertyId: string
+    ownerId: string
+    ownerType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PropertyOwnerCountAggregateOutputType | null
+    _min: PropertyOwnerMinAggregateOutputType | null
+    _max: PropertyOwnerMaxAggregateOutputType | null
+  }
+
+  type GetPropertyOwnerGroupByPayload<T extends PropertyOwnerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PropertyOwnerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PropertyOwnerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PropertyOwnerGroupByOutputType[P]>
+            : GetScalarType<T[P], PropertyOwnerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PropertyOwnerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    propertyId?: boolean
+    ownerId?: boolean
+    ownerType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    owner?: boolean | OwnerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["propertyOwner"]>
+
+  export type PropertyOwnerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    propertyId?: boolean
+    ownerId?: boolean
+    ownerType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    owner?: boolean | OwnerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["propertyOwner"]>
+
+  export type PropertyOwnerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    propertyId?: boolean
+    ownerId?: boolean
+    ownerType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    owner?: boolean | OwnerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["propertyOwner"]>
+
+  export type PropertyOwnerSelectScalar = {
+    id?: boolean
+    propertyId?: boolean
+    ownerId?: boolean
+    ownerType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PropertyOwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "propertyId" | "ownerId" | "ownerType" | "createdAt" | "updatedAt", ExtArgs["result"]["propertyOwner"]>
+  export type PropertyOwnerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    owner?: boolean | OwnerDefaultArgs<ExtArgs>
+  }
+  export type PropertyOwnerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    owner?: boolean | OwnerDefaultArgs<ExtArgs>
+  }
+  export type PropertyOwnerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    owner?: boolean | OwnerDefaultArgs<ExtArgs>
+  }
+
+  export type $PropertyOwnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PropertyOwner"
+    objects: {
+      property: Prisma.$PropertyPayload<ExtArgs>
+      owner: Prisma.$OwnerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      propertyId: string
+      ownerId: string
+      ownerType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["propertyOwner"]>
+    composites: {}
+  }
+
+  type PropertyOwnerGetPayload<S extends boolean | null | undefined | PropertyOwnerDefaultArgs> = $Result.GetResult<Prisma.$PropertyOwnerPayload, S>
+
+  type PropertyOwnerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PropertyOwnerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PropertyOwnerCountAggregateInputType | true
+    }
+
+  export interface PropertyOwnerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PropertyOwner'], meta: { name: 'PropertyOwner' } }
+    /**
+     * Find zero or one PropertyOwner that matches the filter.
+     * @param {PropertyOwnerFindUniqueArgs} args - Arguments to find a PropertyOwner
+     * @example
+     * // Get one PropertyOwner
+     * const propertyOwner = await prisma.propertyOwner.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PropertyOwnerFindUniqueArgs>(args: SelectSubset<T, PropertyOwnerFindUniqueArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PropertyOwner that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PropertyOwnerFindUniqueOrThrowArgs} args - Arguments to find a PropertyOwner
+     * @example
+     * // Get one PropertyOwner
+     * const propertyOwner = await prisma.propertyOwner.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PropertyOwnerFindUniqueOrThrowArgs>(args: SelectSubset<T, PropertyOwnerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PropertyOwner that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerFindFirstArgs} args - Arguments to find a PropertyOwner
+     * @example
+     * // Get one PropertyOwner
+     * const propertyOwner = await prisma.propertyOwner.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PropertyOwnerFindFirstArgs>(args?: SelectSubset<T, PropertyOwnerFindFirstArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PropertyOwner that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerFindFirstOrThrowArgs} args - Arguments to find a PropertyOwner
+     * @example
+     * // Get one PropertyOwner
+     * const propertyOwner = await prisma.propertyOwner.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PropertyOwnerFindFirstOrThrowArgs>(args?: SelectSubset<T, PropertyOwnerFindFirstOrThrowArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PropertyOwners that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PropertyOwners
+     * const propertyOwners = await prisma.propertyOwner.findMany()
+     * 
+     * // Get first 10 PropertyOwners
+     * const propertyOwners = await prisma.propertyOwner.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const propertyOwnerWithIdOnly = await prisma.propertyOwner.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PropertyOwnerFindManyArgs>(args?: SelectSubset<T, PropertyOwnerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PropertyOwner.
+     * @param {PropertyOwnerCreateArgs} args - Arguments to create a PropertyOwner.
+     * @example
+     * // Create one PropertyOwner
+     * const PropertyOwner = await prisma.propertyOwner.create({
+     *   data: {
+     *     // ... data to create a PropertyOwner
+     *   }
+     * })
+     * 
+     */
+    create<T extends PropertyOwnerCreateArgs>(args: SelectSubset<T, PropertyOwnerCreateArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PropertyOwners.
+     * @param {PropertyOwnerCreateManyArgs} args - Arguments to create many PropertyOwners.
+     * @example
+     * // Create many PropertyOwners
+     * const propertyOwner = await prisma.propertyOwner.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PropertyOwnerCreateManyArgs>(args?: SelectSubset<T, PropertyOwnerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PropertyOwners and returns the data saved in the database.
+     * @param {PropertyOwnerCreateManyAndReturnArgs} args - Arguments to create many PropertyOwners.
+     * @example
+     * // Create many PropertyOwners
+     * const propertyOwner = await prisma.propertyOwner.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PropertyOwners and only return the `id`
+     * const propertyOwnerWithIdOnly = await prisma.propertyOwner.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PropertyOwnerCreateManyAndReturnArgs>(args?: SelectSubset<T, PropertyOwnerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PropertyOwner.
+     * @param {PropertyOwnerDeleteArgs} args - Arguments to delete one PropertyOwner.
+     * @example
+     * // Delete one PropertyOwner
+     * const PropertyOwner = await prisma.propertyOwner.delete({
+     *   where: {
+     *     // ... filter to delete one PropertyOwner
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PropertyOwnerDeleteArgs>(args: SelectSubset<T, PropertyOwnerDeleteArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PropertyOwner.
+     * @param {PropertyOwnerUpdateArgs} args - Arguments to update one PropertyOwner.
+     * @example
+     * // Update one PropertyOwner
+     * const propertyOwner = await prisma.propertyOwner.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PropertyOwnerUpdateArgs>(args: SelectSubset<T, PropertyOwnerUpdateArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PropertyOwners.
+     * @param {PropertyOwnerDeleteManyArgs} args - Arguments to filter PropertyOwners to delete.
+     * @example
+     * // Delete a few PropertyOwners
+     * const { count } = await prisma.propertyOwner.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PropertyOwnerDeleteManyArgs>(args?: SelectSubset<T, PropertyOwnerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PropertyOwners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PropertyOwners
+     * const propertyOwner = await prisma.propertyOwner.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PropertyOwnerUpdateManyArgs>(args: SelectSubset<T, PropertyOwnerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PropertyOwners and returns the data updated in the database.
+     * @param {PropertyOwnerUpdateManyAndReturnArgs} args - Arguments to update many PropertyOwners.
+     * @example
+     * // Update many PropertyOwners
+     * const propertyOwner = await prisma.propertyOwner.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PropertyOwners and only return the `id`
+     * const propertyOwnerWithIdOnly = await prisma.propertyOwner.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PropertyOwnerUpdateManyAndReturnArgs>(args: SelectSubset<T, PropertyOwnerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PropertyOwner.
+     * @param {PropertyOwnerUpsertArgs} args - Arguments to update or create a PropertyOwner.
+     * @example
+     * // Update or create a PropertyOwner
+     * const propertyOwner = await prisma.propertyOwner.upsert({
+     *   create: {
+     *     // ... data to create a PropertyOwner
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PropertyOwner we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PropertyOwnerUpsertArgs>(args: SelectSubset<T, PropertyOwnerUpsertArgs<ExtArgs>>): Prisma__PropertyOwnerClient<$Result.GetResult<Prisma.$PropertyOwnerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PropertyOwners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerCountArgs} args - Arguments to filter PropertyOwners to count.
+     * @example
+     * // Count the number of PropertyOwners
+     * const count = await prisma.propertyOwner.count({
+     *   where: {
+     *     // ... the filter for the PropertyOwners we want to count
+     *   }
+     * })
+    **/
+    count<T extends PropertyOwnerCountArgs>(
+      args?: Subset<T, PropertyOwnerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PropertyOwnerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PropertyOwner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PropertyOwnerAggregateArgs>(args: Subset<T, PropertyOwnerAggregateArgs>): Prisma.PrismaPromise<GetPropertyOwnerAggregateType<T>>
+
+    /**
+     * Group by PropertyOwner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PropertyOwnerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PropertyOwnerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PropertyOwnerGroupByArgs['orderBy'] }
+        : { orderBy?: PropertyOwnerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PropertyOwnerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPropertyOwnerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PropertyOwner model
+   */
+  readonly fields: PropertyOwnerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PropertyOwner.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PropertyOwnerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    property<T extends PropertyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PropertyDefaultArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    owner<T extends OwnerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OwnerDefaultArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PropertyOwner model
+   */
+  interface PropertyOwnerFieldRefs {
+    readonly id: FieldRef<"PropertyOwner", 'String'>
+    readonly propertyId: FieldRef<"PropertyOwner", 'String'>
+    readonly ownerId: FieldRef<"PropertyOwner", 'String'>
+    readonly ownerType: FieldRef<"PropertyOwner", 'String'>
+    readonly createdAt: FieldRef<"PropertyOwner", 'DateTime'>
+    readonly updatedAt: FieldRef<"PropertyOwner", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PropertyOwner findUnique
+   */
+  export type PropertyOwnerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which PropertyOwner to fetch.
+     */
+    where: PropertyOwnerWhereUniqueInput
+  }
+
+  /**
+   * PropertyOwner findUniqueOrThrow
+   */
+  export type PropertyOwnerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which PropertyOwner to fetch.
+     */
+    where: PropertyOwnerWhereUniqueInput
+  }
+
+  /**
+   * PropertyOwner findFirst
+   */
+  export type PropertyOwnerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which PropertyOwner to fetch.
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PropertyOwners to fetch.
+     */
+    orderBy?: PropertyOwnerOrderByWithRelationInput | PropertyOwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PropertyOwners.
+     */
+    cursor?: PropertyOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PropertyOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PropertyOwners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PropertyOwners.
+     */
+    distinct?: PropertyOwnerScalarFieldEnum | PropertyOwnerScalarFieldEnum[]
+  }
+
+  /**
+   * PropertyOwner findFirstOrThrow
+   */
+  export type PropertyOwnerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which PropertyOwner to fetch.
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PropertyOwners to fetch.
+     */
+    orderBy?: PropertyOwnerOrderByWithRelationInput | PropertyOwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PropertyOwners.
+     */
+    cursor?: PropertyOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PropertyOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PropertyOwners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PropertyOwners.
+     */
+    distinct?: PropertyOwnerScalarFieldEnum | PropertyOwnerScalarFieldEnum[]
+  }
+
+  /**
+   * PropertyOwner findMany
+   */
+  export type PropertyOwnerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which PropertyOwners to fetch.
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PropertyOwners to fetch.
+     */
+    orderBy?: PropertyOwnerOrderByWithRelationInput | PropertyOwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PropertyOwners.
+     */
+    cursor?: PropertyOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PropertyOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PropertyOwners.
+     */
+    skip?: number
+    distinct?: PropertyOwnerScalarFieldEnum | PropertyOwnerScalarFieldEnum[]
+  }
+
+  /**
+   * PropertyOwner create
+   */
+  export type PropertyOwnerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PropertyOwner.
+     */
+    data: XOR<PropertyOwnerCreateInput, PropertyOwnerUncheckedCreateInput>
+  }
+
+  /**
+   * PropertyOwner createMany
+   */
+  export type PropertyOwnerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PropertyOwners.
+     */
+    data: PropertyOwnerCreateManyInput | PropertyOwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PropertyOwner createManyAndReturn
+   */
+  export type PropertyOwnerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * The data used to create many PropertyOwners.
+     */
+    data: PropertyOwnerCreateManyInput | PropertyOwnerCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PropertyOwner update
+   */
+  export type PropertyOwnerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PropertyOwner.
+     */
+    data: XOR<PropertyOwnerUpdateInput, PropertyOwnerUncheckedUpdateInput>
+    /**
+     * Choose, which PropertyOwner to update.
+     */
+    where: PropertyOwnerWhereUniqueInput
+  }
+
+  /**
+   * PropertyOwner updateMany
+   */
+  export type PropertyOwnerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PropertyOwners.
+     */
+    data: XOR<PropertyOwnerUpdateManyMutationInput, PropertyOwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which PropertyOwners to update
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * Limit how many PropertyOwners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PropertyOwner updateManyAndReturn
+   */
+  export type PropertyOwnerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * The data used to update PropertyOwners.
+     */
+    data: XOR<PropertyOwnerUpdateManyMutationInput, PropertyOwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which PropertyOwners to update
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * Limit how many PropertyOwners to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PropertyOwner upsert
+   */
+  export type PropertyOwnerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PropertyOwner to update in case it exists.
+     */
+    where: PropertyOwnerWhereUniqueInput
+    /**
+     * In case the PropertyOwner found by the `where` argument doesn't exist, create a new PropertyOwner with this data.
+     */
+    create: XOR<PropertyOwnerCreateInput, PropertyOwnerUncheckedCreateInput>
+    /**
+     * In case the PropertyOwner was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PropertyOwnerUpdateInput, PropertyOwnerUncheckedUpdateInput>
+  }
+
+  /**
+   * PropertyOwner delete
+   */
+  export type PropertyOwnerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+    /**
+     * Filter which PropertyOwner to delete.
+     */
+    where: PropertyOwnerWhereUniqueInput
+  }
+
+  /**
+   * PropertyOwner deleteMany
+   */
+  export type PropertyOwnerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PropertyOwners to delete
+     */
+    where?: PropertyOwnerWhereInput
+    /**
+     * Limit how many PropertyOwners to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PropertyOwner without action
+   */
+  export type PropertyOwnerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PropertyOwner
+     */
+    select?: PropertyOwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PropertyOwner
+     */
+    omit?: PropertyOwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PropertyOwnerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Report
+   */
+
+  export type AggregateReport = {
+    _count: ReportCountAggregateOutputType | null
+    _min: ReportMinAggregateOutputType | null
+    _max: ReportMaxAggregateOutputType | null
+  }
+
+  export type ReportMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    notes: string | null
+    reportType: string | null
+    exported: boolean | null
+    exportUrl: string | null
+  }
+
+  export type ReportMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    notes: string | null
+    reportType: string | null
+    exported: boolean | null
+    exportUrl: string | null
+  }
+
+  export type ReportCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    notes: number
+    reportType: number
+    exported: number
+    exportUrl: number
+    _all: number
+  }
+
+
+  export type ReportMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    notes?: true
+    reportType?: true
+    exported?: true
+    exportUrl?: true
+  }
+
+  export type ReportMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    notes?: true
+    reportType?: true
+    exported?: true
+    exportUrl?: true
+  }
+
+  export type ReportCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    notes?: true
+    reportType?: true
+    exported?: true
+    exportUrl?: true
+    _all?: true
+  }
+
+  export type ReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Report to aggregate.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Reports
+    **/
+    _count?: true | ReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReportMaxAggregateInputType
+  }
+
+  export type GetReportAggregateType<T extends ReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReport[P]>
+      : GetScalarType<T[P], AggregateReport[P]>
+  }
+
+
+
+
+  export type ReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportWhereInput
+    orderBy?: ReportOrderByWithAggregationInput | ReportOrderByWithAggregationInput[]
+    by: ReportScalarFieldEnum[] | ReportScalarFieldEnum
+    having?: ReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReportCountAggregateInputType | true
+    _min?: ReportMinAggregateInputType
+    _max?: ReportMaxAggregateInputType
+  }
+
+  export type ReportGroupByOutputType = {
+    id: string
+    title: string
+    description: string | null
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    notes: string | null
+    reportType: string | null
+    exported: boolean | null
+    exportUrl: string | null
+    _count: ReportCountAggregateOutputType | null
+    _min: ReportMinAggregateOutputType | null
+    _max: ReportMaxAggregateOutputType | null
+  }
+
+  type GetReportGroupByPayload<T extends ReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReportGroupByOutputType[P]>
+            : GetScalarType<T[P], ReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notes?: boolean
+    reportType?: boolean
+    exported?: boolean
+    exportUrl?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sharedWith?: boolean | Report$sharedWithArgs<ExtArgs>
+    _count?: boolean | ReportCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["report"]>
+
+  export type ReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notes?: boolean
+    reportType?: boolean
+    exported?: boolean
+    exportUrl?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["report"]>
+
+  export type ReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notes?: boolean
+    reportType?: boolean
+    exported?: boolean
+    exportUrl?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["report"]>
+
+  export type ReportSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    notes?: boolean
+    reportType?: boolean
+    exported?: boolean
+    exportUrl?: boolean
+  }
+
+  export type ReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdAt" | "updatedAt" | "notes" | "reportType" | "exported" | "exportUrl", ExtArgs["result"]["report"]>
+  export type ReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sharedWith?: boolean | Report$sharedWithArgs<ExtArgs>
+    _count?: boolean | ReportCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Report"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      sharedWith: Prisma.$SharedPropertyPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string | null
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+      notes: string | null
+      reportType: string | null
+      exported: boolean | null
+      exportUrl: string | null
+    }, ExtArgs["result"]["report"]>
+    composites: {}
+  }
+
+  type ReportGetPayload<S extends boolean | null | undefined | ReportDefaultArgs> = $Result.GetResult<Prisma.$ReportPayload, S>
+
+  type ReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReportCountAggregateInputType | true
+    }
+
+  export interface ReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Report'], meta: { name: 'Report' } }
+    /**
+     * Find zero or one Report that matches the filter.
+     * @param {ReportFindUniqueArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReportFindUniqueArgs>(args: SelectSubset<T, ReportFindUniqueArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Report that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReportFindUniqueOrThrowArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReportFindUniqueOrThrowArgs>(args: SelectSubset<T, ReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Report that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportFindFirstArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReportFindFirstArgs>(args?: SelectSubset<T, ReportFindFirstArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Report that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportFindFirstOrThrowArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReportFindFirstOrThrowArgs>(args?: SelectSubset<T, ReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Reports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Reports
+     * const reports = await prisma.report.findMany()
+     * 
+     * // Get first 10 Reports
+     * const reports = await prisma.report.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const reportWithIdOnly = await prisma.report.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReportFindManyArgs>(args?: SelectSubset<T, ReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Report.
+     * @param {ReportCreateArgs} args - Arguments to create a Report.
+     * @example
+     * // Create one Report
+     * const Report = await prisma.report.create({
+     *   data: {
+     *     // ... data to create a Report
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReportCreateArgs>(args: SelectSubset<T, ReportCreateArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Reports.
+     * @param {ReportCreateManyArgs} args - Arguments to create many Reports.
+     * @example
+     * // Create many Reports
+     * const report = await prisma.report.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReportCreateManyArgs>(args?: SelectSubset<T, ReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Reports and returns the data saved in the database.
+     * @param {ReportCreateManyAndReturnArgs} args - Arguments to create many Reports.
+     * @example
+     * // Create many Reports
+     * const report = await prisma.report.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Reports and only return the `id`
+     * const reportWithIdOnly = await prisma.report.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReportCreateManyAndReturnArgs>(args?: SelectSubset<T, ReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Report.
+     * @param {ReportDeleteArgs} args - Arguments to delete one Report.
+     * @example
+     * // Delete one Report
+     * const Report = await prisma.report.delete({
+     *   where: {
+     *     // ... filter to delete one Report
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReportDeleteArgs>(args: SelectSubset<T, ReportDeleteArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Report.
+     * @param {ReportUpdateArgs} args - Arguments to update one Report.
+     * @example
+     * // Update one Report
+     * const report = await prisma.report.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReportUpdateArgs>(args: SelectSubset<T, ReportUpdateArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Reports.
+     * @param {ReportDeleteManyArgs} args - Arguments to filter Reports to delete.
+     * @example
+     * // Delete a few Reports
+     * const { count } = await prisma.report.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReportDeleteManyArgs>(args?: SelectSubset<T, ReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Reports
+     * const report = await prisma.report.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReportUpdateManyArgs>(args: SelectSubset<T, ReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reports and returns the data updated in the database.
+     * @param {ReportUpdateManyAndReturnArgs} args - Arguments to update many Reports.
+     * @example
+     * // Update many Reports
+     * const report = await prisma.report.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Reports and only return the `id`
+     * const reportWithIdOnly = await prisma.report.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ReportUpdateManyAndReturnArgs>(args: SelectSubset<T, ReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Report.
+     * @param {ReportUpsertArgs} args - Arguments to update or create a Report.
+     * @example
+     * // Update or create a Report
+     * const report = await prisma.report.upsert({
+     *   create: {
+     *     // ... data to create a Report
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Report we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReportUpsertArgs>(args: SelectSubset<T, ReportUpsertArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Reports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportCountArgs} args - Arguments to filter Reports to count.
+     * @example
+     * // Count the number of Reports
+     * const count = await prisma.report.count({
+     *   where: {
+     *     // ... the filter for the Reports we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReportCountArgs>(
+      args?: Subset<T, ReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Report.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReportAggregateArgs>(args: Subset<T, ReportAggregateArgs>): Prisma.PrismaPromise<GetReportAggregateType<T>>
+
+    /**
+     * Group by Report.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReportGroupByArgs['orderBy'] }
+        : { orderBy?: ReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Report model
+   */
+  readonly fields: ReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Report.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sharedWith<T extends Report$sharedWithArgs<ExtArgs> = {}>(args?: Subset<T, Report$sharedWithArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Report model
+   */
+  interface ReportFieldRefs {
+    readonly id: FieldRef<"Report", 'String'>
+    readonly title: FieldRef<"Report", 'String'>
+    readonly description: FieldRef<"Report", 'String'>
+    readonly userId: FieldRef<"Report", 'String'>
+    readonly createdAt: FieldRef<"Report", 'DateTime'>
+    readonly updatedAt: FieldRef<"Report", 'DateTime'>
+    readonly notes: FieldRef<"Report", 'String'>
+    readonly reportType: FieldRef<"Report", 'String'>
+    readonly exported: FieldRef<"Report", 'Boolean'>
+    readonly exportUrl: FieldRef<"Report", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Report findUnique
+   */
+  export type ReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report findUniqueOrThrow
+   */
+  export type ReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report findFirst
+   */
+  export type ReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reports.
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reports.
+     */
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * Report findFirstOrThrow
+   */
+  export type ReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reports.
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reports.
+     */
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * Report findMany
+   */
+  export type ReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Reports to fetch.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Reports.
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * Report create
+   */
+  export type ReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Report.
+     */
+    data: XOR<ReportCreateInput, ReportUncheckedCreateInput>
+  }
+
+  /**
+   * Report createMany
+   */
+  export type ReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Reports.
+     */
+    data: ReportCreateManyInput | ReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Report createManyAndReturn
+   */
+  export type ReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many Reports.
+     */
+    data: ReportCreateManyInput | ReportCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Report update
+   */
+  export type ReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Report.
+     */
+    data: XOR<ReportUpdateInput, ReportUncheckedUpdateInput>
+    /**
+     * Choose, which Report to update.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report updateMany
+   */
+  export type ReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Reports.
+     */
+    data: XOR<ReportUpdateManyMutationInput, ReportUncheckedUpdateManyInput>
+    /**
+     * Filter which Reports to update
+     */
+    where?: ReportWhereInput
+    /**
+     * Limit how many Reports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Report updateManyAndReturn
+   */
+  export type ReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * The data used to update Reports.
+     */
+    data: XOR<ReportUpdateManyMutationInput, ReportUncheckedUpdateManyInput>
+    /**
+     * Filter which Reports to update
+     */
+    where?: ReportWhereInput
+    /**
+     * Limit how many Reports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Report upsert
+   */
+  export type ReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Report to update in case it exists.
+     */
+    where: ReportWhereUniqueInput
+    /**
+     * In case the Report found by the `where` argument doesn't exist, create a new Report with this data.
+     */
+    create: XOR<ReportCreateInput, ReportUncheckedCreateInput>
+    /**
+     * In case the Report was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReportUpdateInput, ReportUncheckedUpdateInput>
+  }
+
+  /**
+   * Report delete
+   */
+  export type ReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter which Report to delete.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report deleteMany
+   */
+  export type ReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Reports to delete
+     */
+    where?: ReportWhereInput
+    /**
+     * Limit how many Reports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Report.sharedWith
+   */
+  export type Report$sharedWithArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    where?: SharedPropertyWhereInput
+    orderBy?: SharedPropertyOrderByWithRelationInput | SharedPropertyOrderByWithRelationInput[]
+    cursor?: SharedPropertyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SharedPropertyScalarFieldEnum | SharedPropertyScalarFieldEnum[]
+  }
+
+  /**
+   * Report without action
+   */
+  export type ReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SharedProperty
+   */
+
+  export type AggregateSharedProperty = {
+    _count: SharedPropertyCountAggregateOutputType | null
+    _min: SharedPropertyMinAggregateOutputType | null
+    _max: SharedPropertyMaxAggregateOutputType | null
+  }
+
+  export type SharedPropertyMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    reportId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SharedPropertyMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    reportId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SharedPropertyCountAggregateOutputType = {
+    id: number
+    userId: number
+    reportId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SharedPropertyMinAggregateInputType = {
+    id?: true
+    userId?: true
+    reportId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SharedPropertyMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    reportId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SharedPropertyCountAggregateInputType = {
+    id?: true
+    userId?: true
+    reportId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SharedPropertyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SharedProperty to aggregate.
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SharedProperties to fetch.
+     */
+    orderBy?: SharedPropertyOrderByWithRelationInput | SharedPropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SharedPropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SharedProperties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SharedProperties.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SharedProperties
+    **/
+    _count?: true | SharedPropertyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SharedPropertyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SharedPropertyMaxAggregateInputType
+  }
+
+  export type GetSharedPropertyAggregateType<T extends SharedPropertyAggregateArgs> = {
+        [P in keyof T & keyof AggregateSharedProperty]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSharedProperty[P]>
+      : GetScalarType<T[P], AggregateSharedProperty[P]>
+  }
+
+
+
+
+  export type SharedPropertyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SharedPropertyWhereInput
+    orderBy?: SharedPropertyOrderByWithAggregationInput | SharedPropertyOrderByWithAggregationInput[]
+    by: SharedPropertyScalarFieldEnum[] | SharedPropertyScalarFieldEnum
+    having?: SharedPropertyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SharedPropertyCountAggregateInputType | true
+    _min?: SharedPropertyMinAggregateInputType
+    _max?: SharedPropertyMaxAggregateInputType
+  }
+
+  export type SharedPropertyGroupByOutputType = {
+    id: string
+    userId: string
+    reportId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: SharedPropertyCountAggregateOutputType | null
+    _min: SharedPropertyMinAggregateOutputType | null
+    _max: SharedPropertyMaxAggregateOutputType | null
+  }
+
+  type GetSharedPropertyGroupByPayload<T extends SharedPropertyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SharedPropertyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SharedPropertyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SharedPropertyGroupByOutputType[P]>
+            : GetScalarType<T[P], SharedPropertyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SharedPropertySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    reportId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    report?: boolean | ReportDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sharedProperty"]>
+
+  export type SharedPropertySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    reportId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    report?: boolean | ReportDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sharedProperty"]>
+
+  export type SharedPropertySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    reportId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    report?: boolean | ReportDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sharedProperty"]>
+
+  export type SharedPropertySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    reportId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SharedPropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "reportId" | "createdAt" | "updatedAt", ExtArgs["result"]["sharedProperty"]>
+  export type SharedPropertyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    report?: boolean | ReportDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SharedPropertyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    report?: boolean | ReportDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SharedPropertyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    report?: boolean | ReportDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SharedPropertyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SharedProperty"
+    objects: {
+      report: Prisma.$ReportPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      reportId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["sharedProperty"]>
+    composites: {}
+  }
+
+  type SharedPropertyGetPayload<S extends boolean | null | undefined | SharedPropertyDefaultArgs> = $Result.GetResult<Prisma.$SharedPropertyPayload, S>
+
+  type SharedPropertyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SharedPropertyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SharedPropertyCountAggregateInputType | true
+    }
+
+  export interface SharedPropertyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SharedProperty'], meta: { name: 'SharedProperty' } }
+    /**
+     * Find zero or one SharedProperty that matches the filter.
+     * @param {SharedPropertyFindUniqueArgs} args - Arguments to find a SharedProperty
+     * @example
+     * // Get one SharedProperty
+     * const sharedProperty = await prisma.sharedProperty.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SharedPropertyFindUniqueArgs>(args: SelectSubset<T, SharedPropertyFindUniqueArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SharedProperty that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SharedPropertyFindUniqueOrThrowArgs} args - Arguments to find a SharedProperty
+     * @example
+     * // Get one SharedProperty
+     * const sharedProperty = await prisma.sharedProperty.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SharedPropertyFindUniqueOrThrowArgs>(args: SelectSubset<T, SharedPropertyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SharedProperty that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyFindFirstArgs} args - Arguments to find a SharedProperty
+     * @example
+     * // Get one SharedProperty
+     * const sharedProperty = await prisma.sharedProperty.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SharedPropertyFindFirstArgs>(args?: SelectSubset<T, SharedPropertyFindFirstArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SharedProperty that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyFindFirstOrThrowArgs} args - Arguments to find a SharedProperty
+     * @example
+     * // Get one SharedProperty
+     * const sharedProperty = await prisma.sharedProperty.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SharedPropertyFindFirstOrThrowArgs>(args?: SelectSubset<T, SharedPropertyFindFirstOrThrowArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SharedProperties that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SharedProperties
+     * const sharedProperties = await prisma.sharedProperty.findMany()
+     * 
+     * // Get first 10 SharedProperties
+     * const sharedProperties = await prisma.sharedProperty.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sharedPropertyWithIdOnly = await prisma.sharedProperty.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SharedPropertyFindManyArgs>(args?: SelectSubset<T, SharedPropertyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SharedProperty.
+     * @param {SharedPropertyCreateArgs} args - Arguments to create a SharedProperty.
+     * @example
+     * // Create one SharedProperty
+     * const SharedProperty = await prisma.sharedProperty.create({
+     *   data: {
+     *     // ... data to create a SharedProperty
+     *   }
+     * })
+     * 
+     */
+    create<T extends SharedPropertyCreateArgs>(args: SelectSubset<T, SharedPropertyCreateArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SharedProperties.
+     * @param {SharedPropertyCreateManyArgs} args - Arguments to create many SharedProperties.
+     * @example
+     * // Create many SharedProperties
+     * const sharedProperty = await prisma.sharedProperty.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SharedPropertyCreateManyArgs>(args?: SelectSubset<T, SharedPropertyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SharedProperties and returns the data saved in the database.
+     * @param {SharedPropertyCreateManyAndReturnArgs} args - Arguments to create many SharedProperties.
+     * @example
+     * // Create many SharedProperties
+     * const sharedProperty = await prisma.sharedProperty.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SharedProperties and only return the `id`
+     * const sharedPropertyWithIdOnly = await prisma.sharedProperty.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SharedPropertyCreateManyAndReturnArgs>(args?: SelectSubset<T, SharedPropertyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SharedProperty.
+     * @param {SharedPropertyDeleteArgs} args - Arguments to delete one SharedProperty.
+     * @example
+     * // Delete one SharedProperty
+     * const SharedProperty = await prisma.sharedProperty.delete({
+     *   where: {
+     *     // ... filter to delete one SharedProperty
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SharedPropertyDeleteArgs>(args: SelectSubset<T, SharedPropertyDeleteArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SharedProperty.
+     * @param {SharedPropertyUpdateArgs} args - Arguments to update one SharedProperty.
+     * @example
+     * // Update one SharedProperty
+     * const sharedProperty = await prisma.sharedProperty.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SharedPropertyUpdateArgs>(args: SelectSubset<T, SharedPropertyUpdateArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SharedProperties.
+     * @param {SharedPropertyDeleteManyArgs} args - Arguments to filter SharedProperties to delete.
+     * @example
+     * // Delete a few SharedProperties
+     * const { count } = await prisma.sharedProperty.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SharedPropertyDeleteManyArgs>(args?: SelectSubset<T, SharedPropertyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SharedProperties.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SharedProperties
+     * const sharedProperty = await prisma.sharedProperty.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SharedPropertyUpdateManyArgs>(args: SelectSubset<T, SharedPropertyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SharedProperties and returns the data updated in the database.
+     * @param {SharedPropertyUpdateManyAndReturnArgs} args - Arguments to update many SharedProperties.
+     * @example
+     * // Update many SharedProperties
+     * const sharedProperty = await prisma.sharedProperty.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SharedProperties and only return the `id`
+     * const sharedPropertyWithIdOnly = await prisma.sharedProperty.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SharedPropertyUpdateManyAndReturnArgs>(args: SelectSubset<T, SharedPropertyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SharedProperty.
+     * @param {SharedPropertyUpsertArgs} args - Arguments to update or create a SharedProperty.
+     * @example
+     * // Update or create a SharedProperty
+     * const sharedProperty = await prisma.sharedProperty.upsert({
+     *   create: {
+     *     // ... data to create a SharedProperty
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SharedProperty we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SharedPropertyUpsertArgs>(args: SelectSubset<T, SharedPropertyUpsertArgs<ExtArgs>>): Prisma__SharedPropertyClient<$Result.GetResult<Prisma.$SharedPropertyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SharedProperties.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyCountArgs} args - Arguments to filter SharedProperties to count.
+     * @example
+     * // Count the number of SharedProperties
+     * const count = await prisma.sharedProperty.count({
+     *   where: {
+     *     // ... the filter for the SharedProperties we want to count
+     *   }
+     * })
+    **/
+    count<T extends SharedPropertyCountArgs>(
+      args?: Subset<T, SharedPropertyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SharedPropertyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SharedProperty.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SharedPropertyAggregateArgs>(args: Subset<T, SharedPropertyAggregateArgs>): Prisma.PrismaPromise<GetSharedPropertyAggregateType<T>>
+
+    /**
+     * Group by SharedProperty.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SharedPropertyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SharedPropertyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SharedPropertyGroupByArgs['orderBy'] }
+        : { orderBy?: SharedPropertyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SharedPropertyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSharedPropertyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SharedProperty model
+   */
+  readonly fields: SharedPropertyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SharedProperty.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SharedPropertyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    report<T extends ReportDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ReportDefaultArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SharedProperty model
+   */
+  interface SharedPropertyFieldRefs {
+    readonly id: FieldRef<"SharedProperty", 'String'>
+    readonly userId: FieldRef<"SharedProperty", 'String'>
+    readonly reportId: FieldRef<"SharedProperty", 'String'>
+    readonly createdAt: FieldRef<"SharedProperty", 'DateTime'>
+    readonly updatedAt: FieldRef<"SharedProperty", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SharedProperty findUnique
+   */
+  export type SharedPropertyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which SharedProperty to fetch.
+     */
+    where: SharedPropertyWhereUniqueInput
+  }
+
+  /**
+   * SharedProperty findUniqueOrThrow
+   */
+  export type SharedPropertyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which SharedProperty to fetch.
+     */
+    where: SharedPropertyWhereUniqueInput
+  }
+
+  /**
+   * SharedProperty findFirst
+   */
+  export type SharedPropertyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which SharedProperty to fetch.
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SharedProperties to fetch.
+     */
+    orderBy?: SharedPropertyOrderByWithRelationInput | SharedPropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SharedProperties.
+     */
+    cursor?: SharedPropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SharedProperties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SharedProperties.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SharedProperties.
+     */
+    distinct?: SharedPropertyScalarFieldEnum | SharedPropertyScalarFieldEnum[]
+  }
+
+  /**
+   * SharedProperty findFirstOrThrow
+   */
+  export type SharedPropertyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which SharedProperty to fetch.
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SharedProperties to fetch.
+     */
+    orderBy?: SharedPropertyOrderByWithRelationInput | SharedPropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SharedProperties.
+     */
+    cursor?: SharedPropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SharedProperties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SharedProperties.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SharedProperties.
+     */
+    distinct?: SharedPropertyScalarFieldEnum | SharedPropertyScalarFieldEnum[]
+  }
+
+  /**
+   * SharedProperty findMany
+   */
+  export type SharedPropertyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * Filter, which SharedProperties to fetch.
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SharedProperties to fetch.
+     */
+    orderBy?: SharedPropertyOrderByWithRelationInput | SharedPropertyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SharedProperties.
+     */
+    cursor?: SharedPropertyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SharedProperties from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SharedProperties.
+     */
+    skip?: number
+    distinct?: SharedPropertyScalarFieldEnum | SharedPropertyScalarFieldEnum[]
+  }
+
+  /**
+   * SharedProperty create
+   */
+  export type SharedPropertyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SharedProperty.
+     */
+    data: XOR<SharedPropertyCreateInput, SharedPropertyUncheckedCreateInput>
+  }
+
+  /**
+   * SharedProperty createMany
+   */
+  export type SharedPropertyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SharedProperties.
+     */
+    data: SharedPropertyCreateManyInput | SharedPropertyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SharedProperty createManyAndReturn
+   */
+  export type SharedPropertyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * The data used to create many SharedProperties.
+     */
+    data: SharedPropertyCreateManyInput | SharedPropertyCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SharedProperty update
+   */
+  export type SharedPropertyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SharedProperty.
+     */
+    data: XOR<SharedPropertyUpdateInput, SharedPropertyUncheckedUpdateInput>
+    /**
+     * Choose, which SharedProperty to update.
+     */
+    where: SharedPropertyWhereUniqueInput
+  }
+
+  /**
+   * SharedProperty updateMany
+   */
+  export type SharedPropertyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SharedProperties.
+     */
+    data: XOR<SharedPropertyUpdateManyMutationInput, SharedPropertyUncheckedUpdateManyInput>
+    /**
+     * Filter which SharedProperties to update
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * Limit how many SharedProperties to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SharedProperty updateManyAndReturn
+   */
+  export type SharedPropertyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * The data used to update SharedProperties.
+     */
+    data: XOR<SharedPropertyUpdateManyMutationInput, SharedPropertyUncheckedUpdateManyInput>
+    /**
+     * Filter which SharedProperties to update
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * Limit how many SharedProperties to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SharedProperty upsert
+   */
+  export type SharedPropertyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SharedProperty to update in case it exists.
+     */
+    where: SharedPropertyWhereUniqueInput
+    /**
+     * In case the SharedProperty found by the `where` argument doesn't exist, create a new SharedProperty with this data.
+     */
+    create: XOR<SharedPropertyCreateInput, SharedPropertyUncheckedCreateInput>
+    /**
+     * In case the SharedProperty was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SharedPropertyUpdateInput, SharedPropertyUncheckedUpdateInput>
+  }
+
+  /**
+   * SharedProperty delete
+   */
+  export type SharedPropertyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+    /**
+     * Filter which SharedProperty to delete.
+     */
+    where: SharedPropertyWhereUniqueInput
+  }
+
+  /**
+   * SharedProperty deleteMany
+   */
+  export type SharedPropertyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SharedProperties to delete
+     */
+    where?: SharedPropertyWhereInput
+    /**
+     * Limit how many SharedProperties to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SharedProperty without action
+   */
+  export type SharedPropertyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedProperty
+     */
+    select?: SharedPropertySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedProperty
+     */
+    omit?: SharedPropertyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedPropertyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model View
+   */
+
+  export type AggregateView = {
+    _count: ViewCountAggregateOutputType | null
+    _min: ViewMinAggregateOutputType | null
+    _max: ViewMaxAggregateOutputType | null
+  }
+
+  export type ViewMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    propertyId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ViewMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    propertyId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ViewCountAggregateOutputType = {
+    id: number
+    userId: number
+    propertyId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ViewMinAggregateInputType = {
+    id?: true
+    userId?: true
+    propertyId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ViewMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    propertyId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ViewCountAggregateInputType = {
+    id?: true
+    userId?: true
+    propertyId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which View to aggregate.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Views
+    **/
+    _count?: true | ViewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ViewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ViewMaxAggregateInputType
+  }
+
+  export type GetViewAggregateType<T extends ViewAggregateArgs> = {
+        [P in keyof T & keyof AggregateView]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateView[P]>
+      : GetScalarType<T[P], AggregateView[P]>
+  }
+
+
+
+
+  export type ViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ViewWhereInput
+    orderBy?: ViewOrderByWithAggregationInput | ViewOrderByWithAggregationInput[]
+    by: ViewScalarFieldEnum[] | ViewScalarFieldEnum
+    having?: ViewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ViewCountAggregateInputType | true
+    _min?: ViewMinAggregateInputType
+    _max?: ViewMaxAggregateInputType
+  }
+
+  export type ViewGroupByOutputType = {
+    id: string
+    userId: string
+    propertyId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ViewCountAggregateOutputType | null
+    _min: ViewMinAggregateOutputType | null
+    _max: ViewMaxAggregateOutputType | null
+  }
+
+  type GetViewGroupByPayload<T extends ViewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ViewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ViewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ViewGroupByOutputType[P]>
+            : GetScalarType<T[P], ViewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["view"]>
+
+  export type ViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["view"]>
+
+  export type ViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["view"]>
+
+  export type ViewSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "propertyId" | "createdAt" | "updatedAt", ExtArgs["result"]["view"]>
+  export type ViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }
+  export type ViewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }
+  export type ViewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }
+
+  export type $ViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "View"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      property: Prisma.$PropertyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      propertyId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["view"]>
+    composites: {}
+  }
+
+  type ViewGetPayload<S extends boolean | null | undefined | ViewDefaultArgs> = $Result.GetResult<Prisma.$ViewPayload, S>
+
+  type ViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ViewCountAggregateInputType | true
+    }
+
+  export interface ViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['View'], meta: { name: 'View' } }
+    /**
+     * Find zero or one View that matches the filter.
+     * @param {ViewFindUniqueArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ViewFindUniqueArgs>(args: SelectSubset<T, ViewFindUniqueArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one View that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ViewFindUniqueOrThrowArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ViewFindUniqueOrThrowArgs>(args: SelectSubset<T, ViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first View that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewFindFirstArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ViewFindFirstArgs>(args?: SelectSubset<T, ViewFindFirstArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first View that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewFindFirstOrThrowArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ViewFindFirstOrThrowArgs>(args?: SelectSubset<T, ViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Views that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Views
+     * const views = await prisma.view.findMany()
+     * 
+     * // Get first 10 Views
+     * const views = await prisma.view.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const viewWithIdOnly = await prisma.view.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ViewFindManyArgs>(args?: SelectSubset<T, ViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a View.
+     * @param {ViewCreateArgs} args - Arguments to create a View.
+     * @example
+     * // Create one View
+     * const View = await prisma.view.create({
+     *   data: {
+     *     // ... data to create a View
+     *   }
+     * })
+     * 
+     */
+    create<T extends ViewCreateArgs>(args: SelectSubset<T, ViewCreateArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Views.
+     * @param {ViewCreateManyArgs} args - Arguments to create many Views.
+     * @example
+     * // Create many Views
+     * const view = await prisma.view.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ViewCreateManyArgs>(args?: SelectSubset<T, ViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Views and returns the data saved in the database.
+     * @param {ViewCreateManyAndReturnArgs} args - Arguments to create many Views.
+     * @example
+     * // Create many Views
+     * const view = await prisma.view.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Views and only return the `id`
+     * const viewWithIdOnly = await prisma.view.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ViewCreateManyAndReturnArgs>(args?: SelectSubset<T, ViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a View.
+     * @param {ViewDeleteArgs} args - Arguments to delete one View.
+     * @example
+     * // Delete one View
+     * const View = await prisma.view.delete({
+     *   where: {
+     *     // ... filter to delete one View
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ViewDeleteArgs>(args: SelectSubset<T, ViewDeleteArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one View.
+     * @param {ViewUpdateArgs} args - Arguments to update one View.
+     * @example
+     * // Update one View
+     * const view = await prisma.view.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ViewUpdateArgs>(args: SelectSubset<T, ViewUpdateArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Views.
+     * @param {ViewDeleteManyArgs} args - Arguments to filter Views to delete.
+     * @example
+     * // Delete a few Views
+     * const { count } = await prisma.view.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ViewDeleteManyArgs>(args?: SelectSubset<T, ViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Views.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Views
+     * const view = await prisma.view.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ViewUpdateManyArgs>(args: SelectSubset<T, ViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Views and returns the data updated in the database.
+     * @param {ViewUpdateManyAndReturnArgs} args - Arguments to update many Views.
+     * @example
+     * // Update many Views
+     * const view = await prisma.view.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Views and only return the `id`
+     * const viewWithIdOnly = await prisma.view.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ViewUpdateManyAndReturnArgs>(args: SelectSubset<T, ViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one View.
+     * @param {ViewUpsertArgs} args - Arguments to update or create a View.
+     * @example
+     * // Update or create a View
+     * const view = await prisma.view.upsert({
+     *   create: {
+     *     // ... data to create a View
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the View we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ViewUpsertArgs>(args: SelectSubset<T, ViewUpsertArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Views.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewCountArgs} args - Arguments to filter Views to count.
+     * @example
+     * // Count the number of Views
+     * const count = await prisma.view.count({
+     *   where: {
+     *     // ... the filter for the Views we want to count
+     *   }
+     * })
+    **/
+    count<T extends ViewCountArgs>(
+      args?: Subset<T, ViewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ViewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a View.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ViewAggregateArgs>(args: Subset<T, ViewAggregateArgs>): Prisma.PrismaPromise<GetViewAggregateType<T>>
+
+    /**
+     * Group by View.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ViewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ViewGroupByArgs['orderBy'] }
+        : { orderBy?: ViewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the View model
+   */
+  readonly fields: ViewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for View.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    property<T extends PropertyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PropertyDefaultArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the View model
+   */
+  interface ViewFieldRefs {
+    readonly id: FieldRef<"View", 'String'>
+    readonly userId: FieldRef<"View", 'String'>
+    readonly propertyId: FieldRef<"View", 'String'>
+    readonly createdAt: FieldRef<"View", 'DateTime'>
+    readonly updatedAt: FieldRef<"View", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * View findUnique
+   */
+  export type ViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View findUniqueOrThrow
+   */
+  export type ViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View findFirst
+   */
+  export type ViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Views.
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Views.
+     */
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * View findFirstOrThrow
+   */
+  export type ViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Views.
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Views.
+     */
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * View findMany
+   */
+  export type ViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which Views to fetch.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Views.
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * View create
+   */
+  export type ViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a View.
+     */
+    data: XOR<ViewCreateInput, ViewUncheckedCreateInput>
+  }
+
+  /**
+   * View createMany
+   */
+  export type ViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Views.
+     */
+    data: ViewCreateManyInput | ViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * View createManyAndReturn
+   */
+  export type ViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * The data used to create many Views.
+     */
+    data: ViewCreateManyInput | ViewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * View update
+   */
+  export type ViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a View.
+     */
+    data: XOR<ViewUpdateInput, ViewUncheckedUpdateInput>
+    /**
+     * Choose, which View to update.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View updateMany
+   */
+  export type ViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Views.
+     */
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyInput>
+    /**
+     * Filter which Views to update
+     */
+    where?: ViewWhereInput
+    /**
+     * Limit how many Views to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * View updateManyAndReturn
+   */
+  export type ViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * The data used to update Views.
+     */
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyInput>
+    /**
+     * Filter which Views to update
+     */
+    where?: ViewWhereInput
+    /**
+     * Limit how many Views to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * View upsert
+   */
+  export type ViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the View to update in case it exists.
+     */
+    where: ViewWhereUniqueInput
+    /**
+     * In case the View found by the `where` argument doesn't exist, create a new View with this data.
+     */
+    create: XOR<ViewCreateInput, ViewUncheckedCreateInput>
+    /**
+     * In case the View was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ViewUpdateInput, ViewUncheckedUpdateInput>
+  }
+
+  /**
+   * View delete
+   */
+  export type ViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter which View to delete.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View deleteMany
+   */
+  export type ViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Views to delete
+     */
+    where?: ViewWhereInput
+    /**
+     * Limit how many Views to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * View without action
+   */
+  export type ViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Bookmark
+   */
+
+  export type AggregateBookmark = {
+    _count: BookmarkCountAggregateOutputType | null
+    _min: BookmarkMinAggregateOutputType | null
+    _max: BookmarkMaxAggregateOutputType | null
+  }
+
+  export type BookmarkMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    propertyId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookmarkMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    propertyId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookmarkCountAggregateOutputType = {
+    id: number
+    userId: number
+    propertyId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BookmarkMinAggregateInputType = {
+    id?: true
+    userId?: true
+    propertyId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookmarkMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    propertyId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookmarkCountAggregateInputType = {
+    id?: true
+    userId?: true
+    propertyId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BookmarkAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Bookmark to aggregate.
+     */
+    where?: BookmarkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bookmarks to fetch.
+     */
+    orderBy?: BookmarkOrderByWithRelationInput | BookmarkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BookmarkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bookmarks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bookmarks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Bookmarks
+    **/
+    _count?: true | BookmarkCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BookmarkMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BookmarkMaxAggregateInputType
+  }
+
+  export type GetBookmarkAggregateType<T extends BookmarkAggregateArgs> = {
+        [P in keyof T & keyof AggregateBookmark]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBookmark[P]>
+      : GetScalarType<T[P], AggregateBookmark[P]>
+  }
+
+
+
+
+  export type BookmarkGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookmarkWhereInput
+    orderBy?: BookmarkOrderByWithAggregationInput | BookmarkOrderByWithAggregationInput[]
+    by: BookmarkScalarFieldEnum[] | BookmarkScalarFieldEnum
+    having?: BookmarkScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BookmarkCountAggregateInputType | true
+    _min?: BookmarkMinAggregateInputType
+    _max?: BookmarkMaxAggregateInputType
+  }
+
+  export type BookmarkGroupByOutputType = {
+    id: string
+    userId: string
+    propertyId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: BookmarkCountAggregateOutputType | null
+    _min: BookmarkMinAggregateOutputType | null
+    _max: BookmarkMaxAggregateOutputType | null
+  }
+
+  type GetBookmarkGroupByPayload<T extends BookmarkGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BookmarkGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BookmarkGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BookmarkGroupByOutputType[P]>
+            : GetScalarType<T[P], BookmarkGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BookmarkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bookmark"]>
+
+  export type BookmarkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bookmark"]>
+
+  export type BookmarkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bookmark"]>
+
+  export type BookmarkSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    propertyId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BookmarkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "propertyId" | "createdAt" | "updatedAt", ExtArgs["result"]["bookmark"]>
+  export type BookmarkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }
+  export type BookmarkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }
+  export type BookmarkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+  }
+
+  export type $BookmarkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Bookmark"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      property: Prisma.$PropertyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      propertyId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["bookmark"]>
+    composites: {}
+  }
+
+  type BookmarkGetPayload<S extends boolean | null | undefined | BookmarkDefaultArgs> = $Result.GetResult<Prisma.$BookmarkPayload, S>
+
+  type BookmarkCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BookmarkFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BookmarkCountAggregateInputType | true
+    }
+
+  export interface BookmarkDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Bookmark'], meta: { name: 'Bookmark' } }
+    /**
+     * Find zero or one Bookmark that matches the filter.
+     * @param {BookmarkFindUniqueArgs} args - Arguments to find a Bookmark
+     * @example
+     * // Get one Bookmark
+     * const bookmark = await prisma.bookmark.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BookmarkFindUniqueArgs>(args: SelectSubset<T, BookmarkFindUniqueArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Bookmark that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BookmarkFindUniqueOrThrowArgs} args - Arguments to find a Bookmark
+     * @example
+     * // Get one Bookmark
+     * const bookmark = await prisma.bookmark.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BookmarkFindUniqueOrThrowArgs>(args: SelectSubset<T, BookmarkFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Bookmark that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkFindFirstArgs} args - Arguments to find a Bookmark
+     * @example
+     * // Get one Bookmark
+     * const bookmark = await prisma.bookmark.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BookmarkFindFirstArgs>(args?: SelectSubset<T, BookmarkFindFirstArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Bookmark that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkFindFirstOrThrowArgs} args - Arguments to find a Bookmark
+     * @example
+     * // Get one Bookmark
+     * const bookmark = await prisma.bookmark.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BookmarkFindFirstOrThrowArgs>(args?: SelectSubset<T, BookmarkFindFirstOrThrowArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Bookmarks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Bookmarks
+     * const bookmarks = await prisma.bookmark.findMany()
+     * 
+     * // Get first 10 Bookmarks
+     * const bookmarks = await prisma.bookmark.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bookmarkWithIdOnly = await prisma.bookmark.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BookmarkFindManyArgs>(args?: SelectSubset<T, BookmarkFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Bookmark.
+     * @param {BookmarkCreateArgs} args - Arguments to create a Bookmark.
+     * @example
+     * // Create one Bookmark
+     * const Bookmark = await prisma.bookmark.create({
+     *   data: {
+     *     // ... data to create a Bookmark
+     *   }
+     * })
+     * 
+     */
+    create<T extends BookmarkCreateArgs>(args: SelectSubset<T, BookmarkCreateArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Bookmarks.
+     * @param {BookmarkCreateManyArgs} args - Arguments to create many Bookmarks.
+     * @example
+     * // Create many Bookmarks
+     * const bookmark = await prisma.bookmark.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BookmarkCreateManyArgs>(args?: SelectSubset<T, BookmarkCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Bookmarks and returns the data saved in the database.
+     * @param {BookmarkCreateManyAndReturnArgs} args - Arguments to create many Bookmarks.
+     * @example
+     * // Create many Bookmarks
+     * const bookmark = await prisma.bookmark.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Bookmarks and only return the `id`
+     * const bookmarkWithIdOnly = await prisma.bookmark.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BookmarkCreateManyAndReturnArgs>(args?: SelectSubset<T, BookmarkCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Bookmark.
+     * @param {BookmarkDeleteArgs} args - Arguments to delete one Bookmark.
+     * @example
+     * // Delete one Bookmark
+     * const Bookmark = await prisma.bookmark.delete({
+     *   where: {
+     *     // ... filter to delete one Bookmark
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BookmarkDeleteArgs>(args: SelectSubset<T, BookmarkDeleteArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Bookmark.
+     * @param {BookmarkUpdateArgs} args - Arguments to update one Bookmark.
+     * @example
+     * // Update one Bookmark
+     * const bookmark = await prisma.bookmark.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BookmarkUpdateArgs>(args: SelectSubset<T, BookmarkUpdateArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Bookmarks.
+     * @param {BookmarkDeleteManyArgs} args - Arguments to filter Bookmarks to delete.
+     * @example
+     * // Delete a few Bookmarks
+     * const { count } = await prisma.bookmark.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BookmarkDeleteManyArgs>(args?: SelectSubset<T, BookmarkDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Bookmarks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Bookmarks
+     * const bookmark = await prisma.bookmark.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BookmarkUpdateManyArgs>(args: SelectSubset<T, BookmarkUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Bookmarks and returns the data updated in the database.
+     * @param {BookmarkUpdateManyAndReturnArgs} args - Arguments to update many Bookmarks.
+     * @example
+     * // Update many Bookmarks
+     * const bookmark = await prisma.bookmark.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Bookmarks and only return the `id`
+     * const bookmarkWithIdOnly = await prisma.bookmark.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BookmarkUpdateManyAndReturnArgs>(args: SelectSubset<T, BookmarkUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Bookmark.
+     * @param {BookmarkUpsertArgs} args - Arguments to update or create a Bookmark.
+     * @example
+     * // Update or create a Bookmark
+     * const bookmark = await prisma.bookmark.upsert({
+     *   create: {
+     *     // ... data to create a Bookmark
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Bookmark we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BookmarkUpsertArgs>(args: SelectSubset<T, BookmarkUpsertArgs<ExtArgs>>): Prisma__BookmarkClient<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Bookmarks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkCountArgs} args - Arguments to filter Bookmarks to count.
+     * @example
+     * // Count the number of Bookmarks
+     * const count = await prisma.bookmark.count({
+     *   where: {
+     *     // ... the filter for the Bookmarks we want to count
+     *   }
+     * })
+    **/
+    count<T extends BookmarkCountArgs>(
+      args?: Subset<T, BookmarkCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BookmarkCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Bookmark.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BookmarkAggregateArgs>(args: Subset<T, BookmarkAggregateArgs>): Prisma.PrismaPromise<GetBookmarkAggregateType<T>>
+
+    /**
+     * Group by Bookmark.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookmarkGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BookmarkGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BookmarkGroupByArgs['orderBy'] }
+        : { orderBy?: BookmarkGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BookmarkGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBookmarkGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Bookmark model
+   */
+  readonly fields: BookmarkFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Bookmark.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BookmarkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    property<T extends PropertyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PropertyDefaultArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Bookmark model
+   */
+  interface BookmarkFieldRefs {
+    readonly id: FieldRef<"Bookmark", 'String'>
+    readonly userId: FieldRef<"Bookmark", 'String'>
+    readonly propertyId: FieldRef<"Bookmark", 'String'>
+    readonly createdAt: FieldRef<"Bookmark", 'DateTime'>
+    readonly updatedAt: FieldRef<"Bookmark", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Bookmark findUnique
+   */
+  export type BookmarkFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * Filter, which Bookmark to fetch.
+     */
+    where: BookmarkWhereUniqueInput
+  }
+
+  /**
+   * Bookmark findUniqueOrThrow
+   */
+  export type BookmarkFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * Filter, which Bookmark to fetch.
+     */
+    where: BookmarkWhereUniqueInput
+  }
+
+  /**
+   * Bookmark findFirst
+   */
+  export type BookmarkFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * Filter, which Bookmark to fetch.
+     */
+    where?: BookmarkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bookmarks to fetch.
+     */
+    orderBy?: BookmarkOrderByWithRelationInput | BookmarkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Bookmarks.
+     */
+    cursor?: BookmarkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bookmarks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bookmarks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Bookmarks.
+     */
+    distinct?: BookmarkScalarFieldEnum | BookmarkScalarFieldEnum[]
+  }
+
+  /**
+   * Bookmark findFirstOrThrow
+   */
+  export type BookmarkFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * Filter, which Bookmark to fetch.
+     */
+    where?: BookmarkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bookmarks to fetch.
+     */
+    orderBy?: BookmarkOrderByWithRelationInput | BookmarkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Bookmarks.
+     */
+    cursor?: BookmarkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bookmarks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bookmarks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Bookmarks.
+     */
+    distinct?: BookmarkScalarFieldEnum | BookmarkScalarFieldEnum[]
+  }
+
+  /**
+   * Bookmark findMany
+   */
+  export type BookmarkFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * Filter, which Bookmarks to fetch.
+     */
+    where?: BookmarkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bookmarks to fetch.
+     */
+    orderBy?: BookmarkOrderByWithRelationInput | BookmarkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Bookmarks.
+     */
+    cursor?: BookmarkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bookmarks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bookmarks.
+     */
+    skip?: number
+    distinct?: BookmarkScalarFieldEnum | BookmarkScalarFieldEnum[]
+  }
+
+  /**
+   * Bookmark create
+   */
+  export type BookmarkCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Bookmark.
+     */
+    data: XOR<BookmarkCreateInput, BookmarkUncheckedCreateInput>
+  }
+
+  /**
+   * Bookmark createMany
+   */
+  export type BookmarkCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Bookmarks.
+     */
+    data: BookmarkCreateManyInput | BookmarkCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Bookmark createManyAndReturn
+   */
+  export type BookmarkCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * The data used to create many Bookmarks.
+     */
+    data: BookmarkCreateManyInput | BookmarkCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Bookmark update
+   */
+  export type BookmarkUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Bookmark.
+     */
+    data: XOR<BookmarkUpdateInput, BookmarkUncheckedUpdateInput>
+    /**
+     * Choose, which Bookmark to update.
+     */
+    where: BookmarkWhereUniqueInput
+  }
+
+  /**
+   * Bookmark updateMany
+   */
+  export type BookmarkUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Bookmarks.
+     */
+    data: XOR<BookmarkUpdateManyMutationInput, BookmarkUncheckedUpdateManyInput>
+    /**
+     * Filter which Bookmarks to update
+     */
+    where?: BookmarkWhereInput
+    /**
+     * Limit how many Bookmarks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Bookmark updateManyAndReturn
+   */
+  export type BookmarkUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * The data used to update Bookmarks.
+     */
+    data: XOR<BookmarkUpdateManyMutationInput, BookmarkUncheckedUpdateManyInput>
+    /**
+     * Filter which Bookmarks to update
+     */
+    where?: BookmarkWhereInput
+    /**
+     * Limit how many Bookmarks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Bookmark upsert
+   */
+  export type BookmarkUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Bookmark to update in case it exists.
+     */
+    where: BookmarkWhereUniqueInput
+    /**
+     * In case the Bookmark found by the `where` argument doesn't exist, create a new Bookmark with this data.
+     */
+    create: XOR<BookmarkCreateInput, BookmarkUncheckedCreateInput>
+    /**
+     * In case the Bookmark was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BookmarkUpdateInput, BookmarkUncheckedUpdateInput>
+  }
+
+  /**
+   * Bookmark delete
+   */
+  export type BookmarkDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+    /**
+     * Filter which Bookmark to delete.
+     */
+    where: BookmarkWhereUniqueInput
+  }
+
+  /**
+   * Bookmark deleteMany
+   */
+  export type BookmarkDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Bookmarks to delete
+     */
+    where?: BookmarkWhereInput
+    /**
+     * Limit how many Bookmarks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Bookmark without action
+   */
+  export type BookmarkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bookmark
+     */
+    select?: BookmarkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Bookmark
+     */
+    omit?: BookmarkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookmarkInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SavedSearch
+   */
+
+  export type AggregateSavedSearch = {
+    _count: SavedSearchCountAggregateOutputType | null
+    _min: SavedSearchMinAggregateOutputType | null
+    _max: SavedSearchMaxAggregateOutputType | null
+  }
+
+  export type SavedSearchMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SavedSearchMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SavedSearchCountAggregateOutputType = {
+    id: number
+    userId: number
+    name: number
+    filters: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SavedSearchMinAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SavedSearchMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SavedSearchCountAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    filters?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SavedSearchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SavedSearch to aggregate.
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SavedSearches to fetch.
+     */
+    orderBy?: SavedSearchOrderByWithRelationInput | SavedSearchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SavedSearchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SavedSearches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SavedSearches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SavedSearches
+    **/
+    _count?: true | SavedSearchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SavedSearchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SavedSearchMaxAggregateInputType
+  }
+
+  export type GetSavedSearchAggregateType<T extends SavedSearchAggregateArgs> = {
+        [P in keyof T & keyof AggregateSavedSearch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSavedSearch[P]>
+      : GetScalarType<T[P], AggregateSavedSearch[P]>
+  }
+
+
+
+
+  export type SavedSearchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SavedSearchWhereInput
+    orderBy?: SavedSearchOrderByWithAggregationInput | SavedSearchOrderByWithAggregationInput[]
+    by: SavedSearchScalarFieldEnum[] | SavedSearchScalarFieldEnum
+    having?: SavedSearchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SavedSearchCountAggregateInputType | true
+    _min?: SavedSearchMinAggregateInputType
+    _max?: SavedSearchMaxAggregateInputType
+  }
+
+  export type SavedSearchGroupByOutputType = {
+    id: string
+    userId: string
+    name: string
+    filters: JsonValue
+    createdAt: Date
+    updatedAt: Date
+    _count: SavedSearchCountAggregateOutputType | null
+    _min: SavedSearchMinAggregateOutputType | null
+    _max: SavedSearchMaxAggregateOutputType | null
+  }
+
+  type GetSavedSearchGroupByPayload<T extends SavedSearchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SavedSearchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SavedSearchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SavedSearchGroupByOutputType[P]>
+            : GetScalarType<T[P], SavedSearchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SavedSearchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    filters?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["savedSearch"]>
+
+  export type SavedSearchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    filters?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["savedSearch"]>
+
+  export type SavedSearchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    filters?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["savedSearch"]>
+
+  export type SavedSearchSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    filters?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SavedSearchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "filters" | "createdAt" | "updatedAt", ExtArgs["result"]["savedSearch"]>
+  export type SavedSearchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SavedSearchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SavedSearchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SavedSearchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SavedSearch"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      name: string
+      filters: Prisma.JsonValue
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["savedSearch"]>
+    composites: {}
+  }
+
+  type SavedSearchGetPayload<S extends boolean | null | undefined | SavedSearchDefaultArgs> = $Result.GetResult<Prisma.$SavedSearchPayload, S>
+
+  type SavedSearchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SavedSearchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SavedSearchCountAggregateInputType | true
+    }
+
+  export interface SavedSearchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SavedSearch'], meta: { name: 'SavedSearch' } }
+    /**
+     * Find zero or one SavedSearch that matches the filter.
+     * @param {SavedSearchFindUniqueArgs} args - Arguments to find a SavedSearch
+     * @example
+     * // Get one SavedSearch
+     * const savedSearch = await prisma.savedSearch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SavedSearchFindUniqueArgs>(args: SelectSubset<T, SavedSearchFindUniqueArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SavedSearch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SavedSearchFindUniqueOrThrowArgs} args - Arguments to find a SavedSearch
+     * @example
+     * // Get one SavedSearch
+     * const savedSearch = await prisma.savedSearch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SavedSearchFindUniqueOrThrowArgs>(args: SelectSubset<T, SavedSearchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SavedSearch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchFindFirstArgs} args - Arguments to find a SavedSearch
+     * @example
+     * // Get one SavedSearch
+     * const savedSearch = await prisma.savedSearch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SavedSearchFindFirstArgs>(args?: SelectSubset<T, SavedSearchFindFirstArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SavedSearch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchFindFirstOrThrowArgs} args - Arguments to find a SavedSearch
+     * @example
+     * // Get one SavedSearch
+     * const savedSearch = await prisma.savedSearch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SavedSearchFindFirstOrThrowArgs>(args?: SelectSubset<T, SavedSearchFindFirstOrThrowArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SavedSearches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SavedSearches
+     * const savedSearches = await prisma.savedSearch.findMany()
+     * 
+     * // Get first 10 SavedSearches
+     * const savedSearches = await prisma.savedSearch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const savedSearchWithIdOnly = await prisma.savedSearch.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SavedSearchFindManyArgs>(args?: SelectSubset<T, SavedSearchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SavedSearch.
+     * @param {SavedSearchCreateArgs} args - Arguments to create a SavedSearch.
+     * @example
+     * // Create one SavedSearch
+     * const SavedSearch = await prisma.savedSearch.create({
+     *   data: {
+     *     // ... data to create a SavedSearch
+     *   }
+     * })
+     * 
+     */
+    create<T extends SavedSearchCreateArgs>(args: SelectSubset<T, SavedSearchCreateArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SavedSearches.
+     * @param {SavedSearchCreateManyArgs} args - Arguments to create many SavedSearches.
+     * @example
+     * // Create many SavedSearches
+     * const savedSearch = await prisma.savedSearch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SavedSearchCreateManyArgs>(args?: SelectSubset<T, SavedSearchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SavedSearches and returns the data saved in the database.
+     * @param {SavedSearchCreateManyAndReturnArgs} args - Arguments to create many SavedSearches.
+     * @example
+     * // Create many SavedSearches
+     * const savedSearch = await prisma.savedSearch.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SavedSearches and only return the `id`
+     * const savedSearchWithIdOnly = await prisma.savedSearch.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SavedSearchCreateManyAndReturnArgs>(args?: SelectSubset<T, SavedSearchCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SavedSearch.
+     * @param {SavedSearchDeleteArgs} args - Arguments to delete one SavedSearch.
+     * @example
+     * // Delete one SavedSearch
+     * const SavedSearch = await prisma.savedSearch.delete({
+     *   where: {
+     *     // ... filter to delete one SavedSearch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SavedSearchDeleteArgs>(args: SelectSubset<T, SavedSearchDeleteArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SavedSearch.
+     * @param {SavedSearchUpdateArgs} args - Arguments to update one SavedSearch.
+     * @example
+     * // Update one SavedSearch
+     * const savedSearch = await prisma.savedSearch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SavedSearchUpdateArgs>(args: SelectSubset<T, SavedSearchUpdateArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SavedSearches.
+     * @param {SavedSearchDeleteManyArgs} args - Arguments to filter SavedSearches to delete.
+     * @example
+     * // Delete a few SavedSearches
+     * const { count } = await prisma.savedSearch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SavedSearchDeleteManyArgs>(args?: SelectSubset<T, SavedSearchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SavedSearches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SavedSearches
+     * const savedSearch = await prisma.savedSearch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SavedSearchUpdateManyArgs>(args: SelectSubset<T, SavedSearchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SavedSearches and returns the data updated in the database.
+     * @param {SavedSearchUpdateManyAndReturnArgs} args - Arguments to update many SavedSearches.
+     * @example
+     * // Update many SavedSearches
+     * const savedSearch = await prisma.savedSearch.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SavedSearches and only return the `id`
+     * const savedSearchWithIdOnly = await prisma.savedSearch.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SavedSearchUpdateManyAndReturnArgs>(args: SelectSubset<T, SavedSearchUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SavedSearch.
+     * @param {SavedSearchUpsertArgs} args - Arguments to update or create a SavedSearch.
+     * @example
+     * // Update or create a SavedSearch
+     * const savedSearch = await prisma.savedSearch.upsert({
+     *   create: {
+     *     // ... data to create a SavedSearch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SavedSearch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SavedSearchUpsertArgs>(args: SelectSubset<T, SavedSearchUpsertArgs<ExtArgs>>): Prisma__SavedSearchClient<$Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SavedSearches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchCountArgs} args - Arguments to filter SavedSearches to count.
+     * @example
+     * // Count the number of SavedSearches
+     * const count = await prisma.savedSearch.count({
+     *   where: {
+     *     // ... the filter for the SavedSearches we want to count
+     *   }
+     * })
+    **/
+    count<T extends SavedSearchCountArgs>(
+      args?: Subset<T, SavedSearchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SavedSearchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SavedSearch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SavedSearchAggregateArgs>(args: Subset<T, SavedSearchAggregateArgs>): Prisma.PrismaPromise<GetSavedSearchAggregateType<T>>
+
+    /**
+     * Group by SavedSearch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SavedSearchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SavedSearchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SavedSearchGroupByArgs['orderBy'] }
+        : { orderBy?: SavedSearchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SavedSearchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSavedSearchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SavedSearch model
+   */
+  readonly fields: SavedSearchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SavedSearch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SavedSearchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SavedSearch model
+   */
+  interface SavedSearchFieldRefs {
+    readonly id: FieldRef<"SavedSearch", 'String'>
+    readonly userId: FieldRef<"SavedSearch", 'String'>
+    readonly name: FieldRef<"SavedSearch", 'String'>
+    readonly filters: FieldRef<"SavedSearch", 'Json'>
+    readonly createdAt: FieldRef<"SavedSearch", 'DateTime'>
+    readonly updatedAt: FieldRef<"SavedSearch", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SavedSearch findUnique
+   */
+  export type SavedSearchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * Filter, which SavedSearch to fetch.
+     */
+    where: SavedSearchWhereUniqueInput
+  }
+
+  /**
+   * SavedSearch findUniqueOrThrow
+   */
+  export type SavedSearchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * Filter, which SavedSearch to fetch.
+     */
+    where: SavedSearchWhereUniqueInput
+  }
+
+  /**
+   * SavedSearch findFirst
+   */
+  export type SavedSearchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * Filter, which SavedSearch to fetch.
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SavedSearches to fetch.
+     */
+    orderBy?: SavedSearchOrderByWithRelationInput | SavedSearchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SavedSearches.
+     */
+    cursor?: SavedSearchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SavedSearches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SavedSearches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SavedSearches.
+     */
+    distinct?: SavedSearchScalarFieldEnum | SavedSearchScalarFieldEnum[]
+  }
+
+  /**
+   * SavedSearch findFirstOrThrow
+   */
+  export type SavedSearchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * Filter, which SavedSearch to fetch.
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SavedSearches to fetch.
+     */
+    orderBy?: SavedSearchOrderByWithRelationInput | SavedSearchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SavedSearches.
+     */
+    cursor?: SavedSearchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SavedSearches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SavedSearches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SavedSearches.
+     */
+    distinct?: SavedSearchScalarFieldEnum | SavedSearchScalarFieldEnum[]
+  }
+
+  /**
+   * SavedSearch findMany
+   */
+  export type SavedSearchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * Filter, which SavedSearches to fetch.
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SavedSearches to fetch.
+     */
+    orderBy?: SavedSearchOrderByWithRelationInput | SavedSearchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SavedSearches.
+     */
+    cursor?: SavedSearchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SavedSearches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SavedSearches.
+     */
+    skip?: number
+    distinct?: SavedSearchScalarFieldEnum | SavedSearchScalarFieldEnum[]
+  }
+
+  /**
+   * SavedSearch create
+   */
+  export type SavedSearchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SavedSearch.
+     */
+    data: XOR<SavedSearchCreateInput, SavedSearchUncheckedCreateInput>
+  }
+
+  /**
+   * SavedSearch createMany
+   */
+  export type SavedSearchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SavedSearches.
+     */
+    data: SavedSearchCreateManyInput | SavedSearchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SavedSearch createManyAndReturn
+   */
+  export type SavedSearchCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * The data used to create many SavedSearches.
+     */
+    data: SavedSearchCreateManyInput | SavedSearchCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SavedSearch update
+   */
+  export type SavedSearchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SavedSearch.
+     */
+    data: XOR<SavedSearchUpdateInput, SavedSearchUncheckedUpdateInput>
+    /**
+     * Choose, which SavedSearch to update.
+     */
+    where: SavedSearchWhereUniqueInput
+  }
+
+  /**
+   * SavedSearch updateMany
+   */
+  export type SavedSearchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SavedSearches.
+     */
+    data: XOR<SavedSearchUpdateManyMutationInput, SavedSearchUncheckedUpdateManyInput>
+    /**
+     * Filter which SavedSearches to update
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * Limit how many SavedSearches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SavedSearch updateManyAndReturn
+   */
+  export type SavedSearchUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * The data used to update SavedSearches.
+     */
+    data: XOR<SavedSearchUpdateManyMutationInput, SavedSearchUncheckedUpdateManyInput>
+    /**
+     * Filter which SavedSearches to update
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * Limit how many SavedSearches to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SavedSearch upsert
+   */
+  export type SavedSearchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SavedSearch to update in case it exists.
+     */
+    where: SavedSearchWhereUniqueInput
+    /**
+     * In case the SavedSearch found by the `where` argument doesn't exist, create a new SavedSearch with this data.
+     */
+    create: XOR<SavedSearchCreateInput, SavedSearchUncheckedCreateInput>
+    /**
+     * In case the SavedSearch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SavedSearchUpdateInput, SavedSearchUncheckedUpdateInput>
+  }
+
+  /**
+   * SavedSearch delete
+   */
+  export type SavedSearchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+    /**
+     * Filter which SavedSearch to delete.
+     */
+    where: SavedSearchWhereUniqueInput
+  }
+
+  /**
+   * SavedSearch deleteMany
+   */
+  export type SavedSearchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SavedSearches to delete
+     */
+    where?: SavedSearchWhereInput
+    /**
+     * Limit how many SavedSearches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SavedSearch without action
+   */
+  export type SavedSearchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SavedSearch
+     */
+    select?: SavedSearchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SavedSearch
+     */
+    omit?: SavedSearchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SavedSearchInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SystemSettings
+   */
+
+  export type AggregateSystemSettings = {
+    _count: SystemSettingsCountAggregateOutputType | null
+    _min: SystemSettingsMinAggregateOutputType | null
+    _max: SystemSettingsMaxAggregateOutputType | null
+  }
+
+  export type SystemSettingsMinAggregateOutputType = {
+    id: string | null
+    systemName: string | null
+    timezone: string | null
+    maintenance: boolean | null
+    updatedAt: Date | null
+  }
+
+  export type SystemSettingsMaxAggregateOutputType = {
+    id: string | null
+    systemName: string | null
+    timezone: string | null
+    maintenance: boolean | null
+    updatedAt: Date | null
+  }
+
+  export type SystemSettingsCountAggregateOutputType = {
+    id: number
+    systemName: number
+    timezone: number
+    maintenance: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SystemSettingsMinAggregateInputType = {
+    id?: true
+    systemName?: true
+    timezone?: true
+    maintenance?: true
+    updatedAt?: true
+  }
+
+  export type SystemSettingsMaxAggregateInputType = {
+    id?: true
+    systemName?: true
+    timezone?: true
+    maintenance?: true
+    updatedAt?: true
+  }
+
+  export type SystemSettingsCountAggregateInputType = {
+    id?: true
+    systemName?: true
+    timezone?: true
+    maintenance?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SystemSettingsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemSettings to aggregate.
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingsOrderByWithRelationInput | SystemSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SystemSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SystemSettings
+    **/
+    _count?: true | SystemSettingsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SystemSettingsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SystemSettingsMaxAggregateInputType
+  }
+
+  export type GetSystemSettingsAggregateType<T extends SystemSettingsAggregateArgs> = {
+        [P in keyof T & keyof AggregateSystemSettings]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSystemSettings[P]>
+      : GetScalarType<T[P], AggregateSystemSettings[P]>
+  }
+
+
+
+
+  export type SystemSettingsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemSettingsWhereInput
+    orderBy?: SystemSettingsOrderByWithAggregationInput | SystemSettingsOrderByWithAggregationInput[]
+    by: SystemSettingsScalarFieldEnum[] | SystemSettingsScalarFieldEnum
+    having?: SystemSettingsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SystemSettingsCountAggregateInputType | true
+    _min?: SystemSettingsMinAggregateInputType
+    _max?: SystemSettingsMaxAggregateInputType
+  }
+
+  export type SystemSettingsGroupByOutputType = {
+    id: string
+    systemName: string
+    timezone: string
+    maintenance: boolean
+    updatedAt: Date
+    _count: SystemSettingsCountAggregateOutputType | null
+    _min: SystemSettingsMinAggregateOutputType | null
+    _max: SystemSettingsMaxAggregateOutputType | null
+  }
+
+  type GetSystemSettingsGroupByPayload<T extends SystemSettingsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SystemSettingsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SystemSettingsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SystemSettingsGroupByOutputType[P]>
+            : GetScalarType<T[P], SystemSettingsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SystemSettingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    systemName?: boolean
+    timezone?: boolean
+    maintenance?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemSettings"]>
+
+  export type SystemSettingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    systemName?: boolean
+    timezone?: boolean
+    maintenance?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemSettings"]>
+
+  export type SystemSettingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    systemName?: boolean
+    timezone?: boolean
+    maintenance?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemSettings"]>
+
+  export type SystemSettingsSelectScalar = {
+    id?: boolean
+    systemName?: boolean
+    timezone?: boolean
+    maintenance?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SystemSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "systemName" | "timezone" | "maintenance" | "updatedAt", ExtArgs["result"]["systemSettings"]>
+
+  export type $SystemSettingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SystemSettings"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      systemName: string
+      timezone: string
+      maintenance: boolean
+      updatedAt: Date
+    }, ExtArgs["result"]["systemSettings"]>
+    composites: {}
+  }
+
+  type SystemSettingsGetPayload<S extends boolean | null | undefined | SystemSettingsDefaultArgs> = $Result.GetResult<Prisma.$SystemSettingsPayload, S>
+
+  type SystemSettingsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SystemSettingsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SystemSettingsCountAggregateInputType | true
+    }
+
+  export interface SystemSettingsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemSettings'], meta: { name: 'SystemSettings' } }
+    /**
+     * Find zero or one SystemSettings that matches the filter.
+     * @param {SystemSettingsFindUniqueArgs} args - Arguments to find a SystemSettings
+     * @example
+     * // Get one SystemSettings
+     * const systemSettings = await prisma.systemSettings.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SystemSettingsFindUniqueArgs>(args: SelectSubset<T, SystemSettingsFindUniqueArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SystemSettings that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SystemSettingsFindUniqueOrThrowArgs} args - Arguments to find a SystemSettings
+     * @example
+     * // Get one SystemSettings
+     * const systemSettings = await prisma.systemSettings.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SystemSettingsFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemSettingsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsFindFirstArgs} args - Arguments to find a SystemSettings
+     * @example
+     * // Get one SystemSettings
+     * const systemSettings = await prisma.systemSettings.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SystemSettingsFindFirstArgs>(args?: SelectSubset<T, SystemSettingsFindFirstArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemSettings that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsFindFirstOrThrowArgs} args - Arguments to find a SystemSettings
+     * @example
+     * // Get one SystemSettings
+     * const systemSettings = await prisma.systemSettings.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SystemSettingsFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemSettingsFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SystemSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SystemSettings
+     * const systemSettings = await prisma.systemSettings.findMany()
+     * 
+     * // Get first 10 SystemSettings
+     * const systemSettings = await prisma.systemSettings.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const systemSettingsWithIdOnly = await prisma.systemSettings.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SystemSettingsFindManyArgs>(args?: SelectSubset<T, SystemSettingsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SystemSettings.
+     * @param {SystemSettingsCreateArgs} args - Arguments to create a SystemSettings.
+     * @example
+     * // Create one SystemSettings
+     * const SystemSettings = await prisma.systemSettings.create({
+     *   data: {
+     *     // ... data to create a SystemSettings
+     *   }
+     * })
+     * 
+     */
+    create<T extends SystemSettingsCreateArgs>(args: SelectSubset<T, SystemSettingsCreateArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SystemSettings.
+     * @param {SystemSettingsCreateManyArgs} args - Arguments to create many SystemSettings.
+     * @example
+     * // Create many SystemSettings
+     * const systemSettings = await prisma.systemSettings.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SystemSettingsCreateManyArgs>(args?: SelectSubset<T, SystemSettingsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SystemSettings and returns the data saved in the database.
+     * @param {SystemSettingsCreateManyAndReturnArgs} args - Arguments to create many SystemSettings.
+     * @example
+     * // Create many SystemSettings
+     * const systemSettings = await prisma.systemSettings.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SystemSettings and only return the `id`
+     * const systemSettingsWithIdOnly = await prisma.systemSettings.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SystemSettingsCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemSettingsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SystemSettings.
+     * @param {SystemSettingsDeleteArgs} args - Arguments to delete one SystemSettings.
+     * @example
+     * // Delete one SystemSettings
+     * const SystemSettings = await prisma.systemSettings.delete({
+     *   where: {
+     *     // ... filter to delete one SystemSettings
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SystemSettingsDeleteArgs>(args: SelectSubset<T, SystemSettingsDeleteArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SystemSettings.
+     * @param {SystemSettingsUpdateArgs} args - Arguments to update one SystemSettings.
+     * @example
+     * // Update one SystemSettings
+     * const systemSettings = await prisma.systemSettings.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SystemSettingsUpdateArgs>(args: SelectSubset<T, SystemSettingsUpdateArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SystemSettings.
+     * @param {SystemSettingsDeleteManyArgs} args - Arguments to filter SystemSettings to delete.
+     * @example
+     * // Delete a few SystemSettings
+     * const { count } = await prisma.systemSettings.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SystemSettingsDeleteManyArgs>(args?: SelectSubset<T, SystemSettingsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SystemSettings
+     * const systemSettings = await prisma.systemSettings.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SystemSettingsUpdateManyArgs>(args: SelectSubset<T, SystemSettingsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemSettings and returns the data updated in the database.
+     * @param {SystemSettingsUpdateManyAndReturnArgs} args - Arguments to update many SystemSettings.
+     * @example
+     * // Update many SystemSettings
+     * const systemSettings = await prisma.systemSettings.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SystemSettings and only return the `id`
+     * const systemSettingsWithIdOnly = await prisma.systemSettings.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SystemSettingsUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemSettingsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SystemSettings.
+     * @param {SystemSettingsUpsertArgs} args - Arguments to update or create a SystemSettings.
+     * @example
+     * // Update or create a SystemSettings
+     * const systemSettings = await prisma.systemSettings.upsert({
+     *   create: {
+     *     // ... data to create a SystemSettings
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SystemSettings we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SystemSettingsUpsertArgs>(args: SelectSubset<T, SystemSettingsUpsertArgs<ExtArgs>>): Prisma__SystemSettingsClient<$Result.GetResult<Prisma.$SystemSettingsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsCountArgs} args - Arguments to filter SystemSettings to count.
+     * @example
+     * // Count the number of SystemSettings
+     * const count = await prisma.systemSettings.count({
+     *   where: {
+     *     // ... the filter for the SystemSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends SystemSettingsCountArgs>(
+      args?: Subset<T, SystemSettingsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SystemSettingsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SystemSettingsAggregateArgs>(args: Subset<T, SystemSettingsAggregateArgs>): Prisma.PrismaPromise<GetSystemSettingsAggregateType<T>>
+
+    /**
+     * Group by SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SystemSettingsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SystemSettingsGroupByArgs['orderBy'] }
+        : { orderBy?: SystemSettingsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SystemSettingsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemSettingsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SystemSettings model
+   */
+  readonly fields: SystemSettingsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SystemSettings.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SystemSettingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SystemSettings model
+   */
+  interface SystemSettingsFieldRefs {
+    readonly id: FieldRef<"SystemSettings", 'String'>
+    readonly systemName: FieldRef<"SystemSettings", 'String'>
+    readonly timezone: FieldRef<"SystemSettings", 'String'>
+    readonly maintenance: FieldRef<"SystemSettings", 'Boolean'>
+    readonly updatedAt: FieldRef<"SystemSettings", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SystemSettings findUnique
+   */
+  export type SystemSettingsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where: SystemSettingsWhereUniqueInput
+  }
+
+  /**
+   * SystemSettings findUniqueOrThrow
+   */
+  export type SystemSettingsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where: SystemSettingsWhereUniqueInput
+  }
+
+  /**
+   * SystemSettings findFirst
+   */
+  export type SystemSettingsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingsOrderByWithRelationInput | SystemSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemSettings.
+     */
+    cursor?: SystemSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingsScalarFieldEnum | SystemSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSettings findFirstOrThrow
+   */
+  export type SystemSettingsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingsOrderByWithRelationInput | SystemSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemSettings.
+     */
+    cursor?: SystemSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingsScalarFieldEnum | SystemSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSettings findMany
+   */
+  export type SystemSettingsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingsOrderByWithRelationInput | SystemSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SystemSettings.
+     */
+    cursor?: SystemSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    distinct?: SystemSettingsScalarFieldEnum | SystemSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSettings create
+   */
+  export type SystemSettingsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SystemSettings.
+     */
+    data: XOR<SystemSettingsCreateInput, SystemSettingsUncheckedCreateInput>
+  }
+
+  /**
+   * SystemSettings createMany
+   */
+  export type SystemSettingsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SystemSettings.
+     */
+    data: SystemSettingsCreateManyInput | SystemSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemSettings createManyAndReturn
+   */
+  export type SystemSettingsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to create many SystemSettings.
+     */
+    data: SystemSettingsCreateManyInput | SystemSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemSettings update
+   */
+  export type SystemSettingsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SystemSettings.
+     */
+    data: XOR<SystemSettingsUpdateInput, SystemSettingsUncheckedUpdateInput>
+    /**
+     * Choose, which SystemSettings to update.
+     */
+    where: SystemSettingsWhereUniqueInput
+  }
+
+  /**
+   * SystemSettings updateMany
+   */
+  export type SystemSettingsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SystemSettings.
+     */
+    data: XOR<SystemSettingsUpdateManyMutationInput, SystemSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemSettings to update
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * Limit how many SystemSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSettings updateManyAndReturn
+   */
+  export type SystemSettingsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to update SystemSettings.
+     */
+    data: XOR<SystemSettingsUpdateManyMutationInput, SystemSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemSettings to update
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * Limit how many SystemSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSettings upsert
+   */
+  export type SystemSettingsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SystemSettings to update in case it exists.
+     */
+    where: SystemSettingsWhereUniqueInput
+    /**
+     * In case the SystemSettings found by the `where` argument doesn't exist, create a new SystemSettings with this data.
+     */
+    create: XOR<SystemSettingsCreateInput, SystemSettingsUncheckedCreateInput>
+    /**
+     * In case the SystemSettings was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SystemSettingsUpdateInput, SystemSettingsUncheckedUpdateInput>
+  }
+
+  /**
+   * SystemSettings delete
+   */
+  export type SystemSettingsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+    /**
+     * Filter which SystemSettings to delete.
+     */
+    where: SystemSettingsWhereUniqueInput
+  }
+
+  /**
+   * SystemSettings deleteMany
+   */
+  export type SystemSettingsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemSettings to delete
+     */
+    where?: SystemSettingsWhereInput
+    /**
+     * Limit how many SystemSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSettings without action
+   */
+  export type SystemSettingsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSettings
+     */
+    select?: SystemSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSettings
+     */
+    omit?: SystemSettingsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -13009,13 +26694,14 @@ export namespace Prisma {
     email: 'email',
     emailVerified: 'emailVerified',
     image: 'image',
+    password: 'password',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     twoFactorEnabled: 'twoFactorEnabled',
-    role: 'role',
     banned: 'banned',
     banReason: 'banReason',
-    banExpires: 'banExpires'
+    banExpires: 'banExpires',
+    currentRole: 'currentRole'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -13084,6 +26770,8 @@ export namespace Prisma {
     slug: 'slug',
     logo: 'logo',
     createdAt: 'createdAt',
+    status: 'status',
+    isSuperAdmin: 'isSuperAdmin',
     metadata: 'metadata'
   };
 
@@ -13143,12 +26831,162 @@ export namespace Prisma {
   export type PasskeyScalarFieldEnum = (typeof PasskeyScalarFieldEnum)[keyof typeof PasskeyScalarFieldEnum]
 
 
+  export const PermissionScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    category: 'category',
+    description: 'description'
+  };
+
+  export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+  export const RoleScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    isSystem: 'isSystem'
+  };
+
+  export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+  export const PropertyScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    address: 'address',
+    city: 'city',
+    state: 'state',
+    country: 'country',
+    zipCode: 'zipCode',
+    price: 'price',
+    images: 'images',
+    area: 'area',
+    bed: 'bed',
+    bath: 'bath',
+    type: 'type',
+    confidenceScore: 'confidenceScore',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
+
+
+  export const OwnerScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    phoneNumber: 'phoneNumber',
+    stocksSecurities: 'stocksSecurities',
+    businessInterests: 'businessInterests',
+    cashSavings: 'cashSavings',
+    otherAssets: 'otherAssets',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
+
+
+  export const PropertyOwnerScalarFieldEnum: {
+    id: 'id',
+    propertyId: 'propertyId',
+    ownerId: 'ownerId',
+    ownerType: 'ownerType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PropertyOwnerScalarFieldEnum = (typeof PropertyOwnerScalarFieldEnum)[keyof typeof PropertyOwnerScalarFieldEnum]
+
+
+  export const ReportScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    notes: 'notes',
+    reportType: 'reportType',
+    exported: 'exported',
+    exportUrl: 'exportUrl'
+  };
+
+  export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+  export const SharedPropertyScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    reportId: 'reportId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SharedPropertyScalarFieldEnum = (typeof SharedPropertyScalarFieldEnum)[keyof typeof SharedPropertyScalarFieldEnum]
+
+
+  export const ViewScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    propertyId: 'propertyId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ViewScalarFieldEnum = (typeof ViewScalarFieldEnum)[keyof typeof ViewScalarFieldEnum]
+
+
+  export const BookmarkScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    propertyId: 'propertyId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
+
+
+  export const SavedSearchScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    name: 'name',
+    filters: 'filters',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SavedSearchScalarFieldEnum = (typeof SavedSearchScalarFieldEnum)[keyof typeof SavedSearchScalarFieldEnum]
+
+
+  export const SystemSettingsScalarFieldEnum: {
+    id: 'id',
+    systemName: 'systemName',
+    timezone: 'timezone',
+    maintenance: 'maintenance',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SystemSettingsScalarFieldEnum = (typeof SystemSettingsScalarFieldEnum)[keyof typeof SystemSettingsScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -13165,6 +27003,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -13233,6 +27080,20 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
   /**
    * Deep Input Types
    */
@@ -13243,43 +27104,57 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
+    password?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     twoFactorEnabled?: BoolNullableFilter<"User"> | boolean | null
-    role?: StringNullableFilter<"User"> | string | null
     banned?: BoolNullableFilter<"User"> | boolean | null
     banReason?: StringNullableFilter<"User"> | string | null
     banExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    currentRole?: StringFilter<"User"> | string
+    roles?: RoleListRelationFilter
+    members?: MemberListRelationFilter
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
+    savedSearches?: SavedSearchListRelationFilter
+    Bookmark?: BookmarkListRelationFilter
     twofactors?: TwoFactorListRelationFilter
-    members?: MemberListRelationFilter
     invitations?: InvitationListRelationFilter
+    Reports?: ReportListRelationFilter
+    SharedProperty?: SharedPropertyListRelationFilter
+    views?: ViewListRelationFilter
     passkeys?: PasskeyListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
+    name?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twoFactorEnabled?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
     banned?: SortOrderInput | SortOrder
     banReason?: SortOrderInput | SortOrder
     banExpires?: SortOrderInput | SortOrder
+    currentRole?: SortOrder
+    roles?: RoleOrderByRelationAggregateInput
+    members?: MemberOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
+    savedSearches?: SavedSearchOrderByRelationAggregateInput
+    Bookmark?: BookmarkOrderByRelationAggregateInput
     twofactors?: TwoFactorOrderByRelationAggregateInput
-    members?: MemberOrderByRelationAggregateInput
     invitations?: InvitationOrderByRelationAggregateInput
+    Reports?: ReportOrderByRelationAggregateInput
+    SharedProperty?: SharedPropertyOrderByRelationAggregateInput
+    views?: ViewOrderByRelationAggregateInput
     passkeys?: PasskeyOrderByRelationAggregateInput
   }
 
@@ -13289,37 +27164,45 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
+    password?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     twoFactorEnabled?: BoolNullableFilter<"User"> | boolean | null
-    role?: StringNullableFilter<"User"> | string | null
     banned?: BoolNullableFilter<"User"> | boolean | null
     banReason?: StringNullableFilter<"User"> | string | null
     banExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    currentRole?: StringFilter<"User"> | string
+    roles?: RoleListRelationFilter
+    members?: MemberListRelationFilter
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
+    savedSearches?: SavedSearchListRelationFilter
+    Bookmark?: BookmarkListRelationFilter
     twofactors?: TwoFactorListRelationFilter
-    members?: MemberListRelationFilter
     invitations?: InvitationListRelationFilter
+    Reports?: ReportListRelationFilter
+    SharedProperty?: SharedPropertyListRelationFilter
+    views?: ViewListRelationFilter
     passkeys?: PasskeyListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
+    name?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twoFactorEnabled?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
     banned?: SortOrderInput | SortOrder
     banReason?: SortOrderInput | SortOrder
     banExpires?: SortOrderInput | SortOrder
+    currentRole?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -13330,17 +27213,18 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    name?: StringWithAggregatesFilter<"User"> | string
-    email?: StringWithAggregatesFilter<"User"> | string
+    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    email?: StringNullableWithAggregatesFilter<"User"> | string | null
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     twoFactorEnabled?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
-    role?: StringNullableWithAggregatesFilter<"User"> | string | null
     banned?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
     banReason?: StringNullableWithAggregatesFilter<"User"> | string | null
     banExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    currentRole?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type SessionWhereInput = {
@@ -13634,6 +27518,8 @@ export namespace Prisma {
     slug?: StringNullableFilter<"Organization"> | string | null
     logo?: StringNullableFilter<"Organization"> | string | null
     createdAt?: DateTimeFilter<"Organization"> | Date | string
+    status?: StringFilter<"Organization"> | string
+    isSuperAdmin?: BoolFilter<"Organization"> | boolean
     metadata?: StringNullableFilter<"Organization"> | string | null
     members?: MemberListRelationFilter
     invitations?: InvitationListRelationFilter
@@ -13646,6 +27532,8 @@ export namespace Prisma {
     slug?: SortOrderInput | SortOrder
     logo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    isSuperAdmin?: SortOrder
     metadata?: SortOrderInput | SortOrder
     members?: MemberOrderByRelationAggregateInput
     invitations?: InvitationOrderByRelationAggregateInput
@@ -13661,6 +27549,8 @@ export namespace Prisma {
     name?: StringFilter<"Organization"> | string
     logo?: StringNullableFilter<"Organization"> | string | null
     createdAt?: DateTimeFilter<"Organization"> | Date | string
+    status?: StringFilter<"Organization"> | string
+    isSuperAdmin?: BoolFilter<"Organization"> | boolean
     metadata?: StringNullableFilter<"Organization"> | string | null
     members?: MemberListRelationFilter
     invitations?: InvitationListRelationFilter
@@ -13673,6 +27563,8 @@ export namespace Prisma {
     slug?: SortOrderInput | SortOrder
     logo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    isSuperAdmin?: SortOrder
     metadata?: SortOrderInput | SortOrder
     _count?: OrganizationCountOrderByAggregateInput
     _max?: OrganizationMaxOrderByAggregateInput
@@ -13688,6 +27580,8 @@ export namespace Prisma {
     slug?: StringNullableWithAggregatesFilter<"Organization"> | string | null
     logo?: StringNullableWithAggregatesFilter<"Organization"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Organization"> | Date | string
+    status?: StringWithAggregatesFilter<"Organization"> | string
+    isSuperAdmin?: BoolWithAggregatesFilter<"Organization"> | boolean
     metadata?: StringNullableWithAggregatesFilter<"Organization"> | string | null
   }
 
@@ -13829,6 +27723,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CustomRole"> | Date | string
     updatedAt?: DateTimeFilter<"CustomRole"> | Date | string
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    permissions?: PermissionListRelationFilter
   }
 
   export type CustomRoleOrderByWithRelationInput = {
@@ -13840,6 +27735,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     organization?: OrganizationOrderByWithRelationInput
+    permissions?: PermissionOrderByRelationAggregateInput
   }
 
   export type CustomRoleWhereUniqueInput = Prisma.AtLeast<{
@@ -13855,6 +27751,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CustomRole"> | Date | string
     updatedAt?: DateTimeFilter<"CustomRole"> | Date | string
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    permissions?: PermissionListRelationFilter
   }, "id" | "organizationId_name">
 
   export type CustomRoleOrderByWithAggregationInput = {
@@ -13965,133 +27862,910 @@ export namespace Prisma {
     createdAt?: DateTimeNullableWithAggregatesFilter<"Passkey"> | Date | string | null
   }
 
+  export type PermissionWhereInput = {
+    AND?: PermissionWhereInput | PermissionWhereInput[]
+    OR?: PermissionWhereInput[]
+    NOT?: PermissionWhereInput | PermissionWhereInput[]
+    id?: StringFilter<"Permission"> | string
+    name?: StringFilter<"Permission"> | string
+    category?: StringFilter<"Permission"> | string
+    description?: StringNullableFilter<"Permission"> | string | null
+    roles?: RoleListRelationFilter
+    customRoles?: CustomRoleListRelationFilter
+  }
+
+  export type PermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrderInput | SortOrder
+    roles?: RoleOrderByRelationAggregateInput
+    customRoles?: CustomRoleOrderByRelationAggregateInput
+  }
+
+  export type PermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: PermissionWhereInput | PermissionWhereInput[]
+    OR?: PermissionWhereInput[]
+    NOT?: PermissionWhereInput | PermissionWhereInput[]
+    category?: StringFilter<"Permission"> | string
+    description?: StringNullableFilter<"Permission"> | string | null
+    roles?: RoleListRelationFilter
+    customRoles?: CustomRoleListRelationFilter
+  }, "id" | "name">
+
+  export type PermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrderInput | SortOrder
+    _count?: PermissionCountOrderByAggregateInput
+    _max?: PermissionMaxOrderByAggregateInput
+    _min?: PermissionMinOrderByAggregateInput
+  }
+
+  export type PermissionScalarWhereWithAggregatesInput = {
+    AND?: PermissionScalarWhereWithAggregatesInput | PermissionScalarWhereWithAggregatesInput[]
+    OR?: PermissionScalarWhereWithAggregatesInput[]
+    NOT?: PermissionScalarWhereWithAggregatesInput | PermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Permission"> | string
+    name?: StringWithAggregatesFilter<"Permission"> | string
+    category?: StringWithAggregatesFilter<"Permission"> | string
+    description?: StringNullableWithAggregatesFilter<"Permission"> | string | null
+  }
+
+  export type RoleWhereInput = {
+    AND?: RoleWhereInput | RoleWhereInput[]
+    OR?: RoleWhereInput[]
+    NOT?: RoleWhereInput | RoleWhereInput[]
+    id?: StringFilter<"Role"> | string
+    name?: StringFilter<"Role"> | string
+    description?: StringNullableFilter<"Role"> | string | null
+    isSystem?: BoolFilter<"Role"> | boolean
+    permissions?: PermissionListRelationFilter
+    users?: UserListRelationFilter
+  }
+
+  export type RoleOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isSystem?: SortOrder
+    permissions?: PermissionOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
+  }
+
+  export type RoleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: RoleWhereInput | RoleWhereInput[]
+    OR?: RoleWhereInput[]
+    NOT?: RoleWhereInput | RoleWhereInput[]
+    description?: StringNullableFilter<"Role"> | string | null
+    isSystem?: BoolFilter<"Role"> | boolean
+    permissions?: PermissionListRelationFilter
+    users?: UserListRelationFilter
+  }, "id" | "name">
+
+  export type RoleOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isSystem?: SortOrder
+    _count?: RoleCountOrderByAggregateInput
+    _max?: RoleMaxOrderByAggregateInput
+    _min?: RoleMinOrderByAggregateInput
+  }
+
+  export type RoleScalarWhereWithAggregatesInput = {
+    AND?: RoleScalarWhereWithAggregatesInput | RoleScalarWhereWithAggregatesInput[]
+    OR?: RoleScalarWhereWithAggregatesInput[]
+    NOT?: RoleScalarWhereWithAggregatesInput | RoleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Role"> | string
+    name?: StringWithAggregatesFilter<"Role"> | string
+    description?: StringNullableWithAggregatesFilter<"Role"> | string | null
+    isSystem?: BoolWithAggregatesFilter<"Role"> | boolean
+  }
+
+  export type PropertyWhereInput = {
+    AND?: PropertyWhereInput | PropertyWhereInput[]
+    OR?: PropertyWhereInput[]
+    NOT?: PropertyWhereInput | PropertyWhereInput[]
+    id?: StringFilter<"Property"> | string
+    name?: StringFilter<"Property"> | string
+    description?: StringNullableFilter<"Property"> | string | null
+    address?: StringFilter<"Property"> | string
+    city?: StringFilter<"Property"> | string
+    state?: StringFilter<"Property"> | string
+    country?: StringFilter<"Property"> | string
+    zipCode?: StringFilter<"Property"> | string
+    price?: FloatFilter<"Property"> | number
+    images?: StringNullableListFilter<"Property">
+    area?: FloatFilter<"Property"> | number
+    bed?: IntNullableFilter<"Property"> | number | null
+    bath?: IntNullableFilter<"Property"> | number | null
+    type?: StringFilter<"Property"> | string
+    confidenceScore?: FloatNullableFilter<"Property"> | number | null
+    createdAt?: DateTimeFilter<"Property"> | Date | string
+    updatedAt?: DateTimeFilter<"Property"> | Date | string
+    owners?: PropertyOwnerListRelationFilter
+    Bookmarks?: BookmarkListRelationFilter
+    views?: ViewListRelationFilter
+  }
+
+  export type PropertyOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    zipCode?: SortOrder
+    price?: SortOrder
+    images?: SortOrder
+    area?: SortOrder
+    bed?: SortOrderInput | SortOrder
+    bath?: SortOrderInput | SortOrder
+    type?: SortOrder
+    confidenceScore?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    owners?: PropertyOwnerOrderByRelationAggregateInput
+    Bookmarks?: BookmarkOrderByRelationAggregateInput
+    views?: ViewOrderByRelationAggregateInput
+  }
+
+  export type PropertyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    address?: string
+    AND?: PropertyWhereInput | PropertyWhereInput[]
+    OR?: PropertyWhereInput[]
+    NOT?: PropertyWhereInput | PropertyWhereInput[]
+    name?: StringFilter<"Property"> | string
+    description?: StringNullableFilter<"Property"> | string | null
+    city?: StringFilter<"Property"> | string
+    state?: StringFilter<"Property"> | string
+    country?: StringFilter<"Property"> | string
+    zipCode?: StringFilter<"Property"> | string
+    price?: FloatFilter<"Property"> | number
+    images?: StringNullableListFilter<"Property">
+    area?: FloatFilter<"Property"> | number
+    bed?: IntNullableFilter<"Property"> | number | null
+    bath?: IntNullableFilter<"Property"> | number | null
+    type?: StringFilter<"Property"> | string
+    confidenceScore?: FloatNullableFilter<"Property"> | number | null
+    createdAt?: DateTimeFilter<"Property"> | Date | string
+    updatedAt?: DateTimeFilter<"Property"> | Date | string
+    owners?: PropertyOwnerListRelationFilter
+    Bookmarks?: BookmarkListRelationFilter
+    views?: ViewListRelationFilter
+  }, "id" | "address">
+
+  export type PropertyOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    zipCode?: SortOrder
+    price?: SortOrder
+    images?: SortOrder
+    area?: SortOrder
+    bed?: SortOrderInput | SortOrder
+    bath?: SortOrderInput | SortOrder
+    type?: SortOrder
+    confidenceScore?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PropertyCountOrderByAggregateInput
+    _avg?: PropertyAvgOrderByAggregateInput
+    _max?: PropertyMaxOrderByAggregateInput
+    _min?: PropertyMinOrderByAggregateInput
+    _sum?: PropertySumOrderByAggregateInput
+  }
+
+  export type PropertyScalarWhereWithAggregatesInput = {
+    AND?: PropertyScalarWhereWithAggregatesInput | PropertyScalarWhereWithAggregatesInput[]
+    OR?: PropertyScalarWhereWithAggregatesInput[]
+    NOT?: PropertyScalarWhereWithAggregatesInput | PropertyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Property"> | string
+    name?: StringWithAggregatesFilter<"Property"> | string
+    description?: StringNullableWithAggregatesFilter<"Property"> | string | null
+    address?: StringWithAggregatesFilter<"Property"> | string
+    city?: StringWithAggregatesFilter<"Property"> | string
+    state?: StringWithAggregatesFilter<"Property"> | string
+    country?: StringWithAggregatesFilter<"Property"> | string
+    zipCode?: StringWithAggregatesFilter<"Property"> | string
+    price?: FloatWithAggregatesFilter<"Property"> | number
+    images?: StringNullableListFilter<"Property">
+    area?: FloatWithAggregatesFilter<"Property"> | number
+    bed?: IntNullableWithAggregatesFilter<"Property"> | number | null
+    bath?: IntNullableWithAggregatesFilter<"Property"> | number | null
+    type?: StringWithAggregatesFilter<"Property"> | string
+    confidenceScore?: FloatNullableWithAggregatesFilter<"Property"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Property"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Property"> | Date | string
+  }
+
+  export type OwnerWhereInput = {
+    AND?: OwnerWhereInput | OwnerWhereInput[]
+    OR?: OwnerWhereInput[]
+    NOT?: OwnerWhereInput | OwnerWhereInput[]
+    id?: StringFilter<"Owner"> | string
+    name?: StringFilter<"Owner"> | string
+    email?: StringNullableFilter<"Owner"> | string | null
+    phoneNumber?: StringNullableFilter<"Owner"> | string | null
+    stocksSecurities?: FloatFilter<"Owner"> | number
+    businessInterests?: FloatFilter<"Owner"> | number
+    cashSavings?: FloatFilter<"Owner"> | number
+    otherAssets?: FloatFilter<"Owner"> | number
+    createdAt?: DateTimeFilter<"Owner"> | Date | string
+    updatedAt?: DateTimeFilter<"Owner"> | Date | string
+    properties?: PropertyOwnerListRelationFilter
+  }
+
+  export type OwnerOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    properties?: PropertyOwnerOrderByRelationAggregateInput
+  }
+
+  export type OwnerWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OwnerWhereInput | OwnerWhereInput[]
+    OR?: OwnerWhereInput[]
+    NOT?: OwnerWhereInput | OwnerWhereInput[]
+    name?: StringFilter<"Owner"> | string
+    email?: StringNullableFilter<"Owner"> | string | null
+    phoneNumber?: StringNullableFilter<"Owner"> | string | null
+    stocksSecurities?: FloatFilter<"Owner"> | number
+    businessInterests?: FloatFilter<"Owner"> | number
+    cashSavings?: FloatFilter<"Owner"> | number
+    otherAssets?: FloatFilter<"Owner"> | number
+    createdAt?: DateTimeFilter<"Owner"> | Date | string
+    updatedAt?: DateTimeFilter<"Owner"> | Date | string
+    properties?: PropertyOwnerListRelationFilter
+  }, "id">
+
+  export type OwnerOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OwnerCountOrderByAggregateInput
+    _avg?: OwnerAvgOrderByAggregateInput
+    _max?: OwnerMaxOrderByAggregateInput
+    _min?: OwnerMinOrderByAggregateInput
+    _sum?: OwnerSumOrderByAggregateInput
+  }
+
+  export type OwnerScalarWhereWithAggregatesInput = {
+    AND?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
+    OR?: OwnerScalarWhereWithAggregatesInput[]
+    NOT?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Owner"> | string
+    name?: StringWithAggregatesFilter<"Owner"> | string
+    email?: StringNullableWithAggregatesFilter<"Owner"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"Owner"> | string | null
+    stocksSecurities?: FloatWithAggregatesFilter<"Owner"> | number
+    businessInterests?: FloatWithAggregatesFilter<"Owner"> | number
+    cashSavings?: FloatWithAggregatesFilter<"Owner"> | number
+    otherAssets?: FloatWithAggregatesFilter<"Owner"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Owner"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Owner"> | Date | string
+  }
+
+  export type PropertyOwnerWhereInput = {
+    AND?: PropertyOwnerWhereInput | PropertyOwnerWhereInput[]
+    OR?: PropertyOwnerWhereInput[]
+    NOT?: PropertyOwnerWhereInput | PropertyOwnerWhereInput[]
+    id?: StringFilter<"PropertyOwner"> | string
+    propertyId?: StringFilter<"PropertyOwner"> | string
+    ownerId?: StringFilter<"PropertyOwner"> | string
+    ownerType?: StringFilter<"PropertyOwner"> | string
+    createdAt?: DateTimeFilter<"PropertyOwner"> | Date | string
+    updatedAt?: DateTimeFilter<"PropertyOwner"> | Date | string
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+    owner?: XOR<OwnerScalarRelationFilter, OwnerWhereInput>
+  }
+
+  export type PropertyOwnerOrderByWithRelationInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    ownerId?: SortOrder
+    ownerType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    property?: PropertyOrderByWithRelationInput
+    owner?: OwnerOrderByWithRelationInput
+  }
+
+  export type PropertyOwnerWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    propertyId_ownerId?: PropertyOwnerPropertyIdOwnerIdCompoundUniqueInput
+    AND?: PropertyOwnerWhereInput | PropertyOwnerWhereInput[]
+    OR?: PropertyOwnerWhereInput[]
+    NOT?: PropertyOwnerWhereInput | PropertyOwnerWhereInput[]
+    propertyId?: StringFilter<"PropertyOwner"> | string
+    ownerId?: StringFilter<"PropertyOwner"> | string
+    ownerType?: StringFilter<"PropertyOwner"> | string
+    createdAt?: DateTimeFilter<"PropertyOwner"> | Date | string
+    updatedAt?: DateTimeFilter<"PropertyOwner"> | Date | string
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+    owner?: XOR<OwnerScalarRelationFilter, OwnerWhereInput>
+  }, "id" | "propertyId_ownerId">
+
+  export type PropertyOwnerOrderByWithAggregationInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    ownerId?: SortOrder
+    ownerType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PropertyOwnerCountOrderByAggregateInput
+    _max?: PropertyOwnerMaxOrderByAggregateInput
+    _min?: PropertyOwnerMinOrderByAggregateInput
+  }
+
+  export type PropertyOwnerScalarWhereWithAggregatesInput = {
+    AND?: PropertyOwnerScalarWhereWithAggregatesInput | PropertyOwnerScalarWhereWithAggregatesInput[]
+    OR?: PropertyOwnerScalarWhereWithAggregatesInput[]
+    NOT?: PropertyOwnerScalarWhereWithAggregatesInput | PropertyOwnerScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PropertyOwner"> | string
+    propertyId?: StringWithAggregatesFilter<"PropertyOwner"> | string
+    ownerId?: StringWithAggregatesFilter<"PropertyOwner"> | string
+    ownerType?: StringWithAggregatesFilter<"PropertyOwner"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PropertyOwner"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PropertyOwner"> | Date | string
+  }
+
+  export type ReportWhereInput = {
+    AND?: ReportWhereInput | ReportWhereInput[]
+    OR?: ReportWhereInput[]
+    NOT?: ReportWhereInput | ReportWhereInput[]
+    id?: StringFilter<"Report"> | string
+    title?: StringFilter<"Report"> | string
+    description?: StringNullableFilter<"Report"> | string | null
+    userId?: StringFilter<"Report"> | string
+    createdAt?: DateTimeFilter<"Report"> | Date | string
+    updatedAt?: DateTimeFilter<"Report"> | Date | string
+    notes?: StringNullableFilter<"Report"> | string | null
+    reportType?: StringNullableFilter<"Report"> | string | null
+    exported?: BoolNullableFilter<"Report"> | boolean | null
+    exportUrl?: StringNullableFilter<"Report"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sharedWith?: SharedPropertyListRelationFilter
+  }
+
+  export type ReportOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    reportType?: SortOrderInput | SortOrder
+    exported?: SortOrderInput | SortOrder
+    exportUrl?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    sharedWith?: SharedPropertyOrderByRelationAggregateInput
+  }
+
+  export type ReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    title?: string
+    AND?: ReportWhereInput | ReportWhereInput[]
+    OR?: ReportWhereInput[]
+    NOT?: ReportWhereInput | ReportWhereInput[]
+    description?: StringNullableFilter<"Report"> | string | null
+    userId?: StringFilter<"Report"> | string
+    createdAt?: DateTimeFilter<"Report"> | Date | string
+    updatedAt?: DateTimeFilter<"Report"> | Date | string
+    notes?: StringNullableFilter<"Report"> | string | null
+    reportType?: StringNullableFilter<"Report"> | string | null
+    exported?: BoolNullableFilter<"Report"> | boolean | null
+    exportUrl?: StringNullableFilter<"Report"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sharedWith?: SharedPropertyListRelationFilter
+  }, "id" | "title">
+
+  export type ReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    reportType?: SortOrderInput | SortOrder
+    exported?: SortOrderInput | SortOrder
+    exportUrl?: SortOrderInput | SortOrder
+    _count?: ReportCountOrderByAggregateInput
+    _max?: ReportMaxOrderByAggregateInput
+    _min?: ReportMinOrderByAggregateInput
+  }
+
+  export type ReportScalarWhereWithAggregatesInput = {
+    AND?: ReportScalarWhereWithAggregatesInput | ReportScalarWhereWithAggregatesInput[]
+    OR?: ReportScalarWhereWithAggregatesInput[]
+    NOT?: ReportScalarWhereWithAggregatesInput | ReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Report"> | string
+    title?: StringWithAggregatesFilter<"Report"> | string
+    description?: StringNullableWithAggregatesFilter<"Report"> | string | null
+    userId?: StringWithAggregatesFilter<"Report"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Report"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Report"> | Date | string
+    notes?: StringNullableWithAggregatesFilter<"Report"> | string | null
+    reportType?: StringNullableWithAggregatesFilter<"Report"> | string | null
+    exported?: BoolNullableWithAggregatesFilter<"Report"> | boolean | null
+    exportUrl?: StringNullableWithAggregatesFilter<"Report"> | string | null
+  }
+
+  export type SharedPropertyWhereInput = {
+    AND?: SharedPropertyWhereInput | SharedPropertyWhereInput[]
+    OR?: SharedPropertyWhereInput[]
+    NOT?: SharedPropertyWhereInput | SharedPropertyWhereInput[]
+    id?: StringFilter<"SharedProperty"> | string
+    userId?: StringFilter<"SharedProperty"> | string
+    reportId?: StringFilter<"SharedProperty"> | string
+    createdAt?: DateTimeFilter<"SharedProperty"> | Date | string
+    updatedAt?: DateTimeFilter<"SharedProperty"> | Date | string
+    report?: XOR<ReportScalarRelationFilter, ReportWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SharedPropertyOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    reportId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    report?: ReportOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SharedPropertyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_reportId?: SharedPropertyUserIdReportIdCompoundUniqueInput
+    AND?: SharedPropertyWhereInput | SharedPropertyWhereInput[]
+    OR?: SharedPropertyWhereInput[]
+    NOT?: SharedPropertyWhereInput | SharedPropertyWhereInput[]
+    userId?: StringFilter<"SharedProperty"> | string
+    reportId?: StringFilter<"SharedProperty"> | string
+    createdAt?: DateTimeFilter<"SharedProperty"> | Date | string
+    updatedAt?: DateTimeFilter<"SharedProperty"> | Date | string
+    report?: XOR<ReportScalarRelationFilter, ReportWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_reportId">
+
+  export type SharedPropertyOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    reportId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SharedPropertyCountOrderByAggregateInput
+    _max?: SharedPropertyMaxOrderByAggregateInput
+    _min?: SharedPropertyMinOrderByAggregateInput
+  }
+
+  export type SharedPropertyScalarWhereWithAggregatesInput = {
+    AND?: SharedPropertyScalarWhereWithAggregatesInput | SharedPropertyScalarWhereWithAggregatesInput[]
+    OR?: SharedPropertyScalarWhereWithAggregatesInput[]
+    NOT?: SharedPropertyScalarWhereWithAggregatesInput | SharedPropertyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SharedProperty"> | string
+    userId?: StringWithAggregatesFilter<"SharedProperty"> | string
+    reportId?: StringWithAggregatesFilter<"SharedProperty"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"SharedProperty"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SharedProperty"> | Date | string
+  }
+
+  export type ViewWhereInput = {
+    AND?: ViewWhereInput | ViewWhereInput[]
+    OR?: ViewWhereInput[]
+    NOT?: ViewWhereInput | ViewWhereInput[]
+    id?: StringFilter<"View"> | string
+    userId?: StringFilter<"View"> | string
+    propertyId?: StringFilter<"View"> | string
+    createdAt?: DateTimeFilter<"View"> | Date | string
+    updatedAt?: DateTimeFilter<"View"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+  }
+
+  export type ViewOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    property?: PropertyOrderByWithRelationInput
+  }
+
+  export type ViewWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ViewWhereInput | ViewWhereInput[]
+    OR?: ViewWhereInput[]
+    NOT?: ViewWhereInput | ViewWhereInput[]
+    userId?: StringFilter<"View"> | string
+    propertyId?: StringFilter<"View"> | string
+    createdAt?: DateTimeFilter<"View"> | Date | string
+    updatedAt?: DateTimeFilter<"View"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+  }, "id">
+
+  export type ViewOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ViewCountOrderByAggregateInput
+    _max?: ViewMaxOrderByAggregateInput
+    _min?: ViewMinOrderByAggregateInput
+  }
+
+  export type ViewScalarWhereWithAggregatesInput = {
+    AND?: ViewScalarWhereWithAggregatesInput | ViewScalarWhereWithAggregatesInput[]
+    OR?: ViewScalarWhereWithAggregatesInput[]
+    NOT?: ViewScalarWhereWithAggregatesInput | ViewScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"View"> | string
+    userId?: StringWithAggregatesFilter<"View"> | string
+    propertyId?: StringWithAggregatesFilter<"View"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"View"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"View"> | Date | string
+  }
+
+  export type BookmarkWhereInput = {
+    AND?: BookmarkWhereInput | BookmarkWhereInput[]
+    OR?: BookmarkWhereInput[]
+    NOT?: BookmarkWhereInput | BookmarkWhereInput[]
+    id?: StringFilter<"Bookmark"> | string
+    userId?: StringFilter<"Bookmark"> | string
+    propertyId?: StringFilter<"Bookmark"> | string
+    createdAt?: DateTimeFilter<"Bookmark"> | Date | string
+    updatedAt?: DateTimeFilter<"Bookmark"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+  }
+
+  export type BookmarkOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    property?: PropertyOrderByWithRelationInput
+  }
+
+  export type BookmarkWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_propertyId?: BookmarkUserIdPropertyIdCompoundUniqueInput
+    AND?: BookmarkWhereInput | BookmarkWhereInput[]
+    OR?: BookmarkWhereInput[]
+    NOT?: BookmarkWhereInput | BookmarkWhereInput[]
+    userId?: StringFilter<"Bookmark"> | string
+    propertyId?: StringFilter<"Bookmark"> | string
+    createdAt?: DateTimeFilter<"Bookmark"> | Date | string
+    updatedAt?: DateTimeFilter<"Bookmark"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+  }, "id" | "userId_propertyId">
+
+  export type BookmarkOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BookmarkCountOrderByAggregateInput
+    _max?: BookmarkMaxOrderByAggregateInput
+    _min?: BookmarkMinOrderByAggregateInput
+  }
+
+  export type BookmarkScalarWhereWithAggregatesInput = {
+    AND?: BookmarkScalarWhereWithAggregatesInput | BookmarkScalarWhereWithAggregatesInput[]
+    OR?: BookmarkScalarWhereWithAggregatesInput[]
+    NOT?: BookmarkScalarWhereWithAggregatesInput | BookmarkScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Bookmark"> | string
+    userId?: StringWithAggregatesFilter<"Bookmark"> | string
+    propertyId?: StringWithAggregatesFilter<"Bookmark"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
+  }
+
+  export type SavedSearchWhereInput = {
+    AND?: SavedSearchWhereInput | SavedSearchWhereInput[]
+    OR?: SavedSearchWhereInput[]
+    NOT?: SavedSearchWhereInput | SavedSearchWhereInput[]
+    id?: StringFilter<"SavedSearch"> | string
+    userId?: StringFilter<"SavedSearch"> | string
+    name?: StringFilter<"SavedSearch"> | string
+    filters?: JsonFilter<"SavedSearch">
+    createdAt?: DateTimeFilter<"SavedSearch"> | Date | string
+    updatedAt?: DateTimeFilter<"SavedSearch"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SavedSearchOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    filters?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SavedSearchWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SavedSearchWhereInput | SavedSearchWhereInput[]
+    OR?: SavedSearchWhereInput[]
+    NOT?: SavedSearchWhereInput | SavedSearchWhereInput[]
+    userId?: StringFilter<"SavedSearch"> | string
+    name?: StringFilter<"SavedSearch"> | string
+    filters?: JsonFilter<"SavedSearch">
+    createdAt?: DateTimeFilter<"SavedSearch"> | Date | string
+    updatedAt?: DateTimeFilter<"SavedSearch"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type SavedSearchOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    filters?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SavedSearchCountOrderByAggregateInput
+    _max?: SavedSearchMaxOrderByAggregateInput
+    _min?: SavedSearchMinOrderByAggregateInput
+  }
+
+  export type SavedSearchScalarWhereWithAggregatesInput = {
+    AND?: SavedSearchScalarWhereWithAggregatesInput | SavedSearchScalarWhereWithAggregatesInput[]
+    OR?: SavedSearchScalarWhereWithAggregatesInput[]
+    NOT?: SavedSearchScalarWhereWithAggregatesInput | SavedSearchScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SavedSearch"> | string
+    userId?: StringWithAggregatesFilter<"SavedSearch"> | string
+    name?: StringWithAggregatesFilter<"SavedSearch"> | string
+    filters?: JsonWithAggregatesFilter<"SavedSearch">
+    createdAt?: DateTimeWithAggregatesFilter<"SavedSearch"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SavedSearch"> | Date | string
+  }
+
+  export type SystemSettingsWhereInput = {
+    AND?: SystemSettingsWhereInput | SystemSettingsWhereInput[]
+    OR?: SystemSettingsWhereInput[]
+    NOT?: SystemSettingsWhereInput | SystemSettingsWhereInput[]
+    id?: StringFilter<"SystemSettings"> | string
+    systemName?: StringFilter<"SystemSettings"> | string
+    timezone?: StringFilter<"SystemSettings"> | string
+    maintenance?: BoolFilter<"SystemSettings"> | boolean
+    updatedAt?: DateTimeFilter<"SystemSettings"> | Date | string
+  }
+
+  export type SystemSettingsOrderByWithRelationInput = {
+    id?: SortOrder
+    systemName?: SortOrder
+    timezone?: SortOrder
+    maintenance?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SystemSettingsWhereInput | SystemSettingsWhereInput[]
+    OR?: SystemSettingsWhereInput[]
+    NOT?: SystemSettingsWhereInput | SystemSettingsWhereInput[]
+    systemName?: StringFilter<"SystemSettings"> | string
+    timezone?: StringFilter<"SystemSettings"> | string
+    maintenance?: BoolFilter<"SystemSettings"> | boolean
+    updatedAt?: DateTimeFilter<"SystemSettings"> | Date | string
+  }, "id">
+
+  export type SystemSettingsOrderByWithAggregationInput = {
+    id?: SortOrder
+    systemName?: SortOrder
+    timezone?: SortOrder
+    maintenance?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SystemSettingsCountOrderByAggregateInput
+    _max?: SystemSettingsMaxOrderByAggregateInput
+    _min?: SystemSettingsMinOrderByAggregateInput
+  }
+
+  export type SystemSettingsScalarWhereWithAggregatesInput = {
+    AND?: SystemSettingsScalarWhereWithAggregatesInput | SystemSettingsScalarWhereWithAggregatesInput[]
+    OR?: SystemSettingsScalarWhereWithAggregatesInput[]
+    NOT?: SystemSettingsScalarWhereWithAggregatesInput | SystemSettingsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SystemSettings"> | string
+    systemName?: StringWithAggregatesFilter<"SystemSettings"> | string
+    timezone?: StringWithAggregatesFilter<"SystemSettings"> | string
+    maintenance?: BoolWithAggregatesFilter<"SystemSettings"> | boolean
+    updatedAt?: DateTimeWithAggregatesFilter<"SystemSettings"> | Date | string
+  }
+
   export type UserCreateInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorCreateNestedManyWithoutUserInput
-    members?: MemberCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
-    members?: MemberUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
-    members?: MemberUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
-    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
   }
 
   export type SessionCreateInput = {
@@ -14407,11 +29081,13 @@ export namespace Prisma {
   }
 
   export type OrganizationCreateInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     members?: MemberCreateNestedManyWithoutOrganizationInput
     invitations?: InvitationCreateNestedManyWithoutOrganizationInput
@@ -14419,11 +29095,13 @@ export namespace Prisma {
   }
 
   export type OrganizationUncheckedCreateInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     members?: MemberUncheckedCreateNestedManyWithoutOrganizationInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14436,6 +29114,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     members?: MemberUpdateManyWithoutOrganizationNestedInput
     invitations?: InvitationUpdateManyWithoutOrganizationNestedInput
@@ -14448,6 +29128,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     members?: MemberUncheckedUpdateManyWithoutOrganizationNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14455,11 +29137,13 @@ export namespace Prisma {
   }
 
   export type OrganizationCreateManyInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
   }
 
@@ -14469,6 +29153,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -14478,6 +29164,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -14611,6 +29299,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     organization: OrganizationCreateNestedOneWithoutCustomRolesInput
+    permissions?: PermissionCreateNestedManyWithoutCustomRolesInput
   }
 
   export type CustomRoleUncheckedCreateInput = {
@@ -14621,6 +29310,7 @@ export namespace Prisma {
     baseRole: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    permissions?: PermissionUncheckedCreateNestedManyWithoutCustomRolesInput
   }
 
   export type CustomRoleUpdateInput = {
@@ -14631,6 +29321,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organization?: OrganizationUpdateOneRequiredWithoutCustomRolesNestedInput
+    permissions?: PermissionUpdateManyWithoutCustomRolesNestedInput
   }
 
   export type CustomRoleUncheckedUpdateInput = {
@@ -14641,6 +29332,7 @@ export namespace Prisma {
     baseRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: PermissionUncheckedUpdateManyWithoutCustomRolesNestedInput
   }
 
   export type CustomRoleCreateManyInput = {
@@ -14762,6 +29454,802 @@ export namespace Prisma {
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type PermissionCreateInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+    roles?: RoleCreateNestedManyWithoutPermissionsInput
+    customRoles?: CustomRoleCreateNestedManyWithoutPermissionsInput
+  }
+
+  export type PermissionUncheckedCreateInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+    roles?: RoleUncheckedCreateNestedManyWithoutPermissionsInput
+    customRoles?: CustomRoleUncheckedCreateNestedManyWithoutPermissionsInput
+  }
+
+  export type PermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: RoleUpdateManyWithoutPermissionsNestedInput
+    customRoles?: CustomRoleUpdateManyWithoutPermissionsNestedInput
+  }
+
+  export type PermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: RoleUncheckedUpdateManyWithoutPermissionsNestedInput
+    customRoles?: CustomRoleUncheckedUpdateManyWithoutPermissionsNestedInput
+  }
+
+  export type PermissionCreateManyInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+  }
+
+  export type PermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type RoleCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    permissions?: PermissionCreateNestedManyWithoutRolesInput
+    users?: UserCreateNestedManyWithoutRolesInput
+  }
+
+  export type RoleUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    permissions?: PermissionUncheckedCreateNestedManyWithoutRolesInput
+    users?: UserUncheckedCreateNestedManyWithoutRolesInput
+  }
+
+  export type RoleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermissionUpdateManyWithoutRolesNestedInput
+    users?: UserUpdateManyWithoutRolesNestedInput
+  }
+
+  export type RoleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermissionUncheckedUpdateManyWithoutRolesNestedInput
+    users?: UserUncheckedUpdateManyWithoutRolesNestedInput
+  }
+
+  export type RoleCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+  }
+
+  export type RoleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type RoleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PropertyCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owners?: PropertyOwnerCreateNestedManyWithoutPropertyInput
+    Bookmarks?: BookmarkCreateNestedManyWithoutPropertyInput
+    views?: ViewCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owners?: PropertyOwnerUncheckedCreateNestedManyWithoutPropertyInput
+    Bookmarks?: BookmarkUncheckedCreateNestedManyWithoutPropertyInput
+    views?: ViewUncheckedCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owners?: PropertyOwnerUpdateManyWithoutPropertyNestedInput
+    Bookmarks?: BookmarkUpdateManyWithoutPropertyNestedInput
+    views?: ViewUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type PropertyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owners?: PropertyOwnerUncheckedUpdateManyWithoutPropertyNestedInput
+    Bookmarks?: BookmarkUncheckedUpdateManyWithoutPropertyNestedInput
+    views?: ViewUncheckedUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type PropertyCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OwnerCreateInput = {
+    id?: string
+    name: string
+    email?: string | null
+    phoneNumber?: string | null
+    stocksSecurities?: number
+    businessInterests?: number
+    cashSavings?: number
+    otherAssets?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    properties?: PropertyOwnerCreateNestedManyWithoutOwnerInput
+  }
+
+  export type OwnerUncheckedCreateInput = {
+    id?: string
+    name: string
+    email?: string | null
+    phoneNumber?: string | null
+    stocksSecurities?: number
+    businessInterests?: number
+    cashSavings?: number
+    otherAssets?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    properties?: PropertyOwnerUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type OwnerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    stocksSecurities?: FloatFieldUpdateOperationsInput | number
+    businessInterests?: FloatFieldUpdateOperationsInput | number
+    cashSavings?: FloatFieldUpdateOperationsInput | number
+    otherAssets?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    properties?: PropertyOwnerUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type OwnerUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    stocksSecurities?: FloatFieldUpdateOperationsInput | number
+    businessInterests?: FloatFieldUpdateOperationsInput | number
+    cashSavings?: FloatFieldUpdateOperationsInput | number
+    otherAssets?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    properties?: PropertyOwnerUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type OwnerCreateManyInput = {
+    id?: string
+    name: string
+    email?: string | null
+    phoneNumber?: string | null
+    stocksSecurities?: number
+    businessInterests?: number
+    cashSavings?: number
+    otherAssets?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OwnerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    stocksSecurities?: FloatFieldUpdateOperationsInput | number
+    businessInterests?: FloatFieldUpdateOperationsInput | number
+    cashSavings?: FloatFieldUpdateOperationsInput | number
+    otherAssets?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OwnerUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    stocksSecurities?: FloatFieldUpdateOperationsInput | number
+    businessInterests?: FloatFieldUpdateOperationsInput | number
+    cashSavings?: FloatFieldUpdateOperationsInput | number
+    otherAssets?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyOwnerCreateInput = {
+    id?: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutOwnersInput
+    owner: OwnerCreateNestedOneWithoutPropertiesInput
+  }
+
+  export type PropertyOwnerUncheckedCreateInput = {
+    id?: string
+    propertyId: string
+    ownerId: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyOwnerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutOwnersNestedInput
+    owner?: OwnerUpdateOneRequiredWithoutPropertiesNestedInput
+  }
+
+  export type PropertyOwnerUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyOwnerCreateManyInput = {
+    id?: string
+    propertyId: string
+    ownerId: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyOwnerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyOwnerUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+    user: UserCreateNestedOneWithoutReportsInput
+    sharedWith?: SharedPropertyCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportUncheckedCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+    sharedWith?: SharedPropertyUncheckedCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutReportsNestedInput
+    sharedWith?: SharedPropertyUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedWith?: SharedPropertyUncheckedUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportCreateManyInput = {
+    id?: string
+    title: string
+    description?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+  }
+
+  export type ReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SharedPropertyCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    report: ReportCreateNestedOneWithoutSharedWithInput
+    user: UserCreateNestedOneWithoutSharedPropertyInput
+  }
+
+  export type SharedPropertyUncheckedCreateInput = {
+    id?: string
+    userId: string
+    reportId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SharedPropertyUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    report?: ReportUpdateOneRequiredWithoutSharedWithNestedInput
+    user?: UserUpdateOneRequiredWithoutSharedPropertyNestedInput
+  }
+
+  export type SharedPropertyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SharedPropertyCreateManyInput = {
+    id?: string
+    userId: string
+    reportId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SharedPropertyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SharedPropertyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutViewsInput
+    property: PropertyCreateNestedOneWithoutViewsInput
+  }
+
+  export type ViewUncheckedCreateInput = {
+    id?: string
+    userId: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ViewUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutViewsNestedInput
+    property?: PropertyUpdateOneRequiredWithoutViewsNestedInput
+  }
+
+  export type ViewUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewCreateManyInput = {
+    id?: string
+    userId: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ViewUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBookmarkInput
+    property: PropertyCreateNestedOneWithoutBookmarksInput
+  }
+
+  export type BookmarkUncheckedCreateInput = {
+    id?: string
+    userId: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookmarkUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBookmarkNestedInput
+    property?: PropertyUpdateOneRequiredWithoutBookmarksNestedInput
+  }
+
+  export type BookmarkUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkCreateManyInput = {
+    id?: string
+    userId: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookmarkUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SavedSearchCreateInput = {
+    id?: string
+    name: string
+    filters: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSavedSearchesInput
+  }
+
+  export type SavedSearchUncheckedCreateInput = {
+    id?: string
+    userId: string
+    name: string
+    filters: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SavedSearchUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSavedSearchesNestedInput
+  }
+
+  export type SavedSearchUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SavedSearchCreateManyInput = {
+    id?: string
+    userId: string
+    name: string
+    filters: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SavedSearchUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SavedSearchUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingsCreateInput = {
+    id?: string
+    systemName: string
+    timezone: string
+    maintenance?: boolean
+    updatedAt?: Date | string
+  }
+
+  export type SystemSettingsUncheckedCreateInput = {
+    id?: string
+    systemName: string
+    timezone: string
+    maintenance?: boolean
+    updatedAt?: Date | string
+  }
+
+  export type SystemSettingsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    systemName?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    maintenance?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    systemName?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    maintenance?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingsCreateManyInput = {
+    id?: string
+    systemName: string
+    timezone: string
+    maintenance?: boolean
+    updatedAt?: Date | string
+  }
+
+  export type SystemSettingsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    systemName?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    maintenance?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    systemName?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    maintenance?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -14777,11 +30265,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -14795,6 +30278,11 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -14824,6 +30312,18 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type RoleListRelationFilter = {
+    every?: RoleWhereInput
+    some?: RoleWhereInput
+    none?: RoleWhereInput
+  }
+
+  export type MemberListRelationFilter = {
+    every?: MemberWhereInput
+    some?: MemberWhereInput
+    none?: MemberWhereInput
+  }
+
   export type SessionListRelationFilter = {
     every?: SessionWhereInput
     some?: SessionWhereInput
@@ -14836,22 +30336,46 @@ export namespace Prisma {
     none?: AccountWhereInput
   }
 
+  export type SavedSearchListRelationFilter = {
+    every?: SavedSearchWhereInput
+    some?: SavedSearchWhereInput
+    none?: SavedSearchWhereInput
+  }
+
+  export type BookmarkListRelationFilter = {
+    every?: BookmarkWhereInput
+    some?: BookmarkWhereInput
+    none?: BookmarkWhereInput
+  }
+
   export type TwoFactorListRelationFilter = {
     every?: TwoFactorWhereInput
     some?: TwoFactorWhereInput
     none?: TwoFactorWhereInput
   }
 
-  export type MemberListRelationFilter = {
-    every?: MemberWhereInput
-    some?: MemberWhereInput
-    none?: MemberWhereInput
-  }
-
   export type InvitationListRelationFilter = {
     every?: InvitationWhereInput
     some?: InvitationWhereInput
     none?: InvitationWhereInput
+  }
+
+  export type ReportListRelationFilter = {
+    every?: ReportWhereInput
+    some?: ReportWhereInput
+    none?: ReportWhereInput
+  }
+
+  export type SharedPropertyListRelationFilter = {
+    every?: SharedPropertyWhereInput
+    some?: SharedPropertyWhereInput
+    none?: SharedPropertyWhereInput
+  }
+
+  export type ViewListRelationFilter = {
+    every?: ViewWhereInput
+    some?: ViewWhereInput
+    none?: ViewWhereInput
   }
 
   export type PasskeyListRelationFilter = {
@@ -14865,6 +30389,14 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
+  export type RoleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -14873,15 +30405,31 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type SavedSearchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BookmarkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type TwoFactorOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type MemberOrderByRelationAggregateInput = {
+  export type InvitationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type InvitationOrderByRelationAggregateInput = {
+  export type ReportOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SharedPropertyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ViewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14895,13 +30443,14 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twoFactorEnabled?: SortOrder
-    role?: SortOrder
     banned?: SortOrder
     banReason?: SortOrder
     banExpires?: SortOrder
+    currentRole?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -14910,13 +30459,14 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twoFactorEnabled?: SortOrder
-    role?: SortOrder
     banned?: SortOrder
     banReason?: SortOrder
     banExpires?: SortOrder
+    currentRole?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -14925,13 +30475,14 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twoFactorEnabled?: SortOrder
-    role?: SortOrder
     banned?: SortOrder
     banReason?: SortOrder
     banExpires?: SortOrder
+    currentRole?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -14952,14 +30503,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -14976,6 +30519,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -15170,6 +30721,8 @@ export namespace Prisma {
     slug?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    isSuperAdmin?: SortOrder
     metadata?: SortOrder
   }
 
@@ -15179,6 +30732,8 @@ export namespace Prisma {
     slug?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    isSuperAdmin?: SortOrder
     metadata?: SortOrder
   }
 
@@ -15188,6 +30743,8 @@ export namespace Prisma {
     slug?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    isSuperAdmin?: SortOrder
     metadata?: SortOrder
   }
 
@@ -15248,6 +30805,16 @@ export namespace Prisma {
     status?: SortOrder
     expiresAt?: SortOrder
     inviterId?: SortOrder
+  }
+
+  export type PermissionListRelationFilter = {
+    every?: PermissionWhereInput
+    some?: PermissionWhereInput
+    none?: PermissionWhereInput
+  }
+
+  export type PermissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type CustomRoleOrganizationIdNameCompoundUniqueInput = {
@@ -15359,6 +30926,563 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type PermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+  }
+
+  export type PermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+  }
+
+  export type PermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RoleCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    isSystem?: SortOrder
+  }
+
+  export type RoleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    isSystem?: SortOrder
+  }
+
+  export type RoleMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    isSystem?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type PropertyOwnerListRelationFilter = {
+    every?: PropertyOwnerWhereInput
+    some?: PropertyOwnerWhereInput
+    none?: PropertyOwnerWhereInput
+  }
+
+  export type PropertyOwnerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PropertyCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    zipCode?: SortOrder
+    price?: SortOrder
+    images?: SortOrder
+    area?: SortOrder
+    bed?: SortOrder
+    bath?: SortOrder
+    type?: SortOrder
+    confidenceScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PropertyAvgOrderByAggregateInput = {
+    price?: SortOrder
+    area?: SortOrder
+    bed?: SortOrder
+    bath?: SortOrder
+    confidenceScore?: SortOrder
+  }
+
+  export type PropertyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    zipCode?: SortOrder
+    price?: SortOrder
+    area?: SortOrder
+    bed?: SortOrder
+    bath?: SortOrder
+    type?: SortOrder
+    confidenceScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PropertyMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    address?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    zipCode?: SortOrder
+    price?: SortOrder
+    area?: SortOrder
+    bed?: SortOrder
+    bath?: SortOrder
+    type?: SortOrder
+    confidenceScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PropertySumOrderByAggregateInput = {
+    price?: SortOrder
+    area?: SortOrder
+    bed?: SortOrder
+    bath?: SortOrder
+    confidenceScore?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type OwnerCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OwnerAvgOrderByAggregateInput = {
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+  }
+
+  export type OwnerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OwnerMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OwnerSumOrderByAggregateInput = {
+    stocksSecurities?: SortOrder
+    businessInterests?: SortOrder
+    cashSavings?: SortOrder
+    otherAssets?: SortOrder
+  }
+
+  export type PropertyScalarRelationFilter = {
+    is?: PropertyWhereInput
+    isNot?: PropertyWhereInput
+  }
+
+  export type OwnerScalarRelationFilter = {
+    is?: OwnerWhereInput
+    isNot?: OwnerWhereInput
+  }
+
+  export type PropertyOwnerPropertyIdOwnerIdCompoundUniqueInput = {
+    propertyId: string
+    ownerId: string
+  }
+
+  export type PropertyOwnerCountOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    ownerId?: SortOrder
+    ownerType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PropertyOwnerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    ownerId?: SortOrder
+    ownerType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PropertyOwnerMinOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    ownerId?: SortOrder
+    ownerType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notes?: SortOrder
+    reportType?: SortOrder
+    exported?: SortOrder
+    exportUrl?: SortOrder
+  }
+
+  export type ReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notes?: SortOrder
+    reportType?: SortOrder
+    exported?: SortOrder
+    exportUrl?: SortOrder
+  }
+
+  export type ReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    notes?: SortOrder
+    reportType?: SortOrder
+    exported?: SortOrder
+    exportUrl?: SortOrder
+  }
+
+  export type ReportScalarRelationFilter = {
+    is?: ReportWhereInput
+    isNot?: ReportWhereInput
+  }
+
+  export type SharedPropertyUserIdReportIdCompoundUniqueInput = {
+    userId: string
+    reportId: string
+  }
+
+  export type SharedPropertyCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    reportId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SharedPropertyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    reportId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SharedPropertyMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    reportId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ViewCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ViewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ViewMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookmarkUserIdPropertyIdCompoundUniqueInput = {
+    userId: string
+    propertyId: string
+  }
+
+  export type BookmarkCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookmarkMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookmarkMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    propertyId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type SavedSearchCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    filters?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SavedSearchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SavedSearchMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type SystemSettingsCountOrderByAggregateInput = {
+    id?: SortOrder
+    systemName?: SortOrder
+    timezone?: SortOrder
+    maintenance?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    systemName?: SortOrder
+    timezone?: SortOrder
+    maintenance?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemSettingsMinOrderByAggregateInput = {
+    id?: SortOrder
+    systemName?: SortOrder
+    timezone?: SortOrder
+    maintenance?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoleCreateNestedManyWithoutUsersInput = {
+    create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput> | RoleCreateWithoutUsersInput[] | RoleUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutUsersInput | RoleCreateOrConnectWithoutUsersInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+  }
+
+  export type MemberCreateNestedManyWithoutUserInput = {
+    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
+    createMany?: MemberCreateManyUserInputEnvelope
+    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+  }
+
   export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -15373,18 +31497,25 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
+  export type SavedSearchCreateNestedManyWithoutUserInput = {
+    create?: XOR<SavedSearchCreateWithoutUserInput, SavedSearchUncheckedCreateWithoutUserInput> | SavedSearchCreateWithoutUserInput[] | SavedSearchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SavedSearchCreateOrConnectWithoutUserInput | SavedSearchCreateOrConnectWithoutUserInput[]
+    createMany?: SavedSearchCreateManyUserInputEnvelope
+    connect?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+  }
+
+  export type BookmarkCreateNestedManyWithoutUserInput = {
+    create?: XOR<BookmarkCreateWithoutUserInput, BookmarkUncheckedCreateWithoutUserInput> | BookmarkCreateWithoutUserInput[] | BookmarkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutUserInput | BookmarkCreateOrConnectWithoutUserInput[]
+    createMany?: BookmarkCreateManyUserInputEnvelope
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+  }
+
   export type TwoFactorCreateNestedManyWithoutUserInput = {
     create?: XOR<TwoFactorCreateWithoutUserInput, TwoFactorUncheckedCreateWithoutUserInput> | TwoFactorCreateWithoutUserInput[] | TwoFactorUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TwoFactorCreateOrConnectWithoutUserInput | TwoFactorCreateOrConnectWithoutUserInput[]
     createMany?: TwoFactorCreateManyUserInputEnvelope
     connect?: TwoFactorWhereUniqueInput | TwoFactorWhereUniqueInput[]
-  }
-
-  export type MemberCreateNestedManyWithoutUserInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
   }
 
   export type InvitationCreateNestedManyWithoutUserInput = {
@@ -15394,11 +31525,45 @@ export namespace Prisma {
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
   }
 
+  export type ReportCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReportCreateWithoutUserInput, ReportUncheckedCreateWithoutUserInput> | ReportCreateWithoutUserInput[] | ReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutUserInput | ReportCreateOrConnectWithoutUserInput[]
+    createMany?: ReportCreateManyUserInputEnvelope
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+  }
+
+  export type SharedPropertyCreateNestedManyWithoutUserInput = {
+    create?: XOR<SharedPropertyCreateWithoutUserInput, SharedPropertyUncheckedCreateWithoutUserInput> | SharedPropertyCreateWithoutUserInput[] | SharedPropertyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutUserInput | SharedPropertyCreateOrConnectWithoutUserInput[]
+    createMany?: SharedPropertyCreateManyUserInputEnvelope
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+  }
+
+  export type ViewCreateNestedManyWithoutUserInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+  }
+
   export type PasskeyCreateNestedManyWithoutUserInput = {
     create?: XOR<PasskeyCreateWithoutUserInput, PasskeyUncheckedCreateWithoutUserInput> | PasskeyCreateWithoutUserInput[] | PasskeyUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PasskeyCreateOrConnectWithoutUserInput | PasskeyCreateOrConnectWithoutUserInput[]
     createMany?: PasskeyCreateManyUserInputEnvelope
     connect?: PasskeyWhereUniqueInput | PasskeyWhereUniqueInput[]
+  }
+
+  export type RoleUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput> | RoleCreateWithoutUsersInput[] | RoleUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutUsersInput | RoleCreateOrConnectWithoutUsersInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+  }
+
+  export type MemberUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
+    createMany?: MemberCreateManyUserInputEnvelope
+    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
   }
 
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
@@ -15415,6 +31580,20 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
+  export type SavedSearchUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SavedSearchCreateWithoutUserInput, SavedSearchUncheckedCreateWithoutUserInput> | SavedSearchCreateWithoutUserInput[] | SavedSearchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SavedSearchCreateOrConnectWithoutUserInput | SavedSearchCreateOrConnectWithoutUserInput[]
+    createMany?: SavedSearchCreateManyUserInputEnvelope
+    connect?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+  }
+
+  export type BookmarkUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BookmarkCreateWithoutUserInput, BookmarkUncheckedCreateWithoutUserInput> | BookmarkCreateWithoutUserInput[] | BookmarkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutUserInput | BookmarkCreateOrConnectWithoutUserInput[]
+    createMany?: BookmarkCreateManyUserInputEnvelope
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+  }
+
   export type TwoFactorUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<TwoFactorCreateWithoutUserInput, TwoFactorUncheckedCreateWithoutUserInput> | TwoFactorCreateWithoutUserInput[] | TwoFactorUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TwoFactorCreateOrConnectWithoutUserInput | TwoFactorCreateOrConnectWithoutUserInput[]
@@ -15422,18 +31601,32 @@ export namespace Prisma {
     connect?: TwoFactorWhereUniqueInput | TwoFactorWhereUniqueInput[]
   }
 
-  export type MemberUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-  }
-
   export type InvitationUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<InvitationCreateWithoutUserInput, InvitationUncheckedCreateWithoutUserInput> | InvitationCreateWithoutUserInput[] | InvitationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: InvitationCreateOrConnectWithoutUserInput | InvitationCreateOrConnectWithoutUserInput[]
     createMany?: InvitationCreateManyUserInputEnvelope
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+  }
+
+  export type ReportUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReportCreateWithoutUserInput, ReportUncheckedCreateWithoutUserInput> | ReportCreateWithoutUserInput[] | ReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutUserInput | ReportCreateOrConnectWithoutUserInput[]
+    createMany?: ReportCreateManyUserInputEnvelope
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+  }
+
+  export type SharedPropertyUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SharedPropertyCreateWithoutUserInput, SharedPropertyUncheckedCreateWithoutUserInput> | SharedPropertyCreateWithoutUserInput[] | SharedPropertyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutUserInput | SharedPropertyCreateOrConnectWithoutUserInput[]
+    createMany?: SharedPropertyCreateManyUserInputEnvelope
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+  }
+
+  export type ViewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
   }
 
   export type PasskeyUncheckedCreateNestedManyWithoutUserInput = {
@@ -15447,12 +31640,12 @@ export namespace Prisma {
     set?: string
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -15465,6 +31658,33 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type RoleUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput> | RoleCreateWithoutUsersInput[] | RoleUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutUsersInput | RoleCreateOrConnectWithoutUsersInput[]
+    upsert?: RoleUpsertWithWhereUniqueWithoutUsersInput | RoleUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    disconnect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    delete?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    update?: RoleUpdateWithWhereUniqueWithoutUsersInput | RoleUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: RoleUpdateManyWithWhereWithoutUsersInput | RoleUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: RoleScalarWhereInput | RoleScalarWhereInput[]
+  }
+
+  export type MemberUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
+    upsert?: MemberUpsertWithWhereUniqueWithoutUserInput | MemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MemberCreateManyUserInputEnvelope
+    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    update?: MemberUpdateWithWhereUniqueWithoutUserInput | MemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MemberUpdateManyWithWhereWithoutUserInput | MemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
   }
 
   export type SessionUpdateManyWithoutUserNestedInput = {
@@ -15495,6 +31715,34 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
+  export type SavedSearchUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SavedSearchCreateWithoutUserInput, SavedSearchUncheckedCreateWithoutUserInput> | SavedSearchCreateWithoutUserInput[] | SavedSearchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SavedSearchCreateOrConnectWithoutUserInput | SavedSearchCreateOrConnectWithoutUserInput[]
+    upsert?: SavedSearchUpsertWithWhereUniqueWithoutUserInput | SavedSearchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SavedSearchCreateManyUserInputEnvelope
+    set?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    disconnect?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    delete?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    connect?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    update?: SavedSearchUpdateWithWhereUniqueWithoutUserInput | SavedSearchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SavedSearchUpdateManyWithWhereWithoutUserInput | SavedSearchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SavedSearchScalarWhereInput | SavedSearchScalarWhereInput[]
+  }
+
+  export type BookmarkUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BookmarkCreateWithoutUserInput, BookmarkUncheckedCreateWithoutUserInput> | BookmarkCreateWithoutUserInput[] | BookmarkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutUserInput | BookmarkCreateOrConnectWithoutUserInput[]
+    upsert?: BookmarkUpsertWithWhereUniqueWithoutUserInput | BookmarkUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BookmarkCreateManyUserInputEnvelope
+    set?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    disconnect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    delete?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    update?: BookmarkUpdateWithWhereUniqueWithoutUserInput | BookmarkUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BookmarkUpdateManyWithWhereWithoutUserInput | BookmarkUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
+  }
+
   export type TwoFactorUpdateManyWithoutUserNestedInput = {
     create?: XOR<TwoFactorCreateWithoutUserInput, TwoFactorUncheckedCreateWithoutUserInput> | TwoFactorCreateWithoutUserInput[] | TwoFactorUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TwoFactorCreateOrConnectWithoutUserInput | TwoFactorCreateOrConnectWithoutUserInput[]
@@ -15507,20 +31755,6 @@ export namespace Prisma {
     update?: TwoFactorUpdateWithWhereUniqueWithoutUserInput | TwoFactorUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TwoFactorUpdateManyWithWhereWithoutUserInput | TwoFactorUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TwoFactorScalarWhereInput | TwoFactorScalarWhereInput[]
-  }
-
-  export type MemberUpdateManyWithoutUserNestedInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    upsert?: MemberUpsertWithWhereUniqueWithoutUserInput | MemberUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    update?: MemberUpdateWithWhereUniqueWithoutUserInput | MemberUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: MemberUpdateManyWithWhereWithoutUserInput | MemberUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
   }
 
   export type InvitationUpdateManyWithoutUserNestedInput = {
@@ -15537,6 +31771,48 @@ export namespace Prisma {
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
   }
 
+  export type ReportUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReportCreateWithoutUserInput, ReportUncheckedCreateWithoutUserInput> | ReportCreateWithoutUserInput[] | ReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutUserInput | ReportCreateOrConnectWithoutUserInput[]
+    upsert?: ReportUpsertWithWhereUniqueWithoutUserInput | ReportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReportCreateManyUserInputEnvelope
+    set?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    disconnect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    delete?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    update?: ReportUpdateWithWhereUniqueWithoutUserInput | ReportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReportUpdateManyWithWhereWithoutUserInput | ReportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReportScalarWhereInput | ReportScalarWhereInput[]
+  }
+
+  export type SharedPropertyUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SharedPropertyCreateWithoutUserInput, SharedPropertyUncheckedCreateWithoutUserInput> | SharedPropertyCreateWithoutUserInput[] | SharedPropertyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutUserInput | SharedPropertyCreateOrConnectWithoutUserInput[]
+    upsert?: SharedPropertyUpsertWithWhereUniqueWithoutUserInput | SharedPropertyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SharedPropertyCreateManyUserInputEnvelope
+    set?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    disconnect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    delete?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    update?: SharedPropertyUpdateWithWhereUniqueWithoutUserInput | SharedPropertyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SharedPropertyUpdateManyWithWhereWithoutUserInput | SharedPropertyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SharedPropertyScalarWhereInput | SharedPropertyScalarWhereInput[]
+  }
+
+  export type ViewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutUserInput | ViewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutUserInput | ViewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutUserInput | ViewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
   export type PasskeyUpdateManyWithoutUserNestedInput = {
     create?: XOR<PasskeyCreateWithoutUserInput, PasskeyUncheckedCreateWithoutUserInput> | PasskeyCreateWithoutUserInput[] | PasskeyUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PasskeyCreateOrConnectWithoutUserInput | PasskeyCreateOrConnectWithoutUserInput[]
@@ -15549,6 +31825,33 @@ export namespace Prisma {
     update?: PasskeyUpdateWithWhereUniqueWithoutUserInput | PasskeyUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PasskeyUpdateManyWithWhereWithoutUserInput | PasskeyUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PasskeyScalarWhereInput | PasskeyScalarWhereInput[]
+  }
+
+  export type RoleUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput> | RoleCreateWithoutUsersInput[] | RoleUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutUsersInput | RoleCreateOrConnectWithoutUsersInput[]
+    upsert?: RoleUpsertWithWhereUniqueWithoutUsersInput | RoleUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    disconnect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    delete?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    update?: RoleUpdateWithWhereUniqueWithoutUsersInput | RoleUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: RoleUpdateManyWithWhereWithoutUsersInput | RoleUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: RoleScalarWhereInput | RoleScalarWhereInput[]
+  }
+
+  export type MemberUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
+    upsert?: MemberUpsertWithWhereUniqueWithoutUserInput | MemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MemberCreateManyUserInputEnvelope
+    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+    update?: MemberUpdateWithWhereUniqueWithoutUserInput | MemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MemberUpdateManyWithWhereWithoutUserInput | MemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
   }
 
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -15579,6 +31882,34 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
+  export type SavedSearchUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SavedSearchCreateWithoutUserInput, SavedSearchUncheckedCreateWithoutUserInput> | SavedSearchCreateWithoutUserInput[] | SavedSearchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SavedSearchCreateOrConnectWithoutUserInput | SavedSearchCreateOrConnectWithoutUserInput[]
+    upsert?: SavedSearchUpsertWithWhereUniqueWithoutUserInput | SavedSearchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SavedSearchCreateManyUserInputEnvelope
+    set?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    disconnect?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    delete?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    connect?: SavedSearchWhereUniqueInput | SavedSearchWhereUniqueInput[]
+    update?: SavedSearchUpdateWithWhereUniqueWithoutUserInput | SavedSearchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SavedSearchUpdateManyWithWhereWithoutUserInput | SavedSearchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SavedSearchScalarWhereInput | SavedSearchScalarWhereInput[]
+  }
+
+  export type BookmarkUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BookmarkCreateWithoutUserInput, BookmarkUncheckedCreateWithoutUserInput> | BookmarkCreateWithoutUserInput[] | BookmarkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutUserInput | BookmarkCreateOrConnectWithoutUserInput[]
+    upsert?: BookmarkUpsertWithWhereUniqueWithoutUserInput | BookmarkUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BookmarkCreateManyUserInputEnvelope
+    set?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    disconnect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    delete?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    update?: BookmarkUpdateWithWhereUniqueWithoutUserInput | BookmarkUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BookmarkUpdateManyWithWhereWithoutUserInput | BookmarkUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
+  }
+
   export type TwoFactorUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TwoFactorCreateWithoutUserInput, TwoFactorUncheckedCreateWithoutUserInput> | TwoFactorCreateWithoutUserInput[] | TwoFactorUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TwoFactorCreateOrConnectWithoutUserInput | TwoFactorCreateOrConnectWithoutUserInput[]
@@ -15593,20 +31924,6 @@ export namespace Prisma {
     deleteMany?: TwoFactorScalarWhereInput | TwoFactorScalarWhereInput[]
   }
 
-  export type MemberUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    upsert?: MemberUpsertWithWhereUniqueWithoutUserInput | MemberUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    update?: MemberUpdateWithWhereUniqueWithoutUserInput | MemberUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: MemberUpdateManyWithWhereWithoutUserInput | MemberUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
-  }
-
   export type InvitationUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<InvitationCreateWithoutUserInput, InvitationUncheckedCreateWithoutUserInput> | InvitationCreateWithoutUserInput[] | InvitationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: InvitationCreateOrConnectWithoutUserInput | InvitationCreateOrConnectWithoutUserInput[]
@@ -15619,6 +31936,48 @@ export namespace Prisma {
     update?: InvitationUpdateWithWhereUniqueWithoutUserInput | InvitationUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: InvitationUpdateManyWithWhereWithoutUserInput | InvitationUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+  }
+
+  export type ReportUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReportCreateWithoutUserInput, ReportUncheckedCreateWithoutUserInput> | ReportCreateWithoutUserInput[] | ReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutUserInput | ReportCreateOrConnectWithoutUserInput[]
+    upsert?: ReportUpsertWithWhereUniqueWithoutUserInput | ReportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReportCreateManyUserInputEnvelope
+    set?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    disconnect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    delete?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    update?: ReportUpdateWithWhereUniqueWithoutUserInput | ReportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReportUpdateManyWithWhereWithoutUserInput | ReportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReportScalarWhereInput | ReportScalarWhereInput[]
+  }
+
+  export type SharedPropertyUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SharedPropertyCreateWithoutUserInput, SharedPropertyUncheckedCreateWithoutUserInput> | SharedPropertyCreateWithoutUserInput[] | SharedPropertyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutUserInput | SharedPropertyCreateOrConnectWithoutUserInput[]
+    upsert?: SharedPropertyUpsertWithWhereUniqueWithoutUserInput | SharedPropertyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SharedPropertyCreateManyUserInputEnvelope
+    set?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    disconnect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    delete?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    update?: SharedPropertyUpdateWithWhereUniqueWithoutUserInput | SharedPropertyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SharedPropertyUpdateManyWithWhereWithoutUserInput | SharedPropertyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SharedPropertyScalarWhereInput | SharedPropertyScalarWhereInput[]
+  }
+
+  export type ViewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutUserInput | ViewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutUserInput | ViewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutUserInput | ViewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
   }
 
   export type PasskeyUncheckedUpdateManyWithoutUserNestedInput = {
@@ -15865,12 +32224,50 @@ export namespace Prisma {
     connect?: OrganizationWhereUniqueInput
   }
 
+  export type PermissionCreateNestedManyWithoutCustomRolesInput = {
+    create?: XOR<PermissionCreateWithoutCustomRolesInput, PermissionUncheckedCreateWithoutCustomRolesInput> | PermissionCreateWithoutCustomRolesInput[] | PermissionUncheckedCreateWithoutCustomRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutCustomRolesInput | PermissionCreateOrConnectWithoutCustomRolesInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+  }
+
+  export type PermissionUncheckedCreateNestedManyWithoutCustomRolesInput = {
+    create?: XOR<PermissionCreateWithoutCustomRolesInput, PermissionUncheckedCreateWithoutCustomRolesInput> | PermissionCreateWithoutCustomRolesInput[] | PermissionUncheckedCreateWithoutCustomRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutCustomRolesInput | PermissionCreateOrConnectWithoutCustomRolesInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+  }
+
   export type OrganizationUpdateOneRequiredWithoutCustomRolesNestedInput = {
     create?: XOR<OrganizationCreateWithoutCustomRolesInput, OrganizationUncheckedCreateWithoutCustomRolesInput>
     connectOrCreate?: OrganizationCreateOrConnectWithoutCustomRolesInput
     upsert?: OrganizationUpsertWithoutCustomRolesInput
     connect?: OrganizationWhereUniqueInput
     update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutCustomRolesInput, OrganizationUpdateWithoutCustomRolesInput>, OrganizationUncheckedUpdateWithoutCustomRolesInput>
+  }
+
+  export type PermissionUpdateManyWithoutCustomRolesNestedInput = {
+    create?: XOR<PermissionCreateWithoutCustomRolesInput, PermissionUncheckedCreateWithoutCustomRolesInput> | PermissionCreateWithoutCustomRolesInput[] | PermissionUncheckedCreateWithoutCustomRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutCustomRolesInput | PermissionCreateOrConnectWithoutCustomRolesInput[]
+    upsert?: PermissionUpsertWithWhereUniqueWithoutCustomRolesInput | PermissionUpsertWithWhereUniqueWithoutCustomRolesInput[]
+    set?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    disconnect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    delete?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    update?: PermissionUpdateWithWhereUniqueWithoutCustomRolesInput | PermissionUpdateWithWhereUniqueWithoutCustomRolesInput[]
+    updateMany?: PermissionUpdateManyWithWhereWithoutCustomRolesInput | PermissionUpdateManyWithWhereWithoutCustomRolesInput[]
+    deleteMany?: PermissionScalarWhereInput | PermissionScalarWhereInput[]
+  }
+
+  export type PermissionUncheckedUpdateManyWithoutCustomRolesNestedInput = {
+    create?: XOR<PermissionCreateWithoutCustomRolesInput, PermissionUncheckedCreateWithoutCustomRolesInput> | PermissionCreateWithoutCustomRolesInput[] | PermissionUncheckedCreateWithoutCustomRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutCustomRolesInput | PermissionCreateOrConnectWithoutCustomRolesInput[]
+    upsert?: PermissionUpsertWithWhereUniqueWithoutCustomRolesInput | PermissionUpsertWithWhereUniqueWithoutCustomRolesInput[]
+    set?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    disconnect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    delete?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    update?: PermissionUpdateWithWhereUniqueWithoutCustomRolesInput | PermissionUpdateWithWhereUniqueWithoutCustomRolesInput[]
+    updateMany?: PermissionUpdateManyWithWhereWithoutCustomRolesInput | PermissionUpdateManyWithWhereWithoutCustomRolesInput[]
+    deleteMany?: PermissionScalarWhereInput | PermissionScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutPasskeysInput = {
@@ -15895,6 +32292,541 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPasskeysInput, UserUpdateWithoutPasskeysInput>, UserUncheckedUpdateWithoutPasskeysInput>
   }
 
+  export type RoleCreateNestedManyWithoutPermissionsInput = {
+    create?: XOR<RoleCreateWithoutPermissionsInput, RoleUncheckedCreateWithoutPermissionsInput> | RoleCreateWithoutPermissionsInput[] | RoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutPermissionsInput | RoleCreateOrConnectWithoutPermissionsInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+  }
+
+  export type CustomRoleCreateNestedManyWithoutPermissionsInput = {
+    create?: XOR<CustomRoleCreateWithoutPermissionsInput, CustomRoleUncheckedCreateWithoutPermissionsInput> | CustomRoleCreateWithoutPermissionsInput[] | CustomRoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: CustomRoleCreateOrConnectWithoutPermissionsInput | CustomRoleCreateOrConnectWithoutPermissionsInput[]
+    connect?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+  }
+
+  export type RoleUncheckedCreateNestedManyWithoutPermissionsInput = {
+    create?: XOR<RoleCreateWithoutPermissionsInput, RoleUncheckedCreateWithoutPermissionsInput> | RoleCreateWithoutPermissionsInput[] | RoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutPermissionsInput | RoleCreateOrConnectWithoutPermissionsInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+  }
+
+  export type CustomRoleUncheckedCreateNestedManyWithoutPermissionsInput = {
+    create?: XOR<CustomRoleCreateWithoutPermissionsInput, CustomRoleUncheckedCreateWithoutPermissionsInput> | CustomRoleCreateWithoutPermissionsInput[] | CustomRoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: CustomRoleCreateOrConnectWithoutPermissionsInput | CustomRoleCreateOrConnectWithoutPermissionsInput[]
+    connect?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+  }
+
+  export type RoleUpdateManyWithoutPermissionsNestedInput = {
+    create?: XOR<RoleCreateWithoutPermissionsInput, RoleUncheckedCreateWithoutPermissionsInput> | RoleCreateWithoutPermissionsInput[] | RoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutPermissionsInput | RoleCreateOrConnectWithoutPermissionsInput[]
+    upsert?: RoleUpsertWithWhereUniqueWithoutPermissionsInput | RoleUpsertWithWhereUniqueWithoutPermissionsInput[]
+    set?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    disconnect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    delete?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    update?: RoleUpdateWithWhereUniqueWithoutPermissionsInput | RoleUpdateWithWhereUniqueWithoutPermissionsInput[]
+    updateMany?: RoleUpdateManyWithWhereWithoutPermissionsInput | RoleUpdateManyWithWhereWithoutPermissionsInput[]
+    deleteMany?: RoleScalarWhereInput | RoleScalarWhereInput[]
+  }
+
+  export type CustomRoleUpdateManyWithoutPermissionsNestedInput = {
+    create?: XOR<CustomRoleCreateWithoutPermissionsInput, CustomRoleUncheckedCreateWithoutPermissionsInput> | CustomRoleCreateWithoutPermissionsInput[] | CustomRoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: CustomRoleCreateOrConnectWithoutPermissionsInput | CustomRoleCreateOrConnectWithoutPermissionsInput[]
+    upsert?: CustomRoleUpsertWithWhereUniqueWithoutPermissionsInput | CustomRoleUpsertWithWhereUniqueWithoutPermissionsInput[]
+    set?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    disconnect?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    delete?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    connect?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    update?: CustomRoleUpdateWithWhereUniqueWithoutPermissionsInput | CustomRoleUpdateWithWhereUniqueWithoutPermissionsInput[]
+    updateMany?: CustomRoleUpdateManyWithWhereWithoutPermissionsInput | CustomRoleUpdateManyWithWhereWithoutPermissionsInput[]
+    deleteMany?: CustomRoleScalarWhereInput | CustomRoleScalarWhereInput[]
+  }
+
+  export type RoleUncheckedUpdateManyWithoutPermissionsNestedInput = {
+    create?: XOR<RoleCreateWithoutPermissionsInput, RoleUncheckedCreateWithoutPermissionsInput> | RoleCreateWithoutPermissionsInput[] | RoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: RoleCreateOrConnectWithoutPermissionsInput | RoleCreateOrConnectWithoutPermissionsInput[]
+    upsert?: RoleUpsertWithWhereUniqueWithoutPermissionsInput | RoleUpsertWithWhereUniqueWithoutPermissionsInput[]
+    set?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    disconnect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    delete?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    connect?: RoleWhereUniqueInput | RoleWhereUniqueInput[]
+    update?: RoleUpdateWithWhereUniqueWithoutPermissionsInput | RoleUpdateWithWhereUniqueWithoutPermissionsInput[]
+    updateMany?: RoleUpdateManyWithWhereWithoutPermissionsInput | RoleUpdateManyWithWhereWithoutPermissionsInput[]
+    deleteMany?: RoleScalarWhereInput | RoleScalarWhereInput[]
+  }
+
+  export type CustomRoleUncheckedUpdateManyWithoutPermissionsNestedInput = {
+    create?: XOR<CustomRoleCreateWithoutPermissionsInput, CustomRoleUncheckedCreateWithoutPermissionsInput> | CustomRoleCreateWithoutPermissionsInput[] | CustomRoleUncheckedCreateWithoutPermissionsInput[]
+    connectOrCreate?: CustomRoleCreateOrConnectWithoutPermissionsInput | CustomRoleCreateOrConnectWithoutPermissionsInput[]
+    upsert?: CustomRoleUpsertWithWhereUniqueWithoutPermissionsInput | CustomRoleUpsertWithWhereUniqueWithoutPermissionsInput[]
+    set?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    disconnect?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    delete?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    connect?: CustomRoleWhereUniqueInput | CustomRoleWhereUniqueInput[]
+    update?: CustomRoleUpdateWithWhereUniqueWithoutPermissionsInput | CustomRoleUpdateWithWhereUniqueWithoutPermissionsInput[]
+    updateMany?: CustomRoleUpdateManyWithWhereWithoutPermissionsInput | CustomRoleUpdateManyWithWhereWithoutPermissionsInput[]
+    deleteMany?: CustomRoleScalarWhereInput | CustomRoleScalarWhereInput[]
+  }
+
+  export type PermissionCreateNestedManyWithoutRolesInput = {
+    create?: XOR<PermissionCreateWithoutRolesInput, PermissionUncheckedCreateWithoutRolesInput> | PermissionCreateWithoutRolesInput[] | PermissionUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutRolesInput | PermissionCreateOrConnectWithoutRolesInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedManyWithoutRolesInput = {
+    create?: XOR<UserCreateWithoutRolesInput, UserUncheckedCreateWithoutRolesInput> | UserCreateWithoutRolesInput[] | UserUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRolesInput | UserCreateOrConnectWithoutRolesInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type PermissionUncheckedCreateNestedManyWithoutRolesInput = {
+    create?: XOR<PermissionCreateWithoutRolesInput, PermissionUncheckedCreateWithoutRolesInput> | PermissionCreateWithoutRolesInput[] | PermissionUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutRolesInput | PermissionCreateOrConnectWithoutRolesInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutRolesInput = {
+    create?: XOR<UserCreateWithoutRolesInput, UserUncheckedCreateWithoutRolesInput> | UserCreateWithoutRolesInput[] | UserUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRolesInput | UserCreateOrConnectWithoutRolesInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type PermissionUpdateManyWithoutRolesNestedInput = {
+    create?: XOR<PermissionCreateWithoutRolesInput, PermissionUncheckedCreateWithoutRolesInput> | PermissionCreateWithoutRolesInput[] | PermissionUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutRolesInput | PermissionCreateOrConnectWithoutRolesInput[]
+    upsert?: PermissionUpsertWithWhereUniqueWithoutRolesInput | PermissionUpsertWithWhereUniqueWithoutRolesInput[]
+    set?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    disconnect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    delete?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    update?: PermissionUpdateWithWhereUniqueWithoutRolesInput | PermissionUpdateWithWhereUniqueWithoutRolesInput[]
+    updateMany?: PermissionUpdateManyWithWhereWithoutRolesInput | PermissionUpdateManyWithWhereWithoutRolesInput[]
+    deleteMany?: PermissionScalarWhereInput | PermissionScalarWhereInput[]
+  }
+
+  export type UserUpdateManyWithoutRolesNestedInput = {
+    create?: XOR<UserCreateWithoutRolesInput, UserUncheckedCreateWithoutRolesInput> | UserCreateWithoutRolesInput[] | UserUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRolesInput | UserCreateOrConnectWithoutRolesInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutRolesInput | UserUpsertWithWhereUniqueWithoutRolesInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutRolesInput | UserUpdateWithWhereUniqueWithoutRolesInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutRolesInput | UserUpdateManyWithWhereWithoutRolesInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type PermissionUncheckedUpdateManyWithoutRolesNestedInput = {
+    create?: XOR<PermissionCreateWithoutRolesInput, PermissionUncheckedCreateWithoutRolesInput> | PermissionCreateWithoutRolesInput[] | PermissionUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: PermissionCreateOrConnectWithoutRolesInput | PermissionCreateOrConnectWithoutRolesInput[]
+    upsert?: PermissionUpsertWithWhereUniqueWithoutRolesInput | PermissionUpsertWithWhereUniqueWithoutRolesInput[]
+    set?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    disconnect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    delete?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    connect?: PermissionWhereUniqueInput | PermissionWhereUniqueInput[]
+    update?: PermissionUpdateWithWhereUniqueWithoutRolesInput | PermissionUpdateWithWhereUniqueWithoutRolesInput[]
+    updateMany?: PermissionUpdateManyWithWhereWithoutRolesInput | PermissionUpdateManyWithWhereWithoutRolesInput[]
+    deleteMany?: PermissionScalarWhereInput | PermissionScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutRolesNestedInput = {
+    create?: XOR<UserCreateWithoutRolesInput, UserUncheckedCreateWithoutRolesInput> | UserCreateWithoutRolesInput[] | UserUncheckedCreateWithoutRolesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutRolesInput | UserCreateOrConnectWithoutRolesInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutRolesInput | UserUpsertWithWhereUniqueWithoutRolesInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutRolesInput | UserUpdateWithWhereUniqueWithoutRolesInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutRolesInput | UserUpdateManyWithWhereWithoutRolesInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type PropertyCreateimagesInput = {
+    set: string[]
+  }
+
+  export type PropertyOwnerCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<PropertyOwnerCreateWithoutPropertyInput, PropertyOwnerUncheckedCreateWithoutPropertyInput> | PropertyOwnerCreateWithoutPropertyInput[] | PropertyOwnerUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutPropertyInput | PropertyOwnerCreateOrConnectWithoutPropertyInput[]
+    createMany?: PropertyOwnerCreateManyPropertyInputEnvelope
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+  }
+
+  export type BookmarkCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<BookmarkCreateWithoutPropertyInput, BookmarkUncheckedCreateWithoutPropertyInput> | BookmarkCreateWithoutPropertyInput[] | BookmarkUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutPropertyInput | BookmarkCreateOrConnectWithoutPropertyInput[]
+    createMany?: BookmarkCreateManyPropertyInputEnvelope
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+  }
+
+  export type ViewCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<ViewCreateWithoutPropertyInput, ViewUncheckedCreateWithoutPropertyInput> | ViewCreateWithoutPropertyInput[] | ViewUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutPropertyInput | ViewCreateOrConnectWithoutPropertyInput[]
+    createMany?: ViewCreateManyPropertyInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+  }
+
+  export type PropertyOwnerUncheckedCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<PropertyOwnerCreateWithoutPropertyInput, PropertyOwnerUncheckedCreateWithoutPropertyInput> | PropertyOwnerCreateWithoutPropertyInput[] | PropertyOwnerUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutPropertyInput | PropertyOwnerCreateOrConnectWithoutPropertyInput[]
+    createMany?: PropertyOwnerCreateManyPropertyInputEnvelope
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+  }
+
+  export type BookmarkUncheckedCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<BookmarkCreateWithoutPropertyInput, BookmarkUncheckedCreateWithoutPropertyInput> | BookmarkCreateWithoutPropertyInput[] | BookmarkUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutPropertyInput | BookmarkCreateOrConnectWithoutPropertyInput[]
+    createMany?: BookmarkCreateManyPropertyInputEnvelope
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+  }
+
+  export type ViewUncheckedCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<ViewCreateWithoutPropertyInput, ViewUncheckedCreateWithoutPropertyInput> | ViewCreateWithoutPropertyInput[] | ViewUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutPropertyInput | ViewCreateOrConnectWithoutPropertyInput[]
+    createMany?: ViewCreateManyPropertyInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type PropertyUpdateimagesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type PropertyOwnerUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<PropertyOwnerCreateWithoutPropertyInput, PropertyOwnerUncheckedCreateWithoutPropertyInput> | PropertyOwnerCreateWithoutPropertyInput[] | PropertyOwnerUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutPropertyInput | PropertyOwnerCreateOrConnectWithoutPropertyInput[]
+    upsert?: PropertyOwnerUpsertWithWhereUniqueWithoutPropertyInput | PropertyOwnerUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: PropertyOwnerCreateManyPropertyInputEnvelope
+    set?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    disconnect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    delete?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    update?: PropertyOwnerUpdateWithWhereUniqueWithoutPropertyInput | PropertyOwnerUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: PropertyOwnerUpdateManyWithWhereWithoutPropertyInput | PropertyOwnerUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: PropertyOwnerScalarWhereInput | PropertyOwnerScalarWhereInput[]
+  }
+
+  export type BookmarkUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<BookmarkCreateWithoutPropertyInput, BookmarkUncheckedCreateWithoutPropertyInput> | BookmarkCreateWithoutPropertyInput[] | BookmarkUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutPropertyInput | BookmarkCreateOrConnectWithoutPropertyInput[]
+    upsert?: BookmarkUpsertWithWhereUniqueWithoutPropertyInput | BookmarkUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: BookmarkCreateManyPropertyInputEnvelope
+    set?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    disconnect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    delete?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    update?: BookmarkUpdateWithWhereUniqueWithoutPropertyInput | BookmarkUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: BookmarkUpdateManyWithWhereWithoutPropertyInput | BookmarkUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
+  }
+
+  export type ViewUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<ViewCreateWithoutPropertyInput, ViewUncheckedCreateWithoutPropertyInput> | ViewCreateWithoutPropertyInput[] | ViewUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutPropertyInput | ViewCreateOrConnectWithoutPropertyInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutPropertyInput | ViewUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: ViewCreateManyPropertyInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutPropertyInput | ViewUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutPropertyInput | ViewUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
+  export type PropertyOwnerUncheckedUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<PropertyOwnerCreateWithoutPropertyInput, PropertyOwnerUncheckedCreateWithoutPropertyInput> | PropertyOwnerCreateWithoutPropertyInput[] | PropertyOwnerUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutPropertyInput | PropertyOwnerCreateOrConnectWithoutPropertyInput[]
+    upsert?: PropertyOwnerUpsertWithWhereUniqueWithoutPropertyInput | PropertyOwnerUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: PropertyOwnerCreateManyPropertyInputEnvelope
+    set?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    disconnect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    delete?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    update?: PropertyOwnerUpdateWithWhereUniqueWithoutPropertyInput | PropertyOwnerUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: PropertyOwnerUpdateManyWithWhereWithoutPropertyInput | PropertyOwnerUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: PropertyOwnerScalarWhereInput | PropertyOwnerScalarWhereInput[]
+  }
+
+  export type BookmarkUncheckedUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<BookmarkCreateWithoutPropertyInput, BookmarkUncheckedCreateWithoutPropertyInput> | BookmarkCreateWithoutPropertyInput[] | BookmarkUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: BookmarkCreateOrConnectWithoutPropertyInput | BookmarkCreateOrConnectWithoutPropertyInput[]
+    upsert?: BookmarkUpsertWithWhereUniqueWithoutPropertyInput | BookmarkUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: BookmarkCreateManyPropertyInputEnvelope
+    set?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    disconnect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    delete?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
+    update?: BookmarkUpdateWithWhereUniqueWithoutPropertyInput | BookmarkUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: BookmarkUpdateManyWithWhereWithoutPropertyInput | BookmarkUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
+  }
+
+  export type ViewUncheckedUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<ViewCreateWithoutPropertyInput, ViewUncheckedCreateWithoutPropertyInput> | ViewCreateWithoutPropertyInput[] | ViewUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutPropertyInput | ViewCreateOrConnectWithoutPropertyInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutPropertyInput | ViewUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: ViewCreateManyPropertyInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutPropertyInput | ViewUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutPropertyInput | ViewUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
+  export type PropertyOwnerCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<PropertyOwnerCreateWithoutOwnerInput, PropertyOwnerUncheckedCreateWithoutOwnerInput> | PropertyOwnerCreateWithoutOwnerInput[] | PropertyOwnerUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutOwnerInput | PropertyOwnerCreateOrConnectWithoutOwnerInput[]
+    createMany?: PropertyOwnerCreateManyOwnerInputEnvelope
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+  }
+
+  export type PropertyOwnerUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<PropertyOwnerCreateWithoutOwnerInput, PropertyOwnerUncheckedCreateWithoutOwnerInput> | PropertyOwnerCreateWithoutOwnerInput[] | PropertyOwnerUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutOwnerInput | PropertyOwnerCreateOrConnectWithoutOwnerInput[]
+    createMany?: PropertyOwnerCreateManyOwnerInputEnvelope
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+  }
+
+  export type PropertyOwnerUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<PropertyOwnerCreateWithoutOwnerInput, PropertyOwnerUncheckedCreateWithoutOwnerInput> | PropertyOwnerCreateWithoutOwnerInput[] | PropertyOwnerUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutOwnerInput | PropertyOwnerCreateOrConnectWithoutOwnerInput[]
+    upsert?: PropertyOwnerUpsertWithWhereUniqueWithoutOwnerInput | PropertyOwnerUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: PropertyOwnerCreateManyOwnerInputEnvelope
+    set?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    disconnect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    delete?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    update?: PropertyOwnerUpdateWithWhereUniqueWithoutOwnerInput | PropertyOwnerUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: PropertyOwnerUpdateManyWithWhereWithoutOwnerInput | PropertyOwnerUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: PropertyOwnerScalarWhereInput | PropertyOwnerScalarWhereInput[]
+  }
+
+  export type PropertyOwnerUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<PropertyOwnerCreateWithoutOwnerInput, PropertyOwnerUncheckedCreateWithoutOwnerInput> | PropertyOwnerCreateWithoutOwnerInput[] | PropertyOwnerUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: PropertyOwnerCreateOrConnectWithoutOwnerInput | PropertyOwnerCreateOrConnectWithoutOwnerInput[]
+    upsert?: PropertyOwnerUpsertWithWhereUniqueWithoutOwnerInput | PropertyOwnerUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: PropertyOwnerCreateManyOwnerInputEnvelope
+    set?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    disconnect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    delete?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    connect?: PropertyOwnerWhereUniqueInput | PropertyOwnerWhereUniqueInput[]
+    update?: PropertyOwnerUpdateWithWhereUniqueWithoutOwnerInput | PropertyOwnerUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: PropertyOwnerUpdateManyWithWhereWithoutOwnerInput | PropertyOwnerUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: PropertyOwnerScalarWhereInput | PropertyOwnerScalarWhereInput[]
+  }
+
+  export type PropertyCreateNestedOneWithoutOwnersInput = {
+    create?: XOR<PropertyCreateWithoutOwnersInput, PropertyUncheckedCreateWithoutOwnersInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutOwnersInput
+    connect?: PropertyWhereUniqueInput
+  }
+
+  export type OwnerCreateNestedOneWithoutPropertiesInput = {
+    create?: XOR<OwnerCreateWithoutPropertiesInput, OwnerUncheckedCreateWithoutPropertiesInput>
+    connectOrCreate?: OwnerCreateOrConnectWithoutPropertiesInput
+    connect?: OwnerWhereUniqueInput
+  }
+
+  export type PropertyUpdateOneRequiredWithoutOwnersNestedInput = {
+    create?: XOR<PropertyCreateWithoutOwnersInput, PropertyUncheckedCreateWithoutOwnersInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutOwnersInput
+    upsert?: PropertyUpsertWithoutOwnersInput
+    connect?: PropertyWhereUniqueInput
+    update?: XOR<XOR<PropertyUpdateToOneWithWhereWithoutOwnersInput, PropertyUpdateWithoutOwnersInput>, PropertyUncheckedUpdateWithoutOwnersInput>
+  }
+
+  export type OwnerUpdateOneRequiredWithoutPropertiesNestedInput = {
+    create?: XOR<OwnerCreateWithoutPropertiesInput, OwnerUncheckedCreateWithoutPropertiesInput>
+    connectOrCreate?: OwnerCreateOrConnectWithoutPropertiesInput
+    upsert?: OwnerUpsertWithoutPropertiesInput
+    connect?: OwnerWhereUniqueInput
+    update?: XOR<XOR<OwnerUpdateToOneWithWhereWithoutPropertiesInput, OwnerUpdateWithoutPropertiesInput>, OwnerUncheckedUpdateWithoutPropertiesInput>
+  }
+
+  export type UserCreateNestedOneWithoutReportsInput = {
+    create?: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SharedPropertyCreateNestedManyWithoutReportInput = {
+    create?: XOR<SharedPropertyCreateWithoutReportInput, SharedPropertyUncheckedCreateWithoutReportInput> | SharedPropertyCreateWithoutReportInput[] | SharedPropertyUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutReportInput | SharedPropertyCreateOrConnectWithoutReportInput[]
+    createMany?: SharedPropertyCreateManyReportInputEnvelope
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+  }
+
+  export type SharedPropertyUncheckedCreateNestedManyWithoutReportInput = {
+    create?: XOR<SharedPropertyCreateWithoutReportInput, SharedPropertyUncheckedCreateWithoutReportInput> | SharedPropertyCreateWithoutReportInput[] | SharedPropertyUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutReportInput | SharedPropertyCreateOrConnectWithoutReportInput[]
+    createMany?: SharedPropertyCreateManyReportInputEnvelope
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutReportsNestedInput = {
+    create?: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportsInput
+    upsert?: UserUpsertWithoutReportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReportsInput, UserUpdateWithoutReportsInput>, UserUncheckedUpdateWithoutReportsInput>
+  }
+
+  export type SharedPropertyUpdateManyWithoutReportNestedInput = {
+    create?: XOR<SharedPropertyCreateWithoutReportInput, SharedPropertyUncheckedCreateWithoutReportInput> | SharedPropertyCreateWithoutReportInput[] | SharedPropertyUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutReportInput | SharedPropertyCreateOrConnectWithoutReportInput[]
+    upsert?: SharedPropertyUpsertWithWhereUniqueWithoutReportInput | SharedPropertyUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: SharedPropertyCreateManyReportInputEnvelope
+    set?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    disconnect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    delete?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    update?: SharedPropertyUpdateWithWhereUniqueWithoutReportInput | SharedPropertyUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: SharedPropertyUpdateManyWithWhereWithoutReportInput | SharedPropertyUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: SharedPropertyScalarWhereInput | SharedPropertyScalarWhereInput[]
+  }
+
+  export type SharedPropertyUncheckedUpdateManyWithoutReportNestedInput = {
+    create?: XOR<SharedPropertyCreateWithoutReportInput, SharedPropertyUncheckedCreateWithoutReportInput> | SharedPropertyCreateWithoutReportInput[] | SharedPropertyUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: SharedPropertyCreateOrConnectWithoutReportInput | SharedPropertyCreateOrConnectWithoutReportInput[]
+    upsert?: SharedPropertyUpsertWithWhereUniqueWithoutReportInput | SharedPropertyUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: SharedPropertyCreateManyReportInputEnvelope
+    set?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    disconnect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    delete?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    connect?: SharedPropertyWhereUniqueInput | SharedPropertyWhereUniqueInput[]
+    update?: SharedPropertyUpdateWithWhereUniqueWithoutReportInput | SharedPropertyUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: SharedPropertyUpdateManyWithWhereWithoutReportInput | SharedPropertyUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: SharedPropertyScalarWhereInput | SharedPropertyScalarWhereInput[]
+  }
+
+  export type ReportCreateNestedOneWithoutSharedWithInput = {
+    create?: XOR<ReportCreateWithoutSharedWithInput, ReportUncheckedCreateWithoutSharedWithInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutSharedWithInput
+    connect?: ReportWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSharedPropertyInput = {
+    create?: XOR<UserCreateWithoutSharedPropertyInput, UserUncheckedCreateWithoutSharedPropertyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSharedPropertyInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ReportUpdateOneRequiredWithoutSharedWithNestedInput = {
+    create?: XOR<ReportCreateWithoutSharedWithInput, ReportUncheckedCreateWithoutSharedWithInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutSharedWithInput
+    upsert?: ReportUpsertWithoutSharedWithInput
+    connect?: ReportWhereUniqueInput
+    update?: XOR<XOR<ReportUpdateToOneWithWhereWithoutSharedWithInput, ReportUpdateWithoutSharedWithInput>, ReportUncheckedUpdateWithoutSharedWithInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSharedPropertyNestedInput = {
+    create?: XOR<UserCreateWithoutSharedPropertyInput, UserUncheckedCreateWithoutSharedPropertyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSharedPropertyInput
+    upsert?: UserUpsertWithoutSharedPropertyInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSharedPropertyInput, UserUpdateWithoutSharedPropertyInput>, UserUncheckedUpdateWithoutSharedPropertyInput>
+  }
+
+  export type UserCreateNestedOneWithoutViewsInput = {
+    create?: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutViewsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type PropertyCreateNestedOneWithoutViewsInput = {
+    create?: XOR<PropertyCreateWithoutViewsInput, PropertyUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutViewsInput
+    connect?: PropertyWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutViewsNestedInput = {
+    create?: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutViewsInput
+    upsert?: UserUpsertWithoutViewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutViewsInput, UserUpdateWithoutViewsInput>, UserUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type PropertyUpdateOneRequiredWithoutViewsNestedInput = {
+    create?: XOR<PropertyCreateWithoutViewsInput, PropertyUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutViewsInput
+    upsert?: PropertyUpsertWithoutViewsInput
+    connect?: PropertyWhereUniqueInput
+    update?: XOR<XOR<PropertyUpdateToOneWithWhereWithoutViewsInput, PropertyUpdateWithoutViewsInput>, PropertyUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type UserCreateNestedOneWithoutBookmarkInput = {
+    create?: XOR<UserCreateWithoutBookmarkInput, UserUncheckedCreateWithoutBookmarkInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBookmarkInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type PropertyCreateNestedOneWithoutBookmarksInput = {
+    create?: XOR<PropertyCreateWithoutBookmarksInput, PropertyUncheckedCreateWithoutBookmarksInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutBookmarksInput
+    connect?: PropertyWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBookmarkNestedInput = {
+    create?: XOR<UserCreateWithoutBookmarkInput, UserUncheckedCreateWithoutBookmarkInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBookmarkInput
+    upsert?: UserUpsertWithoutBookmarkInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBookmarkInput, UserUpdateWithoutBookmarkInput>, UserUncheckedUpdateWithoutBookmarkInput>
+  }
+
+  export type PropertyUpdateOneRequiredWithoutBookmarksNestedInput = {
+    create?: XOR<PropertyCreateWithoutBookmarksInput, PropertyUncheckedCreateWithoutBookmarksInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutBookmarksInput
+    upsert?: PropertyUpsertWithoutBookmarksInput
+    connect?: PropertyWhereUniqueInput
+    update?: XOR<XOR<PropertyUpdateToOneWithWhereWithoutBookmarksInput, PropertyUpdateWithoutBookmarksInput>, PropertyUncheckedUpdateWithoutBookmarksInput>
+  }
+
+  export type UserCreateNestedOneWithoutSavedSearchesInput = {
+    create?: XOR<UserCreateWithoutSavedSearchesInput, UserUncheckedCreateWithoutSavedSearchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSavedSearchesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSavedSearchesNestedInput = {
+    create?: XOR<UserCreateWithoutSavedSearchesInput, UserUncheckedCreateWithoutSavedSearchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSavedSearchesInput
+    upsert?: UserUpsertWithoutSavedSearchesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSavedSearchesInput, UserUpdateWithoutSavedSearchesInput>, UserUncheckedUpdateWithoutSavedSearchesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15909,11 +32841,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -15926,6 +32853,11 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -15983,14 +32915,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -16017,6 +32941,14 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -16080,6 +33012,133 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type RoleCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    permissions?: PermissionCreateNestedManyWithoutRolesInput
+  }
+
+  export type RoleUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    permissions?: PermissionUncheckedCreateNestedManyWithoutRolesInput
+  }
+
+  export type RoleCreateOrConnectWithoutUsersInput = {
+    where: RoleWhereUniqueInput
+    create: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
+  }
+
+  export type MemberCreateWithoutUserInput = {
+    id: string
+    role: string
+    createdAt: Date | string
+    organization: OrganizationCreateNestedOneWithoutMembersInput
+  }
+
+  export type MemberUncheckedCreateWithoutUserInput = {
+    id: string
+    organizationId: string
+    role: string
+    createdAt: Date | string
+  }
+
+  export type MemberCreateOrConnectWithoutUserInput = {
+    where: MemberWhereUniqueInput
+    create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type MemberCreateManyUserInputEnvelope = {
+    data: MemberCreateManyUserInput | MemberCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -16156,6 +33215,56 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SavedSearchCreateWithoutUserInput = {
+    id?: string
+    name: string
+    filters: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SavedSearchUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    filters: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SavedSearchCreateOrConnectWithoutUserInput = {
+    where: SavedSearchWhereUniqueInput
+    create: XOR<SavedSearchCreateWithoutUserInput, SavedSearchUncheckedCreateWithoutUserInput>
+  }
+
+  export type SavedSearchCreateManyUserInputEnvelope = {
+    data: SavedSearchCreateManyUserInput | SavedSearchCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BookmarkCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutBookmarksInput
+  }
+
+  export type BookmarkUncheckedCreateWithoutUserInput = {
+    id?: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookmarkCreateOrConnectWithoutUserInput = {
+    where: BookmarkWhereUniqueInput
+    create: XOR<BookmarkCreateWithoutUserInput, BookmarkUncheckedCreateWithoutUserInput>
+  }
+
+  export type BookmarkCreateManyUserInputEnvelope = {
+    data: BookmarkCreateManyUserInput | BookmarkCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TwoFactorCreateWithoutUserInput = {
     id: string
     secret: string
@@ -16175,30 +33284,6 @@ export namespace Prisma {
 
   export type TwoFactorCreateManyUserInputEnvelope = {
     data: TwoFactorCreateManyUserInput | TwoFactorCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type MemberCreateWithoutUserInput = {
-    id: string
-    role: string
-    createdAt: Date | string
-    organization: OrganizationCreateNestedOneWithoutMembersInput
-  }
-
-  export type MemberUncheckedCreateWithoutUserInput = {
-    id: string
-    organizationId: string
-    role: string
-    createdAt: Date | string
-  }
-
-  export type MemberCreateOrConnectWithoutUserInput = {
-    where: MemberWhereUniqueInput
-    create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
-  }
-
-  export type MemberCreateManyUserInputEnvelope = {
-    data: MemberCreateManyUserInput | MemberCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16227,6 +33312,90 @@ export namespace Prisma {
 
   export type InvitationCreateManyUserInputEnvelope = {
     data: InvitationCreateManyUserInput | InvitationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReportCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+    sharedWith?: SharedPropertyCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+    sharedWith?: SharedPropertyUncheckedCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportCreateOrConnectWithoutUserInput = {
+    where: ReportWhereUniqueInput
+    create: XOR<ReportCreateWithoutUserInput, ReportUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReportCreateManyUserInputEnvelope = {
+    data: ReportCreateManyUserInput | ReportCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SharedPropertyCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    report: ReportCreateNestedOneWithoutSharedWithInput
+  }
+
+  export type SharedPropertyUncheckedCreateWithoutUserInput = {
+    id?: string
+    reportId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SharedPropertyCreateOrConnectWithoutUserInput = {
+    where: SharedPropertyWhereUniqueInput
+    create: XOR<SharedPropertyCreateWithoutUserInput, SharedPropertyUncheckedCreateWithoutUserInput>
+  }
+
+  export type SharedPropertyCreateManyUserInputEnvelope = {
+    data: SharedPropertyCreateManyUserInput | SharedPropertyCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ViewCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutViewsInput
+  }
+
+  export type ViewUncheckedCreateWithoutUserInput = {
+    id?: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ViewCreateOrConnectWithoutUserInput = {
+    where: ViewWhereUniqueInput
+    create: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ViewCreateManyUserInputEnvelope = {
+    data: ViewCreateManyUserInput | ViewCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16262,6 +33431,59 @@ export namespace Prisma {
   export type PasskeyCreateManyUserInputEnvelope = {
     data: PasskeyCreateManyUserInput | PasskeyCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type RoleUpsertWithWhereUniqueWithoutUsersInput = {
+    where: RoleWhereUniqueInput
+    update: XOR<RoleUpdateWithoutUsersInput, RoleUncheckedUpdateWithoutUsersInput>
+    create: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
+  }
+
+  export type RoleUpdateWithWhereUniqueWithoutUsersInput = {
+    where: RoleWhereUniqueInput
+    data: XOR<RoleUpdateWithoutUsersInput, RoleUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type RoleUpdateManyWithWhereWithoutUsersInput = {
+    where: RoleScalarWhereInput
+    data: XOR<RoleUpdateManyMutationInput, RoleUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type RoleScalarWhereInput = {
+    AND?: RoleScalarWhereInput | RoleScalarWhereInput[]
+    OR?: RoleScalarWhereInput[]
+    NOT?: RoleScalarWhereInput | RoleScalarWhereInput[]
+    id?: StringFilter<"Role"> | string
+    name?: StringFilter<"Role"> | string
+    description?: StringNullableFilter<"Role"> | string | null
+    isSystem?: BoolFilter<"Role"> | boolean
+  }
+
+  export type MemberUpsertWithWhereUniqueWithoutUserInput = {
+    where: MemberWhereUniqueInput
+    update: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
+    create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type MemberUpdateWithWhereUniqueWithoutUserInput = {
+    where: MemberWhereUniqueInput
+    data: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MemberUpdateManyWithWhereWithoutUserInput = {
+    where: MemberScalarWhereInput
+    data: XOR<MemberUpdateManyMutationInput, MemberUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type MemberScalarWhereInput = {
+    AND?: MemberScalarWhereInput | MemberScalarWhereInput[]
+    OR?: MemberScalarWhereInput[]
+    NOT?: MemberScalarWhereInput | MemberScalarWhereInput[]
+    id?: StringFilter<"Member"> | string
+    organizationId?: StringFilter<"Member"> | string
+    userId?: StringFilter<"Member"> | string
+    role?: StringFilter<"Member"> | string
+    createdAt?: DateTimeFilter<"Member"> | Date | string
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -16331,6 +33553,61 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Account"> | Date | string
   }
 
+  export type SavedSearchUpsertWithWhereUniqueWithoutUserInput = {
+    where: SavedSearchWhereUniqueInput
+    update: XOR<SavedSearchUpdateWithoutUserInput, SavedSearchUncheckedUpdateWithoutUserInput>
+    create: XOR<SavedSearchCreateWithoutUserInput, SavedSearchUncheckedCreateWithoutUserInput>
+  }
+
+  export type SavedSearchUpdateWithWhereUniqueWithoutUserInput = {
+    where: SavedSearchWhereUniqueInput
+    data: XOR<SavedSearchUpdateWithoutUserInput, SavedSearchUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SavedSearchUpdateManyWithWhereWithoutUserInput = {
+    where: SavedSearchScalarWhereInput
+    data: XOR<SavedSearchUpdateManyMutationInput, SavedSearchUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SavedSearchScalarWhereInput = {
+    AND?: SavedSearchScalarWhereInput | SavedSearchScalarWhereInput[]
+    OR?: SavedSearchScalarWhereInput[]
+    NOT?: SavedSearchScalarWhereInput | SavedSearchScalarWhereInput[]
+    id?: StringFilter<"SavedSearch"> | string
+    userId?: StringFilter<"SavedSearch"> | string
+    name?: StringFilter<"SavedSearch"> | string
+    filters?: JsonFilter<"SavedSearch">
+    createdAt?: DateTimeFilter<"SavedSearch"> | Date | string
+    updatedAt?: DateTimeFilter<"SavedSearch"> | Date | string
+  }
+
+  export type BookmarkUpsertWithWhereUniqueWithoutUserInput = {
+    where: BookmarkWhereUniqueInput
+    update: XOR<BookmarkUpdateWithoutUserInput, BookmarkUncheckedUpdateWithoutUserInput>
+    create: XOR<BookmarkCreateWithoutUserInput, BookmarkUncheckedCreateWithoutUserInput>
+  }
+
+  export type BookmarkUpdateWithWhereUniqueWithoutUserInput = {
+    where: BookmarkWhereUniqueInput
+    data: XOR<BookmarkUpdateWithoutUserInput, BookmarkUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BookmarkUpdateManyWithWhereWithoutUserInput = {
+    where: BookmarkScalarWhereInput
+    data: XOR<BookmarkUpdateManyMutationInput, BookmarkUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BookmarkScalarWhereInput = {
+    AND?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
+    OR?: BookmarkScalarWhereInput[]
+    NOT?: BookmarkScalarWhereInput | BookmarkScalarWhereInput[]
+    id?: StringFilter<"Bookmark"> | string
+    userId?: StringFilter<"Bookmark"> | string
+    propertyId?: StringFilter<"Bookmark"> | string
+    createdAt?: DateTimeFilter<"Bookmark"> | Date | string
+    updatedAt?: DateTimeFilter<"Bookmark"> | Date | string
+  }
+
   export type TwoFactorUpsertWithWhereUniqueWithoutUserInput = {
     where: TwoFactorWhereUniqueInput
     update: XOR<TwoFactorUpdateWithoutUserInput, TwoFactorUncheckedUpdateWithoutUserInput>
@@ -16355,33 +33632,6 @@ export namespace Prisma {
     secret?: StringFilter<"TwoFactor"> | string
     backupCodes?: StringFilter<"TwoFactor"> | string
     userId?: StringFilter<"TwoFactor"> | string
-  }
-
-  export type MemberUpsertWithWhereUniqueWithoutUserInput = {
-    where: MemberWhereUniqueInput
-    update: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
-    create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
-  }
-
-  export type MemberUpdateWithWhereUniqueWithoutUserInput = {
-    where: MemberWhereUniqueInput
-    data: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
-  }
-
-  export type MemberUpdateManyWithWhereWithoutUserInput = {
-    where: MemberScalarWhereInput
-    data: XOR<MemberUpdateManyMutationInput, MemberUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type MemberScalarWhereInput = {
-    AND?: MemberScalarWhereInput | MemberScalarWhereInput[]
-    OR?: MemberScalarWhereInput[]
-    NOT?: MemberScalarWhereInput | MemberScalarWhereInput[]
-    id?: StringFilter<"Member"> | string
-    organizationId?: StringFilter<"Member"> | string
-    userId?: StringFilter<"Member"> | string
-    role?: StringFilter<"Member"> | string
-    createdAt?: DateTimeFilter<"Member"> | Date | string
   }
 
   export type InvitationUpsertWithWhereUniqueWithoutUserInput = {
@@ -16411,6 +33661,92 @@ export namespace Prisma {
     status?: StringFilter<"Invitation"> | string
     expiresAt?: DateTimeFilter<"Invitation"> | Date | string
     inviterId?: StringFilter<"Invitation"> | string
+  }
+
+  export type ReportUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReportWhereUniqueInput
+    update: XOR<ReportUpdateWithoutUserInput, ReportUncheckedUpdateWithoutUserInput>
+    create: XOR<ReportCreateWithoutUserInput, ReportUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReportUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReportWhereUniqueInput
+    data: XOR<ReportUpdateWithoutUserInput, ReportUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReportUpdateManyWithWhereWithoutUserInput = {
+    where: ReportScalarWhereInput
+    data: XOR<ReportUpdateManyMutationInput, ReportUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ReportScalarWhereInput = {
+    AND?: ReportScalarWhereInput | ReportScalarWhereInput[]
+    OR?: ReportScalarWhereInput[]
+    NOT?: ReportScalarWhereInput | ReportScalarWhereInput[]
+    id?: StringFilter<"Report"> | string
+    title?: StringFilter<"Report"> | string
+    description?: StringNullableFilter<"Report"> | string | null
+    userId?: StringFilter<"Report"> | string
+    createdAt?: DateTimeFilter<"Report"> | Date | string
+    updatedAt?: DateTimeFilter<"Report"> | Date | string
+    notes?: StringNullableFilter<"Report"> | string | null
+    reportType?: StringNullableFilter<"Report"> | string | null
+    exported?: BoolNullableFilter<"Report"> | boolean | null
+    exportUrl?: StringNullableFilter<"Report"> | string | null
+  }
+
+  export type SharedPropertyUpsertWithWhereUniqueWithoutUserInput = {
+    where: SharedPropertyWhereUniqueInput
+    update: XOR<SharedPropertyUpdateWithoutUserInput, SharedPropertyUncheckedUpdateWithoutUserInput>
+    create: XOR<SharedPropertyCreateWithoutUserInput, SharedPropertyUncheckedCreateWithoutUserInput>
+  }
+
+  export type SharedPropertyUpdateWithWhereUniqueWithoutUserInput = {
+    where: SharedPropertyWhereUniqueInput
+    data: XOR<SharedPropertyUpdateWithoutUserInput, SharedPropertyUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SharedPropertyUpdateManyWithWhereWithoutUserInput = {
+    where: SharedPropertyScalarWhereInput
+    data: XOR<SharedPropertyUpdateManyMutationInput, SharedPropertyUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SharedPropertyScalarWhereInput = {
+    AND?: SharedPropertyScalarWhereInput | SharedPropertyScalarWhereInput[]
+    OR?: SharedPropertyScalarWhereInput[]
+    NOT?: SharedPropertyScalarWhereInput | SharedPropertyScalarWhereInput[]
+    id?: StringFilter<"SharedProperty"> | string
+    userId?: StringFilter<"SharedProperty"> | string
+    reportId?: StringFilter<"SharedProperty"> | string
+    createdAt?: DateTimeFilter<"SharedProperty"> | Date | string
+    updatedAt?: DateTimeFilter<"SharedProperty"> | Date | string
+  }
+
+  export type ViewUpsertWithWhereUniqueWithoutUserInput = {
+    where: ViewWhereUniqueInput
+    update: XOR<ViewUpdateWithoutUserInput, ViewUncheckedUpdateWithoutUserInput>
+    create: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ViewUpdateWithWhereUniqueWithoutUserInput = {
+    where: ViewWhereUniqueInput
+    data: XOR<ViewUpdateWithoutUserInput, ViewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ViewUpdateManyWithWhereWithoutUserInput = {
+    where: ViewScalarWhereInput
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ViewScalarWhereInput = {
+    AND?: ViewScalarWhereInput | ViewScalarWhereInput[]
+    OR?: ViewScalarWhereInput[]
+    NOT?: ViewScalarWhereInput | ViewScalarWhereInput[]
+    id?: StringFilter<"View"> | string
+    userId?: StringFilter<"View"> | string
+    propertyId?: StringFilter<"View"> | string
+    createdAt?: DateTimeFilter<"View"> | Date | string
+    updatedAt?: DateTimeFilter<"View"> | Date | string
   }
 
   export type PasskeyUpsertWithWhereUniqueWithoutUserInput = {
@@ -16446,42 +33782,56 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutSessionsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
     members?: MemberCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
     members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -16503,81 +33853,109 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
     members?: MemberUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
     members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
     members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
     members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -16599,81 +33977,109 @@ export namespace Prisma {
 
   export type UserUpdateWithoutAccountsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
     members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
     members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutTwofactorsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
-    members?: MemberCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTwofactorsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -16695,41 +34101,55 @@ export namespace Prisma {
 
   export type UserUpdateWithoutTwofactorsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    members?: MemberUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTwofactorsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -16792,6 +34212,7 @@ export namespace Prisma {
     baseRole: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    permissions?: PermissionCreateNestedManyWithoutCustomRolesInput
   }
 
   export type CustomRoleUncheckedCreateWithoutOrganizationInput = {
@@ -16801,6 +34222,7 @@ export namespace Prisma {
     baseRole: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    permissions?: PermissionUncheckedCreateNestedManyWithoutCustomRolesInput
   }
 
   export type CustomRoleCreateOrConnectWithoutOrganizationInput = {
@@ -16875,22 +34297,26 @@ export namespace Prisma {
   }
 
   export type OrganizationCreateWithoutMembersInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     invitations?: InvitationCreateNestedManyWithoutOrganizationInput
     customRoles?: CustomRoleCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutMembersInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     invitations?: InvitationUncheckedCreateNestedManyWithoutOrganizationInput
     customRoles?: CustomRoleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16902,42 +34328,56 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutMembersInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMembersInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -16963,6 +34403,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     invitations?: InvitationUpdateManyWithoutOrganizationNestedInput
     customRoles?: CustomRoleUpdateManyWithoutOrganizationNestedInput
@@ -16974,6 +34416,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     invitations?: InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
     customRoles?: CustomRoleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16992,61 +34436,79 @@ export namespace Prisma {
 
   export type UserUpdateWithoutMembersInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembersInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrganizationCreateWithoutInvitationsInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     members?: MemberCreateNestedManyWithoutOrganizationInput
     customRoles?: CustomRoleCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutInvitationsInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     members?: MemberUncheckedCreateNestedManyWithoutOrganizationInput
     customRoles?: CustomRoleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17058,42 +34520,56 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutInvitationsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorCreateNestedManyWithoutUserInput
-    members?: MemberCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvitationsInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
-    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -17119,6 +34595,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     members?: MemberUpdateManyWithoutOrganizationNestedInput
     customRoles?: CustomRoleUpdateManyWithoutOrganizationNestedInput
@@ -17130,6 +34608,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     members?: MemberUncheckedUpdateManyWithoutOrganizationNestedInput
     customRoles?: CustomRoleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17148,61 +34628,79 @@ export namespace Prisma {
 
   export type UserUpdateWithoutInvitationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
-    members?: MemberUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvitationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
-    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrganizationCreateWithoutCustomRolesInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     members?: MemberCreateNestedManyWithoutOrganizationInput
     invitations?: InvitationCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutCustomRolesInput = {
-    id: string
+    id?: string
     name: string
     slug?: string | null
     logo?: string | null
-    createdAt: Date | string
+    createdAt?: Date | string
+    status?: string
+    isSuperAdmin?: boolean
     metadata?: string | null
     members?: MemberUncheckedCreateNestedManyWithoutOrganizationInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17211,6 +34709,27 @@ export namespace Prisma {
   export type OrganizationCreateOrConnectWithoutCustomRolesInput = {
     where: OrganizationWhereUniqueInput
     create: XOR<OrganizationCreateWithoutCustomRolesInput, OrganizationUncheckedCreateWithoutCustomRolesInput>
+  }
+
+  export type PermissionCreateWithoutCustomRolesInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+    roles?: RoleCreateNestedManyWithoutPermissionsInput
+  }
+
+  export type PermissionUncheckedCreateWithoutCustomRolesInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+    roles?: RoleUncheckedCreateNestedManyWithoutPermissionsInput
+  }
+
+  export type PermissionCreateOrConnectWithoutCustomRolesInput = {
+    where: PermissionWhereUniqueInput
+    create: XOR<PermissionCreateWithoutCustomRolesInput, PermissionUncheckedCreateWithoutCustomRolesInput>
   }
 
   export type OrganizationUpsertWithoutCustomRolesInput = {
@@ -17230,6 +34749,8 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     members?: MemberUpdateManyWithoutOrganizationNestedInput
     invitations?: InvitationUpdateManyWithoutOrganizationNestedInput
@@ -17241,49 +34762,91 @@ export namespace Prisma {
     slug?: NullableStringFieldUpdateOperationsInput | string | null
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    isSuperAdmin?: BoolFieldUpdateOperationsInput | boolean
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     members?: MemberUncheckedUpdateManyWithoutOrganizationNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
+  export type PermissionUpsertWithWhereUniqueWithoutCustomRolesInput = {
+    where: PermissionWhereUniqueInput
+    update: XOR<PermissionUpdateWithoutCustomRolesInput, PermissionUncheckedUpdateWithoutCustomRolesInput>
+    create: XOR<PermissionCreateWithoutCustomRolesInput, PermissionUncheckedCreateWithoutCustomRolesInput>
+  }
+
+  export type PermissionUpdateWithWhereUniqueWithoutCustomRolesInput = {
+    where: PermissionWhereUniqueInput
+    data: XOR<PermissionUpdateWithoutCustomRolesInput, PermissionUncheckedUpdateWithoutCustomRolesInput>
+  }
+
+  export type PermissionUpdateManyWithWhereWithoutCustomRolesInput = {
+    where: PermissionScalarWhereInput
+    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyWithoutCustomRolesInput>
+  }
+
+  export type PermissionScalarWhereInput = {
+    AND?: PermissionScalarWhereInput | PermissionScalarWhereInput[]
+    OR?: PermissionScalarWhereInput[]
+    NOT?: PermissionScalarWhereInput | PermissionScalarWhereInput[]
+    id?: StringFilter<"Permission"> | string
+    name?: StringFilter<"Permission"> | string
+    category?: StringFilter<"Permission"> | string
+    description?: StringNullableFilter<"Permission"> | string | null
+  }
+
   export type UserCreateWithoutPasskeysInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorCreateNestedManyWithoutUserInput
-    members?: MemberCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPasskeysInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
     image?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     twoFactorEnabled?: boolean | null
-    role?: string | null
     banned?: boolean | null
     banReason?: string | null
     banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
-    members?: MemberUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPasskeysInput = {
@@ -17304,42 +34867,1556 @@ export namespace Prisma {
 
   export type UserUpdateWithoutPasskeysInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
-    members?: MemberUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPasskeysInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
     banReason?: NullableStringFieldUpdateOperationsInput | string | null
     banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
-    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type RoleCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    users?: UserCreateNestedManyWithoutRolesInput
+  }
+
+  export type RoleUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    users?: UserUncheckedCreateNestedManyWithoutRolesInput
+  }
+
+  export type RoleCreateOrConnectWithoutPermissionsInput = {
+    where: RoleWhereUniqueInput
+    create: XOR<RoleCreateWithoutPermissionsInput, RoleUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type CustomRoleCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    baseRole: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutCustomRolesInput
+  }
+
+  export type CustomRoleUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    organizationId: string
+    baseRole: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CustomRoleCreateOrConnectWithoutPermissionsInput = {
+    where: CustomRoleWhereUniqueInput
+    create: XOR<CustomRoleCreateWithoutPermissionsInput, CustomRoleUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type RoleUpsertWithWhereUniqueWithoutPermissionsInput = {
+    where: RoleWhereUniqueInput
+    update: XOR<RoleUpdateWithoutPermissionsInput, RoleUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<RoleCreateWithoutPermissionsInput, RoleUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type RoleUpdateWithWhereUniqueWithoutPermissionsInput = {
+    where: RoleWhereUniqueInput
+    data: XOR<RoleUpdateWithoutPermissionsInput, RoleUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type RoleUpdateManyWithWhereWithoutPermissionsInput = {
+    where: RoleScalarWhereInput
+    data: XOR<RoleUpdateManyMutationInput, RoleUncheckedUpdateManyWithoutPermissionsInput>
+  }
+
+  export type CustomRoleUpsertWithWhereUniqueWithoutPermissionsInput = {
+    where: CustomRoleWhereUniqueInput
+    update: XOR<CustomRoleUpdateWithoutPermissionsInput, CustomRoleUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<CustomRoleCreateWithoutPermissionsInput, CustomRoleUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type CustomRoleUpdateWithWhereUniqueWithoutPermissionsInput = {
+    where: CustomRoleWhereUniqueInput
+    data: XOR<CustomRoleUpdateWithoutPermissionsInput, CustomRoleUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type CustomRoleUpdateManyWithWhereWithoutPermissionsInput = {
+    where: CustomRoleScalarWhereInput
+    data: XOR<CustomRoleUpdateManyMutationInput, CustomRoleUncheckedUpdateManyWithoutPermissionsInput>
+  }
+
+  export type PermissionCreateWithoutRolesInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+    customRoles?: CustomRoleCreateNestedManyWithoutPermissionsInput
+  }
+
+  export type PermissionUncheckedCreateWithoutRolesInput = {
+    id?: string
+    name: string
+    category: string
+    description?: string | null
+    customRoles?: CustomRoleUncheckedCreateNestedManyWithoutPermissionsInput
+  }
+
+  export type PermissionCreateOrConnectWithoutRolesInput = {
+    where: PermissionWhereUniqueInput
+    create: XOR<PermissionCreateWithoutRolesInput, PermissionUncheckedCreateWithoutRolesInput>
+  }
+
+  export type UserCreateWithoutRolesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRolesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRolesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRolesInput, UserUncheckedCreateWithoutRolesInput>
+  }
+
+  export type PermissionUpsertWithWhereUniqueWithoutRolesInput = {
+    where: PermissionWhereUniqueInput
+    update: XOR<PermissionUpdateWithoutRolesInput, PermissionUncheckedUpdateWithoutRolesInput>
+    create: XOR<PermissionCreateWithoutRolesInput, PermissionUncheckedCreateWithoutRolesInput>
+  }
+
+  export type PermissionUpdateWithWhereUniqueWithoutRolesInput = {
+    where: PermissionWhereUniqueInput
+    data: XOR<PermissionUpdateWithoutRolesInput, PermissionUncheckedUpdateWithoutRolesInput>
+  }
+
+  export type PermissionUpdateManyWithWhereWithoutRolesInput = {
+    where: PermissionScalarWhereInput
+    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyWithoutRolesInput>
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutRolesInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutRolesInput, UserUncheckedUpdateWithoutRolesInput>
+    create: XOR<UserCreateWithoutRolesInput, UserUncheckedCreateWithoutRolesInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutRolesInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutRolesInput, UserUncheckedUpdateWithoutRolesInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutRolesInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutRolesInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
+    emailVerified?: BoolFilter<"User"> | boolean
+    image?: StringNullableFilter<"User"> | string | null
+    password?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    twoFactorEnabled?: BoolNullableFilter<"User"> | boolean | null
+    banned?: BoolNullableFilter<"User"> | boolean | null
+    banReason?: StringNullableFilter<"User"> | string | null
+    banExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    currentRole?: StringFilter<"User"> | string
+  }
+
+  export type PropertyOwnerCreateWithoutPropertyInput = {
+    id?: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: OwnerCreateNestedOneWithoutPropertiesInput
+  }
+
+  export type PropertyOwnerUncheckedCreateWithoutPropertyInput = {
+    id?: string
+    ownerId: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyOwnerCreateOrConnectWithoutPropertyInput = {
+    where: PropertyOwnerWhereUniqueInput
+    create: XOR<PropertyOwnerCreateWithoutPropertyInput, PropertyOwnerUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type PropertyOwnerCreateManyPropertyInputEnvelope = {
+    data: PropertyOwnerCreateManyPropertyInput | PropertyOwnerCreateManyPropertyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BookmarkCreateWithoutPropertyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBookmarkInput
+  }
+
+  export type BookmarkUncheckedCreateWithoutPropertyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookmarkCreateOrConnectWithoutPropertyInput = {
+    where: BookmarkWhereUniqueInput
+    create: XOR<BookmarkCreateWithoutPropertyInput, BookmarkUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type BookmarkCreateManyPropertyInputEnvelope = {
+    data: BookmarkCreateManyPropertyInput | BookmarkCreateManyPropertyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ViewCreateWithoutPropertyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutViewsInput
+  }
+
+  export type ViewUncheckedCreateWithoutPropertyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ViewCreateOrConnectWithoutPropertyInput = {
+    where: ViewWhereUniqueInput
+    create: XOR<ViewCreateWithoutPropertyInput, ViewUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type ViewCreateManyPropertyInputEnvelope = {
+    data: ViewCreateManyPropertyInput | ViewCreateManyPropertyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PropertyOwnerUpsertWithWhereUniqueWithoutPropertyInput = {
+    where: PropertyOwnerWhereUniqueInput
+    update: XOR<PropertyOwnerUpdateWithoutPropertyInput, PropertyOwnerUncheckedUpdateWithoutPropertyInput>
+    create: XOR<PropertyOwnerCreateWithoutPropertyInput, PropertyOwnerUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type PropertyOwnerUpdateWithWhereUniqueWithoutPropertyInput = {
+    where: PropertyOwnerWhereUniqueInput
+    data: XOR<PropertyOwnerUpdateWithoutPropertyInput, PropertyOwnerUncheckedUpdateWithoutPropertyInput>
+  }
+
+  export type PropertyOwnerUpdateManyWithWhereWithoutPropertyInput = {
+    where: PropertyOwnerScalarWhereInput
+    data: XOR<PropertyOwnerUpdateManyMutationInput, PropertyOwnerUncheckedUpdateManyWithoutPropertyInput>
+  }
+
+  export type PropertyOwnerScalarWhereInput = {
+    AND?: PropertyOwnerScalarWhereInput | PropertyOwnerScalarWhereInput[]
+    OR?: PropertyOwnerScalarWhereInput[]
+    NOT?: PropertyOwnerScalarWhereInput | PropertyOwnerScalarWhereInput[]
+    id?: StringFilter<"PropertyOwner"> | string
+    propertyId?: StringFilter<"PropertyOwner"> | string
+    ownerId?: StringFilter<"PropertyOwner"> | string
+    ownerType?: StringFilter<"PropertyOwner"> | string
+    createdAt?: DateTimeFilter<"PropertyOwner"> | Date | string
+    updatedAt?: DateTimeFilter<"PropertyOwner"> | Date | string
+  }
+
+  export type BookmarkUpsertWithWhereUniqueWithoutPropertyInput = {
+    where: BookmarkWhereUniqueInput
+    update: XOR<BookmarkUpdateWithoutPropertyInput, BookmarkUncheckedUpdateWithoutPropertyInput>
+    create: XOR<BookmarkCreateWithoutPropertyInput, BookmarkUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type BookmarkUpdateWithWhereUniqueWithoutPropertyInput = {
+    where: BookmarkWhereUniqueInput
+    data: XOR<BookmarkUpdateWithoutPropertyInput, BookmarkUncheckedUpdateWithoutPropertyInput>
+  }
+
+  export type BookmarkUpdateManyWithWhereWithoutPropertyInput = {
+    where: BookmarkScalarWhereInput
+    data: XOR<BookmarkUpdateManyMutationInput, BookmarkUncheckedUpdateManyWithoutPropertyInput>
+  }
+
+  export type ViewUpsertWithWhereUniqueWithoutPropertyInput = {
+    where: ViewWhereUniqueInput
+    update: XOR<ViewUpdateWithoutPropertyInput, ViewUncheckedUpdateWithoutPropertyInput>
+    create: XOR<ViewCreateWithoutPropertyInput, ViewUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type ViewUpdateWithWhereUniqueWithoutPropertyInput = {
+    where: ViewWhereUniqueInput
+    data: XOR<ViewUpdateWithoutPropertyInput, ViewUncheckedUpdateWithoutPropertyInput>
+  }
+
+  export type ViewUpdateManyWithWhereWithoutPropertyInput = {
+    where: ViewScalarWhereInput
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyWithoutPropertyInput>
+  }
+
+  export type PropertyOwnerCreateWithoutOwnerInput = {
+    id?: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutOwnersInput
+  }
+
+  export type PropertyOwnerUncheckedCreateWithoutOwnerInput = {
+    id?: string
+    propertyId: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyOwnerCreateOrConnectWithoutOwnerInput = {
+    where: PropertyOwnerWhereUniqueInput
+    create: XOR<PropertyOwnerCreateWithoutOwnerInput, PropertyOwnerUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type PropertyOwnerCreateManyOwnerInputEnvelope = {
+    data: PropertyOwnerCreateManyOwnerInput | PropertyOwnerCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PropertyOwnerUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: PropertyOwnerWhereUniqueInput
+    update: XOR<PropertyOwnerUpdateWithoutOwnerInput, PropertyOwnerUncheckedUpdateWithoutOwnerInput>
+    create: XOR<PropertyOwnerCreateWithoutOwnerInput, PropertyOwnerUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type PropertyOwnerUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: PropertyOwnerWhereUniqueInput
+    data: XOR<PropertyOwnerUpdateWithoutOwnerInput, PropertyOwnerUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type PropertyOwnerUpdateManyWithWhereWithoutOwnerInput = {
+    where: PropertyOwnerScalarWhereInput
+    data: XOR<PropertyOwnerUpdateManyMutationInput, PropertyOwnerUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type PropertyCreateWithoutOwnersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Bookmarks?: BookmarkCreateNestedManyWithoutPropertyInput
+    views?: ViewCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyUncheckedCreateWithoutOwnersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Bookmarks?: BookmarkUncheckedCreateNestedManyWithoutPropertyInput
+    views?: ViewUncheckedCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyCreateOrConnectWithoutOwnersInput = {
+    where: PropertyWhereUniqueInput
+    create: XOR<PropertyCreateWithoutOwnersInput, PropertyUncheckedCreateWithoutOwnersInput>
+  }
+
+  export type OwnerCreateWithoutPropertiesInput = {
+    id?: string
+    name: string
+    email?: string | null
+    phoneNumber?: string | null
+    stocksSecurities?: number
+    businessInterests?: number
+    cashSavings?: number
+    otherAssets?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OwnerUncheckedCreateWithoutPropertiesInput = {
+    id?: string
+    name: string
+    email?: string | null
+    phoneNumber?: string | null
+    stocksSecurities?: number
+    businessInterests?: number
+    cashSavings?: number
+    otherAssets?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OwnerCreateOrConnectWithoutPropertiesInput = {
+    where: OwnerWhereUniqueInput
+    create: XOR<OwnerCreateWithoutPropertiesInput, OwnerUncheckedCreateWithoutPropertiesInput>
+  }
+
+  export type PropertyUpsertWithoutOwnersInput = {
+    update: XOR<PropertyUpdateWithoutOwnersInput, PropertyUncheckedUpdateWithoutOwnersInput>
+    create: XOR<PropertyCreateWithoutOwnersInput, PropertyUncheckedCreateWithoutOwnersInput>
+    where?: PropertyWhereInput
+  }
+
+  export type PropertyUpdateToOneWithWhereWithoutOwnersInput = {
+    where?: PropertyWhereInput
+    data: XOR<PropertyUpdateWithoutOwnersInput, PropertyUncheckedUpdateWithoutOwnersInput>
+  }
+
+  export type PropertyUpdateWithoutOwnersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Bookmarks?: BookmarkUpdateManyWithoutPropertyNestedInput
+    views?: ViewUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type PropertyUncheckedUpdateWithoutOwnersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Bookmarks?: BookmarkUncheckedUpdateManyWithoutPropertyNestedInput
+    views?: ViewUncheckedUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type OwnerUpsertWithoutPropertiesInput = {
+    update: XOR<OwnerUpdateWithoutPropertiesInput, OwnerUncheckedUpdateWithoutPropertiesInput>
+    create: XOR<OwnerCreateWithoutPropertiesInput, OwnerUncheckedCreateWithoutPropertiesInput>
+    where?: OwnerWhereInput
+  }
+
+  export type OwnerUpdateToOneWithWhereWithoutPropertiesInput = {
+    where?: OwnerWhereInput
+    data: XOR<OwnerUpdateWithoutPropertiesInput, OwnerUncheckedUpdateWithoutPropertiesInput>
+  }
+
+  export type OwnerUpdateWithoutPropertiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    stocksSecurities?: FloatFieldUpdateOperationsInput | number
+    businessInterests?: FloatFieldUpdateOperationsInput | number
+    cashSavings?: FloatFieldUpdateOperationsInput | number
+    otherAssets?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OwnerUncheckedUpdateWithoutPropertiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    stocksSecurities?: FloatFieldUpdateOperationsInput | number
+    businessInterests?: FloatFieldUpdateOperationsInput | number
+    cashSavings?: FloatFieldUpdateOperationsInput | number
+    otherAssets?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutReportsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReportsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+  }
+
+  export type SharedPropertyCreateWithoutReportInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSharedPropertyInput
+  }
+
+  export type SharedPropertyUncheckedCreateWithoutReportInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SharedPropertyCreateOrConnectWithoutReportInput = {
+    where: SharedPropertyWhereUniqueInput
+    create: XOR<SharedPropertyCreateWithoutReportInput, SharedPropertyUncheckedCreateWithoutReportInput>
+  }
+
+  export type SharedPropertyCreateManyReportInputEnvelope = {
+    data: SharedPropertyCreateManyReportInput | SharedPropertyCreateManyReportInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutReportsInput = {
+    update: XOR<UserUpdateWithoutReportsInput, UserUncheckedUpdateWithoutReportsInput>
+    create: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReportsInput, UserUncheckedUpdateWithoutReportsInput>
+  }
+
+  export type UserUpdateWithoutReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SharedPropertyUpsertWithWhereUniqueWithoutReportInput = {
+    where: SharedPropertyWhereUniqueInput
+    update: XOR<SharedPropertyUpdateWithoutReportInput, SharedPropertyUncheckedUpdateWithoutReportInput>
+    create: XOR<SharedPropertyCreateWithoutReportInput, SharedPropertyUncheckedCreateWithoutReportInput>
+  }
+
+  export type SharedPropertyUpdateWithWhereUniqueWithoutReportInput = {
+    where: SharedPropertyWhereUniqueInput
+    data: XOR<SharedPropertyUpdateWithoutReportInput, SharedPropertyUncheckedUpdateWithoutReportInput>
+  }
+
+  export type SharedPropertyUpdateManyWithWhereWithoutReportInput = {
+    where: SharedPropertyScalarWhereInput
+    data: XOR<SharedPropertyUpdateManyMutationInput, SharedPropertyUncheckedUpdateManyWithoutReportInput>
+  }
+
+  export type ReportCreateWithoutSharedWithInput = {
+    id?: string
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+    user: UserCreateNestedOneWithoutReportsInput
+  }
+
+  export type ReportUncheckedCreateWithoutSharedWithInput = {
+    id?: string
+    title: string
+    description?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+  }
+
+  export type ReportCreateOrConnectWithoutSharedWithInput = {
+    where: ReportWhereUniqueInput
+    create: XOR<ReportCreateWithoutSharedWithInput, ReportUncheckedCreateWithoutSharedWithInput>
+  }
+
+  export type UserCreateWithoutSharedPropertyInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSharedPropertyInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSharedPropertyInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSharedPropertyInput, UserUncheckedCreateWithoutSharedPropertyInput>
+  }
+
+  export type ReportUpsertWithoutSharedWithInput = {
+    update: XOR<ReportUpdateWithoutSharedWithInput, ReportUncheckedUpdateWithoutSharedWithInput>
+    create: XOR<ReportCreateWithoutSharedWithInput, ReportUncheckedCreateWithoutSharedWithInput>
+    where?: ReportWhereInput
+  }
+
+  export type ReportUpdateToOneWithWhereWithoutSharedWithInput = {
+    where?: ReportWhereInput
+    data: XOR<ReportUpdateWithoutSharedWithInput, ReportUncheckedUpdateWithoutSharedWithInput>
+  }
+
+  export type ReportUpdateWithoutSharedWithInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutReportsNestedInput
+  }
+
+  export type ReportUncheckedUpdateWithoutSharedWithInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUpsertWithoutSharedPropertyInput = {
+    update: XOR<UserUpdateWithoutSharedPropertyInput, UserUncheckedUpdateWithoutSharedPropertyInput>
+    create: XOR<UserCreateWithoutSharedPropertyInput, UserUncheckedCreateWithoutSharedPropertyInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSharedPropertyInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSharedPropertyInput, UserUncheckedUpdateWithoutSharedPropertyInput>
+  }
+
+  export type UserUpdateWithoutSharedPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSharedPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutViewsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutViewsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutViewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+  }
+
+  export type PropertyCreateWithoutViewsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owners?: PropertyOwnerCreateNestedManyWithoutPropertyInput
+    Bookmarks?: BookmarkCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyUncheckedCreateWithoutViewsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owners?: PropertyOwnerUncheckedCreateNestedManyWithoutPropertyInput
+    Bookmarks?: BookmarkUncheckedCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyCreateOrConnectWithoutViewsInput = {
+    where: PropertyWhereUniqueInput
+    create: XOR<PropertyCreateWithoutViewsInput, PropertyUncheckedCreateWithoutViewsInput>
+  }
+
+  export type UserUpsertWithoutViewsInput = {
+    update: XOR<UserUpdateWithoutViewsInput, UserUncheckedUpdateWithoutViewsInput>
+    create: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutViewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutViewsInput, UserUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type UserUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PropertyUpsertWithoutViewsInput = {
+    update: XOR<PropertyUpdateWithoutViewsInput, PropertyUncheckedUpdateWithoutViewsInput>
+    create: XOR<PropertyCreateWithoutViewsInput, PropertyUncheckedCreateWithoutViewsInput>
+    where?: PropertyWhereInput
+  }
+
+  export type PropertyUpdateToOneWithWhereWithoutViewsInput = {
+    where?: PropertyWhereInput
+    data: XOR<PropertyUpdateWithoutViewsInput, PropertyUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type PropertyUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owners?: PropertyOwnerUpdateManyWithoutPropertyNestedInput
+    Bookmarks?: BookmarkUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type PropertyUncheckedUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owners?: PropertyOwnerUncheckedUpdateManyWithoutPropertyNestedInput
+    Bookmarks?: BookmarkUncheckedUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type UserCreateWithoutBookmarkInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBookmarkInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    savedSearches?: SavedSearchUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBookmarkInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBookmarkInput, UserUncheckedCreateWithoutBookmarkInput>
+  }
+
+  export type PropertyCreateWithoutBookmarksInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owners?: PropertyOwnerCreateNestedManyWithoutPropertyInput
+    views?: ViewCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyUncheckedCreateWithoutBookmarksInput = {
+    id?: string
+    name: string
+    description?: string | null
+    address: string
+    city: string
+    state: string
+    country: string
+    zipCode: string
+    price: number
+    images?: PropertyCreateimagesInput | string[]
+    area: number
+    bed?: number | null
+    bath?: number | null
+    type: string
+    confidenceScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owners?: PropertyOwnerUncheckedCreateNestedManyWithoutPropertyInput
+    views?: ViewUncheckedCreateNestedManyWithoutPropertyInput
+  }
+
+  export type PropertyCreateOrConnectWithoutBookmarksInput = {
+    where: PropertyWhereUniqueInput
+    create: XOR<PropertyCreateWithoutBookmarksInput, PropertyUncheckedCreateWithoutBookmarksInput>
+  }
+
+  export type UserUpsertWithoutBookmarkInput = {
+    update: XOR<UserUpdateWithoutBookmarkInput, UserUncheckedUpdateWithoutBookmarkInput>
+    create: XOR<UserCreateWithoutBookmarkInput, UserUncheckedCreateWithoutBookmarkInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBookmarkInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBookmarkInput, UserUncheckedUpdateWithoutBookmarkInput>
+  }
+
+  export type UserUpdateWithoutBookmarkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBookmarkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PropertyUpsertWithoutBookmarksInput = {
+    update: XOR<PropertyUpdateWithoutBookmarksInput, PropertyUncheckedUpdateWithoutBookmarksInput>
+    create: XOR<PropertyCreateWithoutBookmarksInput, PropertyUncheckedCreateWithoutBookmarksInput>
+    where?: PropertyWhereInput
+  }
+
+  export type PropertyUpdateToOneWithWhereWithoutBookmarksInput = {
+    where?: PropertyWhereInput
+    data: XOR<PropertyUpdateWithoutBookmarksInput, PropertyUncheckedUpdateWithoutBookmarksInput>
+  }
+
+  export type PropertyUpdateWithoutBookmarksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owners?: PropertyOwnerUpdateManyWithoutPropertyNestedInput
+    views?: ViewUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type PropertyUncheckedUpdateWithoutBookmarksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    zipCode?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    images?: PropertyUpdateimagesInput | string[]
+    area?: FloatFieldUpdateOperationsInput | number
+    bed?: NullableIntFieldUpdateOperationsInput | number | null
+    bath?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    confidenceScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owners?: PropertyOwnerUncheckedUpdateManyWithoutPropertyNestedInput
+    views?: ViewUncheckedUpdateManyWithoutPropertyNestedInput
+  }
+
+  export type UserCreateWithoutSavedSearchesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutUserInput
+    Reports?: ReportCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSavedSearchesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean | null
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    currentRole?: string
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Bookmark?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    twofactors?: TwoFactorUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutUserInput
+    Reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    SharedProperty?: SharedPropertyUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSavedSearchesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSavedSearchesInput, UserUncheckedCreateWithoutSavedSearchesInput>
+  }
+
+  export type UserUpsertWithoutSavedSearchesInput = {
+    update: XOR<UserUpdateWithoutSavedSearchesInput, UserUncheckedUpdateWithoutSavedSearchesInput>
+    create: XOR<UserCreateWithoutSavedSearchesInput, UserUncheckedCreateWithoutSavedSearchesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSavedSearchesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSavedSearchesInput, UserUncheckedUpdateWithoutSavedSearchesInput>
+  }
+
+  export type UserUpdateWithoutSavedSearchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSavedSearchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type MemberCreateManyUserInput = {
+    id: string
+    organizationId: string
+    role: string
+    createdAt: Date | string
   }
 
   export type SessionCreateManyUserInput = {
@@ -17369,17 +36446,25 @@ export namespace Prisma {
     updatedAt: Date | string
   }
 
+  export type SavedSearchCreateManyUserInput = {
+    id?: string
+    name: string
+    filters: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookmarkCreateManyUserInput = {
+    id?: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type TwoFactorCreateManyUserInput = {
     id: string
     secret: string
     backupCodes: string
-  }
-
-  export type MemberCreateManyUserInput = {
-    id: string
-    organizationId: string
-    role: string
-    createdAt: Date | string
   }
 
   export type InvitationCreateManyUserInput = {
@@ -17389,6 +36474,32 @@ export namespace Prisma {
     role?: string | null
     status: string
     expiresAt: Date | string
+  }
+
+  export type ReportCreateManyUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: string | null
+    reportType?: string | null
+    exported?: boolean | null
+    exportUrl?: string | null
+  }
+
+  export type SharedPropertyCreateManyUserInput = {
+    id?: string
+    reportId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ViewCreateManyUserInput = {
+    id?: string
+    propertyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PasskeyCreateManyUserInput = {
@@ -17401,6 +36512,50 @@ export namespace Prisma {
     backedUp: boolean
     transports?: string | null
     createdAt?: Date | string | null
+  }
+
+  export type RoleUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermissionUpdateManyWithoutRolesNestedInput
+  }
+
+  export type RoleUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermissionUncheckedUpdateManyWithoutRolesNestedInput
+  }
+
+  export type RoleUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type MemberUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type MemberUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MemberUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -17484,6 +36639,51 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SavedSearchUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SavedSearchUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SavedSearchUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filters?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutBookmarksNestedInput
+  }
+
+  export type BookmarkUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TwoFactorUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     secret?: StringFieldUpdateOperationsInput | string
@@ -17500,27 +36700,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     secret?: StringFieldUpdateOperationsInput | string
     backupCodes?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MemberUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    organization?: OrganizationUpdateOneRequiredWithoutMembersNestedInput
-  }
-
-  export type MemberUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MemberUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    organizationId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type InvitationUpdateWithoutUserInput = {
@@ -17548,6 +36727,86 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedWith?: SharedPropertyUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedWith?: SharedPropertyUncheckedUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    reportType?: NullableStringFieldUpdateOperationsInput | string | null
+    exported?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    exportUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SharedPropertyUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    report?: ReportUpdateOneRequiredWithoutSharedWithNestedInput
+  }
+
+  export type SharedPropertyUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SharedPropertyUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutViewsNestedInput
+  }
+
+  export type ViewUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PasskeyUpdateWithoutUserInput = {
@@ -17666,6 +36925,7 @@ export namespace Prisma {
     baseRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: PermissionUpdateManyWithoutCustomRolesNestedInput
   }
 
   export type CustomRoleUncheckedUpdateWithoutOrganizationInput = {
@@ -17675,6 +36935,7 @@ export namespace Prisma {
     baseRole?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: PermissionUncheckedUpdateManyWithoutCustomRolesNestedInput
   }
 
   export type CustomRoleUncheckedUpdateManyWithoutOrganizationInput = {
@@ -17682,6 +36943,323 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     baseRole?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PermissionUpdateWithoutCustomRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: RoleUpdateManyWithoutPermissionsNestedInput
+  }
+
+  export type PermissionUncheckedUpdateWithoutCustomRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: RoleUncheckedUpdateManyWithoutPermissionsNestedInput
+  }
+
+  export type PermissionUncheckedUpdateManyWithoutCustomRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type RoleUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    users?: UserUpdateManyWithoutRolesNestedInput
+  }
+
+  export type RoleUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    users?: UserUncheckedUpdateManyWithoutRolesNestedInput
+  }
+
+  export type RoleUncheckedUpdateManyWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type CustomRoleUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    baseRole?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutCustomRolesNestedInput
+  }
+
+  export type CustomRoleUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationId?: StringFieldUpdateOperationsInput | string
+    baseRole?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomRoleUncheckedUpdateManyWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationId?: StringFieldUpdateOperationsInput | string
+    baseRole?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PermissionUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    customRoles?: CustomRoleUpdateManyWithoutPermissionsNestedInput
+  }
+
+  export type PermissionUncheckedUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    customRoles?: CustomRoleUncheckedUpdateManyWithoutPermissionsNestedInput
+  }
+
+  export type PermissionUncheckedUpdateManyWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    members?: MemberUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutUserNestedInput
+    Reports?: ReportUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    savedSearches?: SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+    Bookmark?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    twofactors?: TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutUserNestedInput
+    Reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    SharedProperty?: SharedPropertyUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRole?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PropertyOwnerCreateManyPropertyInput = {
+    id?: string
+    ownerId: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookmarkCreateManyPropertyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ViewCreateManyPropertyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyOwnerUpdateWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: OwnerUpdateOneRequiredWithoutPropertiesNestedInput
+  }
+
+  export type PropertyOwnerUncheckedUpdateWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyOwnerUncheckedUpdateManyWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkUpdateWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBookmarkNestedInput
+  }
+
+  export type BookmarkUncheckedUpdateWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookmarkUncheckedUpdateManyWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewUpdateWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutViewsNestedInput
+  }
+
+  export type ViewUncheckedUpdateWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ViewUncheckedUpdateManyWithoutPropertyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyOwnerCreateManyOwnerInput = {
+    id?: string
+    propertyId: string
+    ownerType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PropertyOwnerUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutOwnersNestedInput
+  }
+
+  export type PropertyOwnerUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PropertyOwnerUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    propertyId?: StringFieldUpdateOperationsInput | string
+    ownerType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SharedPropertyCreateManyReportInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SharedPropertyUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSharedPropertyNestedInput
+  }
+
+  export type SharedPropertyUncheckedUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SharedPropertyUncheckedUpdateManyWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

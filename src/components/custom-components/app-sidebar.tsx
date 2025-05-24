@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
 import {
   Users,
   Home,
@@ -16,6 +17,7 @@ import {
   ChevronRight,
   Bell,
   BarChart2,
+  Shield,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -23,99 +25,214 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import Link from "next/link"
 
-// Navigation items grouped by category
-const navigationItems = [
-  {
-    title: "Main",
-    items: [
-      {
-        title: "Home",
-        url: "/app",
-        icon: Home,
-        badge: null,
-      },
-      {
-        title: "Trending Listings",
-        url: "/app/trending",
-        icon: TrendingUp,
-        badge: {
-          content: "New",
-          variant: "default" as const,
+// Navigation items grouped by role
+const navigationItems = {
+  SUPER_ADMIN: [
+    {
+      title: "Main",
+      items: [
+        {
+          title: "Home",
+          url: "/app/super-admin",
+          icon: Home,
+          badge: null,
         },
-      },
-    ],
-  },
-  {
-    title: "Management",
-    items: [
-      {
-        title: "Employees",
-        url: "/app/employees",
-        icon: Users,
-        badge: null,
-      },
-      {
-        title: "Companies",
-        url: "/app/companies",
-        icon: Building,
-        badge: {
-          content: "3",
-          variant: "outline" as const,
+        {
+          title: "Companies",
+          url: "/app/super-admin/companies",
+          icon: Building,
+          badge: null,
         },
-      },
-      {
-        title: "Reports",
-        url: "/app/reports",
-        icon: PieChart,
-        badge: null,
-      },
-      {
-        title: "Wealth Analysis",
-        url: "/app/wealth-analysis",
-        icon: BarChart2,
-        badge: null,
-      },
-    ],
-  },
-  {
-    title: "Tools",
-    items: [
-      {
-        title: "AI Assistant",
-        url: "/app/ai-assistant",
-        icon: Bot,
-        badge: {
-          content: "Beta",
-          variant: "secondary" as const,
+        {
+          title: "Reports",
+          url: "/app/super-admin/reports",
+          icon: PieChart,
+          badge: null,
         },
-      },
-    ],
-  },
-]
+      ],
+    },
+    {
+      title: "Management",
+      items: [
+        {
+          title: "System Settings",
+          url: "/app/super-admin/system-settings",
+          icon: Settings,
+          badge: null,
+        },
+      ],
+    },
+    {
+      title: "Tools",
+      items: [
+        {
+          title: "AI Assistant",
+          url: "/app/super-admin/ai-assistant",
+          icon: Bot,
+          badge: {
+            content: "Beta",
+            variant: "secondary" as const,
+          },
+        },
+      ],
+    },
+  ],
+  COMPANY_ADMIN: [
+    {
+      title: "Main",
+      items: [
+        {
+          title: "Home",
+          url: "/app/company-admin",
+          icon: Home,
+          badge: null,
+        },
+        {
+          title: "Employees",
+          url: "/app/company-admin/employees",
+          icon: Users,
+          badge: null,
+        },
+        {
+          title: "Properties",
+          url: "/app/company-admin/properties",
+          icon: Building,
+          badge: null,
+        },
+      ],
+    },
+    {
+      title: "Management",
+      items: [
+        {
+          title: "Roles & Permissions",
+          url: "/app/company-admin/roles",
+          icon: Shield,
+          badge: null,
+        },
+        {
+          title: "Reports",
+          url: "/app/company-admin/reports",
+          icon: PieChart,
+          badge: null,
+        },
+      ],
+    },
+    {
+      title: "Tools",
+      items: [
+        {
+          title: "AI Assistant",
+          url: "/app/company-admin/ai-assistant",
+          icon: Bot,
+          badge: {
+            content: "Beta",
+            variant: "secondary" as const,
+          },
+        },
+      ],
+    },
+  ],
+  EMPLOYEE: [
+    {
+      title: "Main",
+      items: [
+        {
+          title: "Home",
+          url: "/app/employee/home",
+          icon: Home,
+          badge: null,
+        },
+        {
+          title: "Wealth Analysis",
+          url: "/app/employee/wealth-analysis",
+          icon: BarChart2,
+          badge: null,
+        },
+        {
+          title: "Trending",
+          url: "/app/employee/trending",
+          icon: TrendingUp,
+          badge: null,
+        },
+        {
+          title: "Reports",
+          url: "/app/employee/reports",
+          icon: PieChart,
+          badge: null,
+        },
+      ],
+    },
+    {
+      title: "Tools",
+      items: [
+        {
+          title: "AI Assistant",
+          url: "/app/employee/ai-assistant",
+          icon: Bot,
+          badge: {
+            content: "Beta",
+            variant: "secondary" as const,
+          },
+        },
+      ],
+    },
+  ],
+}
 
-// User-related items
-const userItems = [
-  {
-    title: "Account",
-    url: "/app/account",
-    icon: User,
-  },
-  {
-    title: "Settings",
-    url: "/app/system-settings",
-    icon: Settings,
-  },
-  {
-    title: "Logout",
-    url: "/logout",
-    icon: LogOut,
-  },
-]
+// Available roles for switching based on current role
+const availableRoles = {
+  SUPER_ADMIN: ["SUPER_ADMIN"],
+  COMPANY_ADMIN: ["COMPANY_ADMIN", "EMPLOYEE"],
+  EMPLOYEE: ["EMPLOYEE"],
+}
 
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false)
+  const [currentRole, setCurrentRole] = useState<string>("")
   const pathname = usePathname()
+  const router = useRouter()
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    if (session?.user?.role) {
+      setCurrentRole(session.user.role)
+    }
+  }, [session])
+
+  // Get navigation items based on current role
+  const roleNavigationItems = navigationItems[currentRole as keyof typeof navigationItems] || navigationItems.EMPLOYEE
+
+  // Handle role switch
+  const handleRoleSwitch = async (newRole: string) => {
+    try {
+      const response = await fetch("/api/auth/switch-role", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ role: newRole }),
+      })
+
+      if (!response.ok) throw new Error("Failed to switch role")
+
+      setCurrentRole(newRole)
+      // Redirect to the home page of the new role using hyphens
+      const rolePath = newRole.toLowerCase().replace('_', '-')
+      router.push(`/app/${rolePath}/home`)
+    } catch (error) {
+      console.error("Error switching role:", error)
+    }
+  }
 
   // Dispatch an event when the sidebar width changes
   useEffect(() => {
@@ -126,10 +243,18 @@ export function AppSidebar() {
     window.dispatchEvent(event)
   }, [collapsed])
 
+  const handleLogout = async () => {
+    try {
+      await signOut({ redirect: true, callbackUrl: '/auth/login' })
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
+  }
+
   return (
     <aside
       className={cn(
-        "flex flex-col h-screen bg-white border-r border-border transition-all duration-300 ease-in-out   top-0 left-0 z-40",
+        "flex flex-col h-screen bg-white border-r border-border transition-all duration-300 ease-in-out top-0 left-0 z-40",
         collapsed ? "w-[50px]" : "w-[240px]",
       )}
     >
@@ -139,7 +264,7 @@ export function AppSidebar() {
       >
         {!collapsed && (
           <img
-            src="https://mdb43gc8n0.ufs.sh/f/m6WitHx8Oy6bknDQjybQqPvSr9wEOR5WAN7dcYG2tHfylU4I"
+            src="/globe.svg"
             className="h-8 w-auto"
             alt="Logo"
           />
@@ -151,22 +276,46 @@ export function AppSidebar() {
         )}
       </div>
 
+      {/* Role Switch */}
+      {!collapsed && session?.user && (
+        <div className="p-4 border-b border-border">
+          <Select
+            value={currentRole}
+            onValueChange={handleRoleSwitch}
+            defaultValue={session.user.role}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select role">
+                {currentRole.replace("_", " ")}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {availableRoles[session.user.role as keyof typeof availableRoles]?.map((role) => (
+                <SelectItem key={role} value={role}>
+                  {role.replace("_", " ")}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
       {/* Navigation */}
       <div className="flex-1 py-4 px-2">
         <TooltipProvider delayDuration={0}>
-          {navigationItems.map((group, index) => (
+          {roleNavigationItems.map((group, index) => (
             <div key={group.title} className="mb-4">
               {!collapsed && (
                 <h3 className="text-xs uppercase text-muted-foreground font-medium mb-2 px-2">{group.title}</h3>
               )}
               <div className="space-y-1">
                 {group.items.map((item) => {
-                  const isActive =
-                    item.url === "/app" ? pathname === "/app" : pathname === item.url || pathname?.startsWith(item.url + "/")
+                  // Only highlight the item if the pathname matches exactly
+                  const isActive = pathname === item.url;
                   return (
                     <Tooltip key={item.title}>
                       <TooltipTrigger asChild>
-                        <a
+                        <Link
                           href={item.url}
                           className={cn(
                             "flex items-center gap-3 rounded-md text-sm transition-colors",
@@ -185,7 +334,7 @@ export function AppSidebar() {
                               {item.badge.content}
                             </Badge>
                           )}
-                        </a>
+                        </Link>
                       </TooltipTrigger>
                       {collapsed && (
                         <TooltipContent side="right">
@@ -238,69 +387,28 @@ export function AppSidebar() {
       <Separator />
 
       {/* User section */}
-      <div className={cn("p-2", collapsed ? "px-1" : "p-3")}>
-        <TooltipProvider delayDuration={0}>
-          {collapsed ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex justify-center mb-4">
-                  <Avatar className="h-8 w-8 border-2 border-primary cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xs">JD</AvatarFallback>
-                  </Avatar>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <div>
-                  <p className="font-medium">John Doe</p>
-                  <p className="text-xs text-muted-foreground">john.doe@example.com</p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          ) : (
-            <div className="flex items-center gap-3 mb-4">
-              <Avatar className="h-9 w-9">
-                <AvatarImage src="/broken" alt="User" />
-                <AvatarFallback>RS</AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium">Radhika Sharma</p>
-                <p className="text-xs text-muted-foreground truncate">radhikarohan@forever.com</p>
-              </div>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Bell className="h-4 w-4" />
-                <span className="sr-only">Notifications</span>
-              </Button>
+      <div className="p-4">
+        <div className="flex items-center gap-3">
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={session?.user?.image || ""} alt={session?.user?.name || ""} />
+            <AvatarFallback>{session?.user?.name?.charAt(0) || "U"}</AvatarFallback>
+          </Avatar>
+          {!collapsed && (
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">{session?.user?.name}</p>
+              <p className="text-xs text-muted-foreground truncate">{session?.user?.email}</p>
             </div>
           )}
-
-          <div className="space-y-1">
-            {userItems.map((item) => (
-              <Tooltip key={item.title}>
-                <TooltipTrigger asChild>
-                  <a
-                    href={item.url}
-                    className={cn(
-                      "flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-muted-foreground hover:text-foreground",
-                      collapsed ? "justify-center px-1 py-2" : "px-3 py-2",
-                      item.title === "Logout" && "text-destructive hover:text-destructive hover:bg-destructive/10",
-                    )}
-                  >
-                    <item.icon
-                      className={cn("h-4 w-4", item.title === "Logout" ? "text-destructive" : "text-muted-foreground")}
-                    />
-                    {!collapsed && <span>{item.title}</span>}
-                  </a>
-                </TooltipTrigger>
-                {collapsed && (
-                  <TooltipContent side="right">
-                    <span>{item.title}</span>
-                  </TooltipContent>
-                )}
-              </Tooltip>
-            ))}
-          </div>
-        </TooltipProvider>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4" />
+            <span className="sr-only">Logout</span>
+          </Button>
+        </div>
       </div>
     </aside>
   )

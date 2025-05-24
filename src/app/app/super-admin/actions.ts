@@ -1,9 +1,117 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/generated/prisma";
 import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient();
+
+export type SuperAdminData = {
+  stats: {
+    totalCompanies: number;
+    activeCompanies: number;
+    totalUsers: number;
+    growth: {
+      companies: number;
+      users: number;
+    };
+  };
+  recentActivity: Array<{
+    name: string;
+    createdAt: Date;
+    status: string;
+  }>;
+};
+
+export async function getSuperAdminData(): Promise<SuperAdminData> {
+  const session = await auth();
+  if (!session?.user || session.user.role !== 'SUPER_ADMIN') {
+    redirect('/auth/login');
+  }
+
+  // Get total companies
+  const totalCompanies = await prisma.organization.count({
+    where: { isSuperAdmin: false }
+  });
+
+  // Get active companies
+  const activeCompanies = await prisma.organization.count({
+    where: { 
+      isSuperAdmin: false,
+      status: 'active'
+    }
+  });
+
+  // Get total users (excluding super admins)
+  const totalUsers = await prisma.user.count({
+    where: {
+      roles: {
+        some: {
+          name: {
+            not: 'SUPER_ADMIN'
+          }
+        }
+      }
+    }
+  });
+
+  // Get monthly growth
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+  
+  const newCompaniesThisMonth = await prisma.organization.count({
+    where: {
+      isSuperAdmin: false,
+      createdAt: {
+        gte: lastMonth
+      }
+    }
+  });
+
+  const newUsersThisMonth = await prisma.user.count({
+    where: {
+      createdAt: {
+        gte: lastMonth
+      },
+      roles: {
+        some: {
+          name: {
+            not: 'SUPER_ADMIN'
+          }
+        }
+      }
+    }
+  });
+
+  // Get recent activity
+  const recentActivity = await prisma.organization.findMany({
+    where: {
+      isSuperAdmin: false
+    },
+    orderBy: {
+      createdAt: 'desc'
+    },
+    take: 5,
+    select: {
+      name: true,
+      createdAt: true,
+      status: true
+    }
+  });
+
+  return {
+    stats: {
+      totalCompanies,
+      activeCompanies,
+      totalUsers,
+      growth: {
+        companies: newCompaniesThisMonth,
+        users: newUsersThisMonth
+      }
+    },
+    recentActivity
+  };
+}
 
 export async function getCompanies() {
   const session = await auth();
@@ -12,12 +120,12 @@ export async function getCompanies() {
   }
 
   // Verify super admin status
-  const userOrg = await prisma.member.findFirst({
-    where: { userId: session.user.id },
-    include: { organization: true },
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: { roles: true }
   });
 
-  if (!userOrg?.organization.isSuperAdmin) {
+  if (!user?.roles.some(role => role.name === 'SUPER_ADMIN')) {
     throw new Error("Unauthorized");
   }
 
@@ -32,10 +140,10 @@ export async function getCompanies() {
     },
   });
 
-  return companies.map((company: { id: string; name: string; email: string; status: string; _count: { members: number }; createdAt: Date }) => ({
+  return companies.map((company) => ({
     id: company.id,
     name: company.name,
-    email: company.email,
+    email: company.metadata ? JSON.parse(company.metadata).billingEmail : '',
     status: company.status,
     memberCount: company._count.members,
     createdAt: company.createdAt,

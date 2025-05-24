@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { Session } from "next-auth";
 
 // Define route patterns
 const ROUTES = {
@@ -8,7 +9,6 @@ const ROUTES = {
   EMPLOYEE: '/app/employee',
   AUTH: '/auth',
   API: '/api',
-  REGISTER: '/register',
   APP_ROOT: '/app',
 } as const;
 
@@ -46,64 +46,87 @@ const isPublicApiRoute = (path: string, method: string) => {
 };
 
 export async function middleware(request: NextRequest) {
-  // const session = await auth();
-  // console.log('Middleware - Session:', JSON.stringify(session, null, 2)); // Debug log
+  const session = await auth() as Session & { requiresTwoFactor?: boolean };
+  console.log('Middleware Debug:', {
+    path: request.nextUrl.pathname,
+    session: {
+      isAuth: !!session?.user,
+      userId: session?.user?.id,
+      role: session?.user?.role,
+      requiresTwoFactor: session?.requiresTwoFactor
+    }
+  });
 
-  // const isAuth = !!session?.user;
-  // const isAuthPage = request.nextUrl.pathname.startsWith(ROUTES.AUTH);
-  // const isApiRoute = request.nextUrl.pathname.startsWith(ROUTES.API);
-  // const isRegisterPage = request.nextUrl.pathname.startsWith(ROUTES.REGISTER);
-  // const isAppRoute = request.nextUrl.pathname.startsWith(ROUTES.APP_ROOT);
-  // const isAppRoot = request.nextUrl.pathname === ROUTES.APP_ROOT;
+  const isAuth = !!session?.user;
+  const isAuthPage = request.nextUrl.pathname.startsWith(ROUTES.AUTH);
+  const isApiRoute = request.nextUrl.pathname.startsWith(ROUTES.API);
+  const isAppRoute = request.nextUrl.pathname.startsWith(ROUTES.APP_ROOT);
+  const isAppRoot = request.nextUrl.pathname === ROUTES.APP_ROOT;
 
-  // console.log('Middleware - Path:', request.nextUrl.pathname); // Debug log
-  // console.log('Middleware - Is Auth:', isAuth); // Debug log
-  // console.log('Middleware - User ID:', session?.user?.id); // Debug log
+  // Handle API routes first
+  if (isApiRoute) {
+    // Allow access to public API routes with specific methods
+    if (isPublicApiRoute(request.nextUrl.pathname, request.method)) {
+      return NextResponse.next();
+    }
 
-  // // Handle API routes first
-  // if (isApiRoute) {
-  //   // Allow access to public API routes with specific methods
-  //   if (isPublicApiRoute(request.nextUrl.pathname, request.method)) {
-  //     return NextResponse.next();
-  //   }
+    // Require authentication for other API routes
+    if (!isAuth || !session.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
 
-  //   // Require authentication for other API routes
-  //   if (!isAuth || !session.user?.id) {
-  //     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  //   }
-  //   return NextResponse.next();
-  // }
+  // Handle auth pages (including register)
+  if (isAuthPage) {
+    // If user is already authenticated and doesn't require 2FA, redirect based on role
+    if (isAuth && session.user?.id && !session.requiresTwoFactor) {
+      const role = session.user.role;
+      if (role === 'SUPER_ADMIN') {
+        return NextResponse.redirect(new URL(ROUTES.SUPER_ADMIN, request.url));
+      } else if (role === 'COMPANY_ADMIN') {
+        return NextResponse.redirect(new URL(ROUTES.COMPANY_ADMIN, request.url));
+      } else {
+        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+      }
+    }
+    // Allow access to auth pages for unauthenticated users or users requiring 2FA
+    return NextResponse.next();
+  }
 
-  // // Handle auth and register pages
-  // if (isAuthPage || isRegisterPage) {
-  //   // If user is already authenticated, redirect to employee dashboard
-  //   if (isAuth && session.user?.id) {
-  //     return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
-  //   }
-  //   // Allow access to auth and register pages for unauthenticated users
-  //   return NextResponse.next();
-  // }
+  // Require authentication for all other routes
+  if (!isAuth || !session.user?.id || session.requiresTwoFactor) {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
 
-  // // Require authentication for all other routes
-  // if (!isAuth || !session.user?.id) {
-  //   console.log('Middleware - Redirecting to login - Missing auth or user ID'); // Debug log
-  //   return NextResponse.redirect(new URL('/auth/login', request.url));
-  // }
+  // Handle app routes
+  if (isAppRoute) {
+    // Redirect /app based on role
+    if (isAppRoot) {
+      const role = session.user.role;
+      if (role === 'SUPER_ADMIN') {
+        return NextResponse.redirect(new URL(ROUTES.SUPER_ADMIN, request.url));
+      } else if (role === 'COMPANY_ADMIN') {
+        return NextResponse.redirect(new URL(ROUTES.COMPANY_ADMIN, request.url));
+      } else {
+        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+      }
+    }
 
-  // // Handle app routes
-  // if (isAppRoute) {
-  //   // Redirect /app to /app/employee
-  //   if (isAppRoot) {
-  //     return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
-  //   }
-
-  //   // Check if the user is trying to access a protected route
-  //   const path = request.nextUrl.pathname;
-  //   if (path.startsWith(ROUTES.SUPER_ADMIN) || path.startsWith(ROUTES.COMPANY_ADMIN)) {
-  //     // Let the page components handle the role-based access control
-  //     return NextResponse.next();
-  //   }
-  // }
+    // Check if the user is trying to access a protected route
+    const path = request.nextUrl.pathname;
+    if (path.startsWith(ROUTES.SUPER_ADMIN)) {
+      if (session.user.role !== 'SUPER_ADMIN') {
+        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+      }
+    } else if (path.startsWith(ROUTES.COMPANY_ADMIN)) {
+      // Allow access if user is either SUPER_ADMIN or COMPANY_ADMIN
+      if (session.user.role !== 'SUPER_ADMIN' && session.user.role !== 'COMPANY_ADMIN') {
+        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+      }
+    }
+    return NextResponse.next();
+  }
 
   return NextResponse.next();
 }
@@ -114,6 +137,6 @@ export const config = {
     // - Static files (_next/static, _next/image)
     // - Favicon
     // - Public files (public directory)
-    // "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
   ],
 };

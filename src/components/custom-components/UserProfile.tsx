@@ -2,40 +2,48 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { User, Settings, LogOut } from 'lucide-react';
+import { signOut } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
 
 export default function UserDropdown() {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const avatarUrl = "https://mdb43gc8n0.ufs.sh/f/m6WitHx8Oy6b3Se7jv81uHyLWkg58FX9Zcde6GzhqiVTRJ3A";
+  const router = useRouter();
 
+  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current && 
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     }
 
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    // Cleanup on unmount or when open changes
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [open]);
+  const handleLogout = async () => {
+    try {
+      await signOut({ redirect: false });
+      router.push('/auth/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  // Placeholder for user data - replace with actual user data from your auth system
+  const user = {
+    name: "John Doe",
+    email: "john@example.com",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=John"
+  };
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <div className="relative group" onClick={() => setOpen(!open)}>
         <img
-          src={avatarUrl}
-          alt={'user.name'}
+          src={user.avatarUrl}
+          alt={user.name}
           className="inline-block size-10 rounded-full ring-2 ring-white cursor-pointer"
         />
       </div>
@@ -66,10 +74,7 @@ export default function UserDropdown() {
             </li>
             <li>
               <button
-                onClick={() => {
-                  console.log('Logging out...');
-                  // Add your logout logic here
-                }}
+                onClick={handleLogout}
                 className="w-full text-left flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 <LogOut className="w-5 h-5 mr-2" />

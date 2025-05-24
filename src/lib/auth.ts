@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import Resend from "next-auth/providers/resend"
-import { PrismaClient, User } from "@prisma/client"
+import { PrismaClient, User } from "@/generated/prisma"
 import Credentials from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
 import { JWT } from "next-auth/jwt"
@@ -17,6 +17,7 @@ declare module "next-auth" {
       id: string
       name?: string | null
       email?: string | null
+      role?: 'SUPER_ADMIN' | 'COMPANY_ADMIN' | 'EMPLOYEE'
     }
     requiresTwoFactor?: boolean
   }
@@ -25,6 +26,12 @@ declare module "next-auth" {
 type UserWithAccounts = User & {
   accounts: {
     password: string | null
+  }[]
+  roles: {
+    name: string
+    permissions: {
+      name: string
+    }[]
   }[]
 }
 
@@ -54,12 +61,30 @@ export const authOptions = {
                 where: { providerId: "credentials" },
                 select: { password: true },
               },
+              roles: {
+                include: {
+                  permissions: true
+                }
+              }
             },
           }) as UserWithAccounts | null;
+
+          console.log('Auth Debug - User Roles:', {
+            userId: user?.id,
+            roles: user?.roles.map(r => ({
+              name: r.name,
+              permissions: r.permissions.map(p => p.name)
+            }))
+          });
 
           if (!user) {
             throw new Error("No user found with this email");
           }
+
+          // Check if user has super_admin role
+          const isSuperAdmin = user.roles.some(role => role.name.toLowerCase() === 'super_admin');
+          const isCompanyAdmin = user.roles.some(role => role.name.toLowerCase() === 'company_admin');
+          console.log('Auth Debug - Role Check:', { isSuperAdmin, isCompanyAdmin, roles: user.roles.map(r => r.name) });
 
           if (user.banned) {
             throw new Error(user.banReason || "Account has been banned");
@@ -82,6 +107,21 @@ export const authOptions = {
             throw new Error("Invalid password");
           }
 
+          // Determine role based on available roles, prioritizing super_admin
+          let role: 'SUPER_ADMIN' | 'COMPANY_ADMIN' | 'EMPLOYEE' = 'EMPLOYEE';
+          if (isSuperAdmin) {
+            role = 'SUPER_ADMIN';
+          } else if (isCompanyAdmin) {
+            role = 'COMPANY_ADMIN';
+          }
+
+          // Log the final role assignment
+          console.log('Auth Debug - Final Role Assignment:', { 
+            userId: user.id,
+            assignedRole: role,
+            availableRoles: user.roles.map(r => r.name)
+          });
+
           if (user.twoFactorEnabled) {
             // Return a special object to indicate 2FA is required
             return {
@@ -89,6 +129,7 @@ export const authOptions = {
               email: user.email,
               name: user.name,
               requiresTwoFactor: true,
+              role
             };
           }
 
@@ -96,6 +137,7 @@ export const authOptions = {
             id: user.id,
             email: user.email,
             name: user.name,
+            role
           };
         } catch (error) {
           console.error("Auth error:", error);
@@ -117,6 +159,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.requiresTwoFactor = user.requiresTwoFactor;
+        token.role = user.role;
       }
       return token;
     },
@@ -124,6 +167,7 @@ export const authOptions = {
       if (session.user) {
         session.user.id = token.id as string;
         session.requiresTwoFactor = token.requiresTwoFactor as boolean;
+        session.user.role = token.role as 'SUPER_ADMIN' | 'COMPANY_ADMIN' | 'EMPLOYEE';
       }
       return session;
     },
