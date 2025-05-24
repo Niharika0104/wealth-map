@@ -1,14 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { MapPin, Eye, Calendar, Shield, Grid3X3, List } from "lucide-react"
+import { MapPin, Eye, Calendar, Shield, Grid3X3, List,Heart } from "lucide-react"
 import Link from "next/link"
 import type {Property} from "@/Models/models"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { getBookmarks, addBookmark, removeBookmark } from "@/services/bookmarkService";
 import { Input } from "@/components/ui/input"
 import {
   Pagination,
@@ -28,8 +29,11 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
   const [sortBy, setSortBy] = useState<string>("value-desc")
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
+  const [bookmarkedPropertyIds, setBookmarkedPropertyIds] = useState<string[]>([]);
   const itemsPerPage = 12
-
+useEffect(() => {
+  // getBookmarks("demo").then(setBookmarkedPropertyIds);
+}, []);
   // Helper to get region from address (fallback to state if not present)
   const getRegion = (property: Property) => {
     if (property.address && property.address.includes(",")) {
@@ -38,6 +42,17 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
     }
     return property.state || ""
   }
+
+  //const toggle bookmark
+  const toggleBookmark = async (propertyId: string) => {
+  if (bookmarkedPropertyIds.includes(propertyId)) {
+    const updated = await removeBookmark(propertyId,"demo");
+    setBookmarkedPropertyIds(updated);
+  } else {
+    const updated = await addBookmark(propertyId,"demo");
+    setBookmarkedPropertyIds(updated);
+  }
+};
 
   // Filter properties by search query
   const filteredProperties = properties.filter(
@@ -253,10 +268,21 @@ export default function PropertyGrid({ properties }: PropertyGridProps) {
                           : `$${Number(property.price)}`
                       : 'N/A'}
                           </span>
-                          <Avatar className="h-6 w-6">
-                            <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                            <AvatarFallback>{(property.owners?.[0]?.name?.charAt(0) ?? "?")}</AvatarFallback>
-                          </Avatar>
+                        <button
+  type="button"
+  aria-label={bookmarkedPropertyIds.includes(property.id) ? "Remove Bookmark" : "Add Bookmark"}
+  onClick={e => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleBookmark(property.id);
+  }}
+  className="ml-2"
+>
+  <Heart
+    className={`h-6 w-6 ${bookmarkedPropertyIds.includes(property.id) ? "text-red-500 fill-red-500" : "text-gray-400"}`}
+    fill={bookmarkedPropertyIds.includes(property.id) ? "currentColor" : "none"}
+  />
+</button>
                         </div>
                       </div>
                     </CardContent>

@@ -62,7 +62,18 @@ export function getWealthConfidenceLevel(factors: OwnerWealthFactors): "High" | 
   if (present === 2 || present === 3) return "Medium";
   return "Low";
 }
-
+export function getConfidenceLevel(owner: any): "High" | "Medium" | "Low" {
+  const fields = [
+    owner.stocksSecurities,
+    owner.businessInterests,
+    owner.cashSavings,
+    owner.otherAssets,
+  ];
+  const nonNullCount = fields.filter((v) => v !== null && v !== undefined && v !== 0).length;
+  if (nonNullCount === 4) return "High";
+  if (nonNullCount >= 2) return "Medium";
+  return "Low";
+}
 interface ListViewProps {
   Region: string;  // Changed String to string for TypeScript
   Name: string;
