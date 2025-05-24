@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     // Compute confidence score from asset fields
     const assetFields = [owner.stocksSecurities, owner.businessInterests, owner.cashSavings, owner.otherAssets];
-    const nonNullCount = assetFields.filter((v) => v !== null && v !== undefined).length;
+    const nonNullCount = assetFields.filter((v) => v !== null && v !== undefined && v!=0).length;
     let confidenceScore: "High" | "Medium" | "Low";
     if (nonNullCount === 4) confidenceScore = "High";
     else if (nonNullCount >= 2) confidenceScore = "Medium";

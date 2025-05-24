@@ -56,8 +56,8 @@ useEffect(() => {
         setOwner(ownerObj);
         setOwnerType(ownerType);
        setWealthConfidenceLevel(confidenceScore);
-      setRealestateWealth(totalRealEstate);
-      setTotalWealth(totalRealEstate + totalOtherAssets);
+      setRealestateWealth(totalRealEstateWealth);
+      setTotalWealth(totalRealEstateWealth + totalOtherAssets);
       }
      
 
