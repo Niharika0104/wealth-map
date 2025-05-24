@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import type { FilterState } from "./home-page"
-import { RotateCcw } from "lucide-react"
+import { RotateCcw, TrendingUp, Home, Users } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 interface MapFiltersProps {
@@ -18,7 +18,6 @@ interface MapFiltersProps {
   propertyTypes: string[]
   ownerTypes: string[]
   resetFilters: () => void
-  filteredCount: number
   totalCount: number
 }
 
@@ -30,17 +29,28 @@ export default function MapFilters({
   propertyTypes,
   ownerTypes,
   resetFilters,
-  filteredCount,
   totalCount,
 }: MapFiltersProps) {
   // Format value for display
   const formatValue = (value: number) => {
-    return value >= 1 ? `$${value}M` : `$${value * 1000}K`
+    if (value >= 1000) {
+      return `$${(value / 1000).toFixed(0)}B`
+    } else if (value >= 1) {
+      return `$${value.toFixed(1)}M`
+    } else {
+      return `$${(value * 1000).toFixed(0)}K`
+    }
   }
 
   // Format sqft for display
   const formatSqft = (sqft: number) => {
-    return `${sqft.toLocaleString()} sqft`
+    if (sqft >= 1000000) {
+      return `${(sqft / 1000000).toFixed(1)}M sqft`
+    } else if (sqft >= 1000) {
+      return `${(sqft / 1000).toFixed(0)}K sqft`
+    } else {
+      return `${sqft.toLocaleString()} sqft`
+    }
   }
 
   // Handle value slider change
@@ -113,26 +123,60 @@ export default function MapFilters({
     }
   }
 
+  // Get confidence badge styling
+  const getConfidenceBadgeStyle = (level: string) => {
+    const isSelected = filterState.confidence.includes(level)
+    switch (level) {
+      case "High":
+        return isSelected
+          ? "bg-green-500 text-white hover:bg-green-600"
+          : "border-green-500 text-green-500 hover:bg-green-50"
+      case "Medium":
+        return isSelected
+          ? "bg-yellow-500 text-white hover:bg-yellow-600"
+          : "border-yellow-500 text-yellow-500 hover:bg-yellow-50"
+      case "Low":
+        return isSelected ? "bg-red-500 text-white hover:bg-red-600" : "border-red-500 text-red-500 hover:bg-red-50"
+      default:
+        return isSelected ? "bg-gray-500 text-white" : "border-gray-500 text-gray-500"
+    }
+  }
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-sm font-medium">Showing</h3>
-          <p className="text-sm text-gray-500">
-            {filteredCount} of {totalCount} properties
-          </p>
+    <div className="space-y-6 p-1">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-100">
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-blue-600" />
+              Results
+            </h3>
+            <p className="text-sm text-gray-600 mt-1">
+              <span className="font-medium">{totalCount}</span> total properties
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={resetFilters}
+            className="border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300"
+          >
+            <RotateCcw className="h-3 w-3 mr-2" />
+            Reset All
+          </Button>
         </div>
-        <Button variant="outline" size="sm" onClick={resetFilters}>
-          <RotateCcw className="h-3 w-3 mr-2" />
-          Reset
-        </Button>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-sm font-medium mb-2">Property Value</h3>
+      <div className="space-y-6">
+        {/* Property Value Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+            <h3 className="text-sm font-semibold text-gray-900">Property Value</h3>
+          </div>
           <div className="px-2">
             <Slider
               value={[filterState.value[0], filterState.value[1]]}
@@ -140,17 +184,21 @@ export default function MapFilters({
               max={valueRange[1]}
               step={0.1}
               onValueChange={handleValueChange}
-              className="mb-2"
+              className="mb-3"
             />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>{formatValue(filterState.value[0])}</span>
-              <span>{formatValue(filterState.value[1])}</span>
+            <div className="flex justify-between text-xs font-medium">
+              <span className="text-green-600 bg-green-50 px-2 py-1 rounded">{formatValue(filterState.value[0])}</span>
+              <span className="text-green-600 bg-green-50 px-2 py-1 rounded">{formatValue(filterState.value[1])}</span>
             </div>
           </div>
         </div>
 
-        <div>
-          <h3 className="text-sm font-medium mb-2">Square Footage</h3>
+        {/* Square Footage Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
+            <h3 className="text-sm font-semibold text-gray-900">Square Footage</h3>
+          </div>
           <div className="px-2">
             <Slider
               value={[filterState.sqft[0], filterState.sqft[1]]}
@@ -158,57 +206,68 @@ export default function MapFilters({
               max={sqftRange[1]}
               step={100}
               onValueChange={handleSqftChange}
-              className="mb-2"
+              className="mb-3"
             />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>{formatSqft(filterState.sqft[0])}</span>
-              <span>{formatSqft(filterState.sqft[1])}</span>
+            <div className="flex justify-between text-xs font-medium">
+              <span className="text-blue-600 bg-blue-50 px-2 py-1 rounded">{formatSqft(filterState.sqft[0])}</span>
+              <span className="text-blue-600 bg-blue-50 px-2 py-1 rounded">{formatSqft(filterState.sqft[1])}</span>
             </div>
           </div>
         </div>
 
-        <Separator />
+        <Separator className="bg-gray-200" />
 
-        <div>
-          <h3 className="text-sm font-medium mb-2">Confidence Level</h3>
+        {/* Confidence Level Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-2 w-2 bg-purple-500 rounded-full"></div>
+            <h3 className="text-sm font-semibold text-gray-900">Confidence Level</h3>
+          </div>
           <div className="flex flex-wrap gap-2">
-            <Badge
-              variant={filterState.confidence.includes("High") ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => toggleConfidence("High")}
-            >
-              High
-            </Badge>
-            <Badge
-              variant={filterState.confidence.includes("Medium") ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => toggleConfidence("Medium")}
-            >
-              Medium
-            </Badge>
-            <Badge
-              variant={filterState.confidence.includes("Low") ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => toggleConfidence("Low")}
-            >
-              Low
-            </Badge>
+            {["High", "Medium", "Low"].map((level) => (
+              <Badge
+                key={level}
+                variant="outline"
+                className={`cursor-pointer transition-all duration-200 font-medium ${getConfidenceBadgeStyle(level)}`}
+                onClick={() => toggleConfidence(level)}
+              >
+                {level}
+              </Badge>
+            ))}
           </div>
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="property-types">
-            <AccordionTrigger className="text-sm font-medium py-2">Property Types</AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-2 gap-2">
+        {/* Accordion Sections */}
+        <Accordion type="single" collapsible className="w-full space-y-2">
+          <AccordionItem
+            value="property-types"
+            className="border border-gray-200 rounded-lg bg-white hover:shadow-sm transition-shadow"
+          >
+            <AccordionTrigger className="text-sm font-semibold px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <Home className="h-4 w-4 text-orange-500" />
+                <span>Property Types</span>
+                {filterState.propertyType.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 bg-orange-100 text-orange-700">
+                    {filterState.propertyType.length}
+                  </Badge>
+                )}
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <div className="grid grid-cols-1 gap-3">
                 {propertyTypes.map((type) => (
-                  <div key={type} className="flex items-center space-x-2">
+                  <div
+                    key={type}
+                    className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-50 transition-colors"
+                  >
                     <Checkbox
                       id={`property-type-${type}`}
                       checked={filterState.propertyType.includes(type)}
                       onCheckedChange={() => togglePropertyType(type)}
+                      className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
                     />
-                    <Label htmlFor={`property-type-${type}`} className="text-sm">
+                    <Label htmlFor={`property-type-${type}`} className="text-sm font-medium cursor-pointer flex-1">
                       {type}
                     </Label>
                   </div>
@@ -217,18 +276,35 @@ export default function MapFilters({
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="owner-types">
-            <AccordionTrigger className="text-sm font-medium py-2">Owner Types</AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-2 gap-2">
+          <AccordionItem
+            value="owner-types"
+            className="border border-gray-200 rounded-lg bg-white hover:shadow-sm transition-shadow"
+          >
+            <AccordionTrigger className="text-sm font-semibold px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-indigo-500" />
+                <span>Owner Types</span>
+                {filterState.ownerType.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 bg-indigo-100 text-indigo-700">
+                    {filterState.ownerType.length}
+                  </Badge>
+                )}
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <div className="grid grid-cols-1 gap-3">
                 {ownerTypes.map((type) => (
-                  <div key={type} className="flex items-center space-x-2">
+                  <div
+                    key={type}
+                    className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-50 transition-colors"
+                  >
                     <Checkbox
                       id={`owner-type-${type}`}
                       checked={filterState.ownerType.includes(type)}
                       onCheckedChange={() => toggleOwnerType(type)}
+                      className="data-[state=checked]:bg-indigo-500 data-[state=checked]:border-indigo-500"
                     />
-                    <Label htmlFor={`owner-type-${type}`} className="text-sm">
+                    <Label htmlFor={`owner-type-${type}`} className="text-sm font-medium cursor-pointer flex-1">
                       {type}
                     </Label>
                   </div>
