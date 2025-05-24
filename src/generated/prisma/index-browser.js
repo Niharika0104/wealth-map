@@ -126,13 +126,14 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
+  password: 'password',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   twoFactorEnabled: 'twoFactorEnabled',
-  role: 'role',
   banned: 'banned',
   banReason: 'banReason',
-  banExpires: 'banExpires'
+  banExpires: 'banExpires',
+  currentRole: 'currentRole'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -186,6 +187,8 @@ exports.Prisma.OrganizationScalarFieldEnum = {
   slug: 'slug',
   logo: 'logo',
   createdAt: 'createdAt',
+  status: 'status',
+  isSuperAdmin: 'isSuperAdmin',
   metadata: 'metadata'
 };
 
@@ -230,9 +233,123 @@ exports.Prisma.PasskeyScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PermissionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  description: 'description'
+};
+
+exports.Prisma.RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isSystem: 'isSystem'
+};
+
+exports.Prisma.PropertyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  zipCode: 'zipCode',
+  price: 'price',
+  images: 'images',
+  area: 'area',
+  bed: 'bed',
+  bath: 'bath',
+  type: 'type',
+  confidenceScore: 'confidenceScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OwnerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  stocksSecurities: 'stocksSecurities',
+  businessInterests: 'businessInterests',
+  cashSavings: 'cashSavings',
+  otherAssets: 'otherAssets',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PropertyOwnerScalarFieldEnum = {
+  id: 'id',
+  propertyId: 'propertyId',
+  ownerId: 'ownerId',
+  ownerType: 'ownerType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReportScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  notes: 'notes',
+  reportType: 'reportType',
+  exported: 'exported',
+  exportUrl: 'exportUrl'
+};
+
+exports.Prisma.SharedPropertyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  reportId: 'reportId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ViewScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BookmarkScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SavedSearchScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  filters: 'filters',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SystemSettingsScalarFieldEnum = {
+  id: 'id',
+  systemName: 'systemName',
+  timezone: 'timezone',
+  maintenance: 'maintenance',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -243,6 +360,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 
@@ -256,7 +379,18 @@ exports.Prisma.ModelName = {
   Member: 'Member',
   Invitation: 'Invitation',
   CustomRole: 'CustomRole',
-  Passkey: 'Passkey'
+  Passkey: 'Passkey',
+  Permission: 'Permission',
+  Role: 'Role',
+  Property: 'Property',
+  Owner: 'Owner',
+  PropertyOwner: 'PropertyOwner',
+  Report: 'Report',
+  SharedProperty: 'SharedProperty',
+  View: 'View',
+  Bookmark: 'Bookmark',
+  SavedSearch: 'SavedSearch',
+  SystemSettings: 'SystemSettings'
 };
 
 /**

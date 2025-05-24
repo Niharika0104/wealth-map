@@ -4,6 +4,8 @@ import "./globals.css";
 import MainLayoutShell from "@/components/custom-components/main-layout";
 import { CopilotKit } from "@copilotkit/react-core"; 
 import "@/lib/styles/styles.css"
+import { SessionProvider } from "next-auth/react"
+import { FloatingChatButton } from "@/components/FloatingChatButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +34,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white-50`}
       >
+        <SessionProvider>
           <CopilotKit publicApiKey={process.env.NEXT_PUBLIC_COPILOT_CLOUD_PUBLIC_API_KEY}> 
             {children}
           </CopilotKit>
+        </SessionProvider>
       </body>
     </html>
   );
