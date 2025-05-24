@@ -37,7 +37,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SessionProvider>
           <CopilotKit publicApiKey={process.env.NEXT_PUBLIC_COPILOT_CLOUD_PUBLIC_API_KEY}> 
             {children}
-            <FloatingChatButton />
           </CopilotKit>
         </SessionProvider>
       </body>

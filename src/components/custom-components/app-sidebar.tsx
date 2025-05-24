@@ -215,6 +215,13 @@ export function AppSidebar() {
   // Handle role switch
   const handleRoleSwitch = async (newRole: string) => {
     try {
+      // Validate that the user is allowed to switch to this role
+      const allowedRoles = availableRoles[session?.user?.role as keyof typeof availableRoles] || [];
+      if (!allowedRoles.includes(newRole)) {
+        console.error("Unauthorized role switch attempt");
+        return;
+      }
+
       const response = await fetch("/api/auth/switch-role", {
         method: "POST",
         headers: {
@@ -390,7 +397,6 @@ export function AppSidebar() {
       <div className="p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={session?.user?.image || ""} alt={session?.user?.name || ""} />
             <AvatarFallback>{session?.user?.name?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
           {!collapsed && (

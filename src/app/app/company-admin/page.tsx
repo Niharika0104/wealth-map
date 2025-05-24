@@ -15,7 +15,6 @@ function LoadingState() {
           <h1 className="text-2xl font-bold">Company Dashboard</h1>
           <p className="text-muted-foreground mt-1">Loading...</p>
         </div>
-        <LogoutButton />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[1, 2, 3].map((i) => (
@@ -53,7 +52,6 @@ async function CompanyAdminContent() {
           <h1 className="text-2xl font-bold">Company Dashboard</h1>
           <p className="text-muted-foreground mt-1">Manage your company and employees</p>
         </div>
-        <LogoutButton />
       </div>
 
       {/* Stats Overview */}

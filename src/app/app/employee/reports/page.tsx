@@ -1,19 +1,10 @@
-import CustomReports from "@/components/custom-components/reporting/custom-reports"
-import PropertyExport from "@/components/custom-components/reporting/property-export"
+import ReportingDashboard from "@/components/custom-components/reporting/reporting-dashboard"
 
-export default function EmployeeReportsPage() {
+export default function ReportsPage() {
   return (
     <div className="container mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Reports</h1>
-        <p className="text-gray-600">
-          Generate custom reports and export property data for analysis.
-        </p>
-      </div>
-      <div className="space-y-8">
-        <CustomReports />
-        <PropertyExport />
-      </div>
+      <h1 className="text-2xl font-bold mb-6">Data Export & Reporting</h1>
+      <ReportingDashboard />
     </div>
   )
-} 
+}

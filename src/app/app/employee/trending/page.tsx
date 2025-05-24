@@ -1,6 +1,6 @@
 import TrendingProperties from "@/components/custom-components/trending/trending-properties"
 
-export default function EmployeeTrendingPage() {
+export default function TrendingPage() {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-8">
@@ -12,4 +12,4 @@ export default function EmployeeTrendingPage() {
       <TrendingProperties />
     </div>
   )
-} 
+}

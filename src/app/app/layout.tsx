@@ -6,6 +6,7 @@ import MainLayoutShell from "@/components/custom-components/main-layout";
 import { CopilotSidebar } from "@copilotkit/react-ui";
 import "@/lib/styles/styles.css";
 import { X, Send, Loader2, Square, RefreshCw, Copy, ThumbsUp, ThumbsDown, Upload, Sparkles } from "lucide-react";
+import { FloatingChatButton } from "@/components/FloatingChatButton";
 
 // app/layout.tsx
 export default function AppLayout({
@@ -19,6 +20,7 @@ export default function AppLayout({
       <main className="flex-1 overflow-y-auto">
         {children}
       </main>
+      <FloatingChatButton />
     </div>
   );
 }
