@@ -40,7 +40,7 @@ import { TitleUpdater } from "./title-updater"
 import { mockOwners } from "./mock-data"
 import { Owner,formatKMB } from "@/Models/models"
 import axios from "axios"
-import { dataSources, Wealthownershipfields } from "@/Models/models"
+import { dataSources, Wealthownershipfields, } from "@/Models/models"
 import type { ConfidenceLevel } from "@/Models/models"
 
 // Accept a single optional prop: { ownerId?: string }
@@ -85,7 +85,7 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
 
   const filteredOwners = owners?.filter((owner) => {
     const matchesSearch = owner.name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesConfidence = showOnlyHighConfidence ? owner.confidenceLevel === "High" : true
+const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Low") === "High" : true;
     return matchesSearch && matchesConfidence
   })
 
@@ -438,11 +438,11 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
                           <h3 className="font-medium">Property Locations</h3>
                         </div>
                         <Badge variant="outline" className="bg-white">
-                          {mockProperties[selectedOwnerData.id]?.length || 0} Properties
+                          {selectedOwnerData.properties?.length || 0} Properties
                         </Badge>
                       </div>
                       <div className={expandedSections[selectedOwnerData.id] ? "h-[400px]" : "h-[200px]"}>
-                        <PropertyMap ownerId={selectedOwnerData.id} />
+                        <PropertyMap ownaddress={selectedOwnerData.properties} />
                       </div>
                     </div>
                   </div>
@@ -534,7 +534,7 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
                     </CardHeader>
                     <CardContent className="p-0">
                       <div className="h-[400px]">
-                        <PropertyMap ownerId={selectedOwnerData.id} comparisonOwnerId={comparisonOwnerData.id} />
+                        <PropertyMap ownaddress={selectedOwnerData.properties} compaddress={comparisonOwnerData.properties} />
                       </div>
                     </CardContent>
                   </Card>
