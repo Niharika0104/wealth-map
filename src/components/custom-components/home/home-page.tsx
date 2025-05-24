@@ -66,8 +66,8 @@ export default function HomePage() {
           ...p,
           confidence: confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)]
         }));
-        setProperties(withConfidence);
-        setFilteredProperties(withConfidence);
+        setProperties(data);
+        setFilteredProperties(data); 
       } catch (err) {
         console.error('Failed to fetch properties:', err);
       }

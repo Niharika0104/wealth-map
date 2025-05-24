@@ -1,12 +1,17 @@
 import { NextRequest } from "next/server";
 import prisma from 'lib/index';
-import { any } from "zod";
+import redisClient, { connectRedis } from 'lib/redis'; // Ensure this exists
+
+const CACHE_KEY = 'owners-wealth-data';
+const CACHE_TTL = 60 * 60 * 24; // 24 hours
 
 // POST: Find all properties owned by a given ownerId
 export async function POST(req: NextRequest) {
+
+    await connectRedis();
   const body = await req.json();
   const { ownerId } = body;
-
+  const CACHE_KEY = `owner-data-${ownerId}`;
   if (!ownerId) {
     return new Response(JSON.stringify({ error: "ownerId is required in the request body." }), { status: 400 });
   }
@@ -52,7 +57,15 @@ export async function POST(req: NextRequest) {
     if (owner.properties.length > 0 && owner.properties[0].ownerType) {
       ownerType = owner.properties[0].ownerType;
     }
-
+// Cache the result
+    await redisClient.setEx(CACHE_KEY, CACHE_TTL,  JSON.stringify({
+        owner,
+         ownerType,
+          confidenceScore,
+          totalRealEstateWealth,
+        
+        properties,
+      }));
     // Return owner details and their properties, with top-level fields
     return new Response(
       JSON.stringify({
