@@ -74,6 +74,8 @@ export default function HomePage() {
     fetchProperties();
   }, []);
 
+  console.log(properties);
+  
   // Get unique property types and owner types
   const propertyTypes = Array.from(new Set(properties.map((p) => p.type)));
   const ownerTypes = Array.from(

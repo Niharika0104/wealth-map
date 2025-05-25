@@ -48,10 +48,22 @@ export function AccountProfile() {
         const response = await fetch('/api/user/stats')
         if (response.ok) {
           const data = await response.json()
-          setStats(data)
+          setStats({
+            totalReports: data.totalReports || 0,
+            propertiesAnalyzed: data.propertiesAnalyzed || 0,
+            savedProperties: data.savedProperties || 0,
+            recentActivity: data.recentActivity || []
+          })
         }
       } catch (error) {
         console.error('Error fetching user stats:', error)
+        // Set default values if fetch fails
+        setStats({
+          totalReports: 0,
+          propertiesAnalyzed: 0,
+          savedProperties: 0,
+          recentActivity: []
+        })
       }
     }
 
@@ -118,7 +130,7 @@ export function AccountProfile() {
               </div>
             </div>
 
-            <div className="flex-grow text-center sm:text-left">
+            <div className="flex-1">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
                 <h3 className="text-2xl font-bold text-gray-800">
                   {userData.name}

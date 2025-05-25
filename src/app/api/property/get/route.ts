@@ -1,19 +1,20 @@
 import { NextRequest } from "next/server";
-import prisma from 'lib/index';
-import redisClient, { connectRedis } from 'lib/redis'; // Ensure this exists
+import { PrismaClient } from "@/generated/prisma";
 
+const prisma = new PrismaClient();
 
-const CACHE_TTL = 60 * 60 * 24; // 24 hours
 export async function POST(req: NextRequest) {
-   await connectRedis();
-  const body = await req.json();
-  const { propertyId } = body;
-const CACHE_KEY = `property-data-${propertyId}`;
-  if (!propertyId) {
-    return new Response(JSON.stringify({ error: "propertyId is required in the request body." }), { status: 400 });
-  }
-
   try {
+    const body = await req.json();
+    const { propertyId } = body;
+
+    console.log("Received request for property ID:", propertyId);
+
+    if (!propertyId) {
+      console.error("No propertyId provided in request");
+      return new Response(JSON.stringify({ error: "propertyId is required in the request body." }), { status: 400 });
+    }
+
     const property = await prisma.property.findUnique({
       where: { id: propertyId },
       include: {
@@ -27,14 +28,16 @@ const CACHE_KEY = `property-data-${propertyId}`;
       }
     });
 
+    console.log("Found property:", property);
+
     if (!property) {
+      console.error("Property not found for ID:", propertyId);
       return new Response(JSON.stringify({ error: "Property not found." }), { status: 404 });
     }
-     await redisClient.setEx(CACHE_KEY, CACHE_TTL, JSON.stringify(property));
 
     return new Response(JSON.stringify({ property }), { status: 200 });
   } catch (error) {
-    console.error("Error fetching property details:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), { status: 500 });
+    console.error("Error in property get endpoint:", error);
+    return new Response(JSON.stringify({ error: "Internal server error", details: error }), { status: 500 });
   }
 }

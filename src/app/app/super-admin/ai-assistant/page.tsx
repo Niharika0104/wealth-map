@@ -2,7 +2,7 @@ import { PropertyQuery } from "@/components/PropertyQuery";
 
 export default function AIAssistantPage() {
   return (
-    <div className="h-screen w-full">
+    <div className="h-full w-full">
         <PropertyQuery />
     </div>
   );

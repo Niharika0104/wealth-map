@@ -400,7 +400,7 @@ const filteredProperties = useMemo(() => {
           {displayMode === "grid" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {paginatedProperties.map((property) => (
-                <Link href={`/app/property/${property.id}`} key={property.id}>
+                <Link href={`/app/employee/property/${property.id}`} key={property.id}>
                   <Card className="h-full hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-green-300 group">
                     <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
                       <PropertyImageCarousel propertyId={property.id} className="absolute inset-0" />
@@ -481,7 +481,7 @@ const filteredProperties = useMemo(() => {
           {displayMode === "list" && (
             <div className="space-y-4">
               {paginatedProperties.map((property) => (
-                <Link href={`/app/property/${property.id}`} key={property.id}>
+                <Link href={`/app/employee/property/${property.id}`} key={property.id}>
                   <Card className="hover:shadow-lg transition-all duration-300 border-gray-200 hover:border-green-300 group">
                     <CardContent className="p-0">
                       <div className="flex flex-col md:flex-row">

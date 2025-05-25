@@ -59,7 +59,7 @@ interface WebSearchResult {
   snippet: string;
 }
 
-class PropertyAgent {
+export class PropertyAgent {
   private async getAvailableModels(): Promise<string[]> {
     try {
       const response = await axios.get('https://api.groq.com/openai/v1/models', {
