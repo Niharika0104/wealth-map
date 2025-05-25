@@ -14,10 +14,10 @@ export default function ReportingDashboard() {
   return (
     <Card className="p-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="export">Property Export</TabsTrigger>
           <TabsTrigger value="custom">Custom Reports</TabsTrigger>
-          <TabsTrigger value="scheduled">Scheduled Reports</TabsTrigger>
+       
           <TabsTrigger value="history">Export History</TabsTrigger>
         </TabsList>
 
@@ -29,9 +29,7 @@ export default function ReportingDashboard() {
           <CustomReports />
         </TabsContent>
 
-        <TabsContent value="scheduled" className="mt-6">
-          <ScheduledReports />
-        </TabsContent>
+        
 
         <TabsContent value="history" className="mt-6">
           <ExportHistory />

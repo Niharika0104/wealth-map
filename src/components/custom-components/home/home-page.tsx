@@ -105,7 +105,7 @@ export default function HomePage() {
       const values = properties.map((p) => p.price);
       const minValue = Math.floor(Math.min(...values));
       const maxValue = Math.ceil(Math.max(...values));
-      setValueRange([minValue, maxValue]);
+      setValueRange([0, maxValue]);
       setFilterState((prev) => ({ ...prev, value: [minValue, maxValue] }));
       const sqfts = properties.map((p) => p.area);
       const minSqft = Math.floor(Math.min(...sqfts) / 100) * 100;

@@ -1,14 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
-import { PrismaClient } from '@/generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { fileURLToPath } from 'url';
 import csvParser from 'csv-parser';
 import xlsx from 'xlsx';
-
+const prisma=new PrismaClient()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const prisma = new PrismaClient();
+
 
 const propertyNames = [
   "Sapphire Estate", "Emerald Manor", "Golden Crest", "The Grand Haven", "Silver Oak Residence",
@@ -106,7 +106,10 @@ function readCSV(filePath: string): Promise<any[]> {
       .on('error', reject);
   });
 }
-
+ function func(){
+importData();
+loadAddressesFromCSV('./list_of_real_usa_addresses.csv');
+}
 async function importData(): Promise<void> {
   const filePath = path.join(__dirname, 'realtor-data.csv');
   const results = await readCSV(filePath);
@@ -128,9 +131,9 @@ async function importData(): Promise<void> {
       // Determine property type
       let propertyType = null;
       if ((!houseSize || houseSize === 0) && acreLot && acreLot > 0) {
-        propertyType = "land";
+        propertyType = "Land";
       } else if ((acreLot === 0 || !acreLot) && houseSize && houseSize > 0 && bed >= 1 && bath >= 1) {
-        propertyType = "house";
+        propertyType = "House";
       }
 
       if (!propertyType || (propertyType === "house" && (bed < 1 || bath < 1))) return null;
@@ -287,8 +290,10 @@ async function updatePropertiesWithRealAddresses(addresses: any[]): Promise<void
   }
 }
 
-const updateaddress= async (): Promise<void> => {
+const createProperties= async (): Promise<void> => {
+ 
   try {
+     await importData();
     const addresses = await loadAddressesFromCSV('./list_of_real_usa_addresses.csv');
     console.log(`Loaded ${addresses.length} addresses`);
 
@@ -299,7 +304,7 @@ const updateaddress= async (): Promise<void> => {
     console.error('Error:', error);
   } 
 }
-updateaddress()
+createProperties()
   .catch(e => {
     console.error(e);
   })

@@ -393,7 +393,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Rohith\\projects\\wealth\\src\\generated\\prisma",
+      "value": "/Users/niharikagoulikar/Documents/repos/wealth-map/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -402,12 +402,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Rohith\\projects\\wealth\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/niharikagoulikar/Documents/repos/wealth-map/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

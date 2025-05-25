@@ -116,15 +116,12 @@ const filteredProperties = useMemo(() => {
       case "sqft-asc":
         return (Number(a.area) || 0) - (Number(b.area) || 0)
       case "views-desc":
-        return (
-          (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0) -
-          (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0)
-        )
+        // If views is an array, use its length; if it's a number, use it directly; fallback to 0
+        return (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views : 0)
+          - (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views : 0)
       case "views-asc":
-        return (
-          (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0) -
-          (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0)
-        )
+        return (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views : 0)
+          - (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views : 0)
       case "date-desc":
         return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       case "date-asc":
@@ -437,7 +434,7 @@ const filteredProperties = useMemo(() => {
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
                           <Eye className="h-3 w-3" />
-                          {property.views}
+                          {property?.views}
                         </Badge>
                         <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
                           {property?.area != null && !isNaN(Number(property.area))
