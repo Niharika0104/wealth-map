@@ -135,10 +135,11 @@ export default function Home() {
    
         <Searchbar
           placeholder="Search for properties"
-     
+
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+          onChange={(e) => setSearch(e.target.value)} onSearch={function (value: string): void {
+            throw new Error("Function not implemented.");
+          } }        />
   
     
         <button className="bg-green-500 text-white px-4 py-2 rounded flex items-center">

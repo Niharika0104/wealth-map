@@ -7,6 +7,13 @@ type AvatarGroupProps = {
   users: User[];
 };
 export interface Owner {
+  state: any;
+  propertyName: any;
+  address: any;
+  type: ReactNode;
+  netWorth: ReactNode;
+  wealthComposition: any;
+  dataSources: any;
   id: string;
   name: string;
   email?: string;
@@ -83,6 +90,12 @@ interface ListViewProps {
 }
 export type ConfidenceLevel = "High" | "Medium" | "Low"
 export interface Property {
+  value: ReactNode;
+  sqft: ReactNode;
+  lastUpdated: ReactNode;
+  confidenceLevel(confidenceLevel: any): string | undefined;
+  region: ReactNode;
+  coordinates: [number, number];
   id: string;
   name: string;
   description?: string;

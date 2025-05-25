@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MapPin, Eye, Calendar, Shield, ArrowLeft, TrendingUp } from "lucide-react"
 import axios from 'axios'
 import { getCoordinates } from "@/components/custom-components/home/interactive-map"
+import PropertyDetailImageGallery from "@/components/custom-components/home/property-detail-image-gallery"
 import Link from "next/link"
 
 import MapView from "@/components/custom-components/trending/map-view"
@@ -92,6 +93,133 @@ useEffect(() => {
   // Loading state
   if (loading) {
     return (
+      <div className="container mx-auto p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card>
+              {/* Property Image Shimmer */}
+              <div className="relative h-80 w-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-t-lg"></div>
+
+              <CardHeader>
+                {/* Title Shimmer */}
+                <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-3/4"></div>
+              </CardHeader>
+
+              <CardContent>
+                {/* Address Shimmer */}
+                <div className="flex items-center mb-4">
+                  <div className="h-5 w-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mr-2"></div>
+                  <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/2"></div>
+                </div>
+
+                {/* Stats Grid Shimmer */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mb-2"></div>
+                      <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded"></div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Date and Badge Shimmer */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mr-2"></div>
+                    <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-32"></div>
+                  </div>
+                  <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24"></div>
+                </div>
+
+                {/* Tabs Shimmer */}
+                <div className="mt-4">
+                  <div className="flex space-x-1 mb-4">
+                    <div className="h-8 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24"></div>
+                    <div className="h-8 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded"></div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-5/6"></div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-4/5"></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div>
+            {/* Owner Information Card Shimmer */}
+            <Card className="mb-6">
+              <CardHeader>
+                <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/2"></div>
+              </CardHeader>
+              <CardContent>
+                {/* Avatar and Name Shimmer */}
+                <div className="flex items-center mb-4">
+                  <div className="h-12 w-12 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-full mr-4"></div>
+                  <div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24 mb-2"></div>
+                    <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-16"></div>
+                  </div>
+                </div>
+
+                {/* Net Worth Grid Shimmer */}
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  {[1, 2].map((i) => (
+                    <div key={i} className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mb-2"></div>
+                      <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded"></div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Wealth Composition Shimmer */}
+                <div className="mb-4">
+                  <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/3 mb-2"></div>
+                  <div className="space-y-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-full mr-2"></div>
+                          <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-20"></div>
+                        </div>
+                        <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-12"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Button Shimmer */}
+                <div className="h-10 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-full"></div>
+              </CardContent>
+            </Card>
+
+            {/* Data Sources Card Shimmer */}
+            <Card>
+              <CardHeader>
+                <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/3"></div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="border-b pb-3 last:border-0 last:pb-0">
+                      <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/2 mb-1"></div>
+                      <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-3/4 mb-1"></div>
+                      <div className="h-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/3"></div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Not found state
+  if (!property || !owner) {
+    return (
       <div className="container mx-auto p-6 text-center">
         <h1 className="text-2xl font-bold mb-4">Loading Property...</h1>
       </div>
@@ -129,22 +257,7 @@ useEffect(() => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Card>
-            <div className="relative h-80 w-full">
-              <div
-                className="absolute inset-0 rounded-t-lg bg-gradient-to-r from-blue-100 to-indigo-100"
-                style={{
-                  backgroundImage: `url('/placeholder-r0y0s.png')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-              {isHotProperty && (
-                <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full flex items-center">
-                  <TrendingUp className="h-4 w-4 mr-1" />
-                  Hot Property
-                </div>
-              )}
-            </div>
+            <PropertyDetailImageGallery propertyId={propertyId} isHotProperty={isHotProperty} />
             <CardHeader>
               <CardTitle>
                 {property?.type && property?.city

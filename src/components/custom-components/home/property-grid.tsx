@@ -5,12 +5,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { MapPin, Eye, Calendar, Shield, Grid3X3, List,Heart } from "lucide-react"
+import { MapPin, Eye, Calendar, Shield, Grid3X3, List, Heart, Filter, X, SlidersHorizontal } from "lucide-react"
 import Link from "next/link"
-import type {Property} from "@/Models/models"
+import type { Property } from "@/Models/models"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { getBookmarks, addBookmark, removeBookmark } from "@/services/bookmarkService";
+import { addBookmark, removeBookmark } from "@/services/bookmarkService"
 import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import MapFilters from "./map-filters"
+import PropertyImageCarousel from "./property-image-carousel"
+import type { FilterState } from "./home-page"
 import {
   Pagination,
   PaginationContent,
@@ -22,18 +26,39 @@ import {
 
 interface PropertyGridProps {
   properties: Property[]
+  filterState: FilterState
+  setFilterState: (state: FilterState) => void
+  valueRange: [number, number]
+  sqftRange: [number, number]
+  propertyTypes: string[]
+  ownerTypes: string[]
+  resetFilters: () => void
+  totalCount: number
 }
 
-export default function PropertyGrid({ properties }: PropertyGridProps) {
+export default function PropertyGrid({
+  properties,
+  filterState,
+  setFilterState,
+  valueRange,
+  sqftRange,
+  propertyTypes,
+  ownerTypes,
+  resetFilters,
+  totalCount,
+}: PropertyGridProps) {
   const [displayMode, setDisplayMode] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState<string>("value-desc")
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
-  const [bookmarkedPropertyIds, setBookmarkedPropertyIds] = useState<string[]>([]);
+  const [bookmarkedPropertyIds, setBookmarkedPropertyIds] = useState<string[]>([])
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   const itemsPerPage = 12
-useEffect(() => {
-  // getBookmarks("demo").then(setBookmarkedPropertyIds);
-}, []);
+
+  useEffect(() => {
+    // getBookmarks("demo").then(setBookmarkedPropertyIds);
+  }, [])
+
   // Helper to get region from address (fallback to state if not present)
   const getRegion = (property: Property) => {
     if (property.address && property.address.includes(",")) {
@@ -43,16 +68,16 @@ useEffect(() => {
     return property.state || ""
   }
 
-  //const toggle bookmark
+  // Toggle bookmark
   const toggleBookmark = async (propertyId: string) => {
-  if (bookmarkedPropertyIds.includes(propertyId)) {
-    const updated = await removeBookmark(propertyId,"demo");
-    setBookmarkedPropertyIds(updated);
-  } else {
-    const updated = await addBookmark(propertyId,"demo");
-    setBookmarkedPropertyIds(updated);
+    if (bookmarkedPropertyIds.includes(propertyId)) {
+      const updated = await removeBookmark(propertyId, "demo")
+      setBookmarkedPropertyIds(updated)
+    } else {
+      const updated = await addBookmark(propertyId, "demo")
+      setBookmarkedPropertyIds(updated)
+    }
   }
-};
 
   // Filter properties by search query
   const filteredProperties = properties.filter(
@@ -60,7 +85,7 @@ useEffect(() => {
       property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (property.name && property.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      (property.name && property.name.toLowerCase().includes(searchQuery.toLowerCase())),
   )
 
   // Sort properties
@@ -80,12 +105,15 @@ useEffect(() => {
       case "sqft-asc":
         return (Number(a.area) || 0) - (Number(b.area) || 0)
       case "views-desc":
-        // If views is an array, use its length; if it's a number, use it directly; fallback to 0
-        return (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0)
-          - (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0)
+        return (
+          (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0) -
+          (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0)
+        )
       case "views-asc":
-        return (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0)
-          - (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0)
+        return (
+          (typeof a.views === "number" ? a.views : Array.isArray(a.views) ? a.views.length : 0) -
+          (typeof b.views === "number" ? b.views : Array.isArray(b.views) ? b.views.length : 0)
+        )
       case "date-desc":
         return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       case "date-asc":
@@ -103,13 +131,13 @@ useEffect(() => {
   const getConfidenceColor = (level: string) => {
     switch (level) {
       case "High":
-        return "bg-green-100 text-green-800"
+        return "bg-green-100 text-green-800 border-green-200"
       case "Medium":
-        return "bg-yellow-100 text-yellow-800"
+        return "bg-yellow-100 text-yellow-800 border-yellow-200"
       case "Low":
-        return "bg-red-100 text-red-800"
+        return "bg-red-100 text-red-800 border-red-200"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800 border-gray-200"
     }
   }
 
@@ -138,19 +166,54 @@ useEffect(() => {
     return items
   }
 
+  // Count active filters
+  const getActiveFilterCount = () => {
+    let count = 0
+    if (filterState.value[0] !== valueRange[0] || filterState.value[1] !== valueRange[1]) count++
+    if (filterState.sqft[0] !== sqftRange[0] || filterState.sqft[1] !== sqftRange[1]) count++
+    if (filterState.confidence.length !== 3) count++
+    if (filterState.propertyType.length > 0) count++
+    if (filterState.ownerType.length > 0) count++
+    return count
+  }
+
+  // Clear individual filter
+  const clearFilter = (filterType: string) => {
+    switch (filterType) {
+      case "value":
+        setFilterState({ ...filterState, value: valueRange })
+        break
+      case "sqft":
+        setFilterState({ ...filterState, sqft: sqftRange })
+        break
+      case "confidence":
+        setFilterState({ ...filterState, confidence: ["High", "Medium", "Low"] })
+        break
+      case "propertyType":
+        setFilterState({ ...filterState, propertyType: [] })
+        break
+      case "ownerType":
+        setFilterState({ ...filterState, ownerType: [] })
+        break
+    }
+  }
+
+  const activeFilterCount = getActiveFilterCount()
+
   return (
-    <div className="container mx-auto p-6 pt-16 h-screen overflow-y-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 mt-4">
+    <div className="container mx-auto p-6 pt-16">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 mt-4">
         <div className="relative w-full md:w-auto flex-1 max-w-md">
           <Input
-            placeholder="Search properties..."
+            placeholder="Search properties by name, address, or type..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pl-10 h-11 border-gray-300 focus:border-green-500 focus:ring-green-500"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 absolute left-3 top-3 text-gray-400"
+            className="h-4 w-4 absolute left-3 top-3.5 text-gray-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -164,9 +227,43 @@ useEffect(() => {
           </svg>
         </div>
 
-        <div className="flex items-center gap-4 w-full md:w-auto">
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="sm" className="relative h-11 border-gray-300 hover:border-green-500">
+                <SlidersHorizontal className="h-4 w-4 mr-2" />
+                Filters
+                {activeFilterCount > 0 && (
+                  <Badge className="ml-2 bg-green-500 text-white text-xs px-1.5 py-0.5 min-w-[20px] h-5">
+                    {activeFilterCount}
+                  </Badge>
+                )}
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-80 sm:w-96">
+              <SheetHeader className="pb-4">
+                <SheetTitle className="flex items-center gap-2">
+                  <Filter className="h-5 w-5 text-green-600" />
+                  Property Filters
+                </SheetTitle>
+              </SheetHeader>
+              <div className="h-full overflow-y-auto pb-8">
+                <MapFilters
+                  filterState={filterState}
+                  setFilterState={setFilterState}
+                  valueRange={valueRange}
+                  sqftRange={sqftRange}
+                  propertyTypes={propertyTypes}
+                  ownerTypes={ownerTypes}
+                  resetFilters={resetFilters}
+                  totalCount={totalCount}
+                />
+              </div>
+            </SheetContent>
+          </Sheet>
+
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] h-11 border-gray-300 focus:border-green-500">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -181,12 +278,12 @@ useEffect(() => {
             </SelectContent>
           </Select>
 
-          <div className="flex bg-gray-100 rounded-md p-1">
+          <div className="flex bg-gray-100 rounded-md p-1 border border-gray-200">
             <Button
               variant={displayMode === "grid" ? "default" : "ghost"}
               size="sm"
               onClick={() => setDisplayMode("grid")}
-              className="rounded-r-none"
+              className="rounded-r-none h-9"
             >
               <Grid3X3 className="h-4 w-4" />
             </Button>
@@ -194,7 +291,7 @@ useEffect(() => {
               variant={displayMode === "list" ? "default" : "ghost"}
               size="sm"
               onClick={() => setDisplayMode("list")}
-              className="rounded-l-none"
+              className="rounded-l-none h-9"
             >
               <List className="h-4 w-4" />
             </Button>
@@ -202,10 +299,89 @@ useEffect(() => {
         </div>
       </div>
 
+      {/* Active Filters Display */}
+      {activeFilterCount > 0 && (
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-medium text-green-900">Active Filters ({activeFilterCount})</h4>
+            <Button variant="ghost" size="sm" onClick={resetFilters} className="text-green-600 hover:text-green-800">
+              Clear All
+            </Button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {(filterState.value[0] !== valueRange[0] || filterState.value[1] !== valueRange[1]) && (
+              <Badge variant="secondary" className="bg-white border border-green-200 text-green-800">
+                Value: ${filterState.value[0]}M - ${filterState.value[1]}M
+                <button onClick={() => clearFilter("value")} className="ml-1 hover:text-green-600">
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+            {(filterState.sqft[0] !== sqftRange[0] || filterState.sqft[1] !== sqftRange[1]) && (
+              <Badge variant="secondary" className="bg-white border border-green-200 text-green-800">
+                Area: {filterState.sqft[0]} - {filterState.sqft[1]} sqft
+                <button onClick={() => clearFilter("sqft")} className="ml-1 hover:text-green-600">
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+            {filterState.confidence.length !== 3 && (
+              <Badge variant="secondary" className="bg-white border border-green-200 text-green-800">
+                Confidence: {filterState.confidence.join(", ")}
+                <button onClick={() => clearFilter("confidence")} className="ml-1 hover:text-green-600">
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+            {filterState.propertyType.map((type) => (
+              <Badge key={type} variant="secondary" className="bg-white border border-green-200 text-green-800">
+                {type}
+                <button
+                  onClick={() =>
+                    setFilterState({
+                      ...filterState,
+                      propertyType: filterState.propertyType.filter((t) => t !== type),
+                    })
+                  }
+                  className="ml-1 hover:text-green-600"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            ))}
+            {filterState.ownerType.map((type) => (
+              <Badge key={type} variant="secondary" className="bg-white border border-green-200 text-green-800">
+                {type}
+                <button
+                  onClick={() =>
+                    setFilterState({
+                      ...filterState,
+                      ownerType: filterState.ownerType.filter((t) => t !== type),
+                    })
+                  }
+                  className="ml-1 hover:text-green-600"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Results Section */}
       {paginatedProperties.length === 0 ? (
-        <div className="text-center py-12">
-          <h3 className="text-lg font-medium">No properties found</h3>
-          <p className="text-gray-500 mt-2">Try adjusting your filters or search query</p>
+        <div className="text-center py-16">
+          <div className="bg-gray-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <Grid3X3 className="h-8 w-8 text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No properties found</h3>
+          <p className="text-gray-500 mb-4">Try adjusting your filters or search query to see more results</p>
+          {activeFilterCount > 0 && (
+            <Button variant="outline" onClick={resetFilters} className="border-green-200 text-green-600">
+              Clear All Filters
+            </Button>
+          )}
         </div>
       ) : (
         <>
@@ -214,39 +390,52 @@ useEffect(() => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {paginatedProperties.map((property) => (
                 <Link href={`/app/property/${property.id}`} key={property.id}>
-                  <Card className="h-full hover:shadow-lg transition-shadow duration-200">
-                    <div className="relative h-48 w-full">
-                      <div
-                        className="absolute inset-0 rounded-t-lg bg-gradient-to-r from-blue-100 to-indigo-100"
-                        style={{
-                          backgroundImage: `url('/placeholder-r0y0s.png')`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                        }}
-                      />
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-green-300 group">
+                    <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+                      <PropertyImageCarousel propertyId={property.id} className="absolute inset-0" />
+                      <div className="absolute top-3 right-3">
+                        <button
+                          type="button"
+                          aria-label={bookmarkedPropertyIds.includes(property.id) ? "Remove Bookmark" : "Add Bookmark"}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            toggleBookmark(property.id)
+                          }}
+                          className="bg-white/90 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors"
+                        >
+                          <Heart
+                            className={`h-4 w-4 ${
+                              bookmarkedPropertyIds.includes(property.id)
+                                ? "text-red-500 fill-red-500"
+                                : "text-gray-600"
+                            }`}
+                            fill={bookmarkedPropertyIds.includes(property.id) ? "currentColor" : "none"}
+                          />
+                        </button>
+                      </div>
                     </div>
                     <CardContent className="p-4">
-                      <h3 className="font-bold text-lg mb-1 line-clamp-1">
-                        {property.name} 
-                        
+                      <h3 className="font-bold text-lg mb-2 line-clamp-1 group-hover:text-green-600 transition-colors">
+                        {property.name}
                       </h3>
-                      <div className="flex items-center text-gray-600 mb-2">
-                        <MapPin className="h-4 w-4 min-w-4 mr-1" />
+                      <div className="flex items-center text-gray-600 mb-3">
+                        <MapPin className="h-4 w-4 min-w-4 mr-1 text-gray-400" />
                         <span className="text-sm truncate">{property.address}</span>
                       </div>
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        <Badge variant="outline" className="flex items-center gap-1">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
                           <Eye className="h-3 w-3" />
                           {property.views}
                         </Badge>
-                        <Badge variant="outline" className="flex items-center gap-1">
-                         {property?.area != null && !isNaN(Number(property.area))
-                      ? Number(property.area) >= 1_000_000
-                        ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
-                        : Number(property.area) >= 1_000
-                          ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
-                          : `${Math.floor(Number(property.area))} sqft`
-                      : "N/A sqft"}
+                        <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
+                          {property?.area != null && !isNaN(Number(property.area))
+                            ? Number(property.area) >= 1_000_000
+                              ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
+                              : Number(property.area) >= 1_000
+                                ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
+                                : `${Math.floor(Number(property.area))} sqft`
+                            : "N/A sqft"}
                         </Badge>
                         <Badge className={`${getConfidenceColor(property.confidence ?? "")} flex items-center gap-1`}>
                           <Shield className="h-3 w-3" />
@@ -254,35 +443,20 @@ useEffect(() => {
                         </Badge>
                       </div>
                       <div className="flex justify-between items-center">
-                        <div className="text-sm text-gray-600 flex items-center">
+                        <div className="text-sm text-gray-500 flex items-center">
                           <Calendar className="h-3 w-3 mr-1" />
                           {new Date(property.updatedAt).toLocaleDateString()}
                         </div>
                         <div className="flex items-center">
-                          <span className="font-bold text-green-600 mr-2">
+                          <span className="font-bold text-green-600 text-lg">
                             {property?.price != null && !isNaN(Number(property.price))
-                      ? Number(property.price) >= 1_000_000
-                        ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
-                        : Number(property.price) >= 1_000
-                          ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
-                          : `$${Number(property.price)}`
-                      : 'N/A'}
+                              ? Number(property.price) >= 1_000_000
+                                ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
+                                : Number(property.price) >= 1_000
+                                  ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
+                                  : `$${Number(property.price)}`
+                              : "N/A"}
                           </span>
-                        <button
-  type="button"
-  aria-label={bookmarkedPropertyIds.includes(property.id) ? "Remove Bookmark" : "Add Bookmark"}
-  onClick={e => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleBookmark(property.id);
-  }}
-  className="ml-2"
->
-  <Heart
-    className={`h-6 w-6 ${bookmarkedPropertyIds.includes(property.id) ? "text-red-500 fill-red-500" : "text-gray-400"}`}
-    fill={bookmarkedPropertyIds.includes(property.id) ? "currentColor" : "none"}
-  />
-</button>
                         </div>
                       </div>
                     </CardContent>
@@ -297,60 +471,76 @@ useEffect(() => {
             <div className="space-y-4">
               {paginatedProperties.map((property) => (
                 <Link href={`/app/property/${property.id}`} key={property.id}>
-                  <Card className="hover:shadow-md transition-shadow duration-200">
+                  <Card className="hover:shadow-lg transition-all duration-300 border-gray-200 hover:border-green-300 group">
                     <CardContent className="p-0">
                       <div className="flex flex-col md:flex-row">
-                        <div
-                          className="h-32 md:w-48 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
-                          style={{
-                            backgroundImage: `url('/placeholder-r0y0s.png')`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                        />
+                        <div className="h-32 md:w-48 rounded-t-lg md:rounded-l-lg md:rounded-tr-none overflow-hidden relative">
+                          <PropertyImageCarousel propertyId={property.id} className="absolute inset-0" />
+                        </div>
                         <div className="p-4 flex-1">
                           <div className="flex flex-col md:flex-row md:justify-between md:items-start">
-                            <div>
-                              <h3 className="font-bold text-lg">
+                            <div className="flex-1">
+                              <h3 className="font-bold text-lg group-hover:text-green-600 transition-colors">
                                 {property.name}
                               </h3>
-                              <div className="flex items-center text-gray-600 mb-2">
-                                <MapPin className="h-4 w-4 mr-1" />
+                              <div className="flex items-center text-gray-600 mb-3">
+                                <MapPin className="h-4 w-4 mr-1 text-gray-400" />
                                 <span className="text-sm">{property.address}</span>
                               </div>
                             </div>
-                            <div className="mt-2 md:mt-0 md:ml-4 flex items-center">
-                              <span className="font-bold text-green-600 text-lg">
+                            <div className="mt-2 md:mt-0 md:ml-4 flex items-center gap-3">
+                              <span className="font-bold text-green-600 text-xl">
                                 {property?.price != null && !isNaN(Number(property.price))
-                      ? Number(property.price) >= 1_000_000
-                        ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
-                        : Number(property.price) >= 1_000
-                          ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
-                          : `$${Number(property.price)}`
-                      : 'N/A'}
+                                  ? Number(property.price) >= 1_000_000
+                                    ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
+                                    : Number(property.price) >= 1_000
+                                      ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
+                                      : `$${Number(property.price)}`
+                                  : "N/A"}
                               </span>
-                              <Avatar className="h-6 w-6 ml-2">
+                              <button
+                                type="button"
+                                aria-label={
+                                  bookmarkedPropertyIds.includes(property.id) ? "Remove Bookmark" : "Add Bookmark"
+                                }
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  toggleBookmark(property.id)
+                                }}
+                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                              >
+                                <Heart
+                                  className={`h-5 w-5 ${
+                                    bookmarkedPropertyIds.includes(property.id)
+                                      ? "text-red-500 fill-red-500"
+                                      : "text-gray-400"
+                                  }`}
+                                  fill={bookmarkedPropertyIds.includes(property.id) ? "currentColor" : "none"}
+                                />
+                              </button>
+                              <Avatar className="h-8 w-8">
                                 <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                                <AvatarFallback>{(property.owners?.[0]?.name?.charAt(0) ?? "?")}</AvatarFallback>
+                                <AvatarFallback className="text-xs">
+                                  {property.owners?.[0]?.name?.charAt(0) ?? "?"}
+                                </AvatarFallback>
                               </Avatar>
                             </div>
                           </div>
 
                           <div className="flex flex-wrap gap-2 mt-3">
-                            <Badge variant="outline" className="flex items-center gap-1">
+                            <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
                               <Eye className="h-3 w-3" />
                               {property.views} views
                             </Badge>
-                            <Badge variant="outline" className="flex items-center gap-1">
-                            
-                                  {property?.area != null && !isNaN(Number(property.area))
-                      ? Number(property.area) >= 1_000_000
-                        ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
-                        : Number(property.area) >= 1_000
-                          ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
-                          : `${Math.floor(Number(property.area))} sqft`
-                      : "N/A sqft"}
-                               
+                            <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
+                              {property?.area != null && !isNaN(Number(property.area))
+                                ? Number(property.area) >= 1_000_000
+                                  ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
+                                  : Number(property.area) >= 1_000
+                                    ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
+                                    : `${Math.floor(Number(property.area))} sqft`
+                                : "N/A sqft"}
                             </Badge>
                             <Badge
                               className={`${getConfidenceColor(property.confidence ?? "")} flex items-center gap-1`}
@@ -358,7 +548,7 @@ useEffect(() => {
                               <Shield className="h-3 w-3" />
                               {property.confidence} confidence
                             </Badge>
-                            <div className="text-sm text-gray-600 flex items-center ml-auto">
+                            <div className="text-sm text-gray-500 flex items-center ml-auto">
                               <Calendar className="h-3 w-3 mr-1" />
                               {new Date(property.updatedAt).toLocaleDateString()}
                             </div>
@@ -374,13 +564,13 @@ useEffect(() => {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-8 mb-8">
+            <div className="mt-8 mb-8 flex justify-center">
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
                       onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                      isDisabled={currentPage === 1}
+                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </PaginationItem>
 
@@ -389,7 +579,7 @@ useEffect(() => {
                   <PaginationItem>
                     <PaginationNext
                       onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                      isDisabled={currentPage === totalPages}
+                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </PaginationItem>
                 </PaginationContent>

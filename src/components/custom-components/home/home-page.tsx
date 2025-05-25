@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import axios from 'axios'
-import { getProperties } from "../trending/property-store"
+import axios from "axios"
 import InteractiveMap from "./interactive-map"
 import MapFilters from "./map-filters"
 import SavedViews from "./saved-views"
@@ -13,12 +12,12 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 
 import { toast } from "@/components/ui/use-toast"
 import PropertyGrid from "./property-grid"
-import type {Property} from "@/Models/models"
+import type { Property } from "@/Models/models"
+
 export type MapView = {
   id: string
   name: string
   center: [number, number]
-  zoom: number
   filters: FilterState
   createdAt: string
 }
@@ -50,7 +49,7 @@ export default function HomePage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSavedViewsOpen, setIsSavedViewsOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [viewMode, setViewMode] = useState<"map" | "grid">("map");
+  const [viewMode, setViewMode] = useState<"map" | "grid">("grid");
   const [valueRange, setValueRange] = useState<[number, number]>([0, 15]);
   const [sqftRange, setSqftRange] = useState<[number, number]>([0, 10000]);
 
@@ -67,7 +66,7 @@ export default function HomePage() {
           confidence: confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)]
         }));
         setProperties(data);
-        setFilteredProperties(data); 
+        setFilteredProperties(data);
       } catch (err) {
         console.error('Failed to fetch properties:', err);
       }
@@ -132,7 +131,6 @@ export default function HomePage() {
       id: Date.now().toString(),
       name,
       center: currentView.center,
-      zoom: currentView.zoom,
       filters: { ...filterState },
       createdAt: new Date().toISOString(),
     }
@@ -151,7 +149,7 @@ export default function HomePage() {
   const loadSavedView = (view: MapView) => {
     setCurrentView({
       center: view.center,
-      zoom: view.zoom,
+      zoom: currentView.zoom,
     })
     setFilterState(view.filters)
     setIsSavedViewsOpen(false)
@@ -200,9 +198,12 @@ export default function HomePage() {
     })
   }
 
-  // Add a function to toggle view mode
+  // Updated toggle view mode function to close panels
   const toggleViewMode = () => {
     setViewMode(viewMode === "map" ? "grid" : "map")
+    // Close any open panels when switching views
+    setIsFilterOpen(false)
+    setIsSavedViewsOpen(false)
   }
 
   return (
@@ -213,7 +214,7 @@ export default function HomePage() {
           <Button
             variant={viewMode === "map" ? "default" : "ghost"}
             size="sm"
-            onClick={() => setViewMode("map")}
+            onClick={toggleViewMode}
             className="rounded-r-none"
           >
             <Map className="h-4 w-4 mr-2" />
@@ -222,7 +223,7 @@ export default function HomePage() {
           <Button
             variant={viewMode === "grid" ? "default" : "ghost"}
             size="sm"
-            onClick={() => setViewMode("grid")}
+            onClick={toggleViewMode}
             className="rounded-l-none"
           >
             <Grid className="h-4 w-4 mr-2" />
@@ -263,17 +264,34 @@ export default function HomePage() {
 
       {/* Map View */}
       {viewMode === "map" && (
-        <InteractiveMap
-          properties={filteredProperties}
-          mapType={mapType}
-          initialCenter={currentView.center}
-          initialZoom={currentView.zoom}
-          onViewChange={handleViewChange}
-        />
+        <div className="h-full w-full">
+          <InteractiveMap
+            properties={filteredProperties}
+            mapType={mapType}
+            initialCenter={currentView.center}
+            initialZoom={currentView.zoom}
+            onViewChange={handleViewChange}
+          />
+        </div>
       )}
 
-      {/* Grid View */}
-      {viewMode === "grid" && <PropertyGrid properties={filteredProperties} />}
+      {/* Grid View with filter props */}
+      {viewMode === "grid" && (
+        <div className="h-full overflow-y-auto">
+          <PropertyGrid
+            properties={filteredProperties}
+            filterState={filterState}
+            setFilterState={setFilterState}
+            valueRange={valueRange}
+            sqftRange={sqftRange}
+            propertyTypes={propertyTypes}
+            ownerTypes={ownerTypes}
+            resetFilters={resetFilters}
+            totalCount={properties.length}
+          />
+        </div>
+      )}
+
 
       {/* Map Controls - Mobile */}
       {!isDesktop && (
@@ -295,7 +313,6 @@ export default function HomePage() {
                   propertyTypes={propertyTypes}
                   ownerTypes={ownerTypes}
                   resetFilters={resetFilters}
-                  filteredCount={filteredProperties.length}
                   totalCount={properties.length}
                 />
               </div>
@@ -347,7 +364,6 @@ export default function HomePage() {
             propertyTypes={propertyTypes}
             ownerTypes={ownerTypes}
             resetFilters={resetFilters}
-            filteredCount={filteredProperties.length}
             totalCount={properties.length}
           />
         </div>
@@ -373,9 +389,11 @@ export default function HomePage() {
       )}
 
       {/* Property Count Indicator */}
-      <div className="absolute bottom-4 left-4 z-10 bg-white bg-opacity-90 rounded-md px-3 py-1 text-sm shadow-md">
-        Showing {filteredProperties.length} of {properties.length} properties
-      </div>
+      {viewMode === "map" && (
+        <div className="absolute bottom-4 left-4 z-10 bg-white bg-opacity-90 rounded-md px-3 py-1 text-sm shadow-md">
+          Showing {filteredProperties.length} of {properties.length} properties
+        </div>
+      )}
     </div>
   )
 }
