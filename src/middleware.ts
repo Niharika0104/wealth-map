@@ -30,6 +30,22 @@ const PUBLIC_API_ROUTES = [
     path: '/api/organizations/[id]/status',
     methods: ['PATCH'],
   },
+  {
+    path: '/api/company-admin/employees',
+    methods: ['GET'],
+  },
+  {
+    path: '/api/company-admin/employees/[id]/role',
+    methods: ['PATCH'],
+  },
+  {
+    path: '/api/company-admin/roles',
+    methods: ['GET', 'POST', 'DELETE'],
+  },
+  {
+    path: '/api/company-admin/permissions',
+    methods: ['GET'],
+  },
 ];
 
 // Convert route patterns to regex
@@ -94,8 +110,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Require authentication for all other routes
-  if (!isAuth || !session.user?.id || session.requiresTwoFactor) {
+  // Allow unauthenticated access to the landing page
+  if (
+    !isAuth ||
+    !session.user?.id ||
+    session.requiresTwoFactor
+  ) {
+    if (request.nextUrl.pathname === "/") {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
@@ -137,6 +160,6 @@ export const config = {
     // - Static files (_next/static, _next/image)
     // - Favicon
     // - Public files (public directory)
-    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
+    "/((?!_next/static|_next/image|favicon.ico|public).*)",
   ],
 };

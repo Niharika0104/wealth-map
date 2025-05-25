@@ -53,7 +53,7 @@ export default function MapView({
       clearMarkers()
       if (mapInstance.current) {
         try {
-          mapInstance.current.remove()
+        mapInstance.current.remove()
         } catch (error) {
           console.error("Error removing map:", error)
         }
@@ -180,19 +180,19 @@ export default function MapView({
       // If we have markers, fit the map to show all of them
       if (markersRef.current.length > 0 && mapInstance.current) {
         try {
-          // Create a bounds object
-          const bounds = new maptilersdk.LngLatBounds()
+        // Create a bounds object
+        const bounds = new maptilersdk.LngLatBounds()
 
-          // Extend the bounds to include each marker's position
-          markersRef.current.forEach((marker) => {
-            bounds.extend(marker.getLngLat())
-          })
+        // Extend the bounds to include each marker's position
+        markersRef.current.forEach((marker) => {
+          bounds.extend(marker.getLngLat())
+        })
 
-          // Fit the map to the bounds
-          mapInstance.current.fitBounds(bounds, {
-            padding: 50, // Add some padding around the bounds
-            maxZoom: 15, // Don't zoom in too far
-          })
+        // Fit the map to the bounds
+        mapInstance.current.fitBounds(bounds, {
+          padding: 50, // Add some padding around the bounds
+          maxZoom: 15, // Don't zoom in too far
+        })
         } catch (error) {
           console.error("Error fitting bounds:", error)
         }

@@ -143,7 +143,7 @@ export default function TrendingProperties() {
     if (!score) return "bg-gray-100 text-gray-800"
     if (score >= 0.8) return "bg-green-100 text-green-800"
     if (score >= 0.5) return "bg-yellow-100 text-yellow-800"
-    return "bg-red-100 text-red-800"
+        return "bg-red-100 text-red-800"
   }
 
   // Get trending score color and icon
@@ -520,7 +520,7 @@ export default function TrendingProperties() {
                   <SelectItem value="low">Low Views</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+          </div>
 
             <div className="flex space-x-2">
               <Button

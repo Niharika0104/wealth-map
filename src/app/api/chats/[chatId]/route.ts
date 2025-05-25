@@ -10,33 +10,37 @@ export async function DELETE(
 ) {
   try {
     const session = await auth();
-    if (!session?.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const chat = await prisma.chat.findUnique({
+    const chatId = params.chatId;
+
+    // Verify the chat belongs to the user
+    const chat = await prisma.chat.findFirst({
       where: {
-        id: params.chatId,
+        id: chatId,
+        userId: session.user.id,
       },
     });
 
     if (!chat) {
-      return new NextResponse("Chat not found", { status: 404 });
+      return NextResponse.json({ error: "Chat not found" }, { status: 404 });
     }
 
-    if (chat.userId !== session.user.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
+    // Delete the chat
     await prisma.chat.delete({
       where: {
-        id: params.chatId,
+        id: chatId,
       },
     });
 
-    return new NextResponse(null, { status: 204 });
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("[CHAT_DELETE]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.error("Error deleting chat:", error);
+    return NextResponse.json(
+      { error: "Failed to delete chat" },
+      { status: 500 }
+    );
   }
 } 
