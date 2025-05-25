@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -12,69 +12,118 @@ import { Download, FileText, Table, Search } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
+import { capitalizeFirstLetter, Property } from "@/Models/models"
+import { format } from 'date-fns';
 
-const { trendingProperties } = getProperties()
 
-// Mock function to simulate export
-const exportData = (format: string, properties: string[], fields: string[]) => {
-  // In a real app, this would generate and download the file
-  console.log(`Exporting ${properties.length} properties in ${format} format with fields: ${fields.join(", ")}`)
-
-  // Simulate a delay
-  return new Promise((resolve) => setTimeout(resolve, 1500))
+//Add a utility to generate export content
+function generateExportContent(format: string, properties: any[], fields: string[]) {
+  if (format === "csv" || format === "excel") {
+    const header = fields.join(",");
+    const rows = properties.map((p) =>
+      fields.map((f) => `"${(p[f] ?? "").toString().replace(/"/g, '""')}"`).join(",")
+    );
+    return [header, ...rows].join("\n");
+  }
+  if (format === "json") {
+    return JSON.stringify(properties.map((p) => {
+      const obj: Record<string, any> = {};
+      fields.forEach((f) => { obj[f] = p[f]; });
+      return obj;
+    }), null, 2);
+  }
+  return "";
 }
 
+// Mock function to simulate export
+const exportData = async (
+  format: string,
+  propertyIds: string[],
+  fields: string[],
+  allProperties: any[]
+) => {
+  const selectedProps = allProperties.filter((p) => propertyIds.includes(p.id));
+  const content = generateExportContent(format, selectedProps, fields);
+  let filename = `properties_export.${format}`;
+  let mimeType = "text/plain";
+  if (format === "csv" || format === "excel") mimeType = "text/csv";
+  if (format === "json") mimeType = "application/json";
+  downloadFile(content, filename, mimeType);
+  return new Promise((resolve) => setTimeout(resolve, 1500));
+};
+//Add a utility to trigger file download:
+function downloadFile(content: string, filename: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 0);
+}
 export default function PropertyExport() {
   const [selectedProperties, setSelectedProperties] = useState<string[]>([])
+    const [properties, setProperties] = useState<Property[]>([]);
+  
   const [selectedFormat, setSelectedFormat] = useState("csv")
   const [selectedFields, setSelectedFields] = useState<string[]>([
     "address",
-    "value",
-    "sqft",
+    "price",
+    "area",
     "type",
-    "region",
-    "confidenceLevel",
+    "city",
+    "confidenceF",
   ])
   const [isExporting, setIsExporting] = useState(false)
   const [propertyFilter, setPropertyFilter] = useState("all")
   const [propertySearchTerm, setPropertySearchTerm] = useState("")
 
+  useEffect(() => {
+  const fetchProperties = async () => {
+    const { allProperties } = await getProperties();
+    setProperties(allProperties);
+  };
+  fetchProperties();
+}, []);
   // Available export formats
-  const exportFormats = [
-    { id: "csv", label: "CSV", icon: <FileText className="h-4 w-4" /> },
-    { id: "excel", label: "Excel", icon: <Table className="h-4 w-4" /> },
-    { id: "pdf", label: "PDF", icon: <FileText className="h-4 w-4" /> },
-    { id: "json", label: "JSON", icon: <FileText className="h-4 w-4" /> },
-  ]
+const exportFormats = [
+  { id: "csv", label: "CSV", icon: <FileText className="h-4 w-4" /> },
+  { id: "excel", label: "Excel", icon: <Table className="h-4 w-4" /> },
+  { id: "json", label: "JSON", icon: <FileText className="h-4 w-4" /> },
+]
 
   // Available fields for export
   const availableFields = [
     { id: "address", label: "Address" },
-    { id: "value", label: "Property Value" },
-    { id: "sqft", label: "Square Footage" },
+    { id: "price", label: "Property Value" },
+    { id: "area", label: "Square Footage" },
     { id: "type", label: "Property Type" },
-    { id: "region", label: "Region" },
-    { id: "confidenceLevel", label: "Confidence Level" },
-    { id: "lastUpdated", label: "Last Updated" },
+    { id: "city", label: "Region" },
+    { id: "confidence", label: "Confidence Level" },
+    { id: "updatedAt", label: "Last Updated" },
     { id: "views", label: "View Count" },
-    { id: "ownerName", label: "Owner Name" },
+    
     { id: "ownerType", label: "Owner Type" },
   ]
 
   // Filter properties based on selection and search
-  const filteredProperties = trendingProperties.filter((property) => {
+  const filteredProperties = properties.filter((property) => {
     // First apply the confidence filter
     let passesConfidenceFilter = true
-    if (propertyFilter === "high") passesConfidenceFilter = property.confidenceLevel === "High"
-    else if (propertyFilter === "medium") passesConfidenceFilter = property.confidenceLevel === "Medium"
-    else if (propertyFilter === "low") passesConfidenceFilter = property.confidenceLevel === "Low"
+    if (propertyFilter === "high") passesConfidenceFilter = property.confidence === "High"
+    else if (propertyFilter === "medium") passesConfidenceFilter = property.confidence === "Medium"
+    else if (propertyFilter === "low") passesConfidenceFilter = property.confidence === "Low"
 
     // Then apply the search filter if there's a search term
     const passesSearchFilter =
       propertySearchTerm === "" ||
       property.address.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
-      property.region.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
-      property.value.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.city.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
+      property.price.toString().toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
       property.type.toLowerCase().includes(propertySearchTerm.toLowerCase())
 
     return passesConfidenceFilter && passesSearchFilter
@@ -130,7 +179,7 @@ export default function PropertyExport() {
     setIsExporting(true)
 
     try {
-      await exportData(selectedFormat, selectedProperties, selectedFields)
+      await await exportData(selectedFormat, selectedProperties, selectedFields, filteredProperties);
 
       // Add to export history
       const historyItem = {
@@ -219,10 +268,10 @@ export default function PropertyExport() {
                       />
                       <div>
                         <Label htmlFor={property.id} className="font-medium">
-                          {property.type} {property.region}
+                          {capitalizeFirstLetter(property.type)} in  {property.city}
                         </Label>
                         <p className="text-sm text-gray-500">{property.address}</p>
-                        <p className="text-sm text-gray-500">Value: {property.value}</p>
+                        <p className="text-sm text-gray-500">Value: {property.price}</p>
                       </div>
                     </div>
                   ))}
@@ -335,7 +384,12 @@ export default function PropertyExport() {
                           key={`${property.id}-${fieldId}`}
                           className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                         >
-                          {property[fieldId as keyof typeof property]?.toString()}
+                          {fieldId === 'type' ?
+              capitalizeFirstLetter(property[fieldId as keyof typeof property]?.toString() || '') :
+              // Add this condition for 'lastUpdated'
+              fieldId === 'updatedAt' ?
+                (property.updatedAt ? format(new Date(property.updatedAt), 'MMM dd, yyyy') : 'N/A') : // Example format: May 25, 2025
+                property[fieldId as keyof typeof property]?.toString()}
                         </td>
                       ))}
                     </tr>

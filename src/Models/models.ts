@@ -118,7 +118,7 @@ export interface Property {
   // You can add these as arrays of related types if you have them defined:
   owners?: any[];
   Bookmarks?: any[];
-  views?: any[];
+  views?: number;
   // Synthesized frontend fields:
   ownerType?: string; // "individual" | "corporate" | undefined
   confidence?: ConfidenceLevel; // "High" | "Medium" | "Low" | undefined
@@ -171,4 +171,34 @@ function formatKMB(amount: number): string {
   if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(1) + "M";
   if (amount >= 1_000) return (amount / 1_000).toFixed(1) + "K";
   return amount.toString();
+}
+export  function getTrendingScore({
+  views,
+  bookmarks,
+  createdAt
+}: {
+  views: number;
+  bookmarks: number;
+  createdAt: Date;
+}): number {
+  const ageInHours = (Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60);
+  const decay = Math.pow(ageInHours + 1, 0.5);
+  return (views + (bookmarks * 3)) / decay;
+}
+// Function to capitalize the first letter of a string
+export const capitalizeFirstLetter = (str: string): string => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+// src/Models/models.ts or wherever you define your interfaces
+
+export interface Report {
+  id: string; // Unique identifier for the report
+  name: string; // Name of the report (e.g., "High Value Properties")
+  description: string; // Description of the report
+  created: string; // Date the report was created (formatted as a string, e.g., "May 15, 2025")
+  type: "bar" | "pie" | "line"; // Type of chart (e.g., "bar", "pie", "line")
+  properties: string[]; // Array of IDs of properties included in the report
+  fields: string[]; // Array of IDs of data fields included in the report (e.g., "Price", "confidenceLevel")
+  shared: boolean; // Indicates if the report has been shared
 }

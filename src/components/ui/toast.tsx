@@ -38,16 +38,51 @@ const ToastViewport = React.forwardRef<
 ))
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
+
+// Define types for ToastTitle and ToastDescription
+const ToastTitle = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Title>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Title
+    ref={ref}
+    className={cn("text-sm font-semibold", className)}
+    {...props}
+  />
+))
+ToastTitle.displayName = ToastPrimitives.Title.displayName
+
+const ToastDescription = React.forwardRef<
+  React.ElementRef<typeof ToastPrimitives.Description>,
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
+>(({ className, ...props }, ref) => (
+  <ToastPrimitives.Description
+    ref={ref}
+    className={cn("text-sm opacity-90", className)}
+    {...props}
+  />
+))
+ToastDescription.displayName = ToastPrimitives.Description.displayName
+
+
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
-    VariantProps<typeof toastVariants>
->(({ className, variant, ...props }, ref) => (
+    VariantProps<typeof toastVariants> & { // <--- ADD THIS LINE
+      title?: React.ReactNode; // <--- ADD THIS LINE
+      description?: React.ReactNode; // <--- ADD THIS LINE
+    } // <--- ADD THIS LINE
+>(({ className, variant, title, description, ...props }, ref) => ( // <--- Update destructuring here
   <ToastPrimitives.Root
     ref={ref}
     className={cn(toastVariants({ variant }), className)}
     {...props}
-  />
+  >
+    <div className="grid gap-1">
+      {title && <ToastTitle>{title}</ToastTitle>} {/* <--- RENDER TITLE */}
+      {description && <ToastDescription>{description}</ToastDescription>} {/* <--- RENDER DESCRIPTION */}
+    </div>
+  </ToastPrimitives.Root>
 ))
 Toast.displayName = ToastPrimitives.Root.displayName
 
@@ -82,7 +117,10 @@ const ToastClose = React.forwardRef<
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName
 
-type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
+// The existing type definition for ToastProps is correct,
+// but it needs to reflect the added title and description props for Toast
+type ToastProps = React.ComponentPropsWithoutRef<typeof Toast> // This line is now fine
+
 type ToastActionElement = React.ReactElement<typeof ToastAction>
 
 export {
@@ -91,6 +129,8 @@ export {
   Toast,
   ToastClose,
   ToastAction,
+  ToastTitle, // Export ToastTitle
+  ToastDescription, // Export ToastDescription
   type ToastProps,
   type ToastActionElement,
 }
