@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -79,14 +80,24 @@ export default function PropertyGrid({
     }
   }
 
-  // Filter properties by search query
-  const filteredProperties = properties.filter(
-    (property) =>
-      property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      property.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      property.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (property.name && property.name.toLowerCase().includes(searchQuery.toLowerCase())),
-  )
+const filteredProperties = useMemo(() => {
+  const query = searchQuery.trim().toLowerCase();
+
+  return properties
+    .map((property) => {
+      let score = 0;
+
+      if (property.name?.toLowerCase().includes(query)) score += 3;
+      if (property.address.toLowerCase().includes(query)) score += 2;
+      if (property.state.toLowerCase().includes(query)) score += 1;
+      if (property.type.toLowerCase().includes(query)) score += 1;
+
+      return score > 0 ? { ...property, score } : null;
+    })
+    .filter((p): p is typeof properties[number] & { score: number } => p !== null)
+    .sort((a, b) => b.score - a.score);
+}, [searchQuery, properties]);
+
 
   // Sort properties
   const sortedProperties = [...filteredProperties].sort((a, b) => {

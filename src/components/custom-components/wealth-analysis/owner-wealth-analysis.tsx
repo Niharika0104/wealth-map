@@ -38,14 +38,14 @@ import { ConfidenceIndicator } from "./confidence-indicator"
 import { PropertyMap } from "./property-map"
 import { TitleUpdater } from "./title-updater"
 import { mockOwners } from "./mock-data"
-import { Owner,formatKMB } from "@/Models/models"
+import { Owner, formatKMB } from "@/Models/models"
 import axios from "axios"
 import { dataSources, Wealthownershipfields, } from "@/Models/models"
 import type { ConfidenceLevel } from "@/Models/models"
 
 // Accept a single optional prop: { ownerId?: string }
 export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
-  
+
   const [selectedOwner, setSelectedOwner] = useState<string | null>(null)
   const [comparisonOwner, setComparisonOwner] = useState<string | null>(null)
   const [showOnlyHighConfidence, setShowOnlyHighConfidence] = useState(false)
@@ -67,12 +67,12 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
       setIsMounted(true);
     };
 
-    if(ownerId){
-     
+    if (ownerId) {
+
       handleOwnerSelect(ownerId)
     }
-   
-   fetchOwners();
+
+    fetchOwners();
     return () => setIsMounted(false);
   }, [ownerId]);
 
@@ -83,11 +83,15 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
     }))
   }
 
-  const filteredOwners = owners?.filter((owner) => {
-    const matchesSearch = owner.name.toLowerCase().includes(searchTerm.toLowerCase())
-const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Low") === "High" : true;
-    return matchesSearch && matchesConfidence
-  })
+  const filteredOwners = searchTerm.trim()
+    ? owners?.filter((owner) => {
+      const matchesSearch = owner.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesConfidence = showOnlyHighConfidence
+        ? (owner.confidenceLevel ?? "Low") === "High"
+        : true;
+      return matchesSearch && matchesConfidence;
+    })
+    : [];
 
   const selectedOwnerData = selectedOwner ? owners?.find((owner) => owner.id === selectedOwner) : null
   const comparisonOwnerData = comparisonOwner ? owners?.find((owner) => owner.id === comparisonOwner) : null
@@ -156,8 +160,8 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
       <TitleUpdater />
 
       {/* Intro Section */}
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold">Owner Wealth Analysis</h2>
+      <div className="space-y-2 mt-8">
+        <h2 className="text-3xl font-bold mb-2">Owner Wealth Analysis</h2>
         <p className="text-muted-foreground">
           Analyze property owners' financial profiles, view their wealth composition, and explore their property
           locations.
@@ -214,7 +218,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
               <Input
-                placeholder="Search owners..."
+                placeholder="Search owners with name"
                 className="pl-10 pr-4 border-gray-300 focus:border-primary focus:ring-primary"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -223,20 +227,19 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
               />
             </div>
 
-            {isMounted && isDropdownOpen && (
+            {isMounted && isDropdownOpen && searchTerm.trim() && (
               <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg">
                 <ScrollArea className="h-72">
                   {(filteredOwners?.length ?? 0) > 0 ? (
                     (filteredOwners ?? []).map((owner) => (
                       <div
                         key={owner.id}
-                        className={`p-3 hover:bg-gray-50 cursor-pointer flex items-center justify-between ${
-                          selectedOwner === owner.id ? "bg-primary-50" : ""
-                        }`}
+                        className={`p-3 hover:bg-gray-50 cursor-pointer flex items-center justify-between ${selectedOwner === owner.id ? "bg-primary-50" : ""
+                          }`}
                         onClick={() => handleOwnerSelect(owner.id)}
                       >
                         <div className="flex items-center gap-2">
-                          <Avatar className="h-8 w-8 bg-primary-100">
+                          <Avatar className="h-8 w-8 bg-green-50 flex items-center justify-center">
                             <span className="text-sm font-medium text-primary-700">{owner?.name.charAt(0)}</span>
                           </Avatar>
                           <div>
@@ -305,7 +308,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                             onClick={() => handleComparisonSelect(owner.id)}
                           >
                             <div className="flex items-center gap-2">
-                              <Avatar className="h-10 w-10 bg-primary-100">
+                              <Avatar className="h-10 w-10 bg-green-50 flex items-center justify-center">
                                 <span className="text-lg font-medium text-primary-700">{owner.name.charAt(0)}</span>
                               </Avatar>
                               <div>
@@ -330,7 +333,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                 <CardHeader className="bg-white border-b px-6 py-4">
                   <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-12 w-12 bg-primary-100 text-primary-700">
+                      <Avatar className="h-12 w-12 bg-green-50 flex items-center justify-center text-primary-700">
                         <span className="text-xl font-medium">{selectedOwnerData.name.charAt(0)}</span>
                       </Avatar>
                       <div>
@@ -459,7 +462,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                       <CardHeader className="bg-primary-50 border-b px-6 py-4">
                         <div className="flex justify-between items-start">
                           <div className="flex items-center gap-3">
-                            <Avatar className="h-10 w-10 bg-primary-100 text-primary-700">
+                            <Avatar className="h-10 w-10 text-primary-700 bg-green-50 flex items-center justify-center">
                               <span className="text-lg font-medium">{selectedOwnerData.name.charAt(0)}</span>
                             </Avatar>
                             <div>
@@ -467,7 +470,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                               <CardDescription>{selectedOwnerData.ownerType}</CardDescription>
                             </div>
                           </div>
-                          <ConfidenceIndicator level={selectedOwnerData.confidenceLevel??"Low"} small />
+                          <ConfidenceIndicator level={selectedOwnerData.confidenceLevel ?? "Low"} small />
                         </div>
                       </CardHeader>
                       <CardContent className="p-4">
@@ -487,7 +490,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                       <CardHeader className="bg-orange-50 border-b px-6 py-4">
                         <div className="flex justify-between items-start">
                           <div className="flex items-center gap-3">
-                            <Avatar className="h-10 w-10 bg-orange-100 text-orange-700">
+                            <Avatar className="h-10 w-10 bg-orange-100 text-orange-700 flex items-center justify-center">
                               <span className="text-lg font-medium">{comparisonOwnerData.name.charAt(0)}</span>
                             </Avatar>
                             <div>
@@ -495,7 +498,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                               <CardDescription>{comparisonOwnerData.ownerType}</CardDescription>
                             </div>
                           </div>
-                          <ConfidenceIndicator level={comparisonOwnerData.confidenceLevel??"Low"} small />
+                          <ConfidenceIndicator level={comparisonOwnerData.confidenceLevel ?? "Low"} small />
                         </div>
                       </CardHeader>
                       <CardContent className="p-4">
@@ -572,7 +575,7 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                                 ${formatKMB(Number(getAssetValue(selectedOwnerData, "Real Estate")))}
                               </td>
                               <td className="p-4 border-b text-right">
-                              ${formatKMB(Number(getAssetValue(comparisonOwnerData, "Real Estate")))}
+                                ${formatKMB(Number(getAssetValue(comparisonOwnerData, "Real Estate")))}
                               </td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
@@ -586,11 +589,11 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                             <tr className="hover:bg-gray-50">
                               <td className="p-4 border-b font-medium">Stocks & Securities</td>
                               <td className="p-4 border-b text-right">
-                               
-                               ${formatKMB(Number(getAssetValue(selectedOwnerData,  "Stocks & Securities")))}
+
+                                ${formatKMB(Number(getAssetValue(selectedOwnerData, "Stocks & Securities")))}
                               </td>
                               <td className="p-4 border-b text-right">
-                               ${formatKMB(Number(getAssetValue(comparisonOwnerData,  "Stocks & Securities")))}
+                                ${formatKMB(Number(getAssetValue(comparisonOwnerData, "Stocks & Securities")))}
                               </td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
@@ -604,10 +607,10 @@ const matchesConfidence = showOnlyHighConfidence ? (owner.confidenceLevel ?? "Lo
                             <tr className="hover:bg-gray-50">
                               <td className="p-4 border-b font-medium">Business Interests</td>
                               <td className="p-4 border-b text-right">
-                                ${formatKMB(Number(getAssetValue(selectedOwnerData,  "Business Interests")))}
+                                ${formatKMB(Number(getAssetValue(selectedOwnerData, "Business Interests")))}
                               </td>
                               <td className="p-4 border-b text-right">
-                               ${formatKMB(Number(getAssetValue(comparisonOwnerData,  "Business Interests")))}
+                                ${formatKMB(Number(getAssetValue(comparisonOwnerData, "Business Interests")))}
                               </td>
                               <td className="p-4 border-b text-right">
                                 <DifferenceValue
@@ -653,7 +656,7 @@ function DifferenceValue({ value }: { value: string }) {
 
   return (
     <span className={`font-medium ${isPositive ? "text-green-600" : isNegative ? "text-red-600" : ""}`}>{
-     formatKMB(Number.parseFloat(value))}</span>
+      formatKMB(Number.parseFloat(value))}</span>
   )
 }
 
