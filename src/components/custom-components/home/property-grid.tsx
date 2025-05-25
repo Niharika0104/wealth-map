@@ -9,13 +9,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MapPin, Eye, Calendar, Shield, Grid3X3, List, Heart, Filter, X, SlidersHorizontal } from "lucide-react"
 import Link from "next/link"
 import type { Property } from "@/Models/models"
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { addBookmark, removeBookmark } from "@/services/bookmarkService"
+import { addBookmark, removeBookmark, getBookmarks } from "@/services/bookmarkService"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import MapFilters from "./map-filters"
 import PropertyImageCarousel from "./property-image-carousel"
 import type { FilterState } from "./home-page"
+import { useSession, signOut } from "next-auth/react"
+import PropertyService from "@/services/propertyService";
+import PropertyStore from "@/stores/propertyStore"
+import { User, formatKMB } from "@/Models/models"
 import {
   Pagination,
   PaginationContent,
@@ -24,6 +29,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Session } from "inspector/promises"
 
 interface PropertyGridProps {
   properties: Property[]
@@ -31,11 +37,12 @@ interface PropertyGridProps {
   setFilterState: (state: FilterState) => void
   valueRange: [number, number]
   sqftRange: [number, number]
-  propertyTypes: string[]
+  propertyTypes: (string|undefined)[]
   ownerTypes: string[]
   resetFilters: () => void
   totalCount: number
 }
+
 
 export default function PropertyGrid({
   properties,
@@ -48,17 +55,42 @@ export default function PropertyGrid({
   resetFilters,
   totalCount,
 }: PropertyGridProps) {
+  const propertyService = new PropertyService()
+  const { data: session } = useSession()
+  const userId = session?.user?.id
+  const [bookmarkedPropertyIds, setBookmarkedPropertyIds] = useState<string[]>([])
+  const {
+    allProperties,
+    setAllProperties,
+    getAllProperties,
+    getPropertyById,}=PropertyStore()
   const [displayMode, setDisplayMode] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState<string>("value-desc")
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
-  const [bookmarkedPropertyIds, setBookmarkedPropertyIds] = useState<string[]>([])
+  const [user,setUser]=useState<User|null>(null)
+  
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const itemsPerPage = 12
+  const {data }=useSession()
 
   useEffect(() => {
-    // getBookmarks("demo").then(setBookmarkedPropertyIds);
-  }, [])
+  if (data) {
+    setUser(data?.user);
+  }
+}, [data]);
+
+useEffect(() => {
+  if (!userId) return;
+  getBookmarks(userId).then((propertyIds) => {
+    setBookmarkedPropertyIds(propertyIds)
+  })
+}, [userId])
+
+  const onSearch = async (query: string) =>  {
+    const data=await propertyService.getPropertiesByQuery(query)
+    setAllProperties(data)
+  }
 
   // Helper to get region from address (fallback to state if not present)
   const getRegion = (property: Property) => {
@@ -69,13 +101,14 @@ export default function PropertyGrid({
     return property.state || ""
   }
 
-  // Toggle bookmark
+  // Toggle bookmark for a property
   const toggleBookmark = async (propertyId: string) => {
+    if (!userId) return;
     if (bookmarkedPropertyIds.includes(propertyId)) {
-      const updated = await removeBookmark(propertyId, "demo")
+      const updated = await removeBookmark(propertyId, userId)
       setBookmarkedPropertyIds(updated)
     } else {
-      const updated = await addBookmark(propertyId, "demo")
+      const updated = await addBookmark(propertyId, userId)
       setBookmarkedPropertyIds(updated)
     }
   }
@@ -90,7 +123,7 @@ const filteredProperties = useMemo(() => {
       if (property.name?.toLowerCase().includes(query)) score += 3;
       if (property.address.toLowerCase().includes(query)) score += 2;
       if (property.state.toLowerCase().includes(query)) score += 1;
-      if (property.type.toLowerCase().includes(query)) score += 1;
+      if ((property.type as string).toLowerCase().includes(query)) score += 1;
 
       return score > 0 ? { ...property, score } : null;
     })
@@ -217,6 +250,7 @@ const filteredProperties = useMemo(() => {
             placeholder="Search properties by name, address, or type..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && onSearch(searchQuery)}
             className="pl-10 h-11 border-gray-300 focus:border-green-500 focus:ring-green-500"
           />
           <svg
@@ -438,11 +472,7 @@ const filteredProperties = useMemo(() => {
                         </Badge>
                         <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
                           {property?.area != null && !isNaN(Number(property.area))
-                            ? Number(property.area) >= 1_000_000
-                              ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
-                              : Number(property.area) >= 1_000
-                                ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
-                                : `${Math.floor(Number(property.area))} sqft`
+                            ? `${formatKMB(Number(property.area))} sqft`
                             : "N/A sqft"}
                         </Badge>
                         <Badge className={`${getConfidenceColor(property.confidence ?? "")} flex items-center gap-1`}>
@@ -458,11 +488,7 @@ const filteredProperties = useMemo(() => {
                         <div className="flex items-center">
                           <span className="font-bold text-green-600 text-lg">
                             {property?.price != null && !isNaN(Number(property.price))
-                              ? Number(property.price) >= 1_000_000
-                                ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
-                                : Number(property.price) >= 1_000
-                                  ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
-                                  : `$${Number(property.price)}`
+                              ? `$${formatKMB(Number(property.price))}`
                               : "N/A"}
                           </span>
                         </div>
@@ -499,11 +525,7 @@ const filteredProperties = useMemo(() => {
                             <div className="mt-2 md:mt-0 md:ml-4 flex items-center gap-3">
                               <span className="font-bold text-green-600 text-xl">
                                 {property?.price != null && !isNaN(Number(property.price))
-                                  ? Number(property.price) >= 1_000_000
-                                    ? `$${(Number(property.price) / 1_000_000).toFixed(1)}M`
-                                    : Number(property.price) >= 1_000
-                                      ? `$${(Number(property.price) / 1_000).toFixed(0)}K`
-                                      : `$${Number(property.price)}`
+                                  ? `$${formatKMB(Number(property.price))}`
                                   : "N/A"}
                               </span>
                               <button
@@ -543,11 +565,7 @@ const filteredProperties = useMemo(() => {
                             </Badge>
                             <Badge variant="outline" className="flex items-center gap-1 border-gray-200">
                               {property?.area != null && !isNaN(Number(property.area))
-                                ? Number(property.area) >= 1_000_000
-                                  ? `${(Number(property.area) / 1_000_000).toFixed(1)}M sqft`
-                                  : Number(property.area) >= 1_000
-                                    ? `${(Number(property.area) / 1_000).toFixed(0)}K sqft`
-                                    : `${Math.floor(Number(property.area))} sqft`
+                                ? `${formatKMB(Number(property.area))} sqft`
                                 : "N/A sqft"}
                             </Badge>
                             <Badge

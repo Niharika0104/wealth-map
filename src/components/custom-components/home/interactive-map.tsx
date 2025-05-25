@@ -5,6 +5,7 @@ import * as maptilersdk from "@maptiler/sdk"
 import "@maptiler/sdk/dist/maptiler-sdk.css"
 import type { Property } from "../../../Models/models"
 import { Skeleton } from "@/components/ui/skeleton"
+import usePropertyStore from "@/stores/propertyStore"
 
 // Proper interface for the Map instance
 interface MapRef extends maptilersdk.Map {
@@ -68,6 +69,8 @@ export default function InteractiveMap({
   const markersRef = useRef<maptilersdk.Marker[]>([])
   const markersLayerRef = useRef<any>(null)
   const clustersLayerRef = useRef<any>(null)
+  const {allProperties, getAllProperties,setAllProperties,getPropertyById}=usePropertyStore()
+
 
   // Keep a stable reference for the moveend handler
   const handleMoveEndRef = useRef<(() => void) | null>(null)
@@ -83,10 +86,12 @@ export default function InteractiveMap({
   const [apiProperties, setApiProperties] = useState<Property[] | null>(null)
   useEffect(() => {
     if (!properties || properties.length === 0) {
-      fetch("/api/property/all")
-        .then((res) => res.json())
-        .then((data) => setApiProperties(data))
-        .catch(() => setApiProperties([]))
+        setApiProperties(getAllProperties());
+
+      // fetch("/api/property/all")
+      //   .then((res) => res.json())
+      //   .then((data) => setApiProperties(data))
+      //   .catch(() => setApiProperties([]))
     }
   }, [properties])
   const displayProperties = properties && properties.length > 0 ? properties : apiProperties || []

@@ -1,0 +1,21 @@
+import axios from 'axios';
+import { Owner } from '@/Models/models';
+
+class OnwerService {
+  private PROPERTY_API = `${process.env.NEXT_PUBLIC_PROPERTY_API_BASE_URL}/api/owner`;
+
+  async getOwners(): Promise<Owner[]> {
+    const res = await axios.get(`${this.PROPERTY_API}/all`);
+    return res.data;
+  }
+
+  async getOwnerById(ownerId: string): Promise<Owner> {
+    console.log(ownerId,"hello")    
+    const res = await axios.post(`${this.PROPERTY_API}/get`, { ownerId});
+    return res.data;
+  }
+
+
+}
+
+export default OnwerService;

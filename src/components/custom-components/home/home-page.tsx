@@ -9,10 +9,14 @@ import { Button } from "@/components/ui/button"
 import { Layers, Filter, Bookmark, X, Grid, Map } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import usePropertyStore from "@/stores/propertyStore"
+import useOwnerStore    from "@/stores/ownerStore"
 
 import { toast } from "@/components/ui/use-toast"
 import PropertyGrid from "./property-grid"
 import type { Property } from "@/Models/models"
+import PropertyService from "@/services/propertyService"
+import OwnerService from "@/services/onwerService"
 
 export type MapView = {
   id: string
@@ -31,6 +35,12 @@ export type FilterState = {
 }
 
 export default function HomePage() {
+  const propertyService = new PropertyService();
+  const ownerService = new OwnerService();
+
+  const {allProperties, getAllProperties,setAllProperties,getPropertyById}=usePropertyStore()
+  const {allOwners, getAllOwners,getOwnerById,setAllOwners}=useOwnerStore()
+
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [mapType, setMapType] = useState<"streets" | "satellite">("streets");
@@ -57,16 +67,20 @@ export default function HomePage() {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axios.get('/api/property/all');
-        const data = res.data;
+        const propertyRes = await propertyService.getProperties();
+        const ownerRes = await ownerService.getOwners();
+
+        setAllProperties(propertyRes);
+        setAllOwners(ownerRes);
+
         // Assign random confidence to each property
-        const confidenceLevels = ["High", "Medium", "Low"];
-        const withConfidence = data.map((p: Property) => ({
-          ...p,
-          confidence: confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)]
-        }));
-        setProperties(data);
-        setFilteredProperties(data);
+        // const confidenceLevels = ["High", "Medium", "Low"];
+        // const withConfidence = data.map((p: Property) => ({
+        //   ...p,
+        //   confidence: confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)]
+        // }));
+        setProperties(getAllProperties());
+        setFilteredProperties(getAllProperties());
       } catch (err) {
         console.error('Failed to fetch properties:', err);
       }
@@ -92,7 +106,7 @@ export default function HomePage() {
       const passesValue = property.price >= filterState.value[0] && property.price <= filterState.value[1];
       const passesSqft = property.area >= filterState.sqft[0] && property.area <= filterState.sqft[1];
       const passesConfidence = filterState.confidence.length === 0 || filterState.confidence.includes(property.confidence ?? "");
-      const passesPropertyType = filterState.propertyType.length === 0 || filterState.propertyType.includes(property.type);
+      const passesPropertyType = filterState.propertyType.length === 0 || filterState.propertyType.includes(property.type as string);
       const passesOwnerType = filterState.ownerType.length === 0 || filterState.ownerType.includes(property.ownerType ?? "");
       return passesValue && passesSqft && passesConfidence && passesPropertyType && passesOwnerType;
     });

@@ -1,4 +1,4 @@
-import { PrismaClient } from '../src/generated/prisma';
+import { PrismaClient } from '@/generated/prisma';
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import csvParser from 'csv-parser';
 import xlsx from 'xlsx';
 
-const __filename = fileURLToPath(import.meta.url);
+// const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const prisma = new PrismaClient();
 
@@ -334,43 +334,43 @@ async function generateOwners() {
   console.log("✅ 50 owners inserted.");
 }
 
-async function mapOwnersToProperties() {
-  type Owner = { id: string; name: string };
-  type Property = { id: string };
-  type PropertyOwner = {
-    propertyId: string;
-    ownerId: string;
-    ownerType: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+// async function mapOwnersToProperties() {
+//   type Owner = { id: string; name: string };
+//   type Property = { id: string };
+//   type PropertyOwner = {
+//     propertyId: string;
+//     ownerId: string;
+//     ownerType: string;
+//     createdAt: Date;
+//     updatedAt: Date;
+//   };
 
-  const owners = await prisma.owner.findMany() as Owner[];
-  const properties = await prisma.property.findMany() as Property[];
+//   const owners = await prisma.owner.findMany() as Owner[];
+//   const properties = await prisma.property.findMany() as Property[];
 
-  const propertyOwners = properties.flatMap((property: Property) => {
-    // 20% of properties have no owner
-    if (Math.random() < 0.2) return [];
+//   const propertyOwners = properties.flatMap((property: Property) => {
+//     // 20% of properties have no owner
+//     if (Math.random() < 0.2) return [];
 
-    // Pick 1 random owner
-    const owner = faker.helpers.arrayElement(owners) as Owner;
-    const isCorporate = owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.");
+//     // Pick 1 random owner
+//     const owner = faker.helpers.arrayElement(owners) as Owner;
+//     const isCorporate = owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.");
 
-    return [{
-      propertyId: property.id,
-      ownerId: owner.id,
-      ownerType: isCorporate ? "Entity" : "Individual",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }] as PropertyOwner[];
-  });
+//     return [{
+//       propertyId: property.id,
+//       ownerId: owner.id,
+//       ownerType: isCorporate ? "Entity" : "Individual",
+//       createdAt: new Date(),
+//       updatedAt: new Date()
+//     }] as PropertyOwner[];
+//   });
 
-  await prisma.propertyOwner.createMany({ data: propertyOwners });
-  console.log(`✅ Linked ${propertyOwners.length} properties with owners.`);
-}
+//   await prisma.propertyOwner.createMany({ data: propertyOwners });
+//   console.log(`✅ Linked ${propertyOwners.length} properties with owners.`);
+// }
 
 async function seedOwnersAndLinkToProperties() {
-  await generateOwners();               // Step 1: Create Owners
+  // await generateOwners();               // Step 1: Create Owners
   await mapOwnersToProperties();        // Step 2: Link Owners to Properties
 }
 
@@ -650,9 +650,90 @@ const createProperties= async (): Promise<void> => {
     console.error('Error:', error);
   } 
 }
+async function mapOwnersToProperties() {
+  type Owner = { id: string; name: string };
+  type Property = { id: string };
+  type PropertyOwner = {
+    propertyId: string;
+    ownerId: string;
+    ownerType: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 
-createProperties()
-   .then(() => seedOwnersAndLinkToProperties())
+  const owners = await prisma.owner.findMany() as Owner[];
+  const properties = await prisma.property.findMany() as Property[];
+
+  if (owners.length === 0 || properties.length === 0) {
+    console.warn("Owners or Properties not found. Skipping linking.");
+    return;
+  }
+
+  const propertyOwners: PropertyOwner[] = [];
+  const assignedPropertyIds = new Set<string>();
+
+  // Phase 1: Assign 1 to 5 properties to each owner
+  for (const owner of owners) {
+    const numPropertiesToAssign = faker.number.int({ min: 1, max: 5 });
+    const isCorporate = owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.");
+
+    // Filter out properties already assigned to ensure unique assignments in this phase
+    const availableProperties = properties.filter(prop => !assignedPropertyIds.has(prop.id));
+
+    // Pick random properties for the current owner from available ones
+    const propertiesForOwner = faker.helpers.arrayElements(
+      availableProperties,
+      { min: 0, max: Math.min(numPropertiesToAssign, availableProperties.length) }
+    );
+
+    for (const property of propertiesForOwner) {
+      propertyOwners.push({
+        propertyId: property.id,
+        ownerId: owner.id,
+        ownerType: isCorporate ? "Entity" : "Individual",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      assignedPropertyIds.add(property.id); // Mark property as assigned
+    }
+  }
+
+  // Phase 2: For unassigned properties, pick 2 random owners
+  const unassignedProperties = properties.filter(prop => !assignedPropertyIds.has(prop.id));
+
+  for (const property of unassignedProperties) {
+    // Ensure there are at least two owners to pick from
+    if (owners.length < 2) {
+      console.warn(`Not enough owners to assign 2 owners to property ${property.id}. Assigning 1 or 0.`);
+      const owner = faker.helpers.arrayElement(owners);
+      const isCorporate = owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.");
+      propertyOwners.push({
+        propertyId: property.id,
+        ownerId: owner.id,
+        ownerType: isCorporate ? "Entity" : "Individual",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    } else {
+      const selectedOwners = faker.helpers.arrayElements(owners, 2);
+      for (const owner of selectedOwners) {
+        const isCorporate = owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.");
+        propertyOwners.push({
+          propertyId: property.id,
+          ownerId: owner.id,
+          ownerType: isCorporate ? "Entity" : "Individual",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      }
+    }
+  }
+
+  await prisma.propertyOwner.createMany({ data: propertyOwners });
+  console.log(`✅ Linked ${propertyOwners.length} properties with owners.`);
+}
+mapOwnersToProperties()
+  //  .then(() => seedOwnersAndLinkToProperties())
   .catch((e) => {
     console.error(e);
     process.exit(1);

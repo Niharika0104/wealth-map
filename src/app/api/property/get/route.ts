@@ -8,13 +8,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { propertyId } = body;
 
-    console.log("Received request for property ID:", propertyId);
-
-    if (!propertyId) {
-      console.error("No propertyId provided in request");
-      return new Response(JSON.stringify({ error: "propertyId is required in the request body." }), { status: 400 });
-    }
-
+    
     const property = await prisma.property.findUnique({
       where: { id: propertyId },
       include: {
