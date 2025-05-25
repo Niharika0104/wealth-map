@@ -40,7 +40,6 @@ model User {
   SharedProperty   SharedProperty[]
   views            View[]
   passkeys         Passkey[]
-  chats            Chat[]
 }
 
 model Session {
@@ -314,35 +313,4 @@ model SavedSearch {
   updatedAt DateTime @updatedAt
 
   @@map("saved_searches")
-}
-
-model SystemSettings {
-  id          String   @id @default(uuid())
-  systemName  String
-  timezone    String
-  maintenance Boolean  @default(false)
-  updatedAt   DateTime @updatedAt
-}
-
-model Chat {
-  id        String        @id @default(cuid())
-  userId    String
-  user      User          @relation(fields: [userId], references: [id])
-  title     String
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  messages  ChatMessage[]
-
-  @@index([userId])
-}
-
-model ChatMessage {
-  id        String   @id @default(cuid())
-  chatId    String
-  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  role      String // "user" or "assistant"
-  content   String   @db.Text
-  createdAt DateTime @default(now())
-
-  @@index([chatId])
 }

@@ -393,7 +393,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/workspaces/wealth-map/src/generated/prisma",
+      "value": "C:\\Users\\Rohith\\projects\\wealth\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -402,16 +402,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-1.1.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/workspaces/wealth-map/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\Rohith\\projects\\wealth\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.8.2",
@@ -420,7 +421,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
