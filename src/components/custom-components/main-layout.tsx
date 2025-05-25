@@ -5,17 +5,18 @@ import { usePathname } from "next/navigation";
 import Searchbar from "@/components/custom-components/searchbar";
 import UserDropdown from "@/components/custom-components/UserProfile";
 import { Bell, Filter } from "lucide-react";
-import { useUIStore } from "@/stores/UIStore";
+import PropertyService from "@/services/propertyService";
 import FilterPopup from "./FilterPopUp";
 import {AppSidebar} from "./app-sidebar";
 import React from "react";
 import App from "next/app";
 
 export default function MainLayoutShell({ children }: { children: React.ReactNode }) {
+  const propertyService=new PropertyService()
   const [search, setSearch] = useState("");
   const pathname = usePathname();
   const isRootPath = pathname === "/app";
-  const { openFilterDialog } = useUIStore();
+  // const { openFilterDialog } = useUIStore();
   const [controlHeight, setControlHeight] = useState(0);
 
   const searchRef = useRef<HTMLDivElement>(null);

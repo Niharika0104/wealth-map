@@ -1,9 +1,8 @@
 import { NextRequest } from "next/server";
 import prisma from 'lib/index';
-import redisClient, { connectRedis } from 'lib/redis'; // Ensure this exists
 
-const CACHE_KEY = 'owners-wealth-data';
-const CACHE_TTL = 60 * 60 * 24; // 24 hours
+
+
 
 function getConfidenceLevel(owner: any): "High" | "Medium" | "Low" {
   const fields = [
@@ -19,14 +18,10 @@ function getConfidenceLevel(owner: any): "High" | "Medium" | "Low" {
 }
 
 export async function GET(req: NextRequest) {
-  await connectRedis();
+ 
 
   try {
-    // Check Redis first
-    const cached = await redisClient.get(CACHE_KEY);
-    if (cached) {
-      return new Response(cached, { status: 200 });
-    }
+ 
 
     // No cache, fetch fresh data
     const owners = await prisma.owner.findMany({
@@ -51,8 +46,7 @@ export async function GET(req: NextRequest) {
 
     const jsonData = JSON.stringify(result);
 
-    // Cache the result
-    await redisClient.setEx(CACHE_KEY, CACHE_TTL, jsonData);
+
 
     return new Response(jsonData, { status: 200 });
 

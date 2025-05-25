@@ -15,7 +15,7 @@ interface MapFiltersProps {
   setFilterState: (state: FilterState) => void
   valueRange: [number, number]
   sqftRange: [number, number]
-  propertyTypes: string[]
+  propertyTypes: (string|undefined)[]
   ownerTypes: string[]
   resetFilters: () => void
   totalCount: number
@@ -263,8 +263,8 @@ export default function MapFilters({
                   >
                     <Checkbox
                       id={`property-type-${type}`}
-                      checked={filterState.propertyType.includes(type)}
-                      onCheckedChange={() => togglePropertyType(type)}
+                      checked={filterState.propertyType.includes(type as string)}
+                      onCheckedChange={() => togglePropertyType(type as string)}
                       className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
                     />
                     <Label htmlFor={`property-type-${type}`} className="text-sm font-medium cursor-pointer flex-1">

@@ -1,7 +1,6 @@
 // app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import MainLayoutShell from "@/components/custom-components/main-layout";
 import { CopilotKit } from "@copilotkit/react-core"; 
 import "@/lib/styles/styles.css"
 import { SessionProvider } from "next-auth/react"

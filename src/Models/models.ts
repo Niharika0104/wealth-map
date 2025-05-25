@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
 
-type User = {
-  name: string;
-  avatarUrl: string;
-};
+
 
 type AvatarGroupProps = {
   users: User[];
@@ -92,26 +89,26 @@ export interface ListViewProps {
 }
 export type ConfidenceLevel = "High" | "Medium" | "Low"
 export interface Property {
-  value: ReactNode;
-  sqft: ReactNode;
+
+
   lastUpdated: ReactNode;
-  confidenceLevel: ConfidenceLevel;
-  region: ReactNode;
-  coordinates: [number, number];
+  confidenceLevel?: ConfidenceLevel;
+ownerId?: string;
+  coordinates?: [number, number];
   id: string;
   name: string;
   description?: string;
   address: string;
   city: string;
   state: string;
-  country: string;
+  country?: string;
   zipCode: string;
   price: number;
   images: string[];
   area: number;
   bed?: number; // only for houses
   bath?: number;
-  type: string;
+  type?: string;
   confidenceScore: number | null;
   trendingScore?: number;
   updatedAt: Date; // or Date, depending on your usage
@@ -167,9 +164,9 @@ export function calculateTotals(data: any): { totalRealEstate: number; totalOthe
 export   //Helper:Calculate KMB for assest values
 function formatKMB(amount: number): string {
   if (isNaN(amount)) return "0";
-  if (amount >= 1_000_000_000) return (amount / 1_000_000_000).toFixed(1) + "B";
-  if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(1) + "M";
-  if (amount >= 1_000) return (amount / 1_000).toFixed(1) + "K";
+  if (amount >= 1_000_000_000) return (amount / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+  if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  if (amount >= 1_000) return (amount / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
   return amount.toString();
 }
 export  function getTrendingScore({
@@ -202,3 +199,8 @@ export interface Report {
   fields: string[]; // Array of IDs of data fields included in the report (e.g., "Price", "confidenceLevel")
   shared: boolean; // Indicates if the report has been shared
 }
+export  interface User
+{ id: string; name?: string | null | undefined;
+   email?: string | null | undefined; 
+   role?: "SUPER_ADMIN" | "COMPANY_ADMIN" | "EMPLOYEE" | undefined;
+  }

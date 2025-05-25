@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server";
 import prisma from 'lib/index';
-import redisClient, { connectRedis } from 'lib/redis'; 
+
 const CACHE_TTL = 60 * 60 * 24; // 24 hours
 
 export async function GET(req: NextRequest) {
-   await connectRedis();
+ 
   
   const query = req.nextUrl.searchParams.get("query")?.trim();
   if (!query) {
@@ -13,10 +13,7 @@ export async function GET(req: NextRequest) {
  const CACHE_KEY = `owner-data-${query}`;
   
   try {
-     const cached = await redisClient.get(CACHE_KEY);
-      if (cached) {
-      return new Response(cached, { status: 200 });
-    }
+    
     const properties = await prisma.property.findMany({
       where: {
         OR: [
@@ -28,7 +25,7 @@ export async function GET(req: NextRequest) {
       },
       orderBy: { updatedAt: "desc" },
     });
-     await redisClient.setEx(CACHE_KEY, CACHE_TTL, JSON.stringify(properties));
+   
     return new Response(JSON.stringify(properties), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({ error: "Failed to search properties", details: error }), { status: 500 });

@@ -1,11 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
-import { PrismaClient } from '@prisma/client';
+import prisma from 'lib/index';
+
 import { fileURLToPath } from 'url';
 import csvParser from 'csv-parser';
+import { faker } from "@faker-js/faker";
 import xlsx from 'xlsx';
-const prisma=new PrismaClient()
+// const prisma = new PrismaClient(); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -106,205 +108,210 @@ function readCSV(filePath: string): Promise<any[]> {
       .on('error', reject);
   });
 }
- function func(){
-importData();
-loadAddressesFromCSV('./list_of_real_usa_addresses.csv');
-}
-async function importData(): Promise<void> {
-  const filePath = path.join(__dirname, 'realtor-data.csv');
-  const results = await readCSV(filePath);
+//  function func(){
+// importData();
+// loadAddressesFromCSV('./list_of_real_usa_addresses.csv');
+// }
+// async function importData(): Promise<void> {
+//   const filePath = path.join(__dirname, 'realtor-data.csv');
+//   const results = await readCSV(filePath);
 
-  // Fetch all existing addresses to avoid duplicates
-  const existingProperties = await prisma.property.findMany({
-    select: { address: true }
-  });
-  const existingAddresses = new Set(existingProperties.map(p => p.address));
-  const processed = (results as any[])
-    .filter((r: any) => r.price && r.street && r.city && r.state && r.zip_code)
-    .map((r: any) => {
-      const houseSize = parseFloat(r.house_size);
-      const acreLot = parseFloat(r.acre_lot);
-      const bed = parseInt(r.bed);
-      const bath = parseInt(r.bath);
-      const price = parseFloat(r.price);
+//   // Fetch all existing addresses to avoid duplicates
+//   const existingProperties = await prisma.property.findMany({
+//     select: { address: true }
+//   });
+//   const existingAddresses = new Set(existingProperties.map(p => p.address));
+//   const processed = (results as any[])
+//     .filter((r: any) => r.price && r.street && r.city && r.state && r.zip_code)
+//     .map((r: any) => {
+//       const houseSize = parseFloat(r.house_size);
+//       const acreLot = parseFloat(r.acre_lot);
+//       const bed = parseInt(r.bed);
+//       const bath = parseInt(r.bath);
+//       const price = parseFloat(r.price);
 
-      // Determine property type
-      let propertyType = null;
-      if ((!houseSize || houseSize === 0) && acreLot && acreLot > 0) {
-        propertyType = "Land";
-      } else if ((acreLot === 0 || !acreLot) && houseSize && houseSize > 0 && bed >= 1 && bath >= 1) {
-        propertyType = "House";
-      }
+//       // Determine property type
+//       let propertyType = null;
+//       if ((!houseSize || houseSize === 0) && acreLot && acreLot > 0) {
+//         propertyType = "Land";
+//       } else if ((acreLot === 0 || !acreLot) && houseSize && houseSize > 0 && bed >= 1 && bath >= 1) {
+//         propertyType = "House";
+//       }
 
-      if (!propertyType || (propertyType === "house" && (bed < 1 || bath < 1))) return null;
+//       if (!propertyType || (propertyType === "house" && (bed < 1 || bath < 1))) return null;
 
-      // Ensure all required fields are valid
-      const street = r.street?.trim();
-      const city = r.city?.trim();
-      const state = r.state?.trim();
-      const zip = r.zip_code?.trim();
-      const country = r.country?.trim() || "USA"; // default fallback
+//       // Ensure all required fields are valid
+//       const street = r.street?.trim();
+//       const city = r.city?.trim();
+//       const state = r.state?.trim();
+//       const zip = r.zip_code?.trim();
+//       const country = r.country?.trim() || "USA"; // default fallback
 
-      if (!street || !city || !state || !zip || !country || isNaN(price)) return null;
+//       if (!street || !city || !state || !zip || !country || isNaN(price)) return null;
 
-      const baseImages = r.images ? (() => {
-        try {
-          const parsed = JSON.parse(r.images);
-          return Array.isArray(parsed) ? parsed : [];
-        } catch {
-          return [];
-        }
-      })() : [];
+//       const baseImages = r.images ? (() => {
+//         try {
+//           const parsed = JSON.parse(r.images);
+//           return Array.isArray(parsed) ? parsed : [];
+//         } catch {
+//           return [];
+//         }
+//       })() : [];
 
-      // Add fallback images
-      if (propertyType === "land") {
-        baseImages.push(getRandomFromArray(landPlotImages));
-      } else {
-        baseImages.push(getRandomFromArray(livingRoom));
-        baseImages.push(getRandomFromArray(bedroomImages));
-        baseImages.push(getRandomFromArray(kitchenImages));
-      }
+//       // Add fallback images
+//       if (propertyType === "land") {
+//         baseImages.push(getRandomFromArray(landPlotImages));
+//       } else {
+//         baseImages.push(getRandomFromArray(livingRoom));
+//         baseImages.push(getRandomFromArray(bedroomImages));
+//         baseImages.push(getRandomFromArray(kitchenImages));
+//       }
 
-      const sizeSqFt = propertyType === "house" ? houseSize : (acreLot * 43560);
-      if (!sizeSqFt || isNaN(sizeSqFt)) return null;
+//       const sizeSqFt = propertyType === "house" ? houseSize : (acreLot * 43560);
+//       if (!sizeSqFt || isNaN(sizeSqFt)) return null;
 
-      const priceInMillions = (price / 1_000_000).toFixed(1);
-      const address = `${street}, ${city}, ${state}, ${zip}`;
-      if (existingAddresses.has(address)) return null;
+//       const priceInMillions = (price / 1_000_000).toFixed(1);
+//       const address = `${street}, ${city}, ${state}, ${zip}`;
+//       if (existingAddresses.has(address)) return null;
 
-      const dateAdded = getRandomDate();
-      if (!dateAdded || isNaN(new Date(dateAdded).getTime())) return null;
+//       const dateAdded = getRandomDate();
+//       if (!dateAdded || isNaN(new Date(dateAdded).getTime())) return null;
 
-      return {
-        address,
-        name: getRandomName(),
-        propertyType,
-        sizeSqFt,
-        price,
-        beds: bed,
-        baths: bath,
-        description: `This property is located at ${street}, ${city}, ${state}. The property spans ${Math.round(sizeSqFt)} square feet and is currently valued at $${priceInMillions}M. This is a prime real estate opportunity with excellent investment potential.`,
-        images: baseImages,
-        dateAdded,
-        city,
-        state,
-        country,
-        zipCode: zip,
-        confidenceScore: parseFloat(r.confidence_score) || undefined
-      };
-    })
-    .filter((item: any) => item !== null);
+//       return {
+//         address,
+//         name: getRandomName(),
+//         propertyType,
+//         sizeSqFt,
+//         price,
+//         beds: bed,
+//         baths: bath,
+//         description: `This property is located at ${street}, ${city}, ${state}. The property spans ${Math.round(sizeSqFt)} square feet and is currently valued at $${priceInMillions}M. This is a prime real estate opportunity with excellent investment potential.`,
+//         images: baseImages,
+//         dateAdded,
+//         city,
+//         state,
+//         country,
+//         zipCode: zip,
+//         confidenceScore: parseFloat(r.confidence_score) || undefined
+//       };
+//     })
+//     .filter((item: any) => item !== null);
 
-  // Only insert 100 records at once
-  const toInsert = processed.slice(0, 100);
+//   // Only insert 100 records at once
+//   const toInsert = processed.slice(0, 100);
 
-  if (toInsert.length === 0) {
-    console.log("No new records to insert.");
-    return;
-  }
+//   if (toInsert.length === 0) {
+//     console.log("No new records to insert.");
+//     return;
+//   }
 
-  // Batch insert
-  const inserted = await prisma.property.createMany({
-    data: toInsert.map((item: any) => ({
-      address: item.address,
-      name: item.name,
-      description: item.description,
-      city: item.city,
-      state: item.state,
-      country: item.country,
-      zipCode: item.zipCode,
-      price: item.price,
-      images: item.images, // pass as array
-      area: item.sizeSqFt, // renamed to match model
-      bed: item.beds,
-      bath: item.baths,
-      type: item.propertyType,
-      confidenceScore: item.confidenceScore,
-      createdAt: item.dateAdded
-    })),
-    skipDuplicates: true
-  });
+//   // Batch insert
+//   const inserted = await prisma.property.createMany({
+//     data: toInsert.map((item: any) => ({
+//       address: item.address,
+//       name: item.name,
+//       description: item.description,
+//       city: item.city,
+//       state: item.state,
+//       country: item.country,
+//       zipCode: item.zipCode,
+//       price: item.price,
+//       images: item.images, // pass as array
+//       area: item.sizeSqFt, // renamed to match model
+//       bed: item.beds,
+//       bath: item.baths,
+//       type: item.propertyType,
+//       confidenceScore: item.confidenceScore,
+//       createdAt: item.dateAdded
+//     })),
+//     skipDuplicates: true
+//   });
 
-  console.log(`${inserted.count} new properties inserted.`);
-}
-async function loadAddressesFromCSV(filePath: string): Promise<any[]> {
-  const ext = path.extname(filePath).toLowerCase();
-  if (ext === '.xls' || ext === '.xlsx') {
-    // Use xlsx to parse Excel files
-    const workbook = xlsx.readFile(filePath);
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const rows: any[] = xlsx.utils.sheet_to_json(sheet);
-    // Normalize fields
-    return rows.map((row: any) => ({
-      street: row.street || row.Street || '',
-      city: row.city || row.City || '',
-      state: row.state || row.State || '',
-      zipCode: row.zipCode || row.ZipCode || row.zip || row.Zip || '',
-    }));
-  } else {
-    // Fallback to csv-parser for .csv
-    return new Promise((resolve, reject) => {
-      const addresses: any[] = [];
-      fs.createReadStream(filePath)
-        .pipe(csvParser())
-        .on('data', (row: any) => {
-          addresses.push({
-            street: row.street || row.Street || '',
-            city: row.city || row.City || '',
-            state: row.state || row.State || '',
-            zipCode: row.zipCode || row.ZipCode || row.zip || row.Zip || '',
-          });
-        })
-        .on('end', () => resolve(addresses))
-        .on('error', (err: any) => reject(err));
-    });
-  }
-}
+//   console.log(`${inserted.count} new properties inserted.`);
+// }
+// async function loadAddressesFromCSV(filePath: string): Promise<any[]> {
+//   const ext = path.extname(filePath).toLowerCase();
+//   if (ext === '.xls' || ext === '.xlsx') {
+//     // Use xlsx to parse Excel files
+//     const workbook = xlsx.readFile(filePath);
+//     const sheetName = workbook.SheetNames[0];
+//     const sheet = workbook.Sheets[sheetName];
+//     const rows: any[] = xlsx.utils.sheet_to_json(sheet);
+//     // Normalize fields
+//     return rows.map((row: any) => ({
+//       street: row.street || row.Street || '',
+//       city: row.city || row.City || '',
+//       state: row.state || row.State || '',
+//       zipCode: row.zipCode || row.ZipCode || row.zip || row.Zip || '',
+//     }));
+//   } else {
+//     // Fallback to csv-parser for .csv
+//     return new Promise((resolve, reject) => {
+//       const addresses: any[] = [];
+//       fs.createReadStream(filePath)
+//         .pipe(csvParser())
+//         .on('data', (row: any) => {
+//           addresses.push({
+//             street: row.street || row.Street || '',
+//             city: row.city || row.City || '',
+//             state: row.state || row.State || '',
+//             zipCode: row.zipCode || row.ZipCode || row.zip || row.Zip || '',
+//           });
+//         })
+//         .on('end', () => resolve(addresses))
+//         .on('error', (err: any) => reject(err));
+//     });
+//   }
+// }
 
-async function updatePropertiesWithRealAddresses(addresses: any[]): Promise<void> {
-  // Get existing properties - limit 100 for example
-  const properties = await prisma.property.findMany({ take: 100 });
+// async function updatePropertiesWithRealAddresses(addresses: any[]): Promise<void> {
+//   // Get existing properties - limit 100 for example
+//   const properties = await prisma.property.findMany({ take: 100 });
 
-  for (let i = 0; i < properties.length; i++) {
-    const property = properties[i];
-    const address = addresses[i];
+//   for (let i = 0; i < properties.length; i++) {
+//     const property = properties[i];
+//     const address = addresses[i];
 
-    if (!address) break; // no more addresses
+//     if (!address) break; // no more addresses
 
-    // Compose full address string for the DB (as per your schema)
-    const fullAddress = `${address.street}, ${address.city}, ${address.state}, ${address.zipCode}`;
+//     // Compose full address string for the DB (as per your schema)
+//     const fullAddress = `${address.street}, ${address.city}, ${address.state}, ${address.zipCode}`;
 
-    // Update the property in DB with new address fields
-    await prisma.property.update({
-      where: { id: property.id },
-      data: {
-        address: fullAddress,
-        city: address.city,
-        state: address.state,
-        zipCode: address.zipCode,
-      },
-    });
+//     // Update the property in DB with new address fields
+//     await prisma.property.update({
+//       where: { id: property.id },
+//       data: {
+//         address: fullAddress,
+//         city: address.city,
+//         state: address.state,
+//         zipCode: address.zipCode,
+//       },
+//     });
 
-    console.log(`Updated property ${property.id} with address: ${fullAddress}`);
-  }
-}
+//     console.log(`Updated property ${property.id} with address: ${fullAddress}`);
+//   }
+// }
 
-const createProperties= async (): Promise<void> => {
+// const createProperties= async (): Promise<void> => {
  
-  try {
-     await importData();
-    const addresses = await loadAddressesFromCSV('./list_of_real_usa_addresses.csv');
-    console.log(`Loaded ${addresses.length} addresses`);
+//   try {
+//      await importData();
+//     const addresses = await loadAddressesFromCSV('./list_of_real_usa_addresses.csv');
+//     console.log(`Loaded ${addresses.length} addresses`);
 
-    await updatePropertiesWithRealAddresses(addresses);
+//     await updatePropertiesWithRealAddresses(addresses);
 
-    console.log('Properties updated successfully!');
-  } catch (error) {
-    console.error('Error:', error);
-  } 
-}
-createProperties()
+//     console.log('Properties updated successfully!');
+//   } catch (error) {
+//     console.error('Error:', error);
+//   } 
+// }
+
+
+
+
+
+mapOwnersToProperties()
   .catch(e => {
     console.error(e);
   })
