@@ -47,7 +47,7 @@ const companyFormSchema = z.object({
   name: z.string().min(2, "Company name must be at least 2 characters"),
   companyType: z.string().min(1, "Please select a company type"),
   industry: z.string().min(1, "Please select an industry"),
-  website: z.string().url("Please enter a valid website URL").optional(),
+  website: z.string().url("Please enter a valid website URL"),
   address: z.string().min(5, "Please enter a valid address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   taxId: z.string().min(1, "Please enter your tax ID"),
@@ -125,7 +125,7 @@ export function CompanyRegistrationForm() {
                   <FormItem>
                     <FormLabel>Company Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter company name" {...field} />
+                      <Input placeholder="Enter company name" {...field} className="w-full" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -165,7 +165,7 @@ export function CompanyRegistrationForm() {
                     <FormLabel>Industry</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select industry" />
                         </SelectTrigger>
                       </FormControl>
