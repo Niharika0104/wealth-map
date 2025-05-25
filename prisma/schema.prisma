@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -14,34 +15,32 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
-Bookmark        Bookmark[]
-  twoFactorEnabled Boolean?
-  role             String?
-  banned           Boolean?
-  banReason        String?
-  banExpires       DateTime?
-  twofactors       TwoFactor[]
-  members          Member[]
-  invitations      Invitation[]
-Reports         Report[]
-  SharedProperty   SharedProperty[]
-  views           View[]
-  passkeys Passkey[]
-  savedSearches SavedSearch[]
-
-  roles Role[] @relation("UserRoles")
-
-  @@unique([email])
-  @@map("user")
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     Boolean   @default(false)
+  image             String?
+  password          String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  twoFactorEnabled  Boolean?
+  banned            Boolean?
+  banReason         String?
+  banExpires        DateTime?
+  currentRole       String    @default("EMPLOYEE")
+  roles             Role[]    @relation("UserRoles")
+  members           Member[]
+  sessions          Session[]
+  accounts          Account[]
+  savedSearches     SavedSearch[]
+  Bookmark          Bookmark[]
+  twofactors        TwoFactor[]
+  invitations       Invitation[]
+  Reports           Report[]
+  SharedProperty    SharedProperty[]
+  views             View[]
+  passkeys          Passkey[]
+  chats             Chat[]
 }
 
 model Session {
@@ -154,6 +153,7 @@ model CustomRole {
   baseRole       String // Reference to a system role like 'analyst', 'viewer'
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  permissions    Permission[] @relation("CustomRolePermissions")
 
   @@unique([organizationId, name])
   @@map("custom_role")
@@ -176,11 +176,12 @@ model Passkey {
 }
 
 model Permission {
-  id          String   @id @default(cuid())
-  name        String   @unique
+  id          String      @id @default(cuid())
+  name        String      @unique
   category    String
   description String?
-  roles       Role[]   @relation("RolePermissions")
+  roles       Role[]      @relation("RolePermissions")
+  customRoles CustomRole[] @relation("CustomRolePermissions")
 }
 
 model Role {
@@ -305,4 +306,35 @@ model SavedSearch{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@map("saved_searches")
+}
+
+model SystemSettings {
+  id          String   @id @default(uuid())
+  systemName  String
+  timezone    String
+  maintenance Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
+}
+
+model Chat {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  messages  ChatMessage[]
+
+  @@index([userId])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  role      String   // "user" or "assistant"
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([chatId])
 }

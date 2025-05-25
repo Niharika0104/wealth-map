@@ -15,29 +15,31 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
-
+  id               String           @id @default(cuid())
+  name             String?
+  email            String?          @unique
+  emailVerified    Boolean          @default(false)
+  image            String?
+  password         String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
   twoFactorEnabled Boolean?
-  role             String?
   banned           Boolean?
   banReason        String?
   banExpires       DateTime?
-  twofactors       TwoFactor[]
+  currentRole      String           @default("EMPLOYEE")
+  roles            Role[]           @relation("UserRoles")
   members          Member[]
+  sessions         Session[]
+  accounts         Account[]
+  savedSearches    SavedSearch[]
+  Bookmark         Bookmark[]
+  twofactors       TwoFactor[]
   invitations      Invitation[]
-
-  passkeys Passkey[]
-
-  @@unique([email])
-  @@map("user")
+  Reports          Report[]
+  SharedProperty   SharedProperty[]
+  views            View[]
+  passkeys         Passkey[]
 }
 
 model Session {
@@ -99,15 +101,17 @@ model TwoFactor {
 }
 
 model Organization {
-  id          String       @id
-  name        String
-  slug        String?
-  logo        String?
-  createdAt   DateTime
-  metadata    String?
-  members     Member[]
-  invitations Invitation[]
-  customRoles CustomRole[]
+  id           String       @id @default(uuid())
+  name         String
+  slug         String?
+  logo         String?
+  createdAt    DateTime     @default(now())
+  status       String       @default("active")
+  isSuperAdmin Boolean      @default(false)
+  metadata     String?
+  members      Member[]
+  invitations  Invitation[]
+  customRoles  CustomRole[]
 
   @@unique([slug])
   @@map("organization")
@@ -148,6 +152,7 @@ model CustomRole {
   baseRole       String // Reference to a system role like 'analyst', 'viewer'
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  permissions    Permission[] @relation("CustomRolePermissions")
 
   @@unique([organizationId, name])
   @@map("custom_role")
@@ -167,4 +172,145 @@ model Passkey {
   createdAt    DateTime?
 
   @@map("passkey")
+}
+
+model Permission {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  category    String
+  description String?
+  roles       Role[]       @relation("RolePermissions")
+  customRoles CustomRole[] @relation("CustomRolePermissions")
+}
+
+model Role {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  description String?
+  isSystem    Boolean      @default(false)
+  permissions Permission[] @relation("RolePermissions")
+  users       User[]       @relation("UserRoles")
+}
+
+model Property {
+  id              String          @id @default(uuid())
+  name            String
+  description     String?
+  address         String          @unique
+  city            String
+  state           String
+  country         String
+  zipCode         String
+  price           Float
+  images          String[]
+  area            Float
+  bed             Int? // only for houses
+  bath            Int?
+  type            String
+  confidenceScore Float?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  owners          PropertyOwner[]
+  Bookmarks       Bookmark[]
+  views           View[]
+
+  @@map("property")
+}
+
+model Owner {
+  id                String          @id @default(uuid())
+  name              String
+  email             String?
+  phoneNumber       String?
+  stocksSecurities  Float           @default(0.0)
+  businessInterests Float           @default(0.0)
+  cashSavings       Float           @default(0.0)
+  otherAssets       Float           @default(0.0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  properties        PropertyOwner[]
+
+  @@map("owners")
+}
+
+model PropertyOwner {
+  id         String   @id @default(uuid())
+  propertyId String
+  ownerId    String
+  ownerType  String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  owner      Owner    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([propertyId, ownerId])
+  @@map("property_owners")
+}
+
+model Report {
+  id          String   @id @default(uuid())
+  title       String   @unique
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  notes      String?
+  reportType String?
+  sharedWith SharedProperty[]
+  exported   Boolean?         @default(false)
+  exportUrl  String?
+
+  @@map("reports")
+}
+
+model SharedProperty {
+  id        String   @id @default(uuid())
+  userId    String
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, reportId])
+  @@map("shared_property")
+}
+
+model View {
+  id         String   @id @default(uuid())
+  userId     String
+  propertyId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("views")
+}
+
+model Bookmark {
+  id         String   @id @default(uuid())
+  userId     String
+  propertyId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, propertyId])
+  @@map("bookmarks")
+}
+
+model SavedSearch {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  filters   Json
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("saved_searches")
 }

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/generated/prisma";
 import { hash } from "bcryptjs";
 import { randomUUID } from "crypto";
 
@@ -52,6 +52,11 @@ export async function POST(req: Request) {
         emailVerified: false,
         createdAt: new Date(),
         updatedAt: new Date(),
+        roles: {
+          connect: {
+            name: "company_admin"
+          }
+        }
       },
     });
 
@@ -74,7 +79,7 @@ export async function POST(req: Request) {
         id: randomUUID(),
         organizationId,
         userId: user.id,
-        role: "admin", // First user is always an admin
+        role: "company_admin", // Set the member's role to company_admin
         createdAt: new Date(),
       },
     });
