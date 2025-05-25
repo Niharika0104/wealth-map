@@ -20,7 +20,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <AppSidebar />
       <main
           className={`flex-1 p-4 transition-all duration-300 ease-in-out ${
-            isHome ? "overflow-hidden" : "overflow-y-auto"
+            isHome ? "overflow-hidden" : ""
           }`}
         >
         {children}

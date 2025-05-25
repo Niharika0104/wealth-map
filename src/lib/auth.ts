@@ -18,6 +18,11 @@ declare module "next-auth" {
       name?: string | null
       email?: string | null
       role?: 'SUPER_ADMIN' | 'COMPANY_ADMIN' | 'EMPLOYEE'
+      permissions?: {
+        name: string
+        category: string
+        description: string
+      }[]
     }
     requiresTwoFactor?: boolean
   }
@@ -31,6 +36,8 @@ type UserWithAccounts = User & {
     name: string
     permissions: {
       name: string
+      category: string
+      description: string
     }[]
   }[]
 }
@@ -82,8 +89,8 @@ export const authOptions = {
           }
 
           // Check if user has super_admin role
-          const isSuperAdmin = user.roles.some(role => role.name.toLowerCase() === 'super_admin');
-          const isCompanyAdmin = user.roles.some(role => role.name.toLowerCase() === 'company_admin');
+          const isSuperAdmin = user.roles.some(role => role.name === 'SUPER_ADMIN');
+          const isCompanyAdmin = user.roles.some(role => role.name === 'COMPANY_ADMIN');
           console.log('Auth Debug - Role Check:', { isSuperAdmin, isCompanyAdmin, roles: user.roles.map(r => r.name) });
 
           if (user.banned) {
@@ -115,11 +122,15 @@ export const authOptions = {
             role = 'COMPANY_ADMIN';
           }
 
+          // Get all permissions from user's roles
+          const permissions = user.roles.flatMap(role => role.permissions);
+
           // Log the final role assignment
           console.log('Auth Debug - Final Role Assignment:', { 
             userId: user.id,
             assignedRole: role,
-            availableRoles: user.roles.map(r => r.name)
+            availableRoles: user.roles.map(r => r.name),
+            permissions: permissions.map(p => p.name)
           });
 
           if (user.twoFactorEnabled) {
@@ -129,7 +140,8 @@ export const authOptions = {
               email: user.email,
               name: user.name,
               requiresTwoFactor: true,
-              role
+              role,
+              permissions
             };
           }
 
@@ -137,7 +149,8 @@ export const authOptions = {
             id: user.id,
             email: user.email,
             name: user.name,
-            role
+            role,
+            permissions
           };
         } catch (error) {
           console.error("Auth error:", error);
@@ -160,6 +173,7 @@ export const authOptions = {
         token.id = user.id;
         token.requiresTwoFactor = user.requiresTwoFactor;
         token.role = user.role;
+        token.permissions = user.permissions;
       }
       return token;
     },
@@ -168,6 +182,11 @@ export const authOptions = {
         session.user.id = token.id as string;
         session.requiresTwoFactor = token.requiresTwoFactor as boolean;
         session.user.role = token.role as 'SUPER_ADMIN' | 'COMPANY_ADMIN' | 'EMPLOYEE';
+        session.user.permissions = token.permissions as {
+          name: string;
+          category: string;
+          description: string;
+        }[];
       }
       return session;
     },

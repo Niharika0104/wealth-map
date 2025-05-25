@@ -146,75 +146,75 @@ export function FloatingChatButton() {
                 </SheetTitle>
                 
                 <div className="flex-1 flex flex-col h-[calc(100vh-8rem)]">
-                  <ScrollArea className="h-full">
-                    <div className="h-full flex flex-col">
+                  <ScrollArea className="flex-1 overflow-hidden">
+                    <div className="flex flex-col h-full">
                       {messages.length === 0 ? (
-                        <div className="h-full flex items-center justify-center p-4">
+                        <div className="flex-1 flex items-center justify-center p-4">
                           <div className="text-center text-muted-foreground">
                             <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
                             <p>Ask me anything about properties, market trends, or wealth analysis.</p>
                           </div>
                         </div>
                       ) : (
-                        <div className="h-full flex flex-col justify-end p-4">
-              <div className="space-y-4">
-                {messages.map((message) => (
+                        <div className="flex-1 flex flex-col justify-end p-4">
+                          <div className="space-y-4">
+                            {messages.map((message) => (
                               <motion.div
-                    key={message.id}
+                                key={message.id}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                    className={`flex gap-3 ${
-                      message.role === "user" ? "justify-end" : "justify-start"
-                    }`}
-                  >
-                    {message.role === "assistant" && (
-                      <Avatar className="h-8 w-8">
+                                className={`flex gap-3 ${
+                                  message.role === "user" ? "justify-end" : "justify-start"
+                                }`}
+                              >
+                                {message.role === "assistant" && (
+                                  <Avatar className="h-8 w-8">
                                     <AvatarFallback>
                                       <MessageSquare className="h-4 w-4" />
                                     </AvatarFallback>
-                      </Avatar>
-                    )}
-                    <div
-                      className={`max-w-[80%] rounded-lg p-3 ${
-                        message.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
-                      }`}
-                    >
-                      <MessageRenderer content={message.content} />
-                      <span className="text-xs opacity-70 mt-1 block">
-                        {message.createdAt.toLocaleTimeString()}
-                      </span>
-                    </div>
-                    {message.role === "user" && (
-                      <Avatar className="h-8 w-8">
+                                  </Avatar>
+                                )}
+                                <div
+                                  className={`max-w-[80%] rounded-lg p-3 ${
+                                    message.role === "user"
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-muted"
+                                  }`}
+                                >
+                                  <MessageRenderer content={message.content} />
+                                  <span className="text-xs opacity-70 mt-1 block">
+                                    {message.createdAt.toLocaleTimeString()}
+                                  </span>
+                                </div>
+                                {message.role === "user" && (
+                                  <Avatar className="h-8 w-8">
                                     <AvatarFallback>
                                       <User className="h-4 w-4" />
                                     </AvatarFallback>
-                      </Avatar>
-                    )}
+                                  </Avatar>
+                                )}
                               </motion.div>
-                ))}
-                {loading && (
+                            ))}
+                            {loading && (
                               <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 className="flex gap-3"
                               >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src="/images/bot-avatar.png" alt="AI Assistant" />
-                      <AvatarFallback>AI</AvatarFallback>
-                    </Avatar>
-                    <div className="bg-muted rounded-lg p-3">
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                                <Avatar className="h-8 w-8">
+                                  <AvatarImage src="/images/bot-avatar.png" alt="AI Assistant" />
+                                  <AvatarFallback>AI</AvatarFallback>
+                                </Avatar>
+                                <div className="bg-muted rounded-lg p-3">
+                                  <Loader2 className="h-4 w-4 animate-spin" />
                                 </div>
                               </motion.div>
                             )}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
-              </div>
-            </ScrollArea>
+                  </ScrollArea>
                 </div>
 
             <div className="border-t p-4">

@@ -140,12 +140,6 @@ const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
           icon: Users,
           badge: null,
         },
-        {
-          title: "Company Reports",
-          url: "/app/company-admin/reports",
-          icon: PieChart,
-          badge: null,
-        },
       ],
     },
     {
@@ -248,10 +242,27 @@ const userItems = [
 ];
 
 export function AppSidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
   const pathname = usePathname()
   const router = useRouter()
   const { data: session } = useSession()
+
+  // Handle mobile detection and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobile = window.innerWidth < 768
+      setCollapsed(isMobile)
+    }
+
+    // Check on mount
+    checkMobile()
+
+    // Add resize listener
+    window.addEventListener('resize', checkMobile)
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Get all navigation items based on user's role
   const getAllNavigationItems = (): NavigationItems => {
@@ -358,7 +369,7 @@ export function AppSidebar() {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 py-4 px-2">
+      <div className="flex-1 overflow-y-auto py-4">
         <TooltipProvider delayDuration={0}>
           {navigationItems.map((group: NavigationGroup, index: number) => (
             <div key={`${group.title}-${index}`} className="mb-4">
@@ -367,48 +378,53 @@ export function AppSidebar() {
               )}
               <div className="space-y-1">
                 {group.items.map((item: NavigationItem) => {
-                  // Only highlight the item if the pathname matches exactly
                   const isActive = pathname === item.url;
-                  // Create a unique key based on the URL
                   const uniqueKey = item.url.replace(/\//g, '-');
-                  return (
+                  
+                  const linkContent = (
+                    <Link
+                      href={item.url}
+                      className={cn(
+                        "flex items-center gap-3 rounded-md text-sm transition-colors",
+                        isActive
+                          ? "bg-primary text-primary-foreground"
+                          : "hover:bg-muted text-muted-foreground hover:text-foreground",
+                        collapsed ? "justify-center px-1 py-2" : "px-3 py-2",
+                      )}
+                    >
+                      <item.icon
+                        className={cn("h-5 w-5", isActive ? "text-primary-foreground" : "text-muted-foreground")}
+                      />
+                      {!collapsed && <span className="flex-1">{item.title}</span>}
+                      {!collapsed && item.badge && (
+                        <Badge variant={item.badge.variant} className="ml-auto">
+                          {item.badge.content}
+                        </Badge>
+                      )}
+                    </Link>
+                  );
+
+                  return collapsed ? (
                     <Tooltip key={uniqueKey}>
                       <TooltipTrigger asChild>
-                        <Link
-                          href={item.url}
-                          className={cn(
-                            "flex items-center gap-3 rounded-md text-sm transition-colors",
-                            isActive
-                              ? "bg-primary text-primary-foreground"
-                              : "hover:bg-muted text-muted-foreground hover:text-foreground",
-                            collapsed ? "justify-center px-1 py-2" : "px-3 py-2",
-                          )}
-                        >
-                          <item.icon
-                            className={cn("h-5 w-5", isActive ? "text-primary-foreground" : "text-muted-foreground")}
-                          />
-                          {!collapsed && <span className="flex-1">{item.title}</span>}
-                          {!collapsed && item.badge && (
+                        {linkContent}
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <div className="flex items-center gap-2">
+                          <span>{item.title}</span>
+                          {item.badge && (
                             <Badge variant={item.badge.variant} className="ml-auto">
                               {item.badge.content}
                             </Badge>
                           )}
-                        </Link>
-                      </TooltipTrigger>
-                      {collapsed && (
-                        <TooltipContent side="right">
-                          <div className="flex items-center gap-2">
-                            <span>{item.title}</span>
-                            {item.badge && (
-                              <Badge variant={item.badge.variant} className="ml-auto">
-                                {item.badge.content}
-                              </Badge>
-                            )}
-                          </div>
-                        </TooltipContent>
-                      )}
+                        </div>
+                      </TooltipContent>
                     </Tooltip>
-                  )
+                  ) : (
+                    <div key={uniqueKey}>
+                      {linkContent}
+                    </div>
+                  );
                 })}
               </div>
             </div>
@@ -446,7 +462,7 @@ export function AppSidebar() {
       <Separator />
 
       {/* User section */}
-      <div className={cn("p-2", collapsed ? "px-1" : "p-3")}>
+      <div className="p-4">
         <TooltipProvider delayDuration={0}>
           {collapsed ? (
             <Tooltip>
@@ -479,40 +495,46 @@ export function AppSidebar() {
           )}
 
           <div className="space-y-1">
-            {userItems.map((item) => (
-              <Tooltip key={item.title}>
-                <TooltipTrigger asChild>
-                  {item.title === "Logout" ? (
-                    <button
-                      onClick={handleLogout}
-                      className={cn(
-                        "w-full flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-destructive hover:text-destructive hover:bg-destructive/10",
-                        collapsed ? "justify-center px-1 py-2" : "px-3 py-2"
-                      )}
-                    >
-                      <LogOut className="h-4 w-4 text-destructive" />
-                      {!collapsed && <span>Logout</span>}
-                    </button>
-                  ) : (
-                    <a
-                      href={item.url}
-                      className={cn(
-                        "flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-muted-foreground hover:text-foreground",
-                        collapsed ? "justify-center px-1 py-2" : "px-3 py-2"
-                      )}
-                    >
-                      <item.icon className="h-4 w-4 text-muted-foreground" />
-                      {!collapsed && <span>{item.title}</span>}
-                    </a>
+            {userItems.map((item) => {
+              const itemContent = item.title === "Logout" ? (
+                <button
+                  onClick={handleLogout}
+                  className={cn(
+                    "w-full flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-destructive hover:text-destructive hover:bg-destructive/10",
+                    collapsed ? "justify-center px-1 py-2" : "px-3 py-2"
                   )}
-                </TooltipTrigger>
-                {collapsed && (
+                >
+                  <LogOut className="h-4 w-4 text-destructive" />
+                  {!collapsed && <span>Logout</span>}
+                </button>
+              ) : (
+                <a
+                  href={item.url}
+                  className={cn(
+                    "flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-muted-foreground hover:text-foreground",
+                    collapsed ? "justify-center px-1 py-2" : "px-3 py-2"
+                  )}
+                >
+                  <item.icon className="h-4 w-4 text-muted-foreground" />
+                  {!collapsed && <span>{item.title}</span>}
+                </a>
+              );
+
+              return collapsed ? (
+                <Tooltip key={item.title}>
+                  <TooltipTrigger asChild>
+                    {itemContent}
+                  </TooltipTrigger>
                   <TooltipContent side="right">
                     <span>{item.title}</span>
                   </TooltipContent>
-                )}
-              </Tooltip>
-            ))}
+                </Tooltip>
+              ) : (
+                <div key={item.title}>
+                  {itemContent}
+                </div>
+              );
+            })}
           </div>
         </TooltipProvider>
       </div>

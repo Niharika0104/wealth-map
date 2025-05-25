@@ -1,9 +1,41 @@
 import { NextRequest } from "next/server";
-import prisma from 'lib/index';
+import { PrismaClient } from "@/generated/prisma";
 import { getTrendingScore } from '@/Models/models';
+import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
+
+const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Check if user has permission to view properties
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
+    });
+
+    const hasPermission = user?.roles.some(role =>
+      role.permissions.some(p => p.name === "property:view")
+    );
+
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: "You don't have permission to view properties" },
+        { status: 403 }
+      );
+    }
+
     const properties = await prisma.property.findMany({
       select: {
         id: true,
@@ -17,21 +49,22 @@ export async function GET(req: NextRequest) {
         Bookmarks: { select: { id: true } },
       },
     });
-const rawScores = properties.map((property) => {
-  const viewsCount = property.views.length || 0;
-  const bookmarksCount = property.Bookmarks.length || 0;
-  const score = Number(getTrendingScore({
-    views: viewsCount,
-    bookmarks: bookmarksCount,
-    createdAt: property.createdAt,
-  })) || 0; // fallback to 0 if NaN/undefined/null
-  return {
-    ...property,
-    viewsCount,
-    bookmarksCount,
-    score,
-  };
-});
+
+    const rawScores = properties.map((property) => {
+      const viewsCount = property.views.length || 0;
+      const bookmarksCount = property.Bookmarks.length || 0;
+      const score = Number(getTrendingScore({
+        views: viewsCount,
+        bookmarks: bookmarksCount,
+        createdAt: property.createdAt,
+      })) || 0; // fallback to 0 if NaN/undefined/null
+      return {
+        ...property,
+        viewsCount,
+        bookmarksCount,
+        score,
+      };
+    });
 
     // Normalize and return only the minimal fields
     const scores = rawScores.map((p) => p.score);
@@ -60,11 +93,11 @@ const rawScores = properties.map((property) => {
       (a, b) => b.trendingScore - a.trendingScore
     );
 
-    return new Response(JSON.stringify(sorted), { status: 200 });
+    return NextResponse.json(sorted);
   } catch (error) {
     console.error("Error fetching trending properties:", error);
-    return new Response(
-      JSON.stringify({ error: "Internal server error" }),
+    return NextResponse.json(
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

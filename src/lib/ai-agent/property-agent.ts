@@ -176,7 +176,7 @@ export class PropertyAgent {
     userQuery: string
   ): Promise<string> {
     const prompt = `
-      Based on the following property data and web search results, please provide a comprehensive response to the user's query.
+      You are a friendly and knowledgeable real estate assistant. Based on the following property data and web search results, please provide a helpful response to the user's query.
       
       User Query: ${userQuery}
       
@@ -186,12 +186,20 @@ export class PropertyAgent {
       Additional Web Information:
       ${webData}
       
-      Please provide a detailed response that:
-      1. Directly addresses the user's query
-      2. Includes relevant property details
-      3. Incorporates any relevant market insights from the web data
-      4. Maintains a professional and informative tone
-      5. Cites sources when using information from web search results
+      Please provide a response that:
+      1. Uses a conversational, friendly tone - like you're chatting with a friend
+      2. Directly answers the user's question in a natural way
+      3. Includes relevant property details in a casual, easy-to-understand format
+      4. Adds any interesting market insights from the web data
+      5. Keeps the response concise and engaging
+      6. Uses natural language and avoids formal business jargon
+      7. If citing sources, do it naturally within the conversation
+      
+      Remember to:
+      - Use contractions (I'm, you're, that's, etc.)
+      - Keep sentences short and clear
+      - Add personality to your response
+      - Be helpful but not overly formal
     `;
 
     try {
@@ -221,7 +229,7 @@ export class PropertyAgent {
       }
     } catch (error) {
       debugLog('Error generating AI response:', error);
-      return "I apologize, but I encountered an error while processing your request. Please try again later.";
+      return "Oops! I ran into a little trouble there. Mind trying again?";
     }
   }
 
