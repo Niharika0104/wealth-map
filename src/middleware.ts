@@ -94,8 +94,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Require authentication for all other routes
-  if (!isAuth || !session.user?.id || session.requiresTwoFactor) {
+  // Allow unauthenticated access to the landing page
+  if (
+    !isAuth ||
+    !session.user?.id ||
+    session.requiresTwoFactor
+  ) {
+    if (request.nextUrl.pathname === "/") {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 

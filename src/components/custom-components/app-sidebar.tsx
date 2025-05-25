@@ -234,6 +234,19 @@ const availableRoles: Record<UserRole, UserRole[]> = {
   EMPLOYEE: ["EMPLOYEE"],
 }
 
+const userItems = [
+  {
+    title: "Profile",
+    url: "/app/account",
+    icon: User,
+  },
+  {
+    title: "Logout",
+    url: "#",
+    icon: LogOut,
+  },
+];
+
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const pathname = usePathname()
@@ -433,22 +446,75 @@ export function AppSidebar() {
       <Separator />
 
       {/* User section */}
-      <div className="py-4">
-        <Button 
-          variant="ghost" 
-          className="w-full justify-start gap-2 cursor-pointer hover:bg-muted/50 transition-colors"
-          onClick={() => router.push("/app/account")}
-        >
-          <Avatar className="h-6 w-6">
-            <AvatarFallback>{session?.user?.name?.[0] || "U"}</AvatarFallback>
-          </Avatar>
-          {!collapsed && (
-            <div className="flex flex-col items-start">
-              <span className="text-sm font-medium">{session?.user?.name || "User"}</span>
-              <span className="text-xs text-muted-foreground">{session?.user?.role?.replace("_", " ") || "Role"}</span>
+      <div className={cn("p-2", collapsed ? "px-1" : "p-3")}>
+        <TooltipProvider delayDuration={0}>
+          {collapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex justify-center mb-4">
+                  <Avatar className="h-8 w-8 border-2 border-primary cursor-pointer">
+                    <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                      {session?.user?.name?.[0] || "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <div>
+                  <p className="font-medium">{session?.user?.name || "User"}</p>
+                  <p className="text-xs text-muted-foreground">{session?.user?.email || "user@example.com"}</p>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <div className="flex items-center gap-3 mb-4">
+              <Avatar className="h-9 w-9">
+                <AvatarFallback>{session?.user?.name?.[0] || "U"}</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium">{session?.user?.name || "User"}</p>
+                <p className="text-xs text-muted-foreground truncate">{session?.user?.email || "user@example.com"}</p>
+              </div>
             </div>
           )}
-        </Button>
+
+          <div className="space-y-1">
+            {userItems.map((item) => (
+              <Tooltip key={item.title}>
+                <TooltipTrigger asChild>
+                  {item.title === "Logout" ? (
+                    <button
+                      onClick={handleLogout}
+                      className={cn(
+                        "w-full flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-destructive hover:text-destructive hover:bg-destructive/10",
+                        collapsed ? "justify-center px-1 py-2" : "px-3 py-2"
+                      )}
+                    >
+                      <LogOut className="h-4 w-4 text-destructive" />
+                      {!collapsed && <span>Logout</span>}
+                    </button>
+                  ) : (
+                    <a
+                      href={item.url}
+                      className={cn(
+                        "flex items-center gap-3 rounded-md text-sm transition-colors hover:bg-muted text-muted-foreground hover:text-foreground",
+                        collapsed ? "justify-center px-1 py-2" : "px-3 py-2"
+                      )}
+                    >
+                      <item.icon className="h-4 w-4 text-muted-foreground" />
+                      {!collapsed && <span>{item.title}</span>}
+                    </a>
+                  )}
+                </TooltipTrigger>
+                {collapsed && (
+                  <TooltipContent side="right">
+                    <span>{item.title}</span>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            ))}
+          </div>
+        </TooltipProvider>
       </div>
     </aside>
   )
