@@ -54,7 +54,7 @@ export default function PropertyImageCarousel({ propertyId, className = "" }: Pr
             backgroundImage: `url('${image}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundColor: "green", // Optional: for debug
+            backgroundColor: "lightgray", // Optional: for debug
           }}
         />
       ))}
