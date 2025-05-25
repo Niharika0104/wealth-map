@@ -42,8 +42,32 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+// Define types for navigation items
+type NavigationItem = {
+  title: string;
+  url: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge: {
+    content: string;
+    variant: "default" | "secondary" | "destructive" | "outline";
+  } | null;
+};
+
+type NavigationGroup = {
+  title: string;
+  items: NavigationItem[];
+};
+
+type NavigationItems = NavigationGroup[];
+
+type UserRole = "SUPER_ADMIN" | "COMPANY_ADMIN" | "EMPLOYEE";
+
+type NavigationItemsByRole = {
+  [K in UserRole]: NavigationItems;
+};
+
 // Navigation items grouped by role
-const navigationItems = {
+const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
   SUPER_ADMIN: [
     {
       title: "Main",
@@ -52,6 +76,12 @@ const navigationItems = {
           title: "Home",
           url: "/app/super-admin",
           icon: Home,
+          badge: null,
+        },
+        {
+          title: "Property",
+          url: "/app/super-admin/property",
+          icon: Building,
           badge: null,
         },
         {
@@ -99,7 +129,7 @@ const navigationItems = {
       title: "Main",
       items: [
         {
-          title: "Home",
+          title: "Dashboard",
           url: "/app/company-admin",
           icon: Home,
           badge: null,
@@ -108,6 +138,12 @@ const navigationItems = {
           title: "Employees",
           url: "/app/company-admin/employees",
           icon: Users,
+          badge: null,
+        },
+        {
+          title: "Company Reports",
+          url: "/app/company-admin/reports",
+          icon: PieChart,
           badge: null,
         },
       ],
@@ -119,12 +155,6 @@ const navigationItems = {
           title: "Roles & Permissions",
           url: "/app/company-admin/roles",
           icon: Shield,
-          badge: null,
-        },
-        {
-          title: "Reports",
-          url: "/app/company-admin/reports",
-          icon: PieChart,
           badge: null,
         },
       ],
@@ -149,9 +179,15 @@ const navigationItems = {
       title: "Main",
       items: [
         {
-          title: "Home",
+          title: "Employee Dashboard",
           url: "/app/employee/home",
           icon: Home,
+          badge: null,
+        },
+        {
+          title: "Property View",
+          url: "/app/employee/property",
+          icon: Building,
           badge: null,
         },
         {
@@ -167,7 +203,7 @@ const navigationItems = {
           badge: null,
         },
         {
-          title: "Reports",
+          title: "Employee Reports",
           url: "/app/employee/reports",
           icon: PieChart,
           badge: null,
@@ -192,7 +228,7 @@ const navigationItems = {
 }
 
 // Available roles for switching based on current role
-const availableRoles = {
+const availableRoles: Record<UserRole, UserRole[]> = {
   SUPER_ADMIN: ["SUPER_ADMIN"],
   COMPANY_ADMIN: ["COMPANY_ADMIN", "EMPLOYEE"],
   EMPLOYEE: ["EMPLOYEE"],
@@ -200,69 +236,74 @@ const availableRoles = {
 
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false)
-  const [currentRole, setCurrentRole] = useState<string>("")
   const pathname = usePathname()
   const router = useRouter()
   const { data: session } = useSession()
 
-  useEffect(() => {
-    if (session?.user?.role) {
-      // Get the stored role from localStorage or use the session role
-      const storedRole = localStorage.getItem('selectedRole')
-      const allowedRoles = availableRoles[session.user.role as keyof typeof availableRoles] || []
-      
-      // Only set the stored role if it's allowed for the current user
-      if (storedRole && allowedRoles.includes(storedRole)) {
-        setCurrentRole(storedRole)
-      } else {
-        setCurrentRole(session.user.role)
-        localStorage.setItem('selectedRole', session.user.role)
+  // Get all navigation items based on user's role
+  const getAllNavigationItems = (): NavigationItems => {
+    const defaultRole: UserRole = "EMPLOYEE";
+    if (!session?.user?.role) return ROLE_NAVIGATION_ITEMS[defaultRole];
+
+    const userRole = session.user.role as UserRole;
+    const allowedRoles = availableRoles[userRole] || [];
+    
+    // Combine navigation items from all allowed roles
+    const combinedItems: NavigationItems = [];
+    const seenUrls = new Set<string>();
+    let aiAssistantAdded = false;
+    
+    // Helper function to safely get navigation items for a role
+    const getRoleItems = (role: UserRole): NavigationItems => {
+      return ROLE_NAVIGATION_ITEMS[role] || [];
+    };
+
+    // Process roles in priority order (COMPANY_ADMIN first, then EMPLOYEE)
+    const sortedRoles = allowedRoles.sort((a, b) => {
+      if (a === "COMPANY_ADMIN") return -1;
+      if (b === "COMPANY_ADMIN") return 1;
+      return 0;
+    });
+
+    for (const role of sortedRoles) {
+      const roleItems = getRoleItems(role);
+      for (const group of roleItems) {
+        const existingGroup = combinedItems.find(g => g.title === group.title);
+        if (existingGroup) {
+          // For existing groups, filter out AI Assistant if already added
+          const newItems = group.items.filter(item => {
+            if (item.title === "AI Assistant") {
+              if (aiAssistantAdded) return false;
+              aiAssistantAdded = true;
+              return true;
+            }
+            return !seenUrls.has(item.url);
+          });
+          newItems.forEach(item => seenUrls.add(item.url));
+          existingGroup.items = [...existingGroup.items, ...newItems];
+        } else {
+          // For new groups, filter out AI Assistant if already added
+          const uniqueItems = group.items.filter(item => {
+            if (item.title === "AI Assistant") {
+              if (aiAssistantAdded) return false;
+              aiAssistantAdded = true;
+              return true;
+            }
+            return !seenUrls.has(item.url);
+          });
+          uniqueItems.forEach(item => seenUrls.add(item.url));
+          combinedItems.push({
+            ...group,
+            items: uniqueItems
+          });
+        }
       }
     }
-  }, [session])
 
-  // Get navigation items based on current role
-  const roleNavigationItems = navigationItems[currentRole as keyof typeof navigationItems] || navigationItems.EMPLOYEE
+    return combinedItems;
+  };
 
-  // Handle role switch
-  const handleRoleSwitch = async (newRole: string) => {
-    try {
-      // Validate that the user is allowed to switch to this role
-      const allowedRoles = availableRoles[session?.user?.role as keyof typeof availableRoles] || [];
-      if (!allowedRoles.includes(newRole)) {
-        console.error("Unauthorized role switch attempt");
-        return;
-      }
-
-      const response = await fetch("/api/auth/switch-role", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ role: newRole }),
-      })
-
-      if (!response.ok) throw new Error("Failed to switch role")
-
-      setCurrentRole(newRole)
-      // Store the selected role in localStorage
-      localStorage.setItem('selectedRole', newRole)
-      // Redirect to the home page of the new role using hyphens
-      const rolePath = newRole.toLowerCase().replace('_', '-')
-      router.push(`/app/${rolePath}/home`)
-    } catch (error) {
-      console.error("Error switching role:", error)
-    }
-  }
-
-  // Dispatch an event when the sidebar width changes
-  useEffect(() => {
-    const width = collapsed ? "50px" : "240px"
-    const event = new CustomEvent("sidebarWidthChange", {
-      detail: { width },
-    })
-    window.dispatchEvent(event)
-  }, [collapsed])
+  const navigationItems = getAllNavigationItems();
 
   const handleLogout = async () => {
     try {
@@ -303,44 +344,22 @@ export function AppSidebar() {
         )}
       </div>
 
-      {/* Role Switch */}
-      {!collapsed && session?.user && (
-        <div className="p-4 border-b border-border">
-          <Select
-            value={currentRole}
-            onValueChange={handleRoleSwitch}
-            defaultValue={session.user.role}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select role">
-                {currentRole.replace("_", " ")}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {availableRoles[session.user.role as keyof typeof availableRoles]?.map((role) => (
-                <SelectItem key={role} value={role}>
-                  {role.replace("_", " ")}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
-
       {/* Navigation */}
       <div className="flex-1 py-4 px-2">
         <TooltipProvider delayDuration={0}>
-          {roleNavigationItems.map((group, index) => (
-            <div key={group.title} className="mb-4">
+          {navigationItems.map((group: NavigationGroup, index: number) => (
+            <div key={`${group.title}-${index}`} className="mb-4">
               {!collapsed && (
                 <h3 className="text-xs uppercase text-muted-foreground font-medium mb-2 px-2">{group.title}</h3>
               )}
               <div className="space-y-1">
-                {group.items.map((item) => {
+                {group.items.map((item: NavigationItem) => {
                   // Only highlight the item if the pathname matches exactly
                   const isActive = pathname === item.url;
+                  // Create a unique key based on the URL
+                  const uniqueKey = item.url.replace(/\//g, '-');
                   return (
-                    <Tooltip key={item.title}>
+                    <Tooltip key={uniqueKey}>
                       <TooltipTrigger asChild>
                         <Link
                           href={item.url}
@@ -414,48 +433,22 @@ export function AppSidebar() {
       <Separator />
 
       {/* User section */}
-      <div className="p-4">
-        <div className="flex items-center gap-3">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback>{session?.user?.name?.charAt(0) || "U"}</AvatarFallback>
+      <div className="py-4">
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start gap-2 cursor-pointer hover:bg-muted/50 transition-colors"
+          onClick={() => router.push("/app/account")}
+        >
+          <Avatar className="h-6 w-6">
+            <AvatarFallback>{session?.user?.name?.[0] || "U"}</AvatarFallback>
           </Avatar>
           {!collapsed && (
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{session?.user?.name}</p>
-              <p className="text-xs text-muted-foreground truncate">{session?.user?.email}</p>
+            <div className="flex flex-col items-start">
+              <span className="text-sm font-medium">{session?.user?.name || "User"}</span>
+              <span className="text-xs text-muted-foreground">{session?.user?.role?.replace("_", " ") || "Role"}</span>
             </div>
           )}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8"
-              >
-                <Settings className="h-4 w-4" />
-                <span className="sr-only">Open user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/app/account" className="flex items-center">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile & Settings</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="text-red-600 focus:text-red-600"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Logout</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        </Button>
       </div>
     </aside>
   )

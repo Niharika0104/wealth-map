@@ -27,10 +27,7 @@ export default function MapView({
   const mapContainer = useRef<HTMLDivElement>(null)
   const mapInstance = useRef<MapRef | null>(null)
   const markersRef = useRef<maptilersdk.Marker[]>([])
-
-  // Track mounted state to prevent memory leaks
   const isMounted = useRef(false)
-  // Use state to ensure client-side rendering only
   const [isClient, setIsClient] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -43,6 +40,7 @@ export default function MapView({
     }
   }
 
+  // Initialize map
   useEffect(() => {
     // Set client-side flag
     setIsClient(true)
@@ -54,7 +52,12 @@ export default function MapView({
       isMounted.current = false
       clearMarkers()
       if (mapInstance.current) {
-        mapInstance.current.remove()
+        try {
+          mapInstance.current.remove()
+        } catch (error) {
+          console.error("Error removing map:", error)
+        }
+        mapInstance.current = null
       }
     }
   }, [])
@@ -83,6 +86,7 @@ export default function MapView({
         // Check again if component is still mounted
         if (!isMounted.current) return
 
+        // Create map instance
         mapInstance.current = new maptilersdk.Map({
           container: mapContainer.current!,
           style: maptilersdk.MapStyle.STREETS,
@@ -95,6 +99,30 @@ export default function MapView({
           if (!isMounted.current) return
           setIsLoading(false)
           console.log("Map initialized successfully")
+        })
+
+        // Handle WebGL context loss
+        mapInstance.current.on("webglcontextlost", () => {
+          console.warn("WebGL context lost. Attempting to restore...")
+          if (mapInstance.current) {
+            try {
+              mapInstance.current.resize()
+            } catch (error) {
+              console.error("Error restoring WebGL context:", error)
+            }
+          }
+        })
+
+        // Handle WebGL context restored
+        mapInstance.current.on("webglcontextrestored", () => {
+          console.log("WebGL context restored")
+          if (mapInstance.current) {
+            try {
+              mapInstance.current.resize()
+            } catch (error) {
+              console.error("Error after WebGL context restoration:", error)
+            }
+          }
         })
       } catch (error) {
         console.error("Error initializing map:", error)
@@ -151,24 +179,28 @@ export default function MapView({
 
       // If we have markers, fit the map to show all of them
       if (markersRef.current.length > 0 && mapInstance.current) {
-        // Create a bounds object
-        const bounds = new maptilersdk.LngLatBounds()
+        try {
+          // Create a bounds object
+          const bounds = new maptilersdk.LngLatBounds()
 
-        // Extend the bounds to include each marker's position
-        markersRef.current.forEach((marker) => {
-          bounds.extend(marker.getLngLat())
-        })
+          // Extend the bounds to include each marker's position
+          markersRef.current.forEach((marker) => {
+            bounds.extend(marker.getLngLat())
+          })
 
-        // Fit the map to the bounds
-        mapInstance.current.fitBounds(bounds, {
-          padding: 50, // Add some padding around the bounds
-          maxZoom: 15, // Don't zoom in too far
-        })
+          // Fit the map to the bounds
+          mapInstance.current.fitBounds(bounds, {
+            padding: 50, // Add some padding around the bounds
+            maxZoom: 15, // Don't zoom in too far
+          })
+        } catch (error) {
+          console.error("Error fitting bounds:", error)
+        }
       }
     }
 
     addMarkers()
-  }, [properties, isLoading])
+  }, [properties, isLoading, coordinates])
 
   // Don't render the map container on the server
   if (!isClient) {

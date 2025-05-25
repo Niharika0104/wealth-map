@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -23,11 +23,8 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getProperties, type Property } from "./property-store"
+import type { Property } from "@/Models/models"
 import MapView from "@/components/custom-components/trending/map-view"
-
-// Get properties from our store
-const { trendingProperties, hotProperties } = getProperties()
 
 type TimelineFilter = "all" | "week" | "month" | "quarter"
 type ConfidenceFilter = "all" | "High" | "Medium" | "Low"
@@ -40,7 +37,58 @@ export default function TrendingProperties() {
   const [currentPage, setCurrentPage] = useState(1)
   const [activeTab, setActiveTab] = useState("hot")
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
+  const [trendingProperties, setTrendingProperties] = useState<Property[]>([])
+  const [hotProperties, setHotProperties] = useState<Property[]>([])
+  const [loading, setLoading] = useState(true)
   const itemsPerPage = 8
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await fetch("/api/property/all")
+        if (!response.ok) {
+          throw new Error("Failed to fetch properties")
+        }
+
+        const data = await response.json()
+        // Map the API response to match the Property type
+        const mappedProperties = data.map((property: any) => ({
+          id: property.id,
+          name: property.name,
+          description: property.description || "",
+          address: property.address,
+          city: property.city,
+          state: property.state,
+          country: property.country,
+          zipCode: property.zipCode,
+          price: property.price,
+          images: property.images || [],
+          area: property.area,
+          bed: property.bed,
+          bath: property.bath,
+          type: property.type,
+          confidenceScore: property.confidenceScore ?? null,
+          createdAt: new Date(property.createdAt),
+          updatedAt: new Date(property.updatedAt),
+          owners: property.owners || [],
+          Bookmarks: property.Bookmarks || [],
+          views: property.views || [],
+          ownerType: property.ownerType,
+          confidence: property.confidence
+        }))
+        setTrendingProperties(mappedProperties)
+        // Get hot properties (top 8 by confidence score)
+        const hot = [...mappedProperties].sort((a, b) => (b.confidenceScore || 0) - (a.confidenceScore || 0)).slice(0, 8)
+        setHotProperties(hot)
+      } catch (error) {
+        console.error("Error fetching properties:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProperties()
+  }, [])
 
   // Filter properties based on selected filters
   const filteredProperties = useMemo(() => {
@@ -50,7 +98,7 @@ export default function TrendingProperties() {
     if (timelineFilter !== "all") {
       const now = new Date()
       filtered = filtered.filter((property) => {
-        const updatedDate = new Date(property.lastUpdated)
+        const updatedDate = new Date(property.updatedAt)
         const diffTime = Math.abs(now.getTime() - updatedDate.getTime())
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
@@ -63,42 +111,51 @@ export default function TrendingProperties() {
 
     // Apply confidence filter
     if (confidenceFilter !== "all") {
-      filtered = filtered.filter((property) => property.confidenceLevel === confidenceFilter)
+      filtered = filtered.filter((property) => {
+        const score = property.confidenceScore || 0
+        if (confidenceFilter === "High") return score >= 0.8
+        if (confidenceFilter === "Medium") return score >= 0.5 && score < 0.8
+        if (confidenceFilter === "Low") return score < 0.5
+        return true
+      })
     }
 
     // Apply views filter
     if (viewsFilter !== "all") {
       filtered = filtered.filter((property) => {
-        if (viewsFilter === "high") return property.views > 500
-        if (viewsFilter === "medium") return property.views >= 300 && property.views <= 500
-        if (viewsFilter === "low") return property.views < 300
+        const views = property.views?.length || 0
+        if (viewsFilter === "high") return views > 500
+        if (viewsFilter === "medium") return views >= 300 && views <= 500
+        if (viewsFilter === "low") return views < 300
         return true
       })
     }
 
     return filtered
-  }, [timelineFilter, confidenceFilter, viewsFilter])
+  }, [timelineFilter, confidenceFilter, viewsFilter, trendingProperties])
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredProperties.length / itemsPerPage)
   const paginatedProperties = filteredProperties.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   // Get confidence level color
-  const getConfidenceColor = (level: string) => {
-    switch (level) {
-      case "High":
-        return "bg-green-100 text-green-800"
-      case "Medium":
-        return "bg-yellow-100 text-yellow-800"
-      case "Low":
-        return "bg-red-100 text-red-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
+  const getConfidenceColor = (score: number | null) => {
+    if (!score) return "bg-gray-100 text-gray-800"
+    if (score >= 0.8) return "bg-green-100 text-green-800"
+    if (score >= 0.5) return "bg-yellow-100 text-yellow-800"
+    return "bg-red-100 text-red-800"
   }
 
   // Get trending score color and icon
-  const getTrendingIndicator = (score: number) => {
+  const getTrendingIndicator = (score: number | null) => {
+    if (!score) {
+      return {
+        color: "text-blue-600",
+        bgColor: "bg-blue-50",
+        icon: <Activity className="h-3 w-3 mr-1" />,
+        label: "Active",
+      }
+    }
     if (score > 100) {
       return {
         color: "text-red-600",
@@ -125,10 +182,10 @@ export default function TrendingProperties() {
 
   // Property card component to avoid duplication
   const PropertyCard = ({ property, rank }: { property: Property; rank?: number }) => {
-    const trendingIndicator = getTrendingIndicator(property.trendingScore)
+    const trendingIndicator = getTrendingIndicator(property.confidenceScore)
 
     return (
-      <Link href={`/app/property/${property.id}`} key={property.id}>
+      <Link href={`/app/employee/property/${property.id}`} key={property.id}>
         <Card className="h-full hover:shadow-lg transition-shadow duration-200 relative overflow-hidden">
           {rank && (
             <div className="absolute top-0 left-0 w-10 h-10 bg-gray-800 flex items-center justify-center text-white font-bold text-lg z-10 rounded-tl-lg rounded-br-lg">
@@ -146,7 +203,7 @@ export default function TrendingProperties() {
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
               <h3 className="font-bold text-lg text-white">
-                {property.type} {property.region}
+                {property.type} in {property.city}, {property.state}
               </h3>
               <div className="flex items-center text-white/90 mb-1">
                 <MapPin className="h-3 w-3 mr-1" />
@@ -164,26 +221,26 @@ export default function TrendingProperties() {
             <div className="flex justify-between mb-3">
               <Badge variant="outline" className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {property.views}
+                {property.views?.length || 0}
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
-                {property.sqft} sqft
+                {property.area} sqft
               </Badge>
-              <Badge className={`${getConfidenceColor(property.confidenceLevel)} flex items-center gap-1`}>
+              <Badge className={`${getConfidenceColor(property.confidenceScore)} flex items-center gap-1`}>
                 <Shield className="h-3 w-3" />
-                {property.confidenceLevel}
+                {property.confidenceScore ? (property.confidenceScore >= 0.8 ? "High" : property.confidenceScore >= 0.5 ? "Medium" : "Low") : "Unknown"}
               </Badge>
             </div>
             <div className="flex justify-between items-center">
               <div className="text-sm text-gray-600 flex items-center">
                 <Calendar className="h-3 w-3 mr-1" />
-                {property.lastUpdated}
+                {new Date(property.updatedAt).toLocaleDateString()}
               </div>
               <div className="flex items-center">
-                <span className="font-bold text-green-600 mr-2">{property.value}</span>
+                <span className="font-bold text-green-600 mr-2">${property.price.toLocaleString()}</span>
                 <Avatar className="h-6 w-6">
                   <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                  <AvatarFallback>{property.ownerName.charAt(0)}</AvatarFallback>
+                  <AvatarFallback>{property.owners?.[0]?.owner?.name?.charAt(0) || "?"}</AvatarFallback>
                 </Avatar>
               </div>
             </div>
@@ -195,7 +252,7 @@ export default function TrendingProperties() {
 
   // Featured property card for the top trending property
   const FeaturedPropertyCard = ({ property }: { property: Property }) => {
-    const trendingIndicator = getTrendingIndicator(property.trendingScore)
+    const trendingIndicator = getTrendingIndicator(property.confidenceScore)
 
     return (
       <Card className="overflow-hidden border shadow-md">
@@ -215,20 +272,20 @@ export default function TrendingProperties() {
               <span className="font-bold text-sm">Top Trending</span>
             </div>
           </div>
-          <div className="p-6 md:w-3/5">
+          <CardContent className="p-6 md:w-3/5">
             <div className="flex items-center mb-2">
               <Badge className={`${trendingIndicator.bgColor} ${trendingIndicator.color} mr-2`}>
                 {trendingIndicator.icon}
-                Trending Score: {Math.round(property.trendingScore)}
+                Confidence Score: {property.confidenceScore ? Math.round(property.confidenceScore * 100) : 0}%
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {property.views} views
+                {property.views?.length || 0} views
               </Badge>
             </div>
 
             <h2 className="text-2xl font-bold mb-2">
-              {property.type} in {property.region}
+              {property.type} in {property.city}, {property.state}
             </h2>
 
             <div className="flex items-center text-gray-600 mb-4">
@@ -238,35 +295,35 @@ export default function TrendingProperties() {
 
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex items-center">
-                <Badge className={`${getConfidenceColor(property.confidenceLevel)} mr-2`}>
+                <Badge className={`${getConfidenceColor(property.confidenceScore)} mr-2`}>
                   <Shield className="h-3 w-3 mr-1" />
-                  {property.confidenceLevel}
+                  {property.confidenceScore ? (property.confidenceScore >= 0.8 ? "High" : property.confidenceScore >= 0.5 ? "Medium" : "Low") : "Unknown"}
                 </Badge>
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 text-gray-500 mr-1" />
-                <span className="text-sm text-gray-600">{property.lastUpdated}</span>
+                <span className="text-sm text-gray-600">{new Date(property.updatedAt).toLocaleDateString()}</span>
               </div>
               <div className="flex items-center">
                 <BarChart3 className="h-4 w-4 text-gray-500 mr-1" />
-                <span className="text-sm text-gray-600">{property.sqft} sqft</span>
+                <span className="text-sm text-gray-600">{property.area} sqft</span>
               </div>
               <div className="flex items-center">
                 <Users className="h-4 w-4 text-gray-500 mr-1" />
-                <span className="text-sm text-gray-600">{property.ownerType}</span>
+                <span className="text-sm text-gray-600">{property.owners?.[0]?.ownerType || "Unknown"}</span>
               </div>
             </div>
 
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <span className="font-bold text-2xl text-green-600 mr-2">{property.value}</span>
+                <span className="font-bold text-2xl text-green-600 mr-2">${property.price.toLocaleString()}</span>
                 <ArrowUpRight className="h-5 w-5 text-green-500" />
               </div>
-              <Link href={`/app/property/${property.id}`}>
+              <Link href={`/app/employee/property/${property.id}`}>
                 <Button>View Details</Button>
               </Link>
             </div>
-          </div>
+          </CardContent>
         </div>
       </Card>
     )
@@ -294,6 +351,10 @@ export default function TrendingProperties() {
     { name: "Mountain", icon: <Flame className="h-5 w-5 text-gray-700" /> },
   ]
 
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
       {/* Trending Stats */}
@@ -318,7 +379,7 @@ export default function TrendingProperties() {
             <div>
               <p className="text-sm text-gray-600">Total Views</p>
               <p className="text-2xl font-bold">
-                {trendingProperties.reduce((sum, p) => sum + p.views, 0).toLocaleString()}
+                {trendingProperties.reduce((sum, p) => sum + (p.views?.length || 0), 0).toLocaleString()}
               </p>
             </div>
           </CardContent>
@@ -334,7 +395,7 @@ export default function TrendingProperties() {
               <p className="text-2xl font-bold">
                 {
                   trendingProperties.filter((p) => {
-                    const updatedDate = new Date(p.lastUpdated)
+                    const updatedDate = new Date(p.updatedAt)
                     const now = new Date()
                     const diffTime = Math.abs(now.getTime() - updatedDate.getTime())
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
@@ -354,7 +415,7 @@ export default function TrendingProperties() {
             <div>
               <p className="text-sm text-gray-600">Avg. Confidence</p>
               <p className="text-2xl font-bold">
-                {trendingProperties.filter((p) => p.confidenceLevel === "High").length > trendingProperties.length / 2
+                {trendingProperties.filter((p) => (p.confidenceScore || 0) >= 0.8).length > trendingProperties.length / 2
                   ? "High"
                   : "Medium"}
               </p>
@@ -369,7 +430,7 @@ export default function TrendingProperties() {
           <Flame className="mr-2 h-5 w-5 text-red-600" />
           Featured Trending Property
         </h2>
-        <FeaturedPropertyCard property={topTrendingProperty} />
+        {topTrendingProperty && <FeaturedPropertyCard property={topTrendingProperty} />}
       </div>
 
       {/* Trending Categories */}
@@ -390,7 +451,7 @@ export default function TrendingProperties() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={handleTabChange} className="mb-6">
+      <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="hot">Hot Properties</TabsTrigger>
           <TabsTrigger value="all">All Properties</TabsTrigger>
@@ -402,7 +463,7 @@ export default function TrendingProperties() {
               <TrendingUp className="mr-2 h-5 w-5 text-red-600" />
               Hot Properties
               <span className="text-sm font-normal ml-2 text-gray-500">
-                (Highest trending score based on views and recency)
+                (Highest confidence score)
               </span>
             </h2>
           </div>
@@ -422,13 +483,11 @@ export default function TrendingProperties() {
         </TabsContent>
 
         <TabsContent value="all" className="mt-6">
-          {/* Filters */}
-          <div className="flex flex-col md:flex-row gap-4 mb-6 bg-white p-4 rounded-lg shadow">
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Timeline</label>
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex space-x-2">
               <Select value={timelineFilter} onValueChange={(value) => setTimelineFilter(value as TimelineFilter)}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Filter by timeline" />
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Timeline" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Time</SelectItem>
@@ -437,47 +496,32 @@ export default function TrendingProperties() {
                   <SelectItem value="quarter">Last Quarter</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Views</label>
-              <Select value={viewsFilter} onValueChange={(value) => setViewsFilter(value as ViewsFilter)}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Filter by views" />
+              <Select value={confidenceFilter} onValueChange={(value) => setConfidenceFilter(value as ConfidenceFilter)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Confidence" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Views</SelectItem>
-                  <SelectItem value="high">High (500+)</SelectItem>
-                  <SelectItem value="medium">Medium (300-500)</SelectItem>
-                  <SelectItem value="low">Low (&lt; 300)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confidence</label>
-              <Select
-                value={confidenceFilter}
-                onValueChange={(value) => setConfidenceFilter(value as ConfidenceFilter)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Filter by confidence" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Levels</SelectItem>
+                  <SelectItem value="all">All Confidence</SelectItem>
                   <SelectItem value="High">High</SelectItem>
                   <SelectItem value="Medium">Medium</SelectItem>
                   <SelectItem value="Low">Low</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-          </div>
 
-          {/* View toggle */}
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-sm text-gray-600">
-              Showing {Math.min(paginatedProperties.length, itemsPerPage)} of {filteredProperties.length} properties
+              <Select value={viewsFilter} onValueChange={(value) => setViewsFilter(value as ViewsFilter)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Views" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Views</SelectItem>
+                  <SelectItem value="high">High Views</SelectItem>
+                  <SelectItem value="medium">Medium Views</SelectItem>
+                  <SelectItem value="low">Low Views</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
+
             <div className="flex space-x-2">
               <Button
                 variant={viewMode === "grid" ? "default" : "outline"}

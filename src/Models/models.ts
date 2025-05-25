@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 type User = {
   name: string;
   avatarUrl: string;
@@ -81,7 +83,7 @@ export function getConfidenceLevel(owner: any): "High" | "Medium" | "Low" {
   if (nonNullCount >= 2) return "Medium";
   return "Low";
 }
-interface ListViewProps {
+export interface ListViewProps {
   Region: string;  // Changed String to string for TypeScript
   Name: string;
   Owners: User[];
@@ -93,7 +95,7 @@ export interface Property {
   value: ReactNode;
   sqft: ReactNode;
   lastUpdated: ReactNode;
-  confidenceLevel(confidenceLevel: any): string | undefined;
+  confidenceLevel: ConfidenceLevel;
   region: ReactNode;
   coordinates: [number, number];
   id: string;
@@ -110,8 +112,8 @@ export interface Property {
   bed?: number; // only for houses
   bath?: number;
   type: string;
-  confidenceScore?: number;
-  
+  confidenceScore: number | null;
+  trendingScore?: number;
   updatedAt: Date; // or Date, depending on your usage
   // You can add these as arrays of related types if you have them defined:
   owners?: any[];

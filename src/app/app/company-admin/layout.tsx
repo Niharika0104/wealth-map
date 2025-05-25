@@ -31,7 +31,7 @@ export default function CompanyAdminLayout({
     const isEmployee = session.user.role === "EMPLOYEE";
 
     if (!isCompanyAdmin && !isEmployee) {
-      router.push("/app/employee");
+      router.push("/app/employee/home");
     }
   }, [session, status, router]);
 
