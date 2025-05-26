@@ -21,6 +21,17 @@ interface MapFiltersProps {
   totalCount: number
 }
 
+const MIN_PRICE = 10_000;
+const MAX_PRICE = 8_000_000;
+
+// Helper: Format a number as K, M
+function formatKMB(amount: number): string {
+  if (isNaN(amount)) return "0";
+  if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(2).replace(/\.00$/, "").replace(/0$/, "") + "M";
+  if (amount >= 1_000) return (amount / 1_000).toFixed(2).replace(/\.00$/, "").replace(/0$/, "") + "K";
+  return amount.toString();
+}
+
 export default function MapFilters({
   filterState,
   setFilterState,
@@ -31,33 +42,14 @@ export default function MapFilters({
   resetFilters,
   totalCount,
 }: MapFiltersProps) {
-  // Format value for display
-  const formatValue = (value: number) => {
-    if (value >= 1000) {
-      return `$${(value / 1000).toFixed(0)}B`
-    } else if (value >= 1) {
-      return `$${value.toFixed(1)}M`
-    } else {
-      return `$${(value * 1000).toFixed(0)}K`
-    }
-  }
-
-  // Format sqft for display
-  const formatSqft = (sqft: number) => {
-    if (sqft >= 1000000) {
-      return `${(sqft / 1000000).toFixed(1)}M sqft`
-    } else if (sqft >= 1000) {
-      return `${(sqft / 1000).toFixed(0)}K sqft`
-    } else {
-      return `${sqft.toLocaleString()} sqft`
-    }
-  }
-
   // Handle value slider change
   const handleValueChange = (value: number[]) => {
+    // Clamp values to [10K, 8M]
+    const clampedMin = Math.max(MIN_PRICE, Math.min(value[0], MAX_PRICE));
+    const clampedMax = Math.max(MIN_PRICE, Math.min(value[1], MAX_PRICE));
     setFilterState({
       ...filterState,
-      value: [value[0], value[1]],
+      value: [clampedMin, clampedMax],
     })
   }
 
@@ -180,15 +172,15 @@ export default function MapFilters({
           <div className="px-2">
             <Slider
               value={[filterState.value[0], filterState.value[1]]}
-              min={valueRange[0]}
-              max={valueRange[1]}
-              step={0.1}
+              min={MIN_PRICE}
+              max={MAX_PRICE}
+              step={10_000}
               onValueChange={handleValueChange}
               className="mb-3"
             />
             <div className="flex justify-between text-xs font-medium">
-              <span className="text-green-600 bg-green-50 px-2 py-1 rounded">{formatValue(filterState.value[0])}</span>
-              <span className="text-green-600 bg-green-50 px-2 py-1 rounded">{formatValue(filterState.value[1])}</span>
+              <span className="text-green-600 bg-green-50 px-2 py-1 rounded">{formatKMB(filterState.value[0])}</span>
+              <span className="text-green-600 bg-green-50 px-2 py-1 rounded">{formatKMB(filterState.value[1])}</span>
             </div>
           </div>
         </div>
@@ -209,8 +201,8 @@ export default function MapFilters({
               className="mb-3"
             />
             <div className="flex justify-between text-xs font-medium">
-              <span className="text-blue-600 bg-blue-50 px-2 py-1 rounded">{formatSqft(filterState.sqft[0])}</span>
-              <span className="text-blue-600 bg-blue-50 px-2 py-1 rounded">{formatSqft(filterState.sqft[1])}</span>
+              <span className="text-blue-600 bg-blue-50 px-2 py-1 rounded">{sqftRange[0].toLocaleString()} sqft</span>
+              <span className="text-blue-600 bg-blue-50 px-2 py-1 rounded">{sqftRange[1].toLocaleString()} sqft</span>
             </div>
           </div>
         </div>

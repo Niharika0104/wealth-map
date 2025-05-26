@@ -2,13 +2,16 @@ import { NextRequest } from "next/server";
 import prisma from 'lib/index';
 
 
+const CACHE_KEY = 'owners-wealth-data';
+const CACHE_TTL = 60 * 60 * 24; // 24 hours
+
 // POST: Find all properties owned by a given ownerId
 export async function POST(req: NextRequest) {
 
-    
+
   const body = await req.json();
   const { ownerId } = body;
-  console.log(ownerId)
+  const CACHE_KEY = `owner-data-${ownerId}`;
   if (!ownerId) {
     return new Response(JSON.stringify({ error: "ownerId is required in the request body." }), { status: 400 });
   }
@@ -55,7 +58,7 @@ export async function POST(req: NextRequest) {
       ownerType = owner.properties[0].ownerType;
     }
 // Cache the result
-    console.error("Error fetching properties for owner:", owner);
+   
     // Return owner details and their properties, with top-level fields
     return new Response(
       JSON.stringify({
@@ -66,7 +69,11 @@ export async function POST(req: NextRequest) {
         
         properties,
       }),
-      { status: 200 }
+      { status: 200,headers: {
+        'Cache-Control': 's-maxage=259200, stale-while-revalidate=60', // 3 days cache, 1 min stale
+        'Content-Type': 'application/json',
+      } },
+      
     );
   } catch (error) {
     console.error("Error fetching properties for owner:", error);

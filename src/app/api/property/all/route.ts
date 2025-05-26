@@ -48,7 +48,10 @@ ownerId = property.owners[0].ownerId || null;
 }));
      
 
-    return NextResponse.json(propertiesWithOwnerType);
+    return NextResponse.json(propertiesWithOwnerType,{status:200,headers: {
+      'Cache-Control': 's-maxage=259200, stale-while-revalidate=60', // 3 days cache, 1 min stale
+      'Content-Type': 'application/json',
+    }});
   } catch (error) {
     console.error("Error fetching properties:", error);
     return NextResponse.json({ error: 'Failed to fetch properties', details: error }, { status: 500 });

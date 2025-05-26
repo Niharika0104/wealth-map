@@ -48,7 +48,10 @@ export async function GET(req: NextRequest) {
 
 
 
-    return new Response(jsonData, { status: 200 });
+    return new Response(jsonData, { status: 200,headers: {
+      'Cache-Control': 's-maxage=259200, stale-while-revalidate=60', // 3 days cache, 1 min stale
+      'Content-Type': 'application/json',
+    } });
 
   } catch (error) {
     console.error("Error fetching properties for owner:", error);

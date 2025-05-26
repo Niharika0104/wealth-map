@@ -11,6 +11,8 @@ import axios from 'axios'
 import { getCoordinates } from "@/components/custom-components/home/interactive-map"
 import PropertyDetailImageGallery from "@/components/custom-components/home/property-detail-image-gallery"
 import Link from "next/link"
+import OwnerService from "@/services/onwerService"
+
 
 import MapView from "@/components/custom-components/trending/map-view"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -18,6 +20,7 @@ import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, 
 import type { WealthAnalysisProps, Property, Owner } from "@/Models/models"
 import { getWealthConfidenceLevel, OwnerWealthFactors, calculateTotals } from "@/Models/models";
 import { set } from "zod"
+import { faker } from '@faker-js/faker';
 
 export default function PropertyDetailPage() {
   const params = useParams()
@@ -31,40 +34,43 @@ export default function PropertyDetailPage() {
   const [realestateWealth, setRealestateWealth] = useState<number>(0)
   const [totalWealth, setTotalWealth] = useState<number>(0)
   const [coordinates, setCoordinates] = useState<[number, number] | null>(null);
+  const ownerService = new OwnerService();
   useEffect(() => {
     const fetchProperty = async () => {
       try {
         const res = await axios.post('/api/property/get', { propertyId });
         const { property } = res.data;
         setProperty(property);
-
+  
+        // Only fetch owner if property has one
         let ownerObj = null;
         if (property.owners && property.owners.length > 0) {
           ownerObj = property.owners[0].owner;
-          setOwner(ownerObj);
+        }
+  
+        if (ownerObj?.id) {
+          const owner = await ownerService.getOwnerById(ownerObj.id);
+          const ownerType = owner.ownerType || "";
+          const totalRealEstateWealth = owner.totalRealEstateWealth;
+          const totalOtherAssets = owner.stocksSecurities + owner.businessInterests + owner.cashSavings + owner.otherAssets;
+          setOwner(owner);
+          setOwnerType(ownerType);
+          const wealthFactors: OwnerWealthFactors = {
+            stocksSecurities: owner.stocksSecurities,
+            businessInterests: owner.businessInterests,
+            cashSavings: owner.cashSavings,
+            otherAssets: owner.otherAssets
+          };
+          setWealthConfidenceLevel(getWealthConfidenceLevel(wealthFactors));
+          setRealestateWealth(totalRealEstateWealth);
+          setTotalWealth(totalRealEstateWealth + totalOtherAssets);
         } else {
           setOwner(null);
         }
-        // Fetch all properties for the owner to calculate full wealth portfolio
-        let totalRealEstate = 0;
-        let totalOtherAssets = 0;
-        if (ownerObj?.id) {
-          const ownerRes = await axios.post('/api/owner/get', { ownerId: ownerObj.id });
-          const { owner, ownerType,
-            confidenceScore,
-            totalRealEstateWealth, properties } = ownerRes.data;
-          const totalOtherAssets = owner.stocksSecurities + owner.businessInterests + owner.cashSavings + owner.otherAssets
-          setOwner(ownerObj);
-          setOwnerType(ownerType);
-          setWealthConfidenceLevel(confidenceScore);
-          setRealestateWealth(totalRealEstateWealth);
-          setTotalWealth(totalRealEstateWealth + totalOtherAssets);
-        }
-
-
+  
         const coords = await getCoordinates(property as Property);
         setCoordinates(coords || null);
-
+  
       } catch (err) {
         setProperty(null);
         setOwner(null);
@@ -90,7 +96,6 @@ export default function PropertyDetailPage() {
     }
   }
 
-  // Loading state
   if (loading) {
     return (
       <div className="container mx-auto p-6">
@@ -220,44 +225,169 @@ export default function PropertyDetailPage() {
   // Not found state
   if (!property || !owner) {
     return (
-      <div className="container mx-auto p-6 text-center">
-        <h1 className="text-2xl font-bold mb-4">Property Not Found</h1>
-        <p className="mb-4">The property you're looking for doesn't exist or has been removed.</p>
+      <div className="container mx-auto p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card>
+              {/* Property Image Shimmer */}
+              <div className="relative h-80 w-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-t-lg"></div>
+
+              <CardHeader>
+                {/* Title Shimmer */}
+                <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-3/4"></div>
+              </CardHeader>
+
+              <CardContent>
+                {/* Address Shimmer */}
+                <div className="flex items-center mb-4">
+                  <div className="h-5 w-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mr-2"></div>
+                  <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/2"></div>
+                </div>
+
+                {/* Stats Grid Shimmer */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mb-2"></div>
+                      <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded"></div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Date and Badge Shimmer */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mr-2"></div>
+                    <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-32"></div>
+                  </div>
+                  <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24"></div>
+                </div>
+
+                {/* Tabs Shimmer */}
+                <div className="mt-4">
+                  <div className="flex space-x-1 mb-4">
+                    <div className="h-8 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24"></div>
+                    <div className="h-8 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded"></div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-5/6"></div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-4/5"></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div>
+            {/* Owner Information Card Shimmer */}
+            <Card className="mb-6">
+              <CardHeader>
+                <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/2"></div>
+              </CardHeader>
+              <CardContent>
+                {/* Avatar and Name Shimmer */}
+                <div className="flex items-center mb-4">
+                  <div className="h-12 w-12 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-full mr-4"></div>
+                  <div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-24 mb-2"></div>
+                    <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-16"></div>
+                  </div>
+                </div>
+
+                {/* Net Worth Grid Shimmer */}
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  {[1, 2].map((i) => (
+                    <div key={i} className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded mb-2"></div>
+                      <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded"></div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Wealth Composition Shimmer */}
+                <div className="mb-4">
+                  <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/3 mb-2"></div>
+                  <div className="space-y-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-full mr-2"></div>
+                          <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-20"></div>
+                        </div>
+                        <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-12"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Button Shimmer */}
+                <div className="h-10 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-full"></div>
+              </CardContent>
+            </Card>
+
+            {/* Data Sources Card Shimmer */}
+            <Card>
+              <CardHeader>
+                <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/3"></div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="border-b pb-3 last:border-0 last:pb-0">
+                      <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/2 mb-1"></div>
+                      <div className="h-3 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-3/4 mb-1"></div>
+                      <div className="h-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded w-1/3"></div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     )
   }
 
+  // Not found state
+
+  // // Not found state
+  // if (!property || !owner) {
+  //   return (
+  //     <div className="container mx-auto p-6 text-center">
+  //       <h1 className="text-2xl font-bold mb-4">Property Not Found</h1>
+  //       <p className="mb-4">The property you're looking for doesn't exist or has been removed.</p>
+  //       <Link href="/app/trending">
+  //         <Button>
+  //           <ArrowLeft className="mr-2 h-4 w-4" />
+  //           Back to Trending Properties
+  //         </Button>
+  //       </Link>
+  //     </div>
+  //   )
+  // }
+
   // Check if this is a hot property (top 10% of trending score)
   const isHotProperty = false // Simplified check
+
+  // After owner is set and before rendering, determine entity type:
+  const entityType = owner?.name && (owner.name.includes("LLC") || owner.name.includes("Ltd.") || owner.name.includes("Inc.")) ? "Entity" : "Individual";
 
   return (
     <div className="container mx-auto p-6">
       {/* <Link href="/app/trending">
-<Button variant="outline" className="mb-6">
-<ArrowLeft className="mr-2 h-4 w-4" />
-Back to Trending Properties
-</Button>
-</Link> */}
+        <Button variant="outline" className="mb-6">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Trending Properties
+        </Button>
+      </Link> */}  
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Card>
-            <div className="relative h-80 w-full">
-              <div
-                className="absolute inset-0 rounded-t-lg bg-gradient-to-r from-blue-100 to-indigo-100"
-                style={{
-                  backgroundImage: `url('/placeholder-r0y0s.png')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-              {isHotProperty && (
-                <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full flex items-center">
-                  <TrendingUp className="h-4 w-4 mr-1" />
-                  Hot Property
-                </div>
-              )}
-            </div>
+          <PropertyDetailImageGallery propertyId={propertyId} isHotProperty={isHotProperty} propertyImages={property?.images} />
+           
+          
             <CardHeader>
               <CardTitle>
                 {property?.type && property?.city
@@ -268,7 +398,7 @@ Back to Trending Properties
             <CardContent>
               <div className="flex items-center text-gray-600 mb-4">
                 <MapPin className="h-5 w-5 mr-2" />
-                <span>{property?.address}</span>
+                <span>{property?.address || 'N/A'}</span>
               </div>
 
               <div className="grid grid-cols-3 gap-4 mb-6">
@@ -300,7 +430,9 @@ Back to Trending Properties
                   <div className="text-sm text-gray-500">Views</div>
                   <div className="font-bold flex items-center justify-center">
                     <Eye className="h-4 w-4 mr-1" />
-                    {property?.views || 0}
+                    {typeof property?.views === 'number' && !isNaN(property.views)
+                      ? property.views
+                      : faker.number.int({ min: 100, max: 500 })}
                   </div>
                 </div>
               </div>
@@ -329,14 +461,10 @@ Back to Trending Properties
                     <h3 className="font-medium mb-2">Property Description</h3>
                     <p className="text-gray-600">
                       This {property?.type ? property.type.charAt(0).toUpperCase() + property.type.slice(1).toLowerCase() : "N/A"}
-                      is located in {property?.city} at {property?.address.split(',')[0]}. The
-                      property spans {property?.area
-                        ? property?.area.toString().length > 6
-                          ? Math.floor(Number(property?.area.toString().slice(6))) + " sqft"
-                          : Math.floor(property?.area) + " sqft"
-                        : "N/A sqft"}
+ is located in {property?.city} at {property?.address.split(',')[0]}. The
+                      property spans {formatKMB(property?.area ||0)} sqft
 
-                      square feet and is currently valued at {property?.price}. This is a
+ square feet and is currently valued at {formatKMB(property?.price ||0)}. This is a
                       prime real estate opportunity with excellent investment potential.
                     </p>
                   </div>
@@ -367,11 +495,11 @@ Back to Trending Properties
               <div className="flex items-center mb-4">
                 <Avatar className="h-12 w-12 mr-4">
                   <AvatarImage src={`/placeholder.svg?height=100&width=100&query=avatar`} />
-                  <AvatarFallback>{owner?.name.charAt(0)}</AvatarFallback>
+                  <AvatarFallback>{owner?.name ? owner.name.charAt(0) : '?'}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-bold">{owner?.name}</h3>
-                  <Badge variant="outline">{property?.ownerType}</Badge>
+                  <h3 className="font-bold">{owner?.name || 'N/A'}</h3>
+                  <Badge variant="outline">{entityType}</Badge>
                 </div>
               </div>
 
@@ -391,7 +519,7 @@ Back to Trending Properties
                   <div
                     className={`font-bold ${wealthConfidenceLevel === "High" ? "text-green-600" : wealthConfidenceLevel === "Medium" ? "text-yellow-600" : "text-red-600"}`}
                   >
-                    {wealthConfidenceLevel}
+                    {wealthConfidenceLevel || 'N/A'}
                   </div>
                 </div>
               </div>
