@@ -11,7 +11,7 @@ interface OwnerStore {
   isCacheValid: () => boolean;
 }
 
-const TEN_MINUTES = 10 * 60 * 1000;
+const THREE_DAYS = 3* 24*60 * 60 * 1000;
 
 const useOwnerStore = create<OwnerStore>()(
   persist(
@@ -23,7 +23,7 @@ const useOwnerStore = create<OwnerStore>()(
       getOwnerById: (id: string) => get().allOwners.find(owner => owner.id === id),
       isCacheValid: () => {
         const last = get().lastFetched;
-        return last !== null && Date.now() - last < TEN_MINUTES;
+        return last !== null && Date.now() - last < THREE_DAYS;
       }
     }),
     {

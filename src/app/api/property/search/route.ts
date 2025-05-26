@@ -26,7 +26,10 @@ export async function GET(req: NextRequest) {
       orderBy: { updatedAt: "desc" },
     });
    
-    return new Response(JSON.stringify(properties), { status: 200 });
+    return new Response(JSON.stringify(properties), { status: 200 ,headers: {
+      'Cache-Control': 's-maxage=259200, stale-while-revalidate=60', // 3 days cache, 1 min stale
+      'Content-Type': 'application/json',
+    } });
   } catch (error) {
     return new Response(JSON.stringify({ error: "Failed to search properties", details: error }), { status: 500 });
   }

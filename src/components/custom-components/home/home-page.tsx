@@ -38,8 +38,8 @@ export default function HomePage() {
   const propertyService = new PropertyService();
   const ownerService = new OwnerService();
 
-  const {allProperties, getAllProperties,setAllProperties,getPropertyById}=usePropertyStore()
-  const {allOwners, getAllOwners,getOwnerById,setAllOwners}=useOwnerStore()
+  const {allProperties, getAllProperties,setAllProperties, isCacheValid: isPropertyCacheValid,}=usePropertyStore()
+  const {allOwners, getAllOwners,isCacheValid: isOwnerCacheValid,setAllOwners}=useOwnerStore()
 
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
@@ -60,32 +60,30 @@ export default function HomePage() {
   const [isSavedViewsOpen, setIsSavedViewsOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [viewMode, setViewMode] = useState<"map" | "grid">("grid");
-  const [valueRange, setValueRange] = useState<[number, number]>([0, 15]);
+  const [valueRange, setValueRange] = useState<[number, number]>([0, 0]);
   const [sqftRange, setSqftRange] = useState<[number, number]>([0, 10000]);
 
-  // Fetch properties and assign random confidence
   useEffect(() => {
-    const fetchProperties = async () => {
+    const fetchData = async () => {
+      // Check if cache is valid
+      if (isPropertyCacheValid() && isOwnerCacheValid()) {
+        setProperties(getAllProperties());
+        setFilteredProperties(getAllProperties());
+        return;
+      }
+      // Otherwise, fetch from API
       try {
         const propertyRes = await propertyService.getProperties();
         const ownerRes = await ownerService.getOwners();
-
         setAllProperties(propertyRes);
         setAllOwners(ownerRes);
-
-        // Assign random confidence to each property
-        // const confidenceLevels = ["High", "Medium", "Low"];
-        // const withConfidence = data.map((p: Property) => ({
-        //   ...p,
-        //   confidence: confidenceLevels[Math.floor(Math.random() * confidenceLevels.length)]
-        // }));
-        setProperties(getAllProperties());
-        setFilteredProperties(getAllProperties());
+        setProperties(propertyRes);
+        setFilteredProperties(propertyRes);
       } catch (err) {
         console.error('Failed to fetch properties:', err);
       }
     };
-    fetchProperties();
+    fetchData();
   }, []);
 
   console.log(properties);
@@ -119,7 +117,7 @@ export default function HomePage() {
       const values = properties.map((p) => p.price);
       const minValue = Math.floor(Math.min(...values));
       const maxValue = Math.ceil(Math.max(...values));
-      setValueRange([0, maxValue]);
+      setValueRange([10_000, 8_000_000]);
       setFilterState((prev) => ({ ...prev, value: [minValue, maxValue] }));
       const sqfts = properties.map((p) => p.area);
       const minSqft = Math.floor(Math.min(...sqfts) / 100) * 100;

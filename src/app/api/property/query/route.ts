@@ -106,7 +106,10 @@ export async function POST(req: Request) {
       });
     }
 
-    return NextResponse.json({ response: aiResponse, chatId: chat.id });
+    return NextResponse.json({ response: aiResponse, chatId: chat.id },{status:200,headers: {
+      'Cache-Control': 's-maxage=259200, stale-while-revalidate=60', // 3 days cache, 1 min stale
+      'Content-Type': 'application/json',
+    }});
   } catch (error) {
     console.error("[PROPERTY_QUERY]", error);
     return new NextResponse("Internal Error", { status: 500 });

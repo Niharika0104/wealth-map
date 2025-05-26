@@ -5,14 +5,15 @@ import { useState, useEffect, useRef } from "react"
 interface PropertyImageCarouselProps {
   propertyId: string
   className?: string
+  propertyImages?: string[]
 }
 
-export default function PropertyImageCarousel({ propertyId, className = "" }: PropertyImageCarouselProps) {
+export default function PropertyImageCarousel({ propertyId, className = "",propertyImages}: PropertyImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const images = [
+  const images =propertyImages?? [
     "/image.png",
     "/image1.png",
     "/image2.png",

@@ -29,7 +29,10 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify({ error: "Property not found." }), { status: 404 });
     }
 
-    return new Response(JSON.stringify({ property }), { status: 200 });
+    return new Response(JSON.stringify({ property }), { status: 200,headers: {
+      'Cache-Control': 's-maxage=259200, stale-while-revalidate=60', // 3 days cache, 1 min stale
+      'Content-Type': 'application/json',
+    } });
   } catch (error) {
     console.error("Error in property get endpoint:", error);
     return new Response(JSON.stringify({ error: "Internal server error", details: error }), { status: 500 });

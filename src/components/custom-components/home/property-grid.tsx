@@ -128,8 +128,14 @@ const filteredProperties = useMemo(() => {
       return score > 0 ? { ...property, score } : null;
     })
     .filter((p): p is typeof properties[number] & { score: number } => p !== null)
+    // If confidence is empty, show none; otherwise, filter by selected
+    .filter((p) =>
+      filterState.confidence.length === 0
+        ? false
+        : filterState.confidence.includes((p.confidence ?? "").toString())
+    )
     .sort((a, b) => b.score - a.score);
-}, [searchQuery, properties]);
+}, [searchQuery, properties, filterState.confidence]);
 
 
   // Sort properties
@@ -241,6 +247,9 @@ const filteredProperties = useMemo(() => {
 
   const activeFilterCount = getActiveFilterCount()
 
+  // Before passing propertyTypes to MapFilters, ensure 'House' is included
+  const allPropertyTypes = Array.from(new Set([...(propertyTypes || []), 'House']));
+
   return (
     <div className="container mx-auto p-6 pt-16">
       {/* Header Section */}
@@ -295,7 +304,7 @@ const filteredProperties = useMemo(() => {
                   setFilterState={setFilterState}
                   valueRange={valueRange}
                   sqftRange={sqftRange}
-                  propertyTypes={propertyTypes}
+                  propertyTypes={allPropertyTypes}
                   ownerTypes={ownerTypes}
                   resetFilters={resetFilters}
                   totalCount={totalCount}
@@ -342,7 +351,7 @@ const filteredProperties = useMemo(() => {
       </div>
 
       {/* Active Filters Display */}
-      {activeFilterCount > 0 && (
+      {properties.length > 0 && activeFilterCount > 0 && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
           <div className="flex items-center justify-between mb-3">
             <h4 className="text-sm font-medium text-green-900">Active Filters ({activeFilterCount})</h4>
@@ -353,7 +362,7 @@ const filteredProperties = useMemo(() => {
           <div className="flex flex-wrap gap-2">
             {(filterState.value[0] !== valueRange[0] || filterState.value[1] !== valueRange[1]) && (
               <Badge variant="secondary" className="bg-white border border-green-200 text-green-800">
-                Value: ${filterState.value[0]}M - ${filterState.value[1]}M
+                Value: ${formatKMB(filterState.value[0])} - ${formatKMB(filterState.value[1])}
                 <button onClick={() => clearFilter("value")} className="ml-1 hover:text-green-600">
                   <X className="h-3 w-3" />
                 </button>
@@ -369,7 +378,7 @@ const filteredProperties = useMemo(() => {
             )}
             {filterState.confidence.length !== 3 && (
               <Badge variant="secondary" className="bg-white border border-green-200 text-green-800">
-                Confidence: {filterState.confidence.join(", ")}
+                Confidence: {filterState.confidence.length === 0 ? 'None' : filterState.confidence.join(", ")}
                 <button onClick={() => clearFilter("confidence")} className="ml-1 hover:text-green-600">
                   <X className="h-3 w-3" />
                 </button>
@@ -434,7 +443,7 @@ const filteredProperties = useMemo(() => {
                 <Link href={`/app/employee/property/${property.id}`} key={property.id}>
                   <Card className="h-full hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-green-300 group">
                     <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                      <PropertyImageCarousel propertyId={property.id} className="absolute inset-0" />
+                      <PropertyImageCarousel propertyId={property.id} className="absolute inset-0" propertyImages={property?.images} />
                       <div className="absolute top-3 right-3">
                         <button
                           type="button"

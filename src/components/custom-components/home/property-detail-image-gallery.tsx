@@ -5,20 +5,23 @@ import { useEffect, useState } from "react"
 interface PropertyDetailImageGalleryProps {
   propertyId: string
   isHotProperty?: boolean
+  propertyImages?: string[]
 }
 
 export default function PropertyDetailImageGallery({
   propertyId,
   isHotProperty = false,
+  propertyImages
 }: PropertyDetailImageGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-  const images = [
+  // Use propertyImages if provided, otherwise use default images
+  const images = propertyImages ?? [
     "/image.png",
     "/image1.png",
     "/image2.png",
-  ]
+  ];
 
   useEffect(() => {
     if (!isAutoPlaying) return

@@ -10,7 +10,7 @@ class OnwerService {
   }
 
   async getOwnerById(ownerId: string): Promise<Owner> {
-    console.log(ownerId,"hello")    
+  
     const res = await axios.post(`${this.PROPERTY_API}/get`, { ownerId});
     return res.data;
   }

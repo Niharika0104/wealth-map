@@ -42,9 +42,14 @@ import { Owner, formatKMB } from "@/Models/models"
 import axios from "axios"
 import { dataSources, Wealthownershipfields, } from "@/Models/models"
 import type { ConfidenceLevel } from "@/Models/models"
+import usePropertyStore from "@/stores/propertyStore"
+import useOwnerStore from "@/stores/ownerStore"
+import OwnerService from "@/services/onwerService"
+
 
 // Accept a single optional prop: { ownerId?: string }
 export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
+  const ownerService = new OwnerService();
 
   const [selectedOwner, setSelectedOwner] = useState<string | null>(null)
   const [comparisonOwner, setComparisonOwner] = useState<string | null>(null)
@@ -55,26 +60,55 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
   const [activeTab, setActiveTab] = useState("details")
   const [isMounted, setIsMounted] = useState(false)
   const [owners, setOwners] = useState<Owner[] | null>([])
-
+  const {
+    getAllProperties,
+    setAllProperties,
+    isCacheValid: isPropertyCacheValid,
+  } = usePropertyStore();
+  
+  const {
+    getAllOwners,
+    setAllOwners,
+    isCacheValid: isOwnerCacheValid,
+  } = useOwnerStore();
   useEffect(() => {
-    const fetchOwners = async () => {
-      try {
-        const res = await axios.get('/api/owner/all');
-        setOwners(res.data);
-      } catch (error) {
-        setOwners([]);
+    const fetchData = async () => {
+      if (isOwnerCacheValid()) {
+        setAllOwners(getAllOwners());
+        return;
       }
-      setIsMounted(true);
+      try {
+        const ownerRes = await ownerService.getOwners();
+        setAllOwners(ownerRes);
+      } catch (err) {
+        console.error('Failed to fetch owners:', err);
+      }
     };
-
-    if (ownerId) {
-
-      handleOwnerSelect(ownerId)
+    fetchData();
+  }, []); // Only run on mount
+  
+  // This effect runs when ownerId or allOwners changes
+  useEffect(() => {
+    if (ownerId && getAllOwners().length > 0) {
+      handleOwnerSelect(ownerId);
+      
     }
+  }, [ownerId, getAllOwners]);
+  // useEffect(() => {
+  //   const fetchOwners = async () => {
+  //     try {
+  //       const res = await axios.get('/api/owner/all');
+  //       setOwners(res.data);
+  //     } catch (error) {
+  //       setOwners([]);
+  //     }
+  //     setIsMounted(true);
+  //   };
 
-    fetchOwners();
-    return () => setIsMounted(false);
-  }, [ownerId]);
+   
+  //   fetchOwners();
+  //   return () => setIsMounted(false);
+  // }, [ownerId]);
 
   const toggleSection = (ownerId: string) => {
     setExpandedSections((prev) => ({
@@ -97,6 +131,7 @@ export default function OwnerWealthAnalysis({ ownerId }: { ownerId?: string }) {
   const comparisonOwnerData = comparisonOwner ? owners?.find((owner) => owner.id === comparisonOwner) : null
 
   const handleOwnerSelect = (ownerId: string) => {
+    
     setSelectedOwner(ownerId)
     setIsDropdownOpen(false)
   }
