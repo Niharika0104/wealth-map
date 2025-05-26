@@ -27,6 +27,10 @@ export function usePermissions() {
   const groupedPermissions = useMemo(() => {
     const grouped: GroupedPermissions = {};
     
+    if (!permissions || !Array.isArray(permissions)) {
+      return grouped;
+    }
+    
     permissions.forEach((permission: Permission) => {
       if (!grouped[permission.category]) {
         grouped[permission.category] = {
@@ -41,17 +45,24 @@ export function usePermissions() {
   }, [permissions]);
 
   const hasPermission = (permissionName: string): boolean => {
-    if (!permissions) return false;
-    return permissions.some((p: Permission) => p.name === permissionName);
+    // Special case for wildcard permissions
+    if (permissionName.endsWith(':*')) {
+      const prefix = permissionName.split(':')[0];
+      return Array.isArray(permissions) && permissions.some((p: Permission) => 
+        p.name === permissionName || p.name.startsWith(`${prefix}:`)
+      );
+    }
+    
+    return Array.isArray(permissions) && permissions.some((p: Permission) => p.name === permissionName);
   };
 
   const hasAnyPermission = (permissionNames: string[]): boolean => {
-    if (!permissions) return false;
+    if (!permissions || !Array.isArray(permissions) || permissions.length === 0) return false;
     return permissionNames.some((name) => hasPermission(name));
   };
 
   const hasAllPermissions = (permissionNames: string[]): boolean => {
-    if (!permissions) return false;
+    if (!permissions || !Array.isArray(permissions) || permissions.length === 0) return false;
     return permissionNames.every((name) => hasPermission(name));
   };
 

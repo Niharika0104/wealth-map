@@ -121,6 +121,40 @@ export const authOptions = {
           } else if (isCompanyAdmin) {
             role = 'COMPANY_ADMIN';
           }
+          
+          // Ensure the user has at least one role
+          if (user.roles.length === 0) {
+            // If no roles are assigned, add the EMPLOYEE role by default
+            const defaultRole = await prisma.role.findUnique({
+              where: { name: 'EMPLOYEE' },
+              include: { permissions: true }
+            });
+            
+            if (defaultRole) {
+              console.log('Auth Debug - Assigning default EMPLOYEE role');
+              
+              // Update user with default role (async, won't block login)
+              prisma.user.update({
+                where: { id: user.id },
+                data: {
+                  roles: {
+                    connect: [{ name: 'EMPLOYEE' }]
+                  }
+                }
+              }).catch(err => console.error('Failed to update user roles:', err));
+              
+              // Add default role for current session
+              user.roles = [{
+                name: defaultRole.name,
+                permissions: defaultRole.permissions.map(p => ({
+                  name: p.name,
+                  category: p.category,
+                  description: p.description || '' // Convert null to empty string
+                }))
+              }];
+              role = 'EMPLOYEE';
+            }
+          }
 
           // Get all permissions from user's roles
           const permissions = user.roles.flatMap(role => role.permissions);

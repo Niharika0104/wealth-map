@@ -22,6 +22,11 @@ export function WithPermission({
   const router = useRouter();
 
   useEffect(() => {
+    // Skip permission checks for empty cases
+    if (!permission && (!permissions || permissions.length === 0)) {
+      return; // No permission required
+    }
+
     const hasAccess = permission
       ? hasPermission(permission)
       : permissions
@@ -40,13 +45,17 @@ export function WithPermission({
     }
   }, [permission, permissions, requireAll, hasPermission, hasAllPermissions, hasAnyPermission, router]);
 
-  const hasAccess = permission
-    ? hasPermission(permission)
-    : permissions
-    ? requireAll
-      ? hasAllPermissions(permissions)
-      : hasAnyPermission(permissions)
-    : true;
+  const hasAccess = 
+    // If no permissions specified, allow access
+    (!permission && (!permissions || permissions.length === 0)) ? true :
+    // Otherwise check permission
+    (permission
+      ? hasPermission(permission)
+      : permissions
+      ? requireAll
+        ? hasAllPermissions(permissions)
+        : hasAnyPermission(permissions)
+      : true);
 
   if (!hasAccess) {
     return null;

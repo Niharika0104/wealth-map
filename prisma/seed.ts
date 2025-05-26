@@ -266,7 +266,7 @@ async function main() {
       id: faker.string.uuid(),
       organizationId: company.id,
       userId: companyAdmin.id,
-      role: 'COMPANY_ADMIN',
+      role: 'COMPANY_ADMIN', // Keep consistent with role names in the system
       createdAt: new Date(),
     },
   });

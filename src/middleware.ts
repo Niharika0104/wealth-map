@@ -46,6 +46,24 @@ const PUBLIC_API_ROUTES = [
     path: '/api/company-admin/permissions',
     methods: ['GET'],
   },
+  // Auth routes - critical to keep these public
+  {
+    path: '/api/auth/[...nextauth]',
+    methods: ['GET', 'POST'],
+  },
+  {
+    path: '/api/auth/setup-account',
+    methods: ['POST'],
+  },
+  {
+    path: '/api/auth/2fa',
+    methods: ['POST', 'PUT', 'PATCH'],
+  },
+  // Debugging route for troubleshooting
+  {
+    path: '/api/debug/auth-status',
+    methods: ['GET'],
+  },
 ];
 
 // Convert route patterns to regex
@@ -56,6 +74,11 @@ const PUBLIC_API_PATTERNS = PUBLIC_API_ROUTES.map(route => ({
 
 // Check if a path and method match any of the public API patterns
 const isPublicApiRoute = (path: string, method: string) => {
+  // Special case for nextauth routes which use dynamic segments
+  if (path.startsWith('/api/auth/')) {
+    return true;
+  }
+  
   return PUBLIC_API_PATTERNS.some(({ pattern, methods }) => 
     pattern.test(path) && methods.includes(method)
   );
@@ -81,6 +104,11 @@ export async function middleware(request: NextRequest) {
 
   // Handle API routes first
   if (isApiRoute) {
+    // Always allow access to auth-related API routes
+    if (request.nextUrl.pathname.startsWith('/api/auth/')) {
+      return NextResponse.next();
+    }
+    
     // Allow access to public API routes with specific methods
     if (isPublicApiRoute(request.nextUrl.pathname, request.method)) {
       return NextResponse.next();
