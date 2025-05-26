@@ -82,7 +82,7 @@ export default function AuthPageLayout({
         {/* Main Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center p-12 text-white relative z-10">
           <div className="mb-8 p-4 bg-white/10 backdrop-blur-sm rounded-2xl">
-            <Image src="/globe.svg" alt="Wealth Map Logo" width={80} height={80} />
+            <Image src="/icon.svg" alt="Wealth Map Logo" width={80} height={80} className="animate-pulse" />
           </div>
 
           <h1 className="text-4xl font-bold mb-4 text-center">Welcome to Wealth Map</h1>

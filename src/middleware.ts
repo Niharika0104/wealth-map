@@ -194,6 +194,6 @@ export const config = {
     // - Static files (_next/static, _next/image)
     // - Favicon
     // - Public files (public directory)
-    "/((?!_next/static|_next/image|favicon.ico|public).*)",
+    "/((?!_next/static|_next/image|icon.svg|globe.svg|favicon.ico|public).*)",
   ],
 };
