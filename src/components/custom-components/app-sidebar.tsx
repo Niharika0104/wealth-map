@@ -186,7 +186,7 @@ const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
         },
         {
           title: "Wealth Analysis",
-          url: "/app/employee/wealth-analysis",
+          url: "/app/wealth-analysis",
           icon: BarChart2,
           badge: null,
         },

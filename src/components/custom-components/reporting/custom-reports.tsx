@@ -24,7 +24,7 @@ import {
 } from "recharts";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getProperties } from "../trending/property-store" // Ensure this path is correct
+import PropertyService from "@/services/propertyService" // Ensure this path is correct
 import { BarChart, PieChart, LineChart, Save, Share, Download, Plus, Trash2, Search } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import {
@@ -49,7 +49,7 @@ interface ReportChartRendererProps {
   COLORS: string[];
   isDownloadPreview?: boolean; // New prop to adjust rendering for download
 }
-
+const propertyService = new PropertyService();
 const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
   report,
   availableFields,
@@ -285,8 +285,10 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
 
   useEffect(() => {
   const fetchProperties = async () => {
-    const { allProperties } = await getProperties();
-    setProperties(allProperties);
+    const res= await propertyService.getProperties();
+    console.log(res)
+    console.log("dound")
+    setProperties(res);
   };
   fetchProperties();
 }, []);
@@ -320,7 +322,7 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
       property.address.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
       property.city.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
       property.price.toString().toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
-      property.type.toLowerCase().includes(propertySearchTerm.toLowerCase())
+      (property.type as string).toLowerCase().includes(propertySearchTerm.toLowerCase())
 
     return passesConfidenceFilter && passesSearchFilter
   })
