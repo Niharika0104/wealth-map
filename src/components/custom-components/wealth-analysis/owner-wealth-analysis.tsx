@@ -44,7 +44,7 @@ import { dataSources, Wealthownershipfields, } from "@/Models/models"
 import type { ConfidenceLevel } from "@/Models/models"
 import usePropertyStore from "@/stores/propertyStore"
 import useOwnerStore from "@/stores/ownerStore"
-import OwnerService from "@/services/onwerService"
+import OwnerService from "@/services/ownerService"
 
 
 // Accept a single optional prop: { ownerId?: string }
