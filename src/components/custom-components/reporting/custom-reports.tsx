@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { capitalizeFirstLetter, Property } from "@/Models/models"
+import usePropertyStore from "@/stores/propertyStore"
 import {
   BarChart as ReBarChart,
   Bar,
@@ -24,7 +25,7 @@ import {
 } from "recharts";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import PropertyService from "@/services/propertyService" // Ensure this path is correct
+import PropertyService from "@/services/propertyService"
 import { BarChart, PieChart, LineChart, Save, Share, Download, Plus, Trash2, Search } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import {
@@ -49,7 +50,7 @@ interface ReportChartRendererProps {
   COLORS: string[];
   isDownloadPreview?: boolean; // New prop to adjust rendering for download
 }
-const propertyService = new PropertyService();
+
 const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
   report,
   availableFields,
@@ -176,11 +177,8 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
               {pieChart.data.length > 0 ? (
                 // Adjusted height for pie chart to ensure legend fits
                 <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%"
-                    // Added margin-right to give more space for the legend
-                    margin={isDownloadPreview ? { top: 20, right: 100, bottom: 20, left: 20 } : { top: 20, right: 20, bottom: 20, left: 20 }}
-                  >
-                    <RePieChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RePieChart margin={isDownloadPreview ? { top: 20, right: 100, bottom: 20, left: 20 } : { top: 20, right: 20, bottom: 20, left: 20 }}>
                       <Pie
                         data={pieChart.data}
                         dataKey="value"
@@ -268,6 +266,9 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
 
 
 export default function CustomReports() {
+  const propertyService = new PropertyService();
+  const {isCacheValid,getAllProperties}=usePropertyStore()
+
   const [activeTab, setActiveTab] = useState("create")
   const [reportName, setReportName] = useState("")
   const [reportDescription, setReportDescription] = useState("")
@@ -284,14 +285,17 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d", "#ffc658", "#d0ed57", "#a4de6c", "#c2d6ff", "#f5d7d7", "#d7f5d7", "#d7d7f5"];
 
   useEffect(() => {
-  const fetchProperties = async () => {
-    const res= await propertyService.getProperties();
-    console.log(res)
-    console.log("dound")
-    setProperties(res);
-  };
-  fetchProperties();
-}, []);
+    const fetchProperties = async () => {
+      if (isCacheValid()) {
+        setProperties(getAllProperties());
+      } else {
+        const res = await propertyService.getProperties();
+        setProperties(res);
+      }
+    };
+
+    fetchProperties();
+  }, [isCacheValid, getAllProperties, propertyService]);
   // Refs for chart previews
   const createChartRef = useRef<HTMLDivElement>(null); // For the chart in the "Create" tab
   const hiddenChartRef = useRef<HTMLDivElement>(null); // For the hidden chart to be captured
@@ -516,7 +520,7 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
           heightLeft -= pageHeight;
         }
 
-        pdf.save(`${report.name.replace(/\s+/g, '_')}_Report.pdf`);
+        pdf.save(`${(report.name as string) .replace(/\s+/g, '_')}_Report.pdf`);
 
         toast({
           title: "Download complete",
@@ -649,7 +653,7 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
                         />
                         <div>
                           <Label htmlFor={property.id} className="font-medium">
-                            {capitalizeFirstLetter(property.type)} {property.city}
+                            {capitalizeFirstLetter(property.type as string)} {property.city}
                           </Label>
                           <p className="text-sm text-gray-500">{property.address}</p>
                           <p className="text-sm text-gray-500">Value: {property.price}</p>

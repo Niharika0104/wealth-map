@@ -24,5 +24,3 @@ export function getProperties() {
     return trendingProperties.find((p) => p.id === id)
   }
   export { Property }
-
-

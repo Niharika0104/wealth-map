@@ -518,7 +518,7 @@ export default function TrendingProperties() {
                 </svg>
                 Grid
               </Button>
-              <Button
+              {/* <Button
                 variant={viewMode === "map" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setViewMode("map")}
@@ -526,22 +526,23 @@ export default function TrendingProperties() {
               >
                 <MapIcon className="h-4 w-4 mr-1" />
                 Map
-              </Button>
+              </Button> */}
             </div>
           </div>
 
           {/* Property display - grid or map */}
-          {viewMode === "grid" ? (
+          {viewMode === "grid" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {paginatedProperties.map((property) => (
                 <PropertyCard key={property.id} property={property} />
               ))}
-            </div>
-          ) : (
-            <div className="h-[600px] rounded-lg overflow-hidden border">
-              <MapView properties={paginatedProperties} />
-            </div>
-          )}
+            </div>)
+          // ) : (
+          //   // <div className="h-[600px] rounded-lg overflow-hidden border">
+          //   //   {/* <MapView properties={paginatedProperties} /> */}
+          //   // </div>
+          // )
+          }
 
           {/* Pagination */}
           {totalPages > 1 && viewMode === "grid" && (

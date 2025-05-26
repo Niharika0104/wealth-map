@@ -79,12 +79,6 @@ const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
           badge: null,
         },
         {
-          title: "Property",
-          url: "/app/super-admin/property",
-          icon: Building,
-          badge: null,
-        },
-        {
           title: "Companies",
           url: "/app/super-admin/companies",
           icon: Building,
@@ -179,12 +173,6 @@ const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
           badge: null,
         },
         {
-          title: "Property View",
-          url: "/app/employee/property",
-          icon: Building,
-          badge: null,
-        },
-        {
           title: "Wealth Analysis",
           url: "/app/wealth-analysis",
           icon: BarChart2,
@@ -197,7 +185,7 @@ const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
           badge: null,
         },
         {
-          title: "Employee Reports",
+          title: "Reports",
           url: "/app/employee/reports",
           icon: PieChart,
           badge: null,
