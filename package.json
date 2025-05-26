@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "prebuild": "npx prisma generate",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node --transpile-only prisma/seed.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@auth/core": "^0.39.1",
