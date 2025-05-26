@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { chatId: string } }
+  request: NextRequest,
+  context: { params: Promise<{ chatId: string }> }
 ) {
   try {
     const session = await auth();
@@ -14,7 +14,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const chatId = params.chatId;
+    const { chatId } = await context.params;
 
     // Verify the chat belongs to the user
     const chat = await prisma.chat.findFirst({
