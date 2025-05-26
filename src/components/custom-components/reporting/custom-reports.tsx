@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { capitalizeFirstLetter, Property } from "@/Models/models"
+import usePropertyStore from "@/stores/propertyStore"
 import {
   BarChart as ReBarChart,
   Bar,
@@ -24,9 +25,9 @@ import {
 } from "recharts";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getProperties } from "@/lib/api/properties" // Updated import path
+import PropertyService from "@/services/propertyService"
 import { BarChart, PieChart, LineChart, Save, Share, Download, Plus, Trash2, Search } from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/use-toast"
 import {
   Dialog,
   DialogContent,
@@ -41,8 +42,6 @@ import html2canvas from 'html2canvas-pro'; // Make sure you have the latest vers
 import jsPDF from 'jspdf';
 import { format } from "date-fns"
 import { Report } from "@/Models/models"
-import { createReport } from "@/lib/api/reports"
-import { useSession } from "next-auth/react"
 
 interface ReportChartRendererProps {
   report: Report;
@@ -59,11 +58,6 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
   COLORS,
   isDownloadPreview = false,
 }) => {
-  // Parse notes if it's a string
-  const reportData = typeof report.notes === 'string' ? JSON.parse(report.notes) : report.notes;
-  const properties = reportData?.properties || [];
-  const fields = reportData?.fields || [];
-
   // Helper function to parse numerical values from property data
   const parseValue = (value: string | number | undefined): number => {
     if (typeof value === 'string') {
@@ -74,6 +68,7 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
   };
 
   // Helper to truncate long names for legends/labels
+  // Increased maxLength for better readability in PDF, adjust if needed
   const truncateName = (name: string, maxLength: number = 25): string => {
     if (name.length > maxLength) {
       return name.substring(0, maxLength - 3) + "...";
@@ -84,6 +79,8 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
   // Custom Tooltip for Bar and Line Charts
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
+      // Find the original property data if available for full address
+      // Use trendingProperties as source for the full address
       const originalProp = trendingProperties.find(p => p.address.startsWith(label));
       const displayLabel = originalProp ? originalProp.address : label;
 
@@ -107,10 +104,10 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
   // Data preparation logic for Recharts
   const getChartData = useCallback(() => {
     // Only filter for properties *selected in this report*
-    const propertiesForReport = trendingProperties.filter(p => properties.includes(p.id));
+    const propertiesForReport = trendingProperties.filter(p => report.properties.includes(p.id));
 
     if (report.type === "pie") {
-      return fields.map((field: string, idx: number) => {
+      return report.fields.map(field => {
         let chartData: { name: string; value: number; color: string }[] = [];
 
         if (field === "confidenceLevel") {
@@ -144,13 +141,13 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
     } else { // bar or line chart
       return propertiesForReport.map((prop) => {
         const data: any = { name: truncateName(prop.address || `Property ${prop.id}`, isDownloadPreview ? 20 : 15) };
-        fields.forEach((field: string, idx: number) => {
+        report.fields.forEach((field) => {
           data[field] = parseValue((prop as Record<string, any>)?.[field === "Price" ? "value" : field]);
         });
         return data;
       });
     }
-  }, [report.type, properties, fields, trendingProperties, COLORS, isDownloadPreview]);
+  }, [report, trendingProperties, COLORS, isDownloadPreview]); // Dependencies for useCallback
 
   const chartData = getChartData();
 
@@ -159,7 +156,7 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
     (chartData as { field: string; data: any[] }[]).some(item => item.data.length > 0) :
     (chartData as any[]).length > 0;
 
-  if (properties.length === 0 || fields.length === 0 || !hasData) {
+  if (report.properties.length === 0 || report.fields.length === 0 || !hasData) {
     return (
       <div className="text-center p-8 text-gray-500">
         No data available to render this chart.
@@ -181,9 +178,7 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
                 // Adjusted height for pie chart to ensure legend fits
                 <div className="h-72 w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RePieChart
-                      margin={isDownloadPreview ? { top: 20, right: 100, bottom: 20, left: 20 } : { top: 20, right: 20, bottom: 20, left: 20 }}
-                    >
+                    <RePieChart margin={isDownloadPreview ? { top: 20, right: 100, bottom: 20, left: 20 } : { top: 20, right: 20, bottom: 20, left: 20 }}>
                       <Pie
                         data={pieChart.data}
                         dataKey="value"
@@ -234,7 +229,7 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
               <Legend />
-              {fields.map((field: string, idx: number) => (
+              {report.fields.map((field, idx) => (
                 <Bar key={field} dataKey={field} fill={COLORS[idx % COLORS.length]} />
               ))}
             </ReBarChart>
@@ -251,7 +246,7 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
               <Legend />
-              {fields.map((field: string, idx: number) => (
+              {report.fields.map((field, idx) => (
                 <Line
                   key={field}
                   type="monotone"
@@ -270,81 +265,37 @@ const ReportChartRenderer: React.FC<ReportChartRendererProps> = ({
 // --- End New Component ---
 
 
-const CustomReports = () => {
-  const { toast } = useToast();
-  const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState("create");
-  const [reportName, setReportName] = useState("");
-  const [reportDescription, setReportDescription] = useState("");
-  const [selectedProperties, setSelectedProperties] = useState<string[]>([]);
-  const [selectedFields, setSelectedFields] = useState<string[]>([]);
-  const [chartType, setChartType] = useState<Report['type']>("bar");
-  const [propertyFilter, setPropertyFilter] = useState("all");
-  const [savedReports, setSavedReports] = useState<Report[]>([]);
-  const [shareDialogOpen, setShareDialogOpen] = useState(false);
-  const [currentReportId, setCurrentReportId] = useState<string | null>(null);
-  const [shareEmail, setShareEmail] = useState("");
-  const [shareMessage, setShareMessage] = useState("");
+export default function CustomReports() {
+  const propertyService = new PropertyService();
+  const {isCacheValid,getAllProperties}=usePropertyStore()
+
+  const [activeTab, setActiveTab] = useState("create")
+  const [reportName, setReportName] = useState("")
+  const [reportDescription, setReportDescription] = useState("")
+  const [selectedProperties, setSelectedProperties] = useState<string[]>([])
+  const [selectedFields, setSelectedFields] = useState<string[]>([])
+const [chartType, setChartType] = useState<Report['type']>("bar") 
+  const [propertyFilter, setPropertyFilter] = useState("all")
+  const [savedReports, setSavedReports] = useState<Report[]>([])
+  const [shareDialogOpen, setShareDialogOpen] = useState(false)
+  const [currentReportId, setCurrentReportId] = useState<string | null>(null)
+  const [shareEmail, setShareEmail] = useState("")
+  const [shareMessage, setShareMessage] = useState("")
   const [properties, setProperties] = useState<Property[]>([]);
-  const [showSaveDialog, setShowSaveDialog] = useState(false);
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d", "#ffc658", "#d0ed57", "#a4de6c", "#c2d6ff", "#f5d7d7", "#d7f5d7", "#d7d7f5"];
 
-  // Fetch saved reports
-  useEffect(() => {
-    const fetchSavedReports = async () => {
-      if (!session?.user) return;
-      
-      try {
-        const response = await fetch('/api/reports', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch saved reports');
-        }
-
-        const reports = await response.json();
-        setSavedReports(reports.map((report: Report) => ({
-          ...report,
-          name: report.title ? report.title.split('_').slice(0, -1).join('_') : 'Untitled Report' // Clean up the title with null check
-        })));
-      } catch (err) {
-        console.error('Error fetching saved reports:', err);
-        toast({
-          title: "Error",
-          description: "Failed to load saved reports",
-          variant: "destructive",
-        });
-      }
-    };
-
-    fetchSavedReports();
-  }, [session?.user, toast]);
-
-  // Fetch properties
   useEffect(() => {
     const fetchProperties = async () => {
-      try {
-        const { allProperties } = await getProperties();
-        setProperties(allProperties);
-      } catch (error) {
-        console.error('Error fetching properties:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load properties",
-          variant: "destructive",
-        });
+      if (isCacheValid()) {
+        setProperties(getAllProperties());
+      } else {
+        const res = await propertyService.getProperties();
+        setProperties(res);
       }
     };
-    fetchProperties();
-  }, [toast]);
 
+    fetchProperties();
+  }, [isCacheValid, getAllProperties, propertyService]);
   // Refs for chart previews
   const createChartRef = useRef<HTMLDivElement>(null); // For the chart in the "Create" tab
   const hiddenChartRef = useRef<HTMLDivElement>(null); // For the hidden chart to be captured
@@ -375,7 +326,7 @@ const CustomReports = () => {
       property.address.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
       property.city.toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
       property.price.toString().toLowerCase().includes(propertySearchTerm.toLowerCase()) ||
-      (property.type ? property.type.toLowerCase() : '').includes(propertySearchTerm.toLowerCase())
+      (property.type as string).toLowerCase().includes(propertySearchTerm.toLowerCase())
 
     return passesConfidenceFilter && passesSearchFilter
   })
@@ -408,112 +359,63 @@ const CustomReports = () => {
   }
 
   // Save report
-  const saveReport = async () => {
-    if (!session?.user) {
-      toast({
-        title: "Authentication Required",
-        description: "You must be logged in to save reports",
-        variant: "destructive",
-      });
-      return;
-    }
-
+  const saveReport = () => {
     if (!reportName) {
       toast({
-        title: "Report Name Required",
-        description: "Please enter a name for your report",
+        title: "Report name required",
+        description: "Please enter a name for your report.",
         variant: "destructive",
-      });
-      return;
+      })
+      return
     }
 
     if (selectedProperties.length === 0) {
       toast({
-        title: "Properties Required",
-        description: "Please select at least one property",
+        title: "No properties selected",
+        description: "Please select at least one property for your report.",
         variant: "destructive",
-      });
-      return;
+      })
+      return
     }
 
     if (selectedFields.length === 0) {
       toast({
-        title: "Fields Required",
-        description: "Please select at least one field",
+        title: "No fields selected",
+        description: "Please select at least one field for your report.",
         variant: "destructive",
-      });
-      return;
+      })
+      return
     }
 
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const reportData = {
-        title: reportName,
-        description: reportDescription,
-        reportType: chartType,
-        notes: JSON.stringify({
-          properties: selectedProperties,
-          fields: selectedFields
-        }),
-        exported: false
-      };
-
-      const response = await fetch('/api/reports', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(reportData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to save report');
-      }
-
-      const newReport = await response.json();
-      
-      // Extract the original title by removing the timestamp
-      const originalTitle = newReport.title.split('_').slice(0, -1).join('_');
-      
-      // Add the new report to the saved reports list
-      setSavedReports(prev => [{
-        ...newReport,
-        name: originalTitle,
-        properties: selectedProperties,
-        fields: selectedFields
-      }, ...prev]);
-      
-      // Reset form fields
-      setReportName("");
-      setReportDescription("");
-      setSelectedProperties([]);
-      setSelectedFields([]);
-      setChartType("bar");
-      
-      toast({
-        title: "Success",
-        description: "Report saved successfully",
-        variant: "default",
-      });
-
-      // Switch to saved reports tab
-      setActiveTab("saved");
-    } catch (err) {
-      console.error('Error saving report:', err);
-      setError(err instanceof Error ? err.message : 'Failed to save report');
-      toast({
-        title: "Error",
-        description: err instanceof Error ? err.message : 'Failed to save report',
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+    const newReport: Report = {
+      id: Date.now().toString(),
+      name: reportName,
+      description: reportDescription,
+      created: format(new Date(), 'MMM dd, yyyy'),
+      type: chartType,
+      properties: selectedProperties,
+      fields: selectedFields,
+      shared: false,
     }
-  };
+
+    setSavedReports([...savedReports, newReport])
+
+    toast({
+      title: "Report saved",
+      description: "Your custom report has been saved successfully.",
+      variant: "default",
+    })
+
+    // Reset form
+    setReportName("")
+    setReportDescription("")
+    setSelectedProperties([])
+    setSelectedFields([])
+    setChartType("bar")
+
+    // Switch to saved reports tab
+    setActiveTab("saved")
+  }
 
   // Delete report
   const deleteReport = (reportId: string) => {
@@ -576,163 +478,73 @@ const CustomReports = () => {
   }
 
   // Function to download the report as PDF
-  const downloadReport = async (report: Report) => {
-    if (!session?.user) {
-      toast({
-        title: "Authentication Required",
-        description: "You must be logged in to download reports",
-        variant: "destructive",
-      });
-      return;
-    }
+  const downloadReport = useCallback(async (report: Report) => {
+    toast({
+      title: "Generating PDF...",
+      description: "Please wait while your report is being prepared.",
+    });
 
-    setIsLoading(true);
-    setError(null);
+    // Set the state for the hidden chart renderer
+    setReportToCapture(report);
 
-    try {
-      // Parse the notes field to get properties and fields
-      let reportData;
+    // Wait for the hidden chart to potentially render
+    // A longer delay might be needed for very complex charts or slower machines
+    await new Promise(resolve => setTimeout(resolve, 700)); // Increased delay slightly
+
+    if (hiddenChartRef.current) {
       try {
-        const notes = typeof report.notes === 'string' 
-          ? JSON.parse(report.notes) 
-          : report.notes;
-        
-        reportData = {
-          ...report,
-          type: report.type || 'bar',
-          properties: notes?.properties || [],
-          fields: notes?.fields || [],
-          notes: report.notes
-        };
-      } catch (parseError) {
-        console.error('Error parsing report notes:', parseError);
-        // If parsing fails, use the report as is
-        reportData = {
-          ...report,
-          type: report.type || 'bar',
-          properties: report.properties || [],
-          fields: report.fields || [],
-          notes: report.notes
-        };
-      }
-
-      // Set the state for the hidden chart renderer
-      setReportToCapture(reportData);
-
-      // Wait for the chart to render
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      const chartContainer = document.getElementById('hidden-chart-container');
-      if (!chartContainer) {
-        throw new Error('Chart container not found');
-      }
-
-      // Generate canvas with error handling
-      let canvas;
-      try {
-        canvas = await html2canvas(chartContainer, {
-          scale: 2,
+        const canvas = await html2canvas(hiddenChartRef.current, {
+          scale: 2, // Increase scale for better resolution
           useCORS: true,
-          logging: true,
-          backgroundColor: '#ffffff',
-          allowTaint: true,
-          foreignObjectRendering: true,
-          onclone: (clonedDoc) => {
-            // Ensure the cloned document has the correct styles
-            const style = clonedDoc.createElement('style');
-            style.textContent = `
-              .recharts-wrapper { background: white; }
-              .recharts-surface { background: white; }
-            `;
-            clonedDoc.head.appendChild(style);
-          }
+          logging: false,
+          backgroundColor: '#ffffff'
         });
-      } catch (canvasError) {
-        console.error('Error generating canvas:', canvasError);
-        throw new Error('Failed to generate chart image');
-      }
 
-      if (!canvas) {
-        throw new Error('Canvas generation failed');
-      }
-
-      const imgData = canvas.toDataURL('image/png');
-      if (!imgData) {
-        throw new Error('Failed to generate image data');
-      }
-
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const margin = 20;
-      const contentWidth = pdfWidth - (2 * margin);
-      const contentHeight = pdfHeight - (2 * margin);
-
-      // Add report title and description
-      pdf.setFontSize(20);
-      const title = report.title || report.name || 'Untitled Report';
-      pdf.text(title, margin, margin + 10);
-      
-      if (report.description) {
-        pdf.setFontSize(12);
-        const splitDescription = pdf.splitTextToSize(report.description, contentWidth);
-        pdf.text(splitDescription, margin, margin + 20);
-      }
-
-      // Add the chart with error handling
-      try {
-        const imgWidth = contentWidth;
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', margin, margin + 30, imgWidth, imgHeight);
-      } catch (imageError) {
-        console.error('Error adding image to PDF:', imageError);
-        throw new Error('Failed to add chart to PDF');
+        let heightLeft = imgHeight;
+
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        // For content spanning multiple pages
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save(`${(report.name as string) .replace(/\s+/g, '_')}_Report.pdf`);
+
+        toast({
+          title: "Download complete",
+          description: "Your report has been successfully downloaded.",
+          variant: "default",
+        });
+      } catch (error) {
+        console.error("Failed to generate PDF:", error);
+        toast({
+          title: "Download failed",
+          description: "There was an error generating your PDF report. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setReportToCapture(null); // Clear the hidden chart state
       }
-
-      // Add metadata
-      pdf.setProperties({
-        title: title,
-        subject: 'Property Report',
-        author: session.user.name || 'User',
-        keywords: 'property, report, chart',
-        creator: 'Wealth Management System'
-      });
-
-      // Save the PDF with a clean filename
-      const cleanTitle = title
-        .split('_')
-        .slice(0, -1)
-        .join('_')
-        .replace(/\s+/g, '_');
-      
-      const filename = `${cleanTitle}_Report.pdf`;
-      pdf.save(filename);
-      
+    } else {
       toast({
-        title: "Success",
-        description: "Report downloaded successfully",
-        variant: "default",
-      });
-    } catch (err) {
-      console.error('Error downloading report:', err);
-      setError(err instanceof Error ? err.message : 'Failed to download report');
-      toast({
-        title: "Error",
-        description: err instanceof Error ? err.message : 'Failed to download report',
+        title: "Chart not rendered",
+        description: "Could not capture the chart for PDF generation. The hidden element was not ready.",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
-  };
-
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "unauthenticated") {
-    return <div>Please log in to access reports</div>;
-  }
+  }, []);
 
   return (
     <div>
@@ -841,7 +653,7 @@ const CustomReports = () => {
                         />
                         <div>
                           <Label htmlFor={property.id} className="font-medium">
-                            {property.type ? capitalizeFirstLetter(property.type) : 'Unknown'} {property.city}
+                            {capitalizeFirstLetter(property.type as string)} {property.city}
                           </Label>
                           <p className="text-sm text-gray-500">{property.address}</p>
                           <p className="text-sm text-gray-500">Value: {property.price}</p>
@@ -931,77 +743,54 @@ const CustomReports = () => {
 
         <TabsContent value="saved" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {savedReports.map((report) => {
-              // Parse the notes field to get properties and fields
-              let reportData;
-              try {
-                const notes = typeof report.notes === 'string' 
-                  ? JSON.parse(report.notes) 
-                  : report.notes;
-                
-                reportData = {
-                  ...report,
-                  properties: notes?.properties || [],
-                  fields: notes?.fields || []
-                };
-              } catch (parseError) {
-                console.error('Error parsing report notes:', parseError);
-                reportData = {
-                  ...report,
-                  properties: [],
-                  fields: []
-                };
-              }
-
-              return (
-                <Card key={report.id}>
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-start">
-                      <div className="flex items-center">
-                        {getChartIcon(report.type)}
-                        <CardTitle className="ml-2">{report.name}</CardTitle>
-                      </div>
-                      <div className="flex space-x-1">
-                        <Button variant="ghost" size="icon" onClick={() => deleteReport(report.id)}>
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+            {savedReports.map((report) => (
+              <Card key={report.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center">
+                      {getChartIcon(report.type)}
+                      <CardTitle className="ml-2">{report.name}</CardTitle>
                     </div>
-                    <CardDescription>{report.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Created:</span>
-                        <span>{report.created}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Properties:</span>
-                        <span>{reportData.properties.length}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Fields:</span>
-                        <span>{reportData.fields.map((fieldId: string) => availableFields.find(f => f.id === fieldId)?.label || fieldId).join(', ')}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Shared:</span>
-                        <span>{report.shared ? "Yes" : "No"}</span>
-                      </div>
+                    <div className="flex space-x-1">
+                      <Button variant="ghost" size="icon" onClick={() => deleteReport(report.id)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between pt-0">
-                    <Button variant="outline" size="sm" onClick={() => downloadReport(report)}>
-                      <Download className="mr-2 h-4 w-4" />
-                      Download
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => openShareDialog(report.id)}>
-                      <Share className="mr-2 h-4 w-4" />
-                      Share
-                    </Button>
-                  </CardFooter>
-                </Card>
-              );
-            })}
+                  </div>
+                  <CardDescription>{report.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Created:</span>
+                      <span>{report.created}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Properties:</span>
+                      <span>{report.properties.length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Fields:</span>
+                      <span>{report.fields.map(fieldId => availableFields.find(f => f.id === fieldId)?.label || fieldId).join(', ')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Shared:</span>
+                      <span>{report.shared ? "Yes" : "No"}</span>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-between pt-0">
+                  <Button variant="outline" size="sm" onClick={() => downloadReport(report)}>
+                    <Download className="mr-2 h-4 w-4" />
+                    Download
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => openShareDialog(report.id)}>
+                    <Share className="mr-2 h-4 w-4" />
+                    Share
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
 
             {/* Add New Report Card */}
             <Card
@@ -1017,44 +806,28 @@ const CustomReports = () => {
 
       {/* Hidden div for chart rendering specifically for html2canvas capture */}
       <div
-        id="hidden-chart-container"
         ref={hiddenChartRef}
+        // Key styles for off-screen rendering
         style={{
           position: 'absolute',
           left: '-9999px',
           top: '0',
-          width: '800px',
-          height: '600px',
-          overflow: 'hidden',
-          backgroundColor: 'white',
-          padding: '30px',
-          zIndex: -1,
+          width: '800px', // Crucial: Fixed width for consistent capture
+          height: '600px', // Crucial: Fixed height for consistent capture, adjust as needed
+          overflow: 'hidden', // Hide scrollbars
+          backgroundColor: 'white', // Ensure white background for screenshot
+          padding: '30px', // Add padding for screenshot, adjust as needed
+          zIndex: -1, // Ensure it doesn't interfere with other elements
         }}
       >
         {reportToCapture && (
-          <div className="w-full h-full">
-            <h2 className="text-2xl font-bold mb-4">{reportToCapture.name || reportToCapture.title || 'Untitled Report'}</h2>
-            {reportToCapture.description && (
-              <p className="text-gray-600 mb-6">{reportToCapture.description}</p>
-            )}
-            <ReportChartRenderer
-              report={{
-                id: reportToCapture.id,
-                name: reportToCapture.name || reportToCapture.title,
-                description: reportToCapture.description,
-                created: reportToCapture.created,
-                type: reportToCapture.type || 'bar',
-                properties: reportToCapture.properties || [],
-                fields: reportToCapture.fields || [],
-                shared: reportToCapture.shared || false,
-                notes: reportToCapture.notes
-              }}
-              availableFields={availableFields}
-              trendingProperties={properties}
-              COLORS={COLORS}
-              isDownloadPreview={true}
-            />
-          </div>
+          <ReportChartRenderer
+            report={reportToCapture}
+            availableFields={availableFields}
+            trendingProperties={properties}
+            COLORS={COLORS}
+            isDownloadPreview={true} // Indicate that this render is for download
+          />
         )}
       </div>
 
@@ -1097,5 +870,3 @@ const CustomReports = () => {
     </div>
   )
 }
-
-export default CustomReports

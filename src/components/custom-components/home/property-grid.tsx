@@ -558,12 +558,7 @@ const filteredProperties = useMemo(() => {
                                   fill={bookmarkedPropertyIds.includes(property.id) ? "currentColor" : "none"}
                                 />
                               </button>
-                              <Avatar className="h-8 w-8">
-                                <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
-                                <AvatarFallback className="text-xs">
-                                  {property.owners?.[0]?.name?.charAt(0) ?? "?"}
-                                </AvatarFallback>
-                              </Avatar>
+                            
                             </div>
                           </div>
 
