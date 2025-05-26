@@ -393,7 +393,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/niharikagoulikar/Documents/repos/wealth-map/src/generated/prisma",
+      "value": "/home/rohitt/wealth/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -402,12 +402,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/niharikagoulikar/Documents/repos/wealth-map/prisma/schema.prisma",
+    "sourceFilePath": "/home/rohitt/wealth/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

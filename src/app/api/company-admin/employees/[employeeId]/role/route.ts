@@ -11,6 +11,7 @@ export async function PATCH(
   try {
     const session = await auth();
     if (!session?.user) {
+      console.log("No session or user found");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -21,20 +22,23 @@ export async function PATCH(
     });
 
     if (!userOrg) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      console.log("No organization found for user:", session.user.id);
+      return NextResponse.json({ error: "Unauthorized - No organization found" }, { status: 401 });
     }
 
     const { role } = await req.json();
+    console.log("Updating role for employee:", { employeeId: params.employeeId, newRole: role });
 
     // Check if the employee exists and belongs to the organization
     const employee = await prisma.member.findFirst({
       where: {
-        userId: params.employeeId,
+        id: params.employeeId,
         organizationId: userOrg.organizationId,
       },
     });
 
     if (!employee) {
+      console.log("Employee not found:", params.employeeId);
       return NextResponse.json(
         { error: "Employee not found" },
         { status: 404 }
@@ -42,20 +46,33 @@ export async function PATCH(
     }
 
     // Update the employee's role
-    await prisma.member.update({
+    const updatedEmployee = await prisma.member.update({
       where: {
         id: employee.id,
       },
       data: {
         role,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+            emailVerified: true,
+            twoFactorEnabled: true,
+          },
+        },
+      },
     });
 
-    return NextResponse.json({ success: true });
+    console.log("Employee role updated successfully:", updatedEmployee);
+    return NextResponse.json(updatedEmployee);
   } catch (error) {
     console.error("Error updating employee role:", error);
     return NextResponse.json(
-      { error: "Failed to update employee role" },
+      { error: "Failed to update employee role", details: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }
     );
   }

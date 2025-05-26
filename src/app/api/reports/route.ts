@@ -1,121 +1,202 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@/generated/prisma";
+import { auth } from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
 // Save report
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  // It's good practice to validate the request body here
-  const { title, description, notes, reportType, userId } = req.body;
-
-  // Basic validation example (can be more sophisticated)
-  if (!title || !reportType || !userId) {
-    return res.status(400).json({ message: 'Missing required fields: title, reportType, userId' });
-  }
-
+export async function POST(req: Request) {
   try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Check if user has permission to create reports
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
+    });
+
+    const hasPermission = user?.roles.some(role =>
+      role.permissions.some(p => p.name === "reports:create")
+    );
+
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: "You don't have permission to create reports" },
+        { status: 403 }
+      );
+    }
+
+    const { title, description, notes, reportType } = await req.json();
+
+    if (!title || !reportType) {
+      return NextResponse.json(
+        { error: "Missing required fields: title, reportType" },
+        { status: 400 }
+      );
+    }
+
     const report = await prisma.report.create({
       data: {
         title,
         description,
         notes,
         reportType,
-        userId,
+        userId: session.user.id,
       },
     });
 
-    // Send back the created report along with the success message
-    res.status(201).json({ message: 'Report saved successfully', report });
+    return NextResponse.json({ message: "Report saved successfully", report });
   } catch (error) {
-    console.error('Error saving report:', error);
-    res.status(500).json({ message: 'Error saving report' });
+    console.error("Error saving report:", error);
+    return NextResponse.json(
+      { error: "Error saving report" },
+      { status: 500 }
+    );
   }
 }
 
-// Get reports (all or by ID)
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query; // id can be string | string[] | undefined
-
+// Get reports
+export async function GET(req: Request) {
   try {
-    if (id) {
-      // Get report by ID
-      // Ensure id is a single string (query params can be arrays if duplicated)
-      const reportId = Array.isArray(id) ? id[0] : id;
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-      // Validate reportId if necessary (e.g., if it should be a specific format like UUID)
-      if (!reportId) {
-        return res.status(400).json({ message: 'Report ID is missing or invalid.' });
-      }
-      
+    // Check if user has permission to view reports
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
+    });
+
+    const hasPermission = user?.roles.some(role =>
+      role.permissions.some(p => p.name === "reports:view")
+    );
+
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: "You don't have permission to view reports" },
+        { status: 403 }
+      );
+    }
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (id) {
       const report = await prisma.report.findUnique({
-        // Assuming your Prisma model's id field is a String.
-        // If it's an Int, you'd use: where: { id: parseInt(reportId) }
-        // and add validation to ensure reportId is a valid number.
-        where: { id: String(reportId) },
+        where: { id },
       });
 
-      if (report) {
-        res.status(200).json(report);
-      } else {
-        res.status(404).json({ message: `Report with ID ${reportId} not found` });
+      if (!report) {
+        return NextResponse.json(
+          { error: "Report not found" },
+          { status: 404 }
+        );
       }
-    } else {
-      // Get all reports
-      const reports = await prisma.report.findMany();
-      res.status(200).json(reports);
+
+      return NextResponse.json(report);
     }
-  } catch (error) {
-    console.error('Error getting report(s):', error);
-    // Generic error for unexpected issues
-    res.status(500).json({ message: 'Error retrieving report(s)' });
-  }
-}
 
-// Delete report by ID
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-
-  if (!id) {
-    return res.status(400).json({ message: 'Report ID is required for deletion' });
-  }
-
-  // Ensure id is a single string
-  const reportId = Array.isArray(id) ? id[0] : id;
-  
-  if (!reportId) {
-    return res.status(400).json({ message: 'Report ID is missing or invalid.' });
-  }
-
-  try {
-    await prisma.report.delete({
-      // Assuming your Prisma model's id field is a String.
-      // If it's an Int, you'd use: where: { id: parseInt(reportId) }
-      where: { id: String(reportId) },
+    const reports = await prisma.report.findMany({
+      where: { userId: session.user.id },
     });
-    // Successfully deleted. 204 No Content is also an option if not returning a message.
-    res.status(200).json({ message: `Report with ID ${reportId} deleted successfully` });
-  } catch (error: any) {
-    console.error(`Error deleting report with ID ${reportId}:`, error);
-    // Prisma throws a P2025 error code if the record to delete is not found.
-    if (error.code === 'P2025') {
-      res.status(404).json({ message: `Report with ID ${reportId} not found` });
-    } else {
-      res.status(500).json({ message: 'Error deleting report' });
-    }
+
+    return NextResponse.json(reports);
+  } catch (error) {
+    console.error("Error getting reports:", error);
+    return NextResponse.json(
+      { error: "Error retrieving reports" },
+      { status: 500 }
+    );
   }
 }
 
-// Default handler for methods not explicitly defined
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
-  switch (req.method) {
-    case 'POST':
-      return POST(req, res);
-    case 'GET':
-      return GET(req, res);
-    case 'DELETE':
-      return DELETE(req, res);
-    default:
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+// Delete report
+export async function DELETE(req: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Check if user has permission to delete reports
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
+    });
+
+    const hasPermission = user?.roles.some(role =>
+      role.permissions.some(p => p.name === "reports:create")
+    );
+
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: "You don't have permission to delete reports" },
+        { status: 403 }
+      );
+    }
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Report ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const report = await prisma.report.findUnique({
+      where: { id },
+    });
+
+    if (!report) {
+      return NextResponse.json(
+        { error: "Report not found" },
+        { status: 404 }
+      );
+    }
+
+    // Check if user owns the report
+    if (report.userId !== session.user.id) {
+      return NextResponse.json(
+        { error: "You don't have permission to delete this report" },
+        { status: 403 }
+      );
+    }
+
+    await prisma.report.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ message: "Report deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting report:", error);
+    return NextResponse.json(
+      { error: "Error deleting report" },
+      { status: 500 }
+    );
   }
 }

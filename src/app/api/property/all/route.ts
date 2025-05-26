@@ -1,6 +1,7 @@
 import { PrismaClient } from '@/generated/prisma';
 import { NextResponse } from 'next/server';
 import { getWealthConfidenceLevel } from '@/Models/models';
+import { checkPermission } from '@/lib/auth-utils';
 
 const CACHE_TTL = 60 * 60 * 24; // 24 hours
 const CACHE_KEY = 'properties';
@@ -8,11 +9,16 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
+    // Check if user has permission to view properties
+    const { isAuthorized, error } = await checkPermission('property:view', { allowPublic: false });
+    
+    if (!isAuthorized) {
+      return NextResponse.json({ error: error || 'Unauthorized' }, { status: 401 });
+    }
+    
     const properties = await prisma.property.findMany({
-     
-        include : { views: true,owners:true } 
-        
-        })
+      include: { views: true, owners: true } 
+    });
      
     // Add ownerType field to each property based on the first propertyOwner's ownerType (faster)
    const propertiesWithOwnerType = await Promise.all(properties.map(async (property: any) => {

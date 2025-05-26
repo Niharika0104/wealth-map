@@ -21,6 +21,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Loader2 } from "lucide-react";
 
 type Employee = {
   id: string;
@@ -46,6 +47,8 @@ export default function EmployeesPage() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingRoles, setLoadingRoles] = useState(true);
+  const [updatingRoles, setUpdatingRoles] = useState<Record<string, boolean>>({});
   const { toast } = useToast();
 
   useEffect(() => {
@@ -55,6 +58,7 @@ export default function EmployeesPage() {
 
   const fetchEmployees = async () => {
     try {
+      setLoading(true);
       const response = await fetch("/api/company-admin/employees");
       if (!response.ok) throw new Error("Failed to fetch employees");
       const data = await response.json();
@@ -63,6 +67,7 @@ export default function EmployeesPage() {
       console.error("Error fetching employees:", error);
       toast({
         title: "Error",
+        description: "Failed to fetch employees",
         variant: "destructive",
       });
     } finally {
@@ -72,6 +77,7 @@ export default function EmployeesPage() {
 
   const fetchRoles = async () => {
     try {
+      setLoadingRoles(true);
       const response = await fetch("/api/company-admin/roles");
       if (!response.ok) throw new Error("Failed to fetch roles");
       const data = await response.json();
@@ -80,13 +86,17 @@ export default function EmployeesPage() {
       console.error("Error fetching roles:", error);
       toast({
         title: "Error",
+        description: "Failed to fetch roles",
         variant: "destructive",
       });
+    } finally {
+      setLoadingRoles(false);
     }
   };
 
   const handleRoleChange = async (employeeId: string, newRole: string) => {
     try {
+      setUpdatingRoles(prev => ({ ...prev, [employeeId]: true }));
       const response = await fetch(`/api/company-admin/employees/${employeeId}/role`, {
         method: "PATCH",
         headers: {
@@ -95,24 +105,33 @@ export default function EmployeesPage() {
         body: JSON.stringify({ role: newRole }),
       });
 
-      if (!response.ok) throw new Error("Failed to update role");
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.details || "Failed to update role");
+      }
+
+      const updatedEmployee = await response.json();
 
       // Update the employee's role in the local state
       setEmployees((prev) =>
         prev.map((emp) =>
-          emp.id === employeeId ? { ...emp, role: newRole } : emp
+          emp.id === employeeId ? { ...emp, role: updatedEmployee.role } : emp
         )
       );
 
       toast({
         title: "Success",
+        description: "Employee role updated successfully",
       });
     } catch (error) {
       console.error("Error updating role:", error);
       toast({
         title: "Error",
+        description: error instanceof Error ? error.message : "Failed to update role",
         variant: "destructive",
       });
+    } finally {
+      setUpdatingRoles(prev => ({ ...prev, [employeeId]: false }));
     }
   };
 
@@ -133,7 +152,7 @@ export default function EmployeesPage() {
         <CardContent>
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
             <Table>
@@ -183,16 +202,30 @@ export default function EmployeesPage() {
                       <Select
                         value={employee.role}
                         onValueChange={(value) => handleRoleChange(employee.id, value)}
+                        disabled={updatingRoles[employee.id] || loadingRoles}
                       >
                         <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select role" />
+                          {updatingRoles[employee.id] ? (
+                            <div className="flex items-center gap-2">
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              <span>Updating...</span>
+                            </div>
+                          ) : (
+                            <SelectValue placeholder="Select role" />
+                          )}
                         </SelectTrigger>
                         <SelectContent>
-                          {roles.map((role) => (
-                            <SelectItem key={role.id} value={role.name}>
-                              {role.name}
-                            </SelectItem>
-                          ))}
+                          {loadingRoles ? (
+                            <div className="flex items-center justify-center p-4">
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            </div>
+                          ) : (
+                            roles.map((role) => (
+                              <SelectItem key={role.id} value={role.name}>
+                                {role.name}
+                              </SelectItem>
+                            ))
+                          )}
                         </SelectContent>
                       </Select>
                     </TableCell>

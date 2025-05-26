@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Owner } from '@/Models/models';
 
 class OnwerService {
-  private PROPERTY_API = `${process.env.NEXT_PUBLIC_PROPERTY_API_BASE_URL}/api/owner`;
+  private PROPERTY_API = `/api/owner`;
 
   async getOwners(): Promise<Owner[]> {
     const res = await axios.get(`${this.PROPERTY_API}/all`);

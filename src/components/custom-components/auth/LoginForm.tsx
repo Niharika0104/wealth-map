@@ -88,8 +88,12 @@ export function LoginForm() {
         throw new Error(result.error);
       }
 
-      router.push("/app");
+      // Add a small delay to allow the session to be properly set
+      setTimeout(() => {
+        router.push("/app");
+      }, 500);
     } catch (error) {
+      console.error("Login error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
       setIsLoading(false);

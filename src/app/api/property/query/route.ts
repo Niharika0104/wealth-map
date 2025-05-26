@@ -32,42 +32,41 @@ function getGeneralResponse(): string {
 export async function POST(req: Request) {
   try {
     const session = await auth();
-    if (!session?.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await req.json();
-    const { query, chatId } = body;
-
-    if (!query) {
-      return new NextResponse("Missing query", { status: 400 });
-    }
-
-    // Create or get chat
-    let chat;
-    if (chatId) {
-      chat = await prisma.chat.findUnique({
-        where: { id: chatId },
-      });
-    }
-    
-    if (!chat) {
-      chat = await prisma.chat.create({
-        data: {
-          userId: session.user.id,
-          title: "New Chat",
+    // Check if user has permission to search properties
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            permissions: true,
+          },
         },
-      });
-    }
-
-    // Save user message
-    await prisma.chatMessage.create({
-      data: {
-        chatId: chat.id,
-        role: "user",
-        content: query,
       },
     });
+
+    const hasPermission = user?.roles.some(role =>
+      role.permissions.some(p => p.name === "property:search" || p.name === "property:*")
+    );
+
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: "You don't have permission to search properties" },
+        { status: 403 }
+      );
+    }
+
+    const { query } = await req.json();
+
+    if (!query) {
+      return NextResponse.json(
+        { error: "Query is required" },
+        { status: 400 }
+      );
+    }
 
     let aiResponse: string;
 
@@ -111,7 +110,10 @@ export async function POST(req: Request) {
       'Content-Type': 'application/json',
     }});
   } catch (error) {
-    console.error("[PROPERTY_QUERY]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.error("Error processing property query:", error);
+    return NextResponse.json(
+      { error: "Error processing query" },
+      { status: 500 }
+    );
   }
 } 

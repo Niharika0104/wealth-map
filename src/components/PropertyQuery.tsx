@@ -177,12 +177,12 @@ export function PropertyQuery() {
           </Button>
         </div>
         <ScrollArea className="h-[calc(100vh-8rem)]">
-          <div className="p-2 space-y-1">
+          <div className="p-1.5">
             {chats.map((chat) => (
               <div
                 key={chat.id}
                 className={cn(
-                  "flex items-center justify-between p-2 rounded-md cursor-pointer hover:bg-muted",
+                  "flex items-center justify-between p-1.5 rounded-md cursor-pointer hover:bg-muted",
                   activeChatId === chat.id && "bg-muted"
                 )}
                 onClick={() => {
@@ -210,52 +210,56 @@ export function PropertyQuery() {
 
       {/* Chat Window */}
       <div className="flex-1 flex flex-col">
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex gap-3 ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                {message.role === "assistant" && (
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="/images/bot-avatar.png" alt="AI Assistant" />
-                    <AvatarFallback>AI</AvatarFallback>
-                  </Avatar>
-                )}
-                <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                >
-                  <MessageRenderer content={message.content} />
-                  <span className="text-xs opacity-70 mt-1 block">
-                    {message.createdAt.toLocaleTimeString()}
-                  </span>
-                </div>
-                {message.role === "user" && (
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="/images/user-avatar.png" alt="User" />
-                    <AvatarFallback>U</AvatarFallback>
-                  </Avatar>
+        <ScrollArea className="h-[calc(100vh-7rem)] overflow-hidden">
+          <div className="flex flex-col">
+            <div className="flex flex-col justify-end p-4">
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex gap-3 ${
+                      message.role === "user" ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    {message.role === "assistant" && (
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src="/images/bot-avatar.png" alt="AI Assistant" />
+                        <AvatarFallback>AI</AvatarFallback>
+                      </Avatar>
+                    )}
+                    <div
+                      className={`max-w-[80%] rounded-lg p-3 ${
+                        message.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted"
+                      }`}
+                    >
+                      <MessageRenderer content={message.content} />
+                      <span className="text-xs opacity-70 mt-1 block">
+                        {message.createdAt.toLocaleTimeString()}
+                      </span>
+                    </div>
+                    {message.role === "user" && (
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src="/images/user-avatar.png" alt="User" />
+                        <AvatarFallback>U</AvatarFallback>
+                      </Avatar>
+                    )}
+                  </div>
+                ))}
+                {loading && (
+                  <div className="flex gap-3">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/images/bot-avatar.png" alt="AI Assistant" />
+                      <AvatarFallback>AI</AvatarFallback>
+                    </Avatar>
+                    <div className="bg-muted rounded-lg p-3">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </div>
+                  </div>
                 )}
               </div>
-            ))}
-            {loading && (
-              <div className="flex gap-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/images/bot-avatar.png" alt="AI Assistant" />
-                  <AvatarFallback>AI</AvatarFallback>
-                </Avatar>
-                <div className="bg-muted rounded-lg p-3">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </ScrollArea>
 

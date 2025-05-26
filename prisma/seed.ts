@@ -87,24 +87,24 @@ const livingRoom = [
 async function main() {
   // Create permissions
   const permissions = [
-    // System permissions
+    // System permissions (Super Admin only)
     { name: 'system:*', category: 'system', description: 'Full system access' },
     
-    // Company permissions
+    // Company permissions (Company Admin and Super Admin)
     { name: 'companies:*', category: 'companies', description: 'Full company management' },
     { name: 'company:manage', category: 'companies', description: 'Manage company settings' },
     
-    // User permissions
+    // User permissions (Company Admin and Super Admin)
     { name: 'users:*', category: 'users', description: 'Full user management' },
     { name: 'employees:*', category: 'users', description: 'Full employee management' },
     { name: 'permissions:assign', category: 'users', description: 'Assign permissions to users' },
     
-    // Property permissions
+    // Property permissions (All roles)
     { name: 'property:*', category: 'property', description: 'Full property management' },
     { name: 'property:view', category: 'property', description: 'View properties' },
     { name: 'property:search', category: 'property', description: 'Search properties' },
     
-    // Report permissions
+    // Report permissions (All roles)
     { name: 'reports:*', category: 'reports', description: 'Full report management' },
     { name: 'reports:create', category: 'reports', description: 'Create reports' },
     { name: 'reports:share', category: 'reports', description: 'Share reports' },
@@ -124,20 +124,31 @@ async function main() {
   const roles = [
     {
       name: 'SUPER_ADMIN',
-      description: 'Super Administrator with full system access',
+      description: 'Super Administrator with system-level access only',
       isSystem: true,
-      permissions: ['system:*', 'companies:*', 'users:*', 'property:*', 'reports:*'],
+      permissions: [
+        'system:*',
+        'companies:*',
+        'users:*',
+      ],
     },
     {
       name: 'COMPANY_ADMIN',
-      description: 'Company Administrator with company-level access',
+      description: 'Company Administrator with full company access',
       isSystem: true,
       permissions: [
+        // Company management
         'company:manage',
         'employees:*',
         'permissions:assign',
+        // Property access
         'property:*',
+        // Report access
         'reports:*',
+        // Employee permissions (inherited)
+        'property:view',
+        'property:search',
+        'reports:view',
       ],
     },
     {
@@ -255,7 +266,7 @@ async function main() {
       id: faker.string.uuid(),
       organizationId: company.id,
       userId: companyAdmin.id,
-      role: 'COMPANY_ADMIN',
+      role: 'COMPANY_ADMIN', // Keep consistent with role names in the system
       createdAt: new Date(),
     },
   });

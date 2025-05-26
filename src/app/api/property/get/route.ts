@@ -5,10 +5,17 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { propertyId } = body;
+  const body = await req.json();
+  const { propertyId } = body;
 
-    
+
+
+  if (!propertyId) {
+      console.error("No propertyId provided in request");
+    return new Response(JSON.stringify({ error: "propertyId is required in the request body." }), { status: 400 });
+  }
+
+
     const property = await prisma.property.findUnique({
       where: { id: propertyId },
       include: {
