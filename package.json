@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+
     "prebuild": "npx prisma generate",
     "build": "next build",
+
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node --transpile-only prisma/seed.ts",
