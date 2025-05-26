@@ -173,7 +173,7 @@ const ROLE_NAVIGATION_ITEMS: NavigationItemsByRole = {
       title: "Main",
       items: [
         {
-          title: "Employee Dashboard",
+          title: "Home",
           url: "/app/employee/home",
           icon: Home,
           badge: null,

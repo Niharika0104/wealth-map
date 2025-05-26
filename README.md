@@ -35,13 +35,15 @@ A comprehensive wealth management and property analysis platform built with Next
   - Next.js API Routes
   - Prisma ORM
   - PostgreSQL Database
-  - NextAuth.js for Authentication
+  - NextAuth.js v5 for Authentication
 
 ## Prerequisites
 
-- Node.js 18+
-- PostgreSQL
+- Node.js 20+
+- PostgreSQL 15+
+- Redis (for caching)
 - Google AI API Key
+- GROQ API Key
 - MapTiler API Key
 
 ## Environment Variables
@@ -54,7 +56,10 @@ DATABASE_URL="postgresql://user:password@localhost:5432/wealth_map"
 
 # Authentication
 NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key"
+AUTH_SECRET="your-secret-key"
+
+# Redis Cache
+REDIS_URL="redis://localhost:6379"
 
 # AI Services
 GOOGLE_AI_API_KEY="your-google-ai-key"
@@ -62,6 +67,10 @@ GROQ_API_KEY="your-groq-key"
 
 # Map Services
 MAPTILER_API_KEY="your-maptiler-key"
+
+# Email (Optional for email-based features)
+RESEND_API_KEY="your-resend-api-key"
+EMAIL_FROM="no-reply@your-domain.com"
 ```
 
 ## Installation
@@ -77,47 +86,78 @@ cd wealth-map
 npm install
 ```
 
-3. Set up the database:
+3. Set up the database and generate Prisma client:
 ```bash
 npx prisma generate
-npx prisma db push
+npx prisma migrate dev
 ```
 
-4. Start the development server:
+4. Seed the database with initial data:
+```bash
+npm run seed
+```
+
+5. Start the development server:
 ```bash
 npm run dev
 ```
 
-## Component Architecture
+6. Access the application:
+   - Open your browser and navigate to `http://localhost:3000`
+   - Default login credentials:
+     - Email: `admin@example.com`
+     - Password: `password123`
+
+## Project Architecture
+
+### Directory Structure
+
+```
+wealth-map/
+├── prisma/               # Database schema and migrations
+├── public/               # Static assets
+├── src/
+│   ├── app/              # Next.js App Router components
+│   │   ├── api/          # API routes
+│   │   ├── app/          # Main application routes
+│   │   │   ├── employee/ # Employee-specific pages
+│   │   │   ├── company-admin/ # Company admin pages
+│   │   │   └── super-admin/ # Super admin pages
+│   │   └── auth/         # Authentication pages
+│   ├── components/       # React components
+│   │   ├── custom-components/ # Application-specific components
+│   │   └── ui/           # UI component library
+│   ├── hooks/            # React hooks
+│   ├── lib/              # Utility functions and libraries
+│   ├── Models/           # TypeScript models and interfaces
+│   ├── services/         # API service classes
+│   ├── stores/           # Global state management
+│   ├── types/            # TypeScript type definitions
+│   └── middleware.ts     # Next.js middleware for auth and routing
+```
 
 ### Core Components
 
 | Component | Purpose | Key Features |
 |-----------|---------|--------------|
-| `PropertyExport` | Property data export | • Multi-format export (CSV, Excel, JSON)<br>• Field selection<br>• Property filtering<br>• Preview functionality |
-| `ExportHistory` | Export management | • Export history tracking<br>• Format filtering<br>• Search functionality<br>• Download/Delete actions |
-| `ReportingDashboard` | Report management | • Tab-based navigation<br>• Permission-based access<br>• Integrated reporting tools |
+| `AppSidebar` | Main navigation | • Role-based navigation items<br>• Collapsible UI<br>• User profile integration |
+| `PropertyExport` | Property data export | • Multi-format export<br>• Field selection<br>• Preview functionality |
+| `InteractiveMap` | Property visualization | • MapTiler integration<br>• Property filtering<br>• Custom markers |
+| `HomePage` | Employee dashboard | • Property search<br>• Saved views<br>• Analytics dashboard |
 
-### Component Hierarchy
+### Authentication Flow
 
-```
-ReportingDashboard
-├── PropertyExport
-│   ├── PropertyList
-│   │   ├── PropertySearch
-│   │   └── PropertyFilter
-│   └── ExportOptions
-│       ├── FormatSelector
-│       └── FieldSelector
-├── ExportHistory
-│   ├── ExportTable
-│   │   ├── SearchBar
-│   │   └── FormatFilter
-│   └── DeleteDialog
-└── CustomReports
-    ├── ReportBuilder
-    └── ScheduleManager
-```
+1. **Login Process**
+   - User enters credentials
+   - Server validates credentials and checks 2FA status
+   - Session token generated and stored
+   - User redirected based on role
+
+2. **Authorization Flow**
+   - Middleware checks user session
+   - Routes protected based on role
+   - Permission-based component rendering
+   - API routes secured by permission checks
 
 ## Data Flow
 
@@ -303,21 +343,91 @@ const hasPermission = user.roles.some(role =>
    - Update roles as requirements change
    - Document permission changes
 
+## Troubleshooting
+
+### Common Issues
+
+1. **Database Connection Errors**
+   - Ensure PostgreSQL is running
+   - Verify DATABASE_URL in .env file
+   - Check for correct database credentials
+   ```bash
+   # Test database connection
+   npx prisma db pull
+   ```
+
+2. **Authentication Issues**
+   - Verify NEXTAUTH_SECRET is set
+   - Check user roles and permissions
+   - Clear browser cookies and try again
+   - Ensure email verification is working (if enabled)
+
+3. **Map Not Loading**
+   - Verify MAPTILER_API_KEY is valid
+   - Check browser console for errors
+   - Ensure MapTiler account has sufficient quota
+
+4. **AI Features Not Working**
+   - Verify AI API keys are valid
+   - Check usage limits on AI service providers
+   - Look for specific error messages in server logs
+
+### Debugging
+
+```bash
+# Check Prisma database connection
+npx prisma db pull
+
+# Reset database (development only)
+npx prisma migrate reset
+
+# Validate environment variables
+node -e "console.log(process.env.DATABASE_URL)"
+
+# Check for TypeScript errors
+npx tsc --noEmit
+```
+
 ## Deployment
 
-### Build Process
+### Build and Start Production Server
 ```bash
-# Production build
+# Build the application
 npm run build
 
-# Development
-npm run dev
+# Start the production server
+npm run start
 ```
 
-### Environment Setup
+### Continuous Integration/Deployment
+For CI/CD setup, you can use services like Vercel, Netlify, or a custom pipeline:
+
+#### Vercel Deployment
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in the Vercel dashboard
+3. Deploy automatically on push to main branch
+
+#### Docker Deployment
 ```bash
-# Required environment variables
-NEXT_PUBLIC_API_URL=
-NEXT_PUBLIC_AUTH_DOMAIN=
-NEXT_PUBLIC_CLIENT_ID=
+# Build Docker image
+docker build -t wealth-map .
+
+# Run Docker container
+docker run -p 3000:3000 --env-file .env.production wealth-map
 ```
+
+### Database Migration in Production
+```bash
+# Apply migrations to production database
+npx prisma migrate deploy
+
+# If needed, seed production data
+NODE_ENV=production npm run seed
+```
+
+### Important Production Considerations
+- Set up proper database backups
+- Configure Redis for production with authentication
+- Use a reverse proxy like Nginx for SSL termination
+- Implement rate limiting for API endpoints
+- Set up monitoring and error tracking

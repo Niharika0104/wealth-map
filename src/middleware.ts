@@ -131,7 +131,7 @@ export async function middleware(request: NextRequest) {
       } else if (role === 'COMPANY_ADMIN') {
         return NextResponse.redirect(new URL(ROUTES.COMPANY_ADMIN, request.url));
       } else {
-        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE + '/home', request.url));
       }
     }
     // Allow access to auth pages for unauthenticated users or users requiring 2FA
@@ -160,7 +160,7 @@ export async function middleware(request: NextRequest) {
       } else if (role === 'COMPANY_ADMIN') {
         return NextResponse.redirect(new URL(ROUTES.COMPANY_ADMIN, request.url));
       } else {
-        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
+        return NextResponse.redirect(new URL(ROUTES.EMPLOYEE + '/home', request.url));
       }
     }
 
