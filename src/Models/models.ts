@@ -190,14 +190,16 @@ export const capitalizeFirstLetter = (str: string): string => {
 // src/Models/models.ts or wherever you define your interfaces
 
 export interface Report {
-  id: string; // Unique identifier for the report
-  name: string; // Name of the report (e.g., "High Value Properties")
-  description: string; // Description of the report
-  created: string; // Date the report was created (formatted as a string, e.g., "May 15, 2025")
-  type: "bar" | "pie" | "line"; // Type of chart (e.g., "bar", "pie", "line")
-  properties: string[]; // Array of IDs of properties included in the report
-  fields: string[]; // Array of IDs of data fields included in the report (e.g., "Price", "confidenceLevel")
-  shared: boolean; // Indicates if the report has been shared
+  id: string;
+  title?: string;
+  name?: string;
+  description?: string;
+  created: string;
+  type: 'bar' | 'pie' | 'line';
+  properties: string[];
+  fields: string[];
+  shared: boolean;
+  notes?: string | { properties: string[]; fields: string[] };
 }
 export  interface User
 { id: string; name?: string | null | undefined;

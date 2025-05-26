@@ -166,6 +166,12 @@ export async function middleware(request: NextRequest) {
 
     // Check if the user is trying to access a protected route
     const path = request.nextUrl.pathname;
+    
+    // Allow access to reports page for all authenticated users
+    if (path.startsWith('/app/employee/reports')) {
+      return NextResponse.next();
+    }
+    
     if (path.startsWith(ROUTES.SUPER_ADMIN)) {
       if (session.user.role !== 'SUPER_ADMIN') {
         return NextResponse.redirect(new URL(ROUTES.EMPLOYEE, request.url));
