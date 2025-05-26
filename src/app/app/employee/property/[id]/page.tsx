@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MapPin, Eye, Calendar, Shield, ArrowLeft, TrendingUp } from "lucide-react"
+import OwnerService from "@/services/onwerService"
 import axios from 'axios'
 import { getCoordinates } from "@/components/custom-components/home/interactive-map"
 import Link from "next/link"

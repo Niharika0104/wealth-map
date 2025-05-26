@@ -21,7 +21,6 @@ import type { WealthAnalysisProps, Property, Owner } from "@/Models/models"
 import { getWealthConfidenceLevel, OwnerWealthFactors, calculateTotals } from "@/Models/models";
 import { set } from "zod"
 import { faker } from '@faker-js/faker';
-import PropertyDetailImageGallery from "@/components/custom-components/home/property-detail-image-gallery";
 
 export default function PropertyDetailPage() {
   const params = useParams()
