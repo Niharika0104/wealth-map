@@ -16,6 +16,8 @@ let properties: Property[] = [];
 let trendingProperties: Property[] = [];
 let hotProperties: Property[] = [];
 
+let isInitialized = false;
+
 const fetchOwners = async () => {
   const value = localStorage.getItem('owner-storage');
   if (value) {
@@ -83,12 +85,23 @@ const fetchProperties = async () => {
 };
 
 async function init() {
-  await fetchOwners();
-  await fetchProperties();
+  if (!isInitialized) {
+    await fetchOwners();
+    await fetchProperties();
+    isInitialized = true;
+  }
 }
-await init(); // Ensure data is ready before exports
+
+init().catch(console.error);
 
 export function getProperties() {
+  if (!isInitialized) {
+    return {
+      trendingProperties: [],
+      hotProperties: []
+    };
+  }
+
   if (trendingProperties.length === 0 && properties.length > 0) {
     trendingProperties = properties.map((property, index) => {
       let lastUpdated;
