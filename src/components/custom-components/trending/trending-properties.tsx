@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Property as PropertyType } from "@/Models/models"
 import {
   MapPin,
   Eye,
@@ -23,11 +24,36 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { faker } from '@faker-js/faker'
-
+const transformProperties = (properties: Property[]): PropertyType[] => {
+  return properties.map((property) => ({
+    id:property.id,
+    name:"",
+    images:[],
+   
+    lastUpdated:property.lastUpdated,
+    price: Number(property.value),
+    address: property.address,
+    confidenceScore: property.confidenceLevel==="High"?100:property.confidenceLevel==="Medium"?50:0,
+   coordinates:[property.coordinates[0],property.coordinates[1]],
+    ownerId: property.ownerId,
+    ownerName: property.ownerName,
+    ownerType: property.ownerType,
+    type: property.type,
+    trendingScore: property.trendingScore,
+    country: "United States",
+    city: property.region,
+    state: property.state,
+    zipCode: property.zipCode,
+    area: Number(property.sqft),
+    views: property.views,
+  }));
+};
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getProperties, type Property } from "./property-store"
 import MapView from "@/components/custom-components/trending/map-view"
+import { formatKMB } from "@/Models/models"
+import { C } from "node_modules/@copilotkit/react-core/dist/copilot-context-8fb74a85"
 
 // Get properties from our store
 const { trendingProperties, hotProperties } = getProperties()
@@ -180,7 +206,7 @@ export default function TrendingProperties() {
                 {property.views}
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
-                {property.sqft} sqft
+                {formatKMB(Number(property.sqft))} sqft
               </Badge>
               <Badge className={`${getConfidenceColor(property.confidenceLevel)} flex items-center gap-1`}>
                 <Shield className="h-3 w-3" />
@@ -193,7 +219,7 @@ export default function TrendingProperties() {
                 {property.lastUpdated}
               </div>
               <div className="flex items-center">
-                <span className="font-bold text-green-600 mr-2">{property.value}</span>
+                <span className="font-bold text-green-600 mr-2">{formatKMB(Number(property.value))}</span>
                 <Avatar className="h-6 w-6">
                   <AvatarImage src={`/placeholder.svg?height=50&width=50&query=avatar`} />
                   <AvatarFallback>{property.ownerName.charAt(0)}</AvatarFallback>
@@ -263,7 +289,7 @@ export default function TrendingProperties() {
               </div>
               <div className="flex items-center">
                 <BarChart3 className="h-4 w-4 text-gray-500 mr-1" />
-                <span className="text-sm text-gray-600">{property.sqft} sqft</span>
+                <span className="text-sm text-gray-600">{formatKMB(Number(property.sqft))} sqft</span>
               </div>
               <div className="flex items-center">
                 <Users className="h-4 w-4 text-gray-500 mr-1" />
@@ -273,7 +299,7 @@ export default function TrendingProperties() {
 
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <span className="font-bold text-2xl text-green-600 mr-2">{property.value}</span>
+                <span className="font-bold text-2xl text-green-600 mr-2">{formatKMB(Number(property.value))}</span>
                 <ArrowUpRight className="h-5 w-5 text-green-500" />
               </div>
               <Link href={`/app/property/${property.id}`}>
@@ -518,7 +544,7 @@ export default function TrendingProperties() {
                 </svg>
                 Grid
               </Button>
-              {/* <Button
+              <Button
                 variant={viewMode === "map" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setViewMode("map")}
@@ -526,22 +552,22 @@ export default function TrendingProperties() {
               >
                 <MapIcon className="h-4 w-4 mr-1" />
                 Map
-              </Button> */}
+              </Button>
             </div>
           </div>
 
           {/* Property display - grid or map */}
-          {viewMode === "grid" && (
+          {viewMode === "grid" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {paginatedProperties.map((property) => (
                 <PropertyCard key={property.id} property={property} />
               ))}
             </div>)
-          // ) : (
-          //   // <div className="h-[600px] rounded-lg overflow-hidden border">
-          //   //   {/* <MapView properties={paginatedProperties} /> */}
-          //   // </div>
-          // )
+          : (
+            <div className="h-[600px] rounded-lg overflow-hidden border">
+              <MapView properties={transformProperties(paginatedProperties)} />
+            </div>
+          )
           }
 
           {/* Pagination */}
