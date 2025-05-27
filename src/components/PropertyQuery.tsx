@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Send, Plus, Trash2 } from "lucide-react";
+import { Loader2, Send, Plus, Trash2, Pencil, Check, X } from "lucide-react";
 import { MessageRenderer } from "./MessageRenderer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,6 +41,8 @@ export function PropertyQuery() {
   const [error, setError] = useState("");
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState("");
 
   useEffect(() => {
     if (session?.user?.id) {
@@ -110,6 +112,28 @@ export function PropertyQuery() {
       }
     } catch (err) {
       console.error("Failed to delete chat:", err);
+    }
+  };
+
+  const handleEditTitle = async (chatId: string, newTitle: string) => {
+    try {
+      const res = await fetch(`/api/chats/${chatId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: newTitle }),
+      });
+
+      if (res.ok) {
+        const { chat } = await res.json();
+        setChats((prev) =>
+          prev.map((c) => (c.id === chatId ? { ...c, title: chat.title } : c))
+        );
+        setEditingChatId(null);
+      }
+    } catch (err) {
+      console.error("Failed to update chat title:", err);
     }
   };
 
@@ -186,22 +210,81 @@ export function PropertyQuery() {
                   activeChatId === chat.id && "bg-muted"
                 )}
                 onClick={() => {
-                  setActiveChatId(chat.id);
-                  setMessages(chat.messages);
+                  if (editingChatId !== chat.id) {
+                    setActiveChatId(chat.id);
+                    setMessages(chat.messages);
+                  }
                 }}
               >
-                <span className="truncate flex-1">{chat.title}</span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteChat(chat.id);
-                  }}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                {editingChatId === chat.id ? (
+                  <form
+                    className="flex-1 flex gap-1"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleEditTitle(chat.id, editingTitle);
+                    }}
+                  >
+                    <Input
+                      value={editingTitle}
+                      onChange={(e) => setEditingTitle(e.target.value)}
+                      className="h-6 text-sm"
+                      autoFocus
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                    <div className="flex gap-1">
+                      <Button
+                        type="submit"
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Check className="h-3 w-3 text-green-600" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingChatId(null);
+                        }}
+                      >
+                        <X className="h-3 w-3 text-red-600" />
+                      </Button>
+                    </div>
+                  </form>
+                ) : (
+                  <>
+                    <span className="truncate flex-1">{chat.title}</span>
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingChatId(chat.id);
+                          setEditingTitle(chat.title);
+                        }}
+                      >
+                        <Pencil className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteChat(chat.id);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
