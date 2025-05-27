@@ -42,6 +42,7 @@ import html2canvas from 'html2canvas-pro'; // Make sure you have the latest vers
 import jsPDF from 'jspdf';
 import { format } from "date-fns"
 import { Report } from "@/Models/models"
+import { createReport } from "@/lib/api/reports"
 
 interface ReportChartRendererProps {
   report: Report;
@@ -359,7 +360,7 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
   }
 
   // Save report
-  const saveReport = () => {
+  const saveReport = async () => {
     if (!reportName) {
       toast({
         title: "Report name required",
@@ -387,34 +388,65 @@ const [chartType, setChartType] = useState<Report['type']>("bar")
       return
     }
 
-    const newReport: Report = {
-      id: Date.now().toString(),
-      name: reportName,
-      description: reportDescription,
-      created: format(new Date(), 'MMM dd, yyyy'),
-      type: chartType,
-      properties: selectedProperties,
-      fields: selectedFields,
-      shared: false,
+    try {
+      // Create the report data
+      const reportData = {
+        title: reportName,
+        description: reportDescription,
+        reportType: chartType,
+        notes: JSON.stringify({
+          properties: selectedProperties,
+          fields: selectedFields,
+          data: properties.filter(p => selectedProperties.includes(p.id))
+            .map(p => {
+              const data: any = { id: p.id };
+              selectedFields.forEach(field => {
+                data[field] = p[field as keyof typeof p];
+              });
+              return data;
+            })
+        }),
+        exported: true
+      };
+
+      // Save to database
+      const savedReport = await createReport(reportData);
+
+      // Update local state
+      setSavedReports([...savedReports, {
+        id: savedReport.id,
+        name: savedReport.title,
+        description: savedReport.description,
+        created: format(new Date(savedReport.createdAt), 'MMM dd, yyyy'),
+        type: savedReport.reportType as Report['type'],
+        properties: selectedProperties,
+        fields: selectedFields,
+        shared: false,
+      }]);
+
+      toast({
+        title: "Report saved",
+        description: "Your custom report has been saved successfully.",
+        variant: "default",
+      });
+
+      // Reset form
+      setReportName("");
+      setReportDescription("");
+      setSelectedProperties([]);
+      setSelectedFields([]);
+      setChartType("bar");
+
+      // Switch to saved reports tab
+      setActiveTab("saved");
+    } catch (error) {
+      console.error('Error saving report:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save report. Please try again.",
+        variant: "destructive",
+      });
     }
-
-    setSavedReports([...savedReports, newReport])
-
-    toast({
-      title: "Report saved",
-      description: "Your custom report has been saved successfully.",
-      variant: "default",
-    })
-
-    // Reset form
-    setReportName("")
-    setReportDescription("")
-    setSelectedProperties([])
-    setSelectedFields([])
-    setChartType("bar")
-
-    // Switch to saved reports tab
-    setActiveTab("saved")
   }
 
   // Delete report

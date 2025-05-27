@@ -55,7 +55,6 @@ const fetchProperties = async () => {
     localStorage.setItem('property-storage', JSON.stringify(rawProperties));
   }
 
-  // Convert to enriched Property[]
   const enrichedProps = await Promise.all(
     rawProperties.map(async (property) => {
       const coordinates = await getCoordinates(property);
@@ -69,7 +68,7 @@ const fetchProperties = async () => {
         region: property.city,
         sqft: property.area,
         views: faker.number.int({ min: 100, max: 1000 }),
-        confidenceLevel: property.confidenceLevel || ["High","Medium","Low"][faker.number.int({ min: 0, max: 2 })] as ConfidenceLevel,
+        confidenceLevel: property.confidenceLevel || ["High", "Medium", "Low"][faker.number.int({ min: 0, max: 2 })] as ConfidenceLevel,
         lastUpdated: property.lastUpdated,
         ownerId: property.ownerId,
         ownerName: owner?.name || faker.person.fullName(),
@@ -87,12 +86,12 @@ async function init() {
   if (!initialized) {
     await fetchOwners();
     await fetchProperties();
+    populateTrendingAndHot();
     initialized = true;
   }
 }
 
-export async function getProperties() {
-  await init();
+function populateTrendingAndHot() {
   if (trendingProperties.length === 0 && properties.length > 0) {
     trendingProperties = properties.map((property, index) => {
       let lastUpdated;
@@ -133,6 +132,10 @@ export async function getProperties() {
       .sort((a, b) => b.trendingScore - a.trendingScore)
       .slice(0, 4);
   }
+}
+
+export async function getProperties() {
+  await init();
 
   return {
     trendingProperties,

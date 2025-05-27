@@ -91,20 +91,44 @@ export default function ExportHistory() {
 
   const handleDownload = async (item: ExportHistoryItem) => {
     try {
-      if (item.exportUrl) {
-        window.open(item.exportUrl, '_blank');
-        toast({
-          title: "Success",
-          description: "Download started",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: "Export file not found",
-          variant: "destructive",
-        });
+      const response = await fetch(`/api/reports/${item.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to download report');
       }
+
+      // Get the filename from the Content-Disposition header
+      const contentDisposition = response.headers.get('Content-Disposition');
+      const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
+      const filename = filenameMatch ? filenameMatch[1] : `${item.title}.${item.reportType}`;
+
+      // Create a blob from the response
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      
+      // Create a temporary link and trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Clean up
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      toast({
+        title: "Success",
+        description: "Download started",
+      });
     } catch (error) {
+      console.error('Error downloading report:', error);
       toast({
         title: "Error",
         description: "Failed to download export",
