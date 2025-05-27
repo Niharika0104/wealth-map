@@ -15,6 +15,7 @@ let owners: Owner[] = [];
 let properties: Property[] = [];
 let trendingProperties: Property[] = [];
 let hotProperties: Property[] = [];
+let initialized = false;
 
 const fetchOwners = async () => {
   const value = localStorage.getItem('owner-storage');
@@ -83,12 +84,15 @@ const fetchProperties = async () => {
 };
 
 async function init() {
-  await fetchOwners();
-  await fetchProperties();
+  if (!initialized) {
+    await fetchOwners();
+    await fetchProperties();
+    initialized = true;
+  }
 }
-await init(); // Ensure data is ready before exports
 
-export function getProperties() {
+export async function getProperties() {
+  await init();
   if (trendingProperties.length === 0 && properties.length > 0) {
     trendingProperties = properties.map((property, index) => {
       let lastUpdated;
@@ -136,8 +140,8 @@ export function getProperties() {
   };
 }
 
-export function getPropertyById(id: string): Property | undefined {
-  const { trendingProperties } = getProperties();
+export async function getPropertyById(id: string): Promise<Property | undefined> {
+  const { trendingProperties } = await getProperties();
   return trendingProperties.find((p) => p.id === id);
 }
 
