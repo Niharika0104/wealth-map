@@ -15,8 +15,7 @@ let owners: Owner[] = [];
 let properties: Property[] = [];
 let trendingProperties: Property[] = [];
 let hotProperties: Property[] = [];
-
-let isInitialized = false;
+let initialized = false;
 
 const fetchOwners = async () => {
   const value = localStorage.getItem('owner-storage');
@@ -56,7 +55,6 @@ const fetchProperties = async () => {
     localStorage.setItem('property-storage', JSON.stringify(rawProperties));
   }
 
-  // Convert to enriched Property[]
   const enrichedProps = await Promise.all(
     rawProperties.map(async (property) => {
       const coordinates = await getCoordinates(property);
@@ -70,7 +68,7 @@ const fetchProperties = async () => {
         region: property.city,
         sqft: property.area,
         views: faker.number.int({ min: 100, max: 1000 }),
-        confidenceLevel: property.confidenceLevel || ["High","Medium","Low"][faker.number.int({ min: 0, max: 2 })] as ConfidenceLevel,
+        confidenceLevel: property.confidenceLevel || ["High", "Medium", "Low"][faker.number.int({ min: 0, max: 2 })] as ConfidenceLevel,
         lastUpdated: property.lastUpdated,
         ownerId: property.ownerId,
         ownerName: owner?.name || faker.person.fullName(),
@@ -85,23 +83,15 @@ const fetchProperties = async () => {
 };
 
 async function init() {
-  if (!isInitialized) {
+  if (!initialized) {
     await fetchOwners();
     await fetchProperties();
-    isInitialized = true;
+    populateTrendingAndHot();
+    initialized = true;
   }
 }
 
-init().catch(console.error);
-
-export function getProperties() {
-  if (!isInitialized) {
-    return {
-      trendingProperties: [],
-      hotProperties: []
-    };
-  }
-
+function populateTrendingAndHot() {
   if (trendingProperties.length === 0 && properties.length > 0) {
     trendingProperties = properties.map((property, index) => {
       let lastUpdated;
@@ -142,6 +132,10 @@ export function getProperties() {
       .sort((a, b) => b.trendingScore - a.trendingScore)
       .slice(0, 4);
   }
+}
+
+export async function getProperties() {
+  await init();
 
   return {
     trendingProperties,
@@ -149,8 +143,8 @@ export function getProperties() {
   };
 }
 
-export function getPropertyById(id: string): Property | undefined {
-  const { trendingProperties } = getProperties();
+export async function getPropertyById(id: string): Promise<Property | undefined> {
+  const { trendingProperties } = await getProperties();
   return trendingProperties.find((p) => p.id === id);
 }
 
