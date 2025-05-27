@@ -126,6 +126,7 @@ export default function TrendingProperties() {
     // Apply views filter
     if (viewsFilter !== "all") {
       filtered = filtered.filter((property) => {
+       if (!property) return false;
         if (viewsFilter === "high") return property.views > 500;
         if (viewsFilter === "medium") return property.views >= 300 && property.views <= 500;
         if (viewsFilter === "low") return property.views < 300;
@@ -223,7 +224,7 @@ export default function TrendingProperties() {
             <div className="flex justify-between mb-3">
               <Badge variant="outline" className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {property.views}
+                {property.views??0}
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
                 {formatKMB(Number(property.sqft))} sqft
@@ -251,7 +252,7 @@ export default function TrendingProperties() {
 
   // Featured property card for the top trending property
   const FeaturedPropertyCard = ({ property }: { property: Property }) => {
-    const trendingIndicator = getTrendingIndicator(property.trendingScore);
+    const trendingIndicator = getTrendingIndicator(property?.trendingScore);
     const randomImageIndex = faker.number.int({ min: 0, max: propertyPlaceholderImages.length - 1 });
     const imageUrl = propertyPlaceholderImages[randomImageIndex];
 
@@ -277,11 +278,11 @@ export default function TrendingProperties() {
             <div className="flex items-center mb-2">
               <Badge className={`${trendingIndicator.bgColor} ${trendingIndicator.color} mr-2`}>
                 {trendingIndicator.icon}
-                Trending Score: {Math.round(property.trendingScore)}
+                Trending Score: {Math.round(property?.trendingScore)}
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {property.views} views
+                {property.views??0} views
               </Badge>
             </div>
 
@@ -385,7 +386,7 @@ export default function TrendingProperties() {
             <div>
               <p className="text-sm text-gray-600">Total Views</p>
               <p className="text-2xl font-bold">
-                {trendingProperties.reduce((sum, p) => sum + p.views, 0).toLocaleString()}
+                {trendingProperties.reduce((sum, p) => p.views?sum + p.views:sum, 0).toLocaleString()}
               </p>
             </div>
           </CardContent>
@@ -592,7 +593,7 @@ export default function TrendingProperties() {
           </div>
 
           {/* Property display - grid or map */}
-          {viewMode === "grid" ? (
+          {viewMode === "grid" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {paginatedProperties.length > 0 ? (
                 paginatedProperties.map((property) => (
@@ -602,7 +603,8 @@ export default function TrendingProperties() {
                 <p className="col-span-full text-center text-gray-500">No properties match your filters.</p>
               )}
             </div>
-          ) : (
+          )}
+          {/* {viewMode === "map" && (
             <div className="h-[600px] rounded-lg overflow-hidden border">
               {paginatedProperties.length > 0 ? (
                 <MapView properties={transformProperties(paginatedProperties)} />
@@ -610,7 +612,7 @@ export default function TrendingProperties() {
                 <div className="flex justify-center items-center h-full text-gray-500">No properties to display on map with current filters.</div>
               )}
             </div>
-          )}
+          )} */}
 
           {/* Pagination */}
           {totalPages > 1 && viewMode === "grid" && (
