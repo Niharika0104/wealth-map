@@ -8,7 +8,7 @@ import { FloatingChatButton } from "@/components/FloatingChatButton";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isHome = pathname === "/app";
+  const isHome = pathname === "/app/home" || "/app/employee/home" ;
 
   return (
       <div className="flex h-screen overflow-hidden">

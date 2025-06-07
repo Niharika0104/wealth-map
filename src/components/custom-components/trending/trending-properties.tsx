@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef, useCallback } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -23,12 +23,12 @@ import {
   Activity,
 } from "lucide-react"
 import Link from "next/link"
-import { faker } from '@faker-js/faker' // Ensure faker is installed: npm install @faker-js/faker
+import { faker } from '@faker-js/faker'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getProperties, type Property } from "./property-store" // Ensure this path is correct
-import MapView from "@/components/custom-components/trending/map-view" // Ensure this path is correct
-import { formatKMB } from "@/Models/models" // Ensure this path is correct
+import { getProperties, type Property } from "./property-store"
+import MapView from "@/components/custom-components/trending/map-view"
+import { formatKMB } from "@/Models/models"
 
 // Helper function to transform properties for MapView
 const transformProperties = (properties: Property[]): PropertyType[] => {
@@ -73,37 +73,37 @@ export default function TrendingProperties() {
   const [timelineFilter, setTimelineFilter] = useState<TimelineFilter>("all");
   const [confidenceFilter, setConfidenceFilter] = useState<ConfidenceFilter>("all");
   const [viewsFilter, setViewsFilter] = useState<ViewsFilter>("all");
-  const [currentPage, setCurrentPage] = useState(1);
   const [trendingProperties, setTrendingProperties] = useState<Property[]>([]);
   const [hotProperties, setHotProperties] = useState<Property[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Renamed status to isLoading for clarity
+  const [isLoading, setIsLoading] = useState(false);
 
   const [activeTab, setActiveTab] = useState("hot");
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
   const itemsPerPage = 8;
+  const [page, setPage] = useState(1);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobilePage, setMobilePage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Start loading
+      setIsLoading(true);
       try {
         const { trendingProperties, hotProperties } = await getProperties();
         setTrendingProperties(trendingProperties);
         setHotProperties(hotProperties);
       } catch (error) {
         console.error("Failed to fetch properties:", error);
-        // Optionally, handle error state for UI
       } finally {
-        setIsLoading(false); // End loading
+        setIsLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  // Filter properties based on selected filters
   const filteredProperties = useMemo(() => {
-    let filtered = [...trendingProperties]; // Use trendingProperties for "All Properties" tab
+    let filtered = [...trendingProperties];
 
-    // Apply timeline filter
     if (timelineFilter !== "all") {
       const now = new Date();
       filtered = filtered.filter((property) => {
@@ -118,15 +118,13 @@ export default function TrendingProperties() {
       });
     }
 
-    // Apply confidence filter
     if (confidenceFilter !== "all") {
       filtered = filtered.filter((property) => property.confidenceLevel === confidenceFilter);
     }
 
-    // Apply views filter
     if (viewsFilter !== "all") {
       filtered = filtered.filter((property) => {
-       if (!property) return false;
+       if (!property.views) return false; // Handle undefined views
         if (viewsFilter === "high") return property.views > 500;
         if (viewsFilter === "medium") return property.views >= 300 && property.views <= 500;
         if (viewsFilter === "low") return property.views < 300;
@@ -135,13 +133,68 @@ export default function TrendingProperties() {
     }
 
     return filtered;
-  }, [timelineFilter, confidenceFilter, viewsFilter, trendingProperties]); // Add trendingProperties to dependency array
-
-  // Calculate pagination for "All Properties" tab
+  }, [timelineFilter, confidenceFilter, viewsFilter, trendingProperties]);
   const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
-  const paginatedProperties = filteredProperties.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  // Detect mobile with media query
+  useEffect(() => {
+   
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 767px)").matches);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+  
+  // Infinite scroll for mobile only
+  useEffect(() => {
+    if (!isMobile || activeTab !== "all" || viewMode !== "grid") return;
+    if (!sentinelRef.current) return;
+    const maxPage = Math.ceil(filteredProperties.length / itemsPerPage);
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setMobilePage((prev) => {
+            if (prev < maxPage) return prev + 1;
+            return prev;
+          });
+        }
+      },
+      { threshold: 1 }
+    );
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [filteredProperties.length, activeTab, viewMode, isMobile]);
 
-  // Get confidence level color
+  // Reset page(s) when filters or tab change
+  useEffect(() => {
+    setPage(1);
+    setMobilePage(1);
+  }, [timelineFilter, confidenceFilter, viewsFilter, activeTab]);
+
+  // Pagination items for desktop
+  const getPaginationItems = () => {
+    const items = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    for (let i = startPage; i <= endPage; i++) {
+      items.push(
+        <button
+          key={i}
+          className={`px-3 py-1 rounded ${page === i ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+          onClick={() => setPage(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+    return items;
+  };
+
   const getConfidenceColor = (level: string) => {
     switch (level) {
       case "High":
@@ -155,7 +208,6 @@ export default function TrendingProperties() {
     }
   };
 
-  // Get trending score color and icon
   const getTrendingIndicator = (score: number) => {
     if (score > 100) {
       return {
@@ -181,7 +233,6 @@ export default function TrendingProperties() {
     }
   };
 
-  // Property card component to avoid duplication
   const PropertyCard = ({ property, rank }: { property: Property; rank?: number }) => {
     const trendingIndicator = getTrendingIndicator(property.trendingScore);
     const randomImageIndex = faker.number.int({ min: 0, max: propertyPlaceholderImages.length - 1 });
@@ -224,7 +275,7 @@ export default function TrendingProperties() {
             <div className="flex justify-between mb-3">
               <Badge variant="outline" className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {property.views??0}
+                {property.views ?? 0}
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
                 {formatKMB(Number(property.sqft))} sqft
@@ -237,11 +288,11 @@ export default function TrendingProperties() {
             <div className="flex justify-between items-center">
               <div className="text-sm text-gray-600 flex items-center">
                 <Calendar className="h-3 w-3 mr-1" />
-                {new Date(property.lastUpdated).toLocaleDateString()} {/* Format date */}
+                {new Date(property.lastUpdated).toLocaleDateString()}
               </div>
               <div className="flex items-center">
                 <span className="font-bold text-green-600 mr-2">${formatKMB(Number(property.value))}</span>
-               
+
               </div>
             </div>
           </CardContent>
@@ -250,7 +301,6 @@ export default function TrendingProperties() {
     );
   };
 
-  // Featured property card for the top trending property
   const FeaturedPropertyCard = ({ property }: { property: Property }) => {
     const trendingIndicator = getTrendingIndicator(property?.trendingScore);
     const randomImageIndex = faker.number.int({ min: 0, max: propertyPlaceholderImages.length - 1 });
@@ -274,15 +324,15 @@ export default function TrendingProperties() {
               <span className="font-bold text-sm">Top Trending</span>
             </div>
           </div>
-          <div className="p-6 md:w-3/5">
+          <div className="p-3 sm:p-6 md:w-3/5">
             <div className="flex items-center mb-2">
-              <Badge className={`${trendingIndicator.bgColor} ${trendingIndicator.color} mr-2`}>
+              <Badge className={`${trendingIndicator.bgColor} ${trendingIndicator.color} mr-2 `}>
                 {trendingIndicator.icon}
                 Trending Score: {Math.round(property?.trendingScore)}
               </Badge>
               <Badge variant="outline" className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {property.views??0} views
+                {property.views ?? 0} views
               </Badge>
             </div>
 
@@ -331,21 +381,16 @@ export default function TrendingProperties() {
     );
   };
 
-  // Handle tab change
   const handleTabChange = (value: string) => {
     setActiveTab(value);
   };
 
-  // Handle view all properties button click
   const handleViewAllClick = () => {
     setActiveTab("all");
-    setCurrentPage(1); // Reset pagination when switching tabs
   };
 
-  // Get top trending property
-  const topTrendingProperty = hotProperties[0]; // Access after hotProperties is fetched
+  const topTrendingProperty = hotProperties[0];
 
-  // Get trending categories (simplified for example)
   const trendingCategories = [
     { name: "Luxury", icon: <Flame className="h-5 w-5 text-gray-700" /> },
     { name: "Beachfront", icon: <Flame className="h-5 w-5 text-gray-700" /> },
@@ -353,53 +398,49 @@ export default function TrendingProperties() {
     { name: "Mountain", icon: <Flame className="h-5 w-5 text-gray-700" /> },
   ];
 
-  // Show loading spinner
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div>
-      {/* Trending Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div className="px-2 sm:px-4 md:px-8 max-w-screen-2xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <Card>
           <CardContent className="p-4 flex items-center">
             <div className="bg-gray-100 p-3 rounded-full mr-3">
               <Flame className="h-6 w-6 text-red-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Hot Properties</p>
-              <p className="text-2xl font-bold">{hotProperties.length}</p>
+              <p className="text-xs sm:text-sm text-gray-600">Hot Properties</p>
+              <p className="text-xl sm:text-2xl font-bold">{hotProperties.length}</p>
             </div>
           </CardContent>
         </Card>
-
         <Card>
           <CardContent className="p-4 flex items-center">
             <div className="bg-gray-100 p-3 rounded-full mr-3">
               <Eye className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Views</p>
-              <p className="text-2xl font-bold">
-                {trendingProperties.reduce((sum, p) => p.views?sum + p.views:sum, 0).toLocaleString()}
+              <p className="text-xs sm:text-sm text-gray-600">Total Views</p>
+              <p className="text-xl sm:text-2xl font-bold">
+                {trendingProperties.reduce((sum, p) => p.views ? sum + p.views : sum, 0).toLocaleString()}
               </p>
             </div>
           </CardContent>
         </Card>
-
         <Card>
           <CardContent className="p-4 flex items-center">
             <div className="bg-gray-100 p-3 rounded-full mr-3">
               <Activity className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">New This Week</p>
-              <p className="text-2xl font-bold">
+              <p className="text-xs sm:text-sm text-gray-600">New This Week</p>
+              <p className="text-xl sm:text-2xl font-bold">
                 {
                   trendingProperties.filter((p) => {
                     const updatedDate = new Date(p.lastUpdated);
@@ -413,16 +454,14 @@ export default function TrendingProperties() {
             </div>
           </CardContent>
         </Card>
-
         <Card>
           <CardContent className="p-4 flex items-center">
             <div className="bg-gray-100 p-3 rounded-full mr-3">
               <BarChart3 className="h-6 w-6 text-gray-700" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Avg. Confidence</p>
-              <p className="text-2xl font-bold">
-                {/* Ensure trendingProperties has items before accessing confidenceLevel */}
+              <p className="text-xs sm:text-sm text-gray-600">Avg. Confidence</p>
+              <p className="text-xl sm:text-2xl font-bold">
                 {trendingProperties.length > 0 && trendingProperties.filter((p) => p.confidenceLevel === "High").length > trendingProperties.length / 2
                   ? "High"
                   : "Medium"}
@@ -433,10 +472,9 @@ export default function TrendingProperties() {
         </Card>
       </div>
 
-      {/* Featured Property */}
-      {topTrendingProperty && ( // Conditionally render only if topTrendingProperty exists
+      {topTrendingProperty && (
         <div className="mb-8">
-          <h2 className="text-xl font-bold mb-4 flex items-center">
+          <h2 className="text-lg sm:text-xl font-bold mb-4 flex items-center">
             <Flame className="mr-2 h-5 w-5 text-red-600" />
             Featured Trending Property
           </h2>
@@ -444,16 +482,15 @@ export default function TrendingProperties() {
         </div>
       )}
 
-      {/* Trending Categories */}
       <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Trending Categories</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <h2 className="text-lg sm:text-xl font-bold mb-4">Trending Categories</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {trendingCategories.map((category, index) => (
             <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-              <div className="h-16 bg-gray-100 flex items-center justify-center">{category.icon}</div>
-              <CardContent className="p-3 text-center">
-                <h3 className="font-bold">{category.name}</h3>
-                <p className="text-sm text-gray-600">
+              <div className="h-14 sm:h-16 bg-gray-100 flex items-center justify-center">{category.icon}</div>
+              <CardContent className="p-2 sm:p-3 text-center">
+                <h3 className="font-bold text-sm sm:text-base">{category.name}</h3>
+                <p className="text-xs sm:text-sm text-gray-600">
                   {trendingProperties.filter((p) => p.type.includes(category.name)).length} properties
                 </p>
               </CardContent>
@@ -470,26 +507,25 @@ export default function TrendingProperties() {
 
         <TabsContent value="hot" className="mt-6">
           <div className="mb-4">
-            <h2 className="text-xl font-bold flex items-center">
+            <h2 className="text-lg sm:text-xl font-bold flex items-center">
               <TrendingUp className="mr-2 h-5 w-5 text-red-600" />
               Hot Properties
-              <span className="text-sm font-normal ml-2 text-gray-500">
+              <span className="text-xs sm:text-sm font-normal ml-2 text-gray-500">
                 (Highest trending score based on views and recency)
               </span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Render hot properties, excluding the top one if it was featured */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {hotProperties.slice(topTrendingProperty ? 1 : 0).map((property, index) => (
               <PropertyCard key={property.id} property={property} rank={topTrendingProperty ? index + 2 : index + 1} />
             ))}
             {hotProperties.length === 0 && <p className="col-span-full text-center text-gray-500">No hot properties found.</p>}
           </div>
 
-          {hotProperties.length > (topTrendingProperty ? 1 : 0) && ( // Only show button if there are more hot properties
+          {hotProperties.length > (topTrendingProperty ? 1 : 0) && (
             <div className="mt-6 flex justify-center">
-              <Button variant="outline" onClick={handleViewAllClick} className="flex items-center">
+              <Button variant="outline" onClick={handleViewAllClick} className="flex items-center w-full sm:w-auto">
                 View All Properties
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -498,10 +534,9 @@ export default function TrendingProperties() {
         </TabsContent>
 
         <TabsContent value="all" className="mt-6">
-          {/* Filters */}
           <div className="flex flex-col md:flex-row gap-4 mb-6 bg-white p-4 rounded-lg shadow">
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Timeline</label>
+            <div className="flex-1 min-w-0">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Timeline</label>
               <Select value={timelineFilter} onValueChange={(value) => setTimelineFilter(value as TimelineFilter)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Filter by timeline" />
@@ -515,8 +550,8 @@ export default function TrendingProperties() {
               </Select>
             </div>
 
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Views</label>
+            <div className="flex-1 min-w-0">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Views</label>
               <Select value={viewsFilter} onValueChange={(value) => setViewsFilter(value as ViewsFilter)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Filter by views" />
@@ -530,8 +565,8 @@ export default function TrendingProperties() {
               </Select>
             </div>
 
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confidence</label>
+            <div className="flex-1 min-w-0">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Confidence</label>
               <Select
                 value={confidenceFilter}
                 onValueChange={(value) => setConfidenceFilter(value as ConfidenceFilter)}
@@ -549,17 +584,16 @@ export default function TrendingProperties() {
             </div>
           </div>
 
-          {/* View toggle */}
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-sm text-gray-600">
-              Showing {paginatedProperties.length} of {filteredProperties.length} properties
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
+            <div className="text-xs sm:text-sm text-gray-600">
+              Showing {Math.min(page * itemsPerPage, filteredProperties.length)} of {filteredProperties.length} properties
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 w-full sm:w-auto">
               <Button
                 variant={viewMode === "grid" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setViewMode("grid")}
-                className="flex items-center"
+                className="flex items-center w-1/2 sm:w-auto"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -584,7 +618,7 @@ export default function TrendingProperties() {
                 variant={viewMode === "map" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setViewMode("map")}
-                className="flex items-center"
+                className="flex items-center w-1/2 sm:w-auto"
               >
                 <MapIcon className="h-4 w-4 mr-1" />
                 Map
@@ -592,72 +626,61 @@ export default function TrendingProperties() {
             </div>
           </div>
 
-          {/* Property display - grid or map */}
           {viewMode === "grid" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {paginatedProperties.length > 0 ? (
-                paginatedProperties.map((property) => (
-                  <PropertyCard key={property.id} property={property} />
-                ))
-              ) : (
-                <p className="col-span-full text-center text-gray-500">No properties match your filters.</p>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                {(isMobile
+                  ? filteredProperties.slice(0, mobilePage * itemsPerPage)
+                  : filteredProperties.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                ).length > 0 ? (
+                  (isMobile
+                    ? filteredProperties.slice(0, mobilePage * itemsPerPage)
+                    : filteredProperties.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                  ).map((property) => (
+                    <PropertyCard key={property.id} property={property} />
+                  ))
+                ) : (
+                  <p className="col-span-full text-center text-gray-500">No properties match your filters.</p>
+                )}
+              </div>
+              {/* Infinite scroll loader for mobile only */}
+              {isMobile && (() => {
+                const visibleCount = Math.min(mobilePage * itemsPerPage, filteredProperties.length);
+                return visibleCount < filteredProperties.length ? (
+                  <div ref={sentinelRef} className="flex justify-center py-6">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
+                  </div>
+                ) : null;
+              })()}
+              {/* Pagination controls for desktop only */}
+              {!isMobile && totalPages > 1 && (
+                <div className="mt-8 mb-8 flex justify-center gap-2">
+                  <button
+                    className={`px-3 py-1 rounded ${page === 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-100 text-gray-700'}`}
+                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={page === 1}
+                  >
+                    Prev
+                  </button>
+                  {getPaginationItems()}
+                  <button
+                    className={`px-3 py-1 rounded ${page === totalPages ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-100 text-gray-700'}`}
+                    onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={page === totalPages}
+                  >
+                    Next
+                  </button>
+                </div>
               )}
-            </div>
+            </>
           )}
-          {/* {viewMode === "map" && (
-            <div className="h-[600px] rounded-lg overflow-hidden border">
-              {paginatedProperties.length > 0 ? (
-                <MapView properties={transformProperties(paginatedProperties)} />
+          {viewMode === "map" && (
+            <div className="h-[600px] rounded-lg overflow-hidden border mt-4">
+              {filteredProperties.length > 0 ? (
+                <MapView properties={transformProperties(filteredProperties)} />
               ) : (
                 <div className="flex justify-center items-center h-full text-gray-500">No properties to display on map with current filters.</div>
               )}
-            </div>
-          )} */}
-
-          {/* Pagination */}
-          {totalPages > 1 && viewMode === "grid" && (
-            <div className="flex justify-center mt-8">
-              <div className="flex space-x-2">
-                <Button
-                  variant="outline"
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                >
-                  Previous
-                </Button>
-
-                {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                  let pageNumber;
-                  if (totalPages <= 5) {
-                    pageNumber = i + 1;
-                  } else {
-                    if (currentPage <= 3) {
-                      pageNumber = i + 1;
-                    } else if (currentPage >= totalPages - 2) {
-                      pageNumber = totalPages - 4 + i;
-                    } else {
-                      pageNumber = currentPage - 2 + i;
-                    }
-                  }
-                  return (
-                    <Button
-                      key={pageNumber}
-                      variant={currentPage === pageNumber ? "default" : "outline"}
-                      onClick={() => setCurrentPage(pageNumber)}
-                    >
-                      {pageNumber}
-                    </Button>
-                  );
-                })}
-
-                <Button
-                  variant="outline"
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </Button>
-              </div>
             </div>
           )}
         </TabsContent>
